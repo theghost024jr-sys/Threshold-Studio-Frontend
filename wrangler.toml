@@ -1,0 +1,11 @@
+name = "threshold-node-gate"
+main = "threshold/worker/index.js"
+compatibility_date = "2026-08-08"
+
+routes = [
+  { pattern = "thresholdstudiowebsite.org/api/*", zone_name = "thresholdstudiowebsite.org" }
+]
+
+[[r2_buckets]]
+binding = "NODE_BUNDLES"
+bucket_name = "threshold-node-bundles"

@@ -1,36 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hub</title>
-  <link rel="stylesheet" href="hub.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threshold Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-
-  <div class="hub-container">
-
-    <!-- Four circles -->
-    <div class="circle c1"></div>
-    <div class="circle c2"></div>
-    <div class="circle c3"></div>
-    <div class="circle c4"></div>
-
-    <!-- Orbiting glyphs -->
-    <div class="orbit orbit1">✦</div>
-    <div class="orbit orbit2">✺</div>
-    <div class="orbit orbit3">⊹</div>
-    <div class="orbit orbit4">✧</div>
-
-    <!-- Moon -->
-    <div class="moon"></div>
-
-    <!-- Comet -->
-    <div class="comet"></div>
-
-  </div>
-
-  <script src="hub.js"></script>
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="assets/entry/threshold-logo.svg" alt="">Threshold</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html">Entry</a>
+      <a href="hub.html" aria-current="page">Hub</a>
+      <a href="garden.html">Garden</a>
+    </nav>
+  </header>
+  <main class="shell">
+    <p class="eyebrow">Circle I / Anchor</p>
+    <h1>The hub holds.</h1>
+    <p class="lead">A stable center for movement between the known field and the branches waiting beyond it.</p>
+    <a class="action" href="garden.html">Cross into the garden</a>
+    <section class="field-grid" aria-label="Hub field">
+      <article class="field"><h2>Anchor</h2><p>The public foundation remains small, legible, and recoverable.</p></article>
+      <article class="field"><h2>Drift</h2><p>Branches remain dormant until a chosen path gives them motion.</p></article>
+      <article class="field"><h2>Activation</h2><p>The Worker opens protected material only when its threshold is crossed.</p></article>
+    </section>
+  </main>
 </body>
 </html>

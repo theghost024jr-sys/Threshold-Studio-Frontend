@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "sequence": [13, 8, 5, 3, 2, 1],
+  "layers": {
+    "13": "entry",
+    "8": "spoke",
+    "5": "world",
+    "3": "symbolic",
+    "2": "intimate",
+    "1": "core"
+  },
+  "spokes": {
+    "house-garden": {
+      "entryFib": 13,
+      "routes": [
+        {
+          "id": "garden",
+          "label": "Garden Path",
+          "version": "v3-vines",
+          "targetFib": 8
+        },
+        {
+          "id": "shaper",
+          "label": "Shaper Path",
+          "version": "v2-black-shapers",
+          "targetFib": 8
+        },
+        {
+          "id": "chamber",
+          "label": "Chamber Path",
+          "version": "v1-green-box",
+          "targetFib": 8
+        }
+      ],
+      "continuation": {
+        "5": [],
+        "3": [],
+        "2": [],
+        "1": []
+      }
+    }
+  }
+}

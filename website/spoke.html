@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Spoke</title>
+  <link rel="stylesheet" href="styles/spoke-shell.css" />
+  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+</head>
+<body class="spoke-shell-page" data-threshold-spoke="">
+  <main class="spoke-shell" aria-live="polite">
+    <header class="spoke-shell-header">
+      <p class="spoke-shell-circle" data-node-fib>Fib 8</p>
+      <h1 data-spoke-title>Opening spoke...</h1>
+      <p data-spoke-status>Only this route is active.</p>
+    </header>
+
+    <section class="spoke-node" data-node hidden>
+      <div class="spoke-node-heading">
+        <div>
+          <p class="spoke-node-kind" data-node-kind></p>
+          <h2 data-node-title></h2>
+        </div>
+        <button type="button" class="spoke-back" data-node-back hidden>Previous Fib</button>
+      </div>
+      <div class="spoke-node-content" data-node-content></div>
+      <div class="spoke-node-choices" data-node-choices></div>
+    </section>
+
+    <button type="button" class="spoke-enter" data-spoke-enter>Enter Spoke</button>
+  </main>
+
+  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/spoke-tabs.js"></script>
+  <script type="module" src="scripts/spoke-shell.js"></script>
+</body>
+</html>

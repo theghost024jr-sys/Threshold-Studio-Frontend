@@ -17,3 +17,9 @@ The current `website/config/spokes.json` manifest defines House & Garden, Ethos,
 3. Duplicate paths with identical content are aliases in `manifest.json`, not extra copied files.
 4. Snapshot HTML is archival source and is not rewritten to make relative dependencies runnable.
 5. Active website pages remain in `website/` and are not replaced by archive files.
+
+## Fibonacci Layering Law
+
+Active routes move inward through `13 -> 8 -> 5 -> 3 -> 2 -> 1`. Fib 13 is the shared entry layer; a path choice selects a spoke version at Fib 8, and that lineage must remain attached to later activations. Multiple versions may coexist at any ring.
+
+`website/config/fibonacci-routes.json` is the runtime route contract. The folders under `website/house-and-garden/fib*/` are the implementation scaffold. Historical snapshots are not assigned to named runtime versions until their provenance and intended experience are both verified.

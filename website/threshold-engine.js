@@ -11,6 +11,9 @@ const TARGET_IDS = [
   "project-chamber"
 ];
 
+const DEFAULT_ASSET_BASE = "https://cdn.jsdelivr.net/gh/theghost024jr-sys/Threshold-Studio-Assets@main";
+const REMOTE_ASSET_TYPES = new Set(["text", "json", "blob", "arrayBuffer"]);
+
 const BRANCH_IDS = [
   "rootSigil",
   "home",
@@ -213,6 +216,7 @@ class ThresholdEngine {
     this.glyphEngine = new ThresholdGlyphEngine(this, this.branchEngine);
     this.moduleCache = {};
     this.vaultDataCache = {};
+    this.assetBase = this.resolveAssetBase();
     this.moduleMap = {
       archive: () => import("./archive.js"),
       weather: () => import("./weather.js"),
@@ -503,6 +507,115 @@ class ThresholdEngine {
     }
 
     return this.moduleCache[name];
+  }
+
+  resolveAssetBase() {
+    const meta = document.querySelector('meta[name="threshold-asset-base"]');
+    const configured = window.THRESHOLD_ASSET_BASE || (meta && meta.content) || DEFAULT_ASSET_BASE;
+    return String(configured).replace(/\/+$/, "");
+  }
+
+  setAssetBase(url) {
+    const parsed = new URL(String(url));
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      throw new Error("Asset base must use HTTP or HTTPS");
+    }
+
+    this.assetBase = parsed.href.replace(/\/+$/, "");
+    return this.assetBase;
+  }
+
+  assetURL(path) {
+    const normalizedPath = String(path || "").replace(/^\/+/, "");
+    if (!normalizedPath) {
+      throw new Error("Asset path is required");
+    }
+
+    return new URL(normalizedPath, this.assetBase + "/").href;
+  }
+
+  assetPath(group, name, extension) {
+    const normalizedName = String(name || "").replace(/^\/+|\/+$/g, "");
+    if (!normalizedName || normalizedName.split("/").some((part) => !part || part === "." || part === "..")) {
+      throw new Error("Invalid asset name: " + name);
+    }
+
+    return group + "/" + normalizedName + extension;
+  }
+
+  async loadAsset(path, type = "text", options = {}) {
+    if (!REMOTE_ASSET_TYPES.has(type)) {
+      throw new Error("Unsupported asset type: " + type);
+    }
+
+    const url = this.assetURL(path);
+    const response = await fetch(url, Object.assign({ cache: "default" }, options));
+    if (!response.ok) {
+      throw new Error("Failed to load asset (" + response.status + "): " + url);
+    }
+
+    return response[type]();
+  }
+
+  async loadChamber(name, target = "#chamber") {
+    const html = await this.loadAsset(this.assetPath("chambers", name, ".html"));
+    const mount = document.querySelector(target);
+    if (!mount) {
+      throw new Error("Chamber target not found: " + target);
+    }
+
+    mount.innerHTML = html;
+    return mount;
+  }
+
+  glyphURL(name) {
+    return this.assetURL(this.assetPath("glyphs", name, ".png"));
+  }
+
+  async loadMythology(name, render) {
+    const data = await this.loadAsset(this.assetPath("mythology", name, ".json"), "json");
+    if (typeof render === "function") {
+      render(data);
+    }
+
+    window.dispatchEvent(new CustomEvent("threshold:mythology-loaded", {
+      detail: { name: name, data: data }
+    }));
+    return data;
+  }
+
+  async loadConstruct(name, target = "#construct") {
+    const html = await this.loadAsset(this.assetPath("constructs", name, ".html"));
+    const mount = document.querySelector(target);
+    if (!mount) {
+      throw new Error("Construct target not found: " + target);
+    }
+
+    mount.innerHTML = html;
+    return mount;
+  }
+
+  loadStylesheet(path) {
+    const url = this.assetURL(path);
+    const existing = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+      .find((link) => link.href === url);
+    if (existing) {
+      return existing;
+    }
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = url;
+    document.head.appendChild(link);
+    return link;
+  }
+
+  async loadWeatherModule(zone) {
+    const url = this.assetURL(this.assetPath("weather", zone, ".js"));
+    if (!this.moduleCache[url]) {
+      this.moduleCache[url] = await import(url);
+    }
+    return this.moduleCache[url];
   }
 
   async loadVault(name) {

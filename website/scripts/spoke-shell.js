@@ -1,4 +1,4 @@
-import { readFibonacciLineage } from "./fibonacci-routing.js";
+import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
 
 (function () {
   "use strict";
@@ -19,6 +19,7 @@ import { readFibonacciLineage } from "./fibonacci-routing.js";
   const backButton = document.querySelector("[data-node-back]");
   const history = [];
   let spoke = null;
+  let activeFib = routeLineage ? routeLineage.fib : 8;
 
   function summarize(content) {
     if (!content) {
@@ -38,13 +39,14 @@ import { readFibonacciLineage } from "./fibonacci-routing.js";
     }).join("\n\n");
   }
 
-  function renderNode(node, pushHistory) {
+  function renderNode(node, pushHistory, displayFib) {
     if (pushHistory && window.ThresholdNodes.getActiveNode()) {
-      history.push(window.ThresholdNodes.getActiveNode());
+      history.push({ node: window.ThresholdNodes.getActiveNode(), fib: activeFib });
     }
+    activeFib = displayFib || activeFib;
     nodeShell.hidden = false;
     enterButton.hidden = true;
-    fibNode.textContent = "Fib " + String(node.fib || "");
+    fibNode.textContent = "Fib " + String(activeFib);
     kindNode.textContent = String(node.kind || "node").replace(/-/g, " ");
     nodeTitle.textContent = node.title || String(node.id || spoke.label).replace(/^[^:]+:/, "").replace(/-/g, " ");
     contentNode.textContent = node.components && node.components.length
@@ -57,7 +59,7 @@ import { readFibonacciLineage } from "./fibonacci-routing.js";
       button.className = "spoke-node-choice";
       button.textContent = choice.label;
       button.addEventListener("click", function () {
-        activate(choice.activation, choice.id);
+        activate(choice.activation, choice.id, true);
       });
       choicesNode.appendChild(button);
     });
@@ -67,10 +69,11 @@ import { readFibonacciLineage } from "./fibonacci-routing.js";
       : "This is the active depth node.";
   }
 
-  async function activate(token, choiceId) {
+  async function activate(token, choiceId, moveInward) {
     statusNode.textContent = "Activating next node...";
     try {
       const previous = window.ThresholdNodes.getActiveNode();
+      const displayFib = previous && moveInward ? nextFibonacciFib(activeFib) : activeFib;
       const node = await window.ThresholdNodes.activate({
         spokeId,
         token,
@@ -78,9 +81,9 @@ import { readFibonacciLineage } from "./fibonacci-routing.js";
         lineage: routeLineage
       });
       if (previous) {
-        history.push(previous);
+        history.push({ node: previous, fib: activeFib });
       }
-      renderNode(node, false);
+      renderNode(node, false, displayFib);
     } catch (error) {
       statusNode.textContent = error instanceof Error ? error.message : "Activation failed";
     }
@@ -91,7 +94,7 @@ import { readFibonacciLineage } from "./fibonacci-routing.js";
     if (!previous) {
       return;
     }
-    renderNode(previous, false);
+    renderNode(previous.node, false, previous.fib);
   });
 
   enterButton.addEventListener("click", function () {

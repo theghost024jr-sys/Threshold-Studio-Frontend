@@ -6,6 +6,7 @@ import routes from "./website/config/fibonacci-routes.json" with { type: "json" 
 import {
   buildFibonacciUrl,
   FIBONACCI_SEQUENCE,
+  nextFibonacciFib,
   readFibonacciLineage,
   resolveFibonacciRoute
 } from "./website/scripts/fibonacci-routing.js";
@@ -55,4 +56,13 @@ test("keeps Fib 8 route manifests aligned with the loader contract", async () =>
     assert.equal(manifest.fib, route.targetFib);
   }
   assert.deepEqual(Object.keys(spoke.continuation).map(Number), [1, 2, 3, 5]);
+});
+
+test("moves inward one Fibonacci ring at a time", () => {
+  assert.equal(nextFibonacciFib(13), 8);
+  assert.equal(nextFibonacciFib(8), 5);
+  assert.equal(nextFibonacciFib(5), 3);
+  assert.equal(nextFibonacciFib(3), 2);
+  assert.equal(nextFibonacciFib(2), 1);
+  assert.equal(nextFibonacciFib(1), 1);
 });

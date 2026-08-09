@@ -56,4 +56,11 @@ export function readFibonacciLineage(search) {
   });
 }
 
+export function nextFibonacciFib(fib) {
+  const index = FIBONACCI_SEQUENCE.indexOf(Number(fib));
+  return index >= 0 && index < FIBONACCI_SEQUENCE.length - 1
+    ? FIBONACCI_SEQUENCE[index + 1]
+    : FIBONACCI_SEQUENCE[FIBONACCI_SEQUENCE.length - 1];
+}
+
 export { FIBONACCI_SEQUENCE };

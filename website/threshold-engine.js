@@ -354,13 +354,9 @@ class ThresholdEngine {
     anchor.setAttribute("data-threshold-logo-trigger", "1");
 
     const img = document.createElement("img");
-    img.src = "assets/logo/threshold-logo.svg";
+    img.src = "assets/entry/threshold-logo.svg";
     img.alt = "Threshold Root Sigil";
     img.className = "threshold-nav-logo-img";
-    img.addEventListener("error", function () {
-      img.src = "assets/logo.png";
-    }, { once: true });
-
     anchor.appendChild(img);
     nav.insertBefore(anchor, nav.firstChild);
   }

@@ -46,7 +46,7 @@ test("keeps Fib 8 route manifests aligned with the loader contract", async () =>
   const spoke = routes.spokes["house-garden"];
   for (const route of spoke.routes) {
     const source = await readFile(
-      new URL(`./website/house-and-garden/fib8/${route.version}/route.json`, import.meta.url),
+      new URL(`./vault-holding/website-history/house-and-garden/fib8/${route.version}/route.json`, import.meta.url),
       "utf8"
     );
     const manifest = JSON.parse(source);

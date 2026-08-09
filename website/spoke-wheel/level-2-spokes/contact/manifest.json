@@ -1,0 +1,81 @@
+{
+    "page":  "contact",
+    "slug":  "contact",
+    "level":  "level-2-spokes",
+    "architecturalRole":  "current-manifest",
+    "generated":  "2026-08-09",
+    "snapshots":  [
+                      {
+                          "role":  "git-history",
+                          "blob":  "2638afb7725ce97e844189b80d941a59ac885532",
+                          "output":  "git-history/2638afb7725c.html",
+                          "knownPath":  "website/contact.html",
+                          "worktreeAliases":  [
+                                                  "website/contact.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "316d14e17fe0426a1cba5a7c705007b73932caba",
+                          "output":  "git-history/316d14e17fe0.html",
+                          "knownPath":  "Threshold Studio Website/ThresholdStudio/contact.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "5aba80d071eb9a2927b9e9e00985059463fe57e0",
+                          "output":  "git-history/5aba80d071eb.html",
+                          "knownPath":  "contact.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "5c6eceaa329bde5e1df701d446ac1a4a257cd9f4",
+                          "output":  "git-history/5c6eceaa329b.html",
+                          "knownPath":  "docs/contact.html",
+                          "worktreeAliases":  [
+                                                  "docs/contact.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "7176af41eee640b665e17292c1e86c2b4efd47f8",
+                          "output":  "git-history/7176af41eee6.html",
+                          "knownPath":  "threshold/core/contact.html",
+                          "worktreeAliases":  [
+                                                  "threshold/core/contact.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "9f1aca6db6ed78f96ef7c4b6aca82366ee9ecb30",
+                          "output":  "git-history/9f1aca6db6ed.html",
+                          "knownPath":  "ThresholdStudio/contact.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "current-worker-source",
+                          "blob":  "2638afb7725ce97e844189b80d941a59ac885532",
+                          "output":  "current/source.html",
+                          "knownPath":  "website/contact.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "core-prototype",
+                          "blob":  "7176af41eee640b665e17292c1e86c2b4efd47f8",
+                          "output":  "core-prototype/source.html",
+                          "knownPath":  "threshold/core/contact.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      }
+                  ]
+}

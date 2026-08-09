@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Hub - Entry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/styles.css" />
+  <style>
+    :root {
+      --bg-0: #030407;
+      --bg-1: #0b1222;
+      --bg-2: #17202f;
+      --ink: rgba(248, 243, 232, 0.96);
+      --ink-soft: rgba(217, 226, 235, 0.78);
+      --gold: #f3be63;
+      --teal: #8be4d5;
+      --line: rgba(243, 190, 99, 0.36);
+      --panel: rgba(7, 10, 18, 0.74);
+      --panel-strong: rgba(11, 16, 28, 0.9);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 58% 42%, rgba(244, 196, 108, 0.2), rgba(8, 10, 14, 0) 34%),
+        radial-gradient(circle at 16% 20%, rgba(136, 198, 255, 0.14), rgba(8, 10, 14, 0) 42%),
+        radial-gradient(circle at 86% 78%, rgba(114, 233, 216, 0.13), rgba(8, 10, 14, 0) 36%),
+        linear-gradient(160deg, var(--bg-0), var(--bg-1));
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20vmax;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.32;
+      background: conic-gradient(from 0deg, rgba(243, 190, 99, 0.28), rgba(139, 228, 213, 0.15), rgba(136, 198, 255, 0.08), rgba(243, 190, 99, 0.28));
+      mix-blend-mode: screen;
+      animation: halo-spin 42s linear infinite;
+    }
+
+    body::after {
+      opacity: 0.22;
+      filter: blur(34px);
+      animation-duration: 62s;
+      animation-direction: reverse;
+    }
+
+    .entry-shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(1rem, 2vw, 2rem);
+    }
+
+    .entry-panel {
+      width: min(1020px, 100%);
+      padding: clamp(1.2rem, 3vw, 2.4rem);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background:
+        linear-gradient(145deg, rgba(255, 245, 221, 0.05), rgba(130, 220, 255, 0.03) 34%, rgba(8, 10, 18, 0.5)),
+        var(--panel);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 80px rgba(0, 0, 0, 0.44), 0 0 36px rgba(243, 190, 99, 0.15);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(1rem, 2.6vw, 2.2rem);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .entry-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(243, 190, 99, 0.18), transparent 38%),
+        radial-gradient(circle at 86% 84%, rgba(139, 228, 213, 0.13), transparent 36%);
+      pointer-events: none;
+    }
+
+    .entry-copy,
+    .entry-nav {
+      position: relative;
+      z-index: 1;
+    }
+
+    .entry-mark {
+      width: clamp(60px, 8vw, 92px);
+      aspect-ratio: 1;
+      margin: 0 0 0.9rem;
+      opacity: 0.92;
+      filter: drop-shadow(0 0 18px rgba(255, 219, 136, 0.52));
+    }
+
+    h1 {
+      margin: 0;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: clamp(1.35rem, 2.7vw, 2rem);
+      font-family: "Cinzel", Georgia, serif;
+      line-height: 1.15;
+    }
+
+    .entry-kicker {
+      margin: 0.45rem 0 0;
+      color: rgba(241, 206, 146, 0.92);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.64rem;
+    }
+
+    p {
+      margin: 0.95rem 0 0;
+      max-width: 54ch;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .entry-orbit {
+      margin-top: 1.15rem;
+      width: min(320px, 76vw);
+      aspect-ratio: 1;
+      position: relative;
+      display: block;
+      padding: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(243, 190, 99, 0.34);
+      color: inherit;
+      background:
+        radial-gradient(circle at center, rgba(243, 190, 99, 0.24), rgba(10, 14, 20, 0.14) 42%, rgba(10, 14, 20, 0) 70%);
+      cursor: crosshair;
+      animation: orbit-breathe 9s ease-in-out infinite;
+    }
+
+    .entry-orbit:focus-visible {
+      outline: 1px solid var(--teal);
+      outline-offset: 8px;
+    }
+
+    .entry-orbit:hover,
+    .entry-orbit:focus-visible {
+      animation-play-state: paused;
+    }
+
+    .entry-orbit::before,
+    .entry-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border-radius: 50%;
+      border: 1px dashed rgba(155, 214, 255, 0.32);
+      animation: halo-spin 20s linear infinite;
+    }
+
+    .entry-orbit::after {
+      inset: 28%;
+      border-style: solid;
+      border-color: rgba(139, 228, 213, 0.34);
+      animation-duration: 13s;
+      animation-direction: reverse;
+    }
+
+    .entry-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 26%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 246, 227, 0.95) 0%, rgba(243, 190, 99, 0.78) 48%, rgba(12, 18, 26, 0.4) 100%);
+      box-shadow: 0 0 24px rgba(243, 190, 99, 0.46);
+      transition: transform 500ms ease, box-shadow 500ms ease, filter 500ms ease;
+    }
+
+    .entry-spoke {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 50%;
+      height: 1px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(243, 190, 99, 0.85), rgba(139, 228, 213, 0));
+      opacity: 0.82;
+    }
+
+    .entry-spoke-a { transform: rotate(-22deg); }
+    .entry-spoke-b { transform: rotate(102deg); }
+    .entry-spoke-c { transform: rotate(218deg); }
+
+    .entry-whisper {
+      position: absolute;
+      z-index: 4;
+      left: 50%;
+      bottom: 13%;
+      width: 76%;
+      transform: translateX(-50%);
+      color: rgba(248, 243, 232, 0.7);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      line-height: 1.4;
+      text-align: center;
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: opacity 400ms ease, transform 400ms ease;
+    }
+
+    .entry-orbit[data-state="awake"] {
+      animation: none;
+      border-color: rgba(139, 228, 213, 0.5);
+      box-shadow: inset 0 0 48px rgba(139, 228, 213, 0.08), 0 0 28px rgba(243, 190, 99, 0.12);
+    }
+
+    .entry-orbit[data-state="awake"] .entry-core {
+      transform: translate(-50%, -50%) scale(0.56);
+      filter: brightness(1.18);
+      box-shadow: 0 0 34px rgba(243, 190, 99, 0.74);
+    }
+
+    .entry-orbit[data-state="awake"] .entry-whisper {
+      opacity: 0;
+      transform: translate(-50%, 0.45rem);
+    }
+
+    .entry-orbit[data-state="reacting"] .entry-core {
+      transform: translate(-50%, -50%) scale(1.35);
+      box-shadow: 0 0 80px rgba(139, 228, 213, 0.9);
+    }
+
+    .portal-field {
+      position: absolute;
+      inset: -6%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .warp-portal {
+      --portal-angle: 0deg;
+      --portal-delay: 0s;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: clamp(2.6rem, 13%, 3.35rem);
+      aspect-ratio: 1;
+      padding: 0;
+      border: 1px solid rgba(243, 190, 99, 0.52);
+      border-radius: 50%;
+      color: rgba(248, 243, 232, 0.92);
+      background: radial-gradient(circle, rgba(139, 228, 213, 0.24), rgba(6, 9, 15, 0.92) 60%);
+      box-shadow: 0 0 16px rgba(139, 228, 213, 0.18), inset 0 0 12px rgba(243, 190, 99, 0.12);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 0.64rem;
+      letter-spacing: 0;
+      opacity: 0;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) rotate(var(--portal-angle)) translateY(-9.2rem) rotate(calc(-1 * var(--portal-angle))) scale(0.1);
+      animation: portal-arrive 900ms var(--portal-delay) cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+                 portal-breathe 4.8s calc(var(--portal-delay) + 900ms) ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    .warp-portal:hover,
+    .warp-portal:focus-visible,
+    .warp-portal[data-seen="true"] {
+      border-color: var(--teal);
+      color: #fff9e9;
+      background: radial-gradient(circle, rgba(243, 190, 99, 0.44), rgba(6, 9, 15, 0.94) 66%);
+      box-shadow: 0 0 28px rgba(139, 228, 213, 0.48), inset 0 0 14px rgba(243, 190, 99, 0.25);
+      outline: none;
+    }
+
+    .warp-portal[data-warp="circle-three"] {
+      width: 4.2rem;
+      border-style: double;
+      border-width: 3px;
+      color: #081015;
+      background: radial-gradient(circle, #fff6d7 0 12%, var(--teal) 13% 38%, rgba(8, 14, 22, 0.95) 65%);
+      box-shadow: 0 0 50px rgba(139, 228, 213, 0.78);
+      animation: circle-three-arrive 1200ms cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                 portal-breathe 3.2s 1200ms ease-in-out infinite;
+    }
+
+    .portal-reaction {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 50%;
+      width: 1rem;
+      aspect-ratio: 1;
+      border: 1px solid var(--teal);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: choice-reaction 720ms ease-out forwards;
+      pointer-events: none;
+    }
+
+    .portal-status {
+      min-height: 1.4rem;
+      margin: 0.7rem 0 0;
+      color: rgba(139, 228, 213, 0.78);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .velin-chamber {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at center, rgba(139, 228, 213, 0.13), transparent 36%),
+        rgba(2, 4, 8, 0.96);
+      opacity: 0;
+      animation: chamber-materialize 1300ms ease forwards;
+    }
+
+    .velin-chamber::before {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border: 1px solid rgba(139, 228, 213, 0.16);
+      border-radius: 50%;
+      box-shadow: 0 0 90px rgba(139, 228, 213, 0.12);
+      animation: halo-spin 38s linear infinite;
+    }
+
+    .velin-book {
+      position: relative;
+      z-index: 1;
+      width: min(720px, 100%);
+      text-align: center;
+    }
+
+    .velin-book .entry-kicker {
+      margin-bottom: 0.8rem;
+      color: var(--teal);
+    }
+
+    .velin-book h2 {
+      margin: 0;
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .velin-question {
+      margin: 1rem auto 2.2rem;
+      color: var(--ink-soft);
+    }
+
+    .velin-directions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .velin-direction {
+      min-height: 8.5rem;
+      padding: 1rem 0.6rem;
+      border: 1px solid rgba(243, 190, 99, 0.3);
+      border-radius: 0;
+      color: var(--ink);
+      background: rgba(8, 12, 20, 0.76);
+      cursor: pointer;
+    }
+
+    .velin-direction:hover,
+    .velin-direction:focus-visible {
+      transform: translateY(-0.35rem);
+      border-color: var(--teal);
+      background: rgba(139, 228, 213, 0.12);
+      outline: none;
+    }
+
+    .velin-direction strong,
+    .velin-direction small {
+      display: block;
+    }
+
+    .velin-direction strong {
+      font-family: "Cinzel", Georgia, serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .velin-direction small {
+      margin-top: 0.8rem;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+
+    .velin-chamber[data-leaving="true"] .velin-book {
+      animation: choice-collapse 850ms ease forwards;
+    }
+
+    .entry-nav {
+      border: 1px solid rgba(243, 190, 99, 0.24);
+      border-radius: 22px;
+      background: var(--panel-strong);
+      padding: clamp(0.9rem, 2.2vw, 1.2rem);
+      align-self: center;
+    }
+
+    .entry-nav h2 {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: "Cinzel", Georgia, serif;
+      color: rgba(241, 206, 146, 0.96);
+    }
+
+    .entry-actions {
+      margin-top: 0.82rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.48rem;
+      margin-bottom: 0.95rem;
+    }
+
+    .entry-actions a {
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.42rem 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.66rem;
+      font-weight: 700;
+      background: rgba(255, 223, 164, 0.08);
+      transition: transform 170ms ease, background 170ms ease, color 170ms ease;
+    }
+
+    .entry-actions a:hover,
+    .entry-actions a:focus-visible {
+      background: rgba(255, 228, 173, 0.95);
+      color: #121620;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .entry-engine {
+      display: inline-block;
+      margin-top: 0.1rem;
+      text-decoration: none;
+      color: #131722;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 233, 184, 0.95);
+      background: var(--gold);
+      padding: 0.68rem 1.25rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      font-weight: 600;
+      box-shadow: 0 0 20px rgba(255, 214, 126, 0.3);
+      transition: transform 170ms ease, filter 170ms ease;
+    }
+
+    .entry-engine:hover,
+    .entry-engine:focus-visible {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    @keyframes halo-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes orbit-drift {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.01); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes orbit-breathe {
+      0%, 100% { filter: brightness(0.92); }
+      50% { filter: brightness(1.12); }
+    }
+
+    @keyframes portal-arrive {
+      from { opacity: 0; transform: translate(-50%, -50%) rotate(var(--portal-angle)) translateY(-2rem) rotate(calc(-1 * var(--portal-angle))) scale(0.1); }
+      to { opacity: 0.82; transform: translate(-50%, -50%) rotate(var(--portal-angle)) translateY(-9.2rem) rotate(calc(-1 * var(--portal-angle))) scale(1); }
+    }
+
+    @keyframes portal-breathe {
+      0%, 100% { opacity: 0.56; filter: brightness(0.8); }
+      50% { opacity: 1; filter: brightness(1.3); }
+    }
+
+    @keyframes circle-three-arrive {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.1) rotate(-180deg); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    }
+
+    @keyframes choice-reaction {
+      from { opacity: 1; width: 1rem; }
+      to { opacity: 0; width: 150%; }
+    }
+
+    @keyframes chamber-materialize {
+      from { opacity: 0; filter: blur(18px); }
+      to { opacity: 1; filter: blur(0); }
+    }
+
+    @keyframes choice-collapse {
+      to { opacity: 0; transform: scale(1.25); filter: blur(18px); }
+    }
+
+    @media (max-width: 900px) {
+      .entry-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-copy {
+        text-align: center;
+      }
+
+      .entry-mark {
+        margin: 0 auto 0.9rem;
+      }
+
+      p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .entry-orbit {
+        margin: 1rem auto 0;
+      }
+
+      .entry-nav {
+        width: 100%;
+      }
+
+      .warp-portal {
+        transform: translate(-50%, -50%) rotate(var(--portal-angle)) translateY(-8.1rem) rotate(calc(-1 * var(--portal-angle))) scale(0.1);
+      }
+
+      @keyframes portal-arrive {
+        from { opacity: 0; transform: translate(-50%, -50%) rotate(var(--portal-angle)) translateY(-2rem) rotate(calc(-1 * var(--portal-angle))) scale(0.1); }
+        to { opacity: 0.82; transform: translate(-50%, -50%) rotate(var(--portal-angle)) translateY(-8.1rem) rotate(calc(-1 * var(--portal-angle))) scale(1); }
+      }
+    }
+
+    .threshold-crossing {
+      position: relative;
+      z-index: 1;
+      min-height: 72vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(4rem, 9vw, 8rem) clamp(1rem, 5vw, 4rem);
+      border-top: 1px solid rgba(243, 190, 99, 0.18);
+      background:
+        linear-gradient(180deg, rgba(3, 4, 7, 0.24), rgba(3, 4, 7, 0.88)),
+        repeating-linear-gradient(90deg, transparent 0, transparent calc(20% - 1px), rgba(139, 228, 213, 0.06) 20%);
+      overflow: hidden;
+      max-width: none;
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .threshold-passage {
+      width: min(1120px, 100%);
+      position: relative;
+    }
+
+    .threshold-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(0.8rem, 3vw, 2rem);
+      margin-bottom: clamp(2.8rem, 7vw, 5.6rem);
+    }
+
+    .threshold-heading::before,
+    .threshold-heading::after {
+      content: "";
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(243, 190, 99, 0.72));
+    }
+
+    .threshold-heading::after {
+      transform: scaleX(-1);
+    }
+
+    .threshold-title {
+      margin: 0;
+      max-width: 14ch;
+      text-align: center;
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(1.15rem, 3vw, 2rem);
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .threshold-title span {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--teal);
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+    }
+
+    .threshold-sequence {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: clamp(0.65rem, 2vw, 1.5rem);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .threshold-sequence::before {
+      content: "";
+      position: absolute;
+      top: 1rem;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), var(--teal), var(--gold));
+      box-shadow: 0 0 18px rgba(139, 228, 213, 0.52);
+      animation: threshold-pulse 5s ease-in-out infinite;
+    }
+
+    .threshold-stage {
+      position: relative;
+      padding-top: 2.9rem;
+      text-align: center;
+    }
+
+    .threshold-stage::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: 0.63rem;
+      left: 50%;
+      width: 0.72rem;
+      aspect-ratio: 1;
+      transform: translateX(-50%) rotate(45deg);
+      border: 1px solid rgba(255, 238, 202, 0.9);
+      background: #111926;
+      box-shadow: 0 0 0 5px rgba(3, 4, 7, 0.86), 0 0 16px rgba(243, 190, 99, 0.52);
+    }
+
+    .threshold-stage:nth-child(even)::before {
+      border-color: var(--teal);
+    }
+
+    .threshold-stage strong {
+      display: block;
+      color: var(--ink);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(0.72rem, 1.4vw, 0.92rem);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .threshold-stage small {
+      display: block;
+      margin: 0.55rem auto 0;
+      max-width: 18ch;
+      color: var(--ink-soft);
+      font-size: 0.72rem;
+      line-height: 1.55;
+    }
+
+    .threshold-inscription {
+      margin: clamp(3rem, 7vw, 5rem) auto 0;
+      max-width: 52ch;
+      text-align: center;
+      color: rgba(241, 206, 146, 0.82);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(0.78rem, 1.7vw, 1rem);
+      letter-spacing: 0.06em;
+    }
+
+    @keyframes threshold-pulse {
+      0%, 100% { opacity: 0.48; filter: brightness(0.88); }
+      50% { opacity: 1; filter: brightness(1.18); }
+    }
+
+    @media (max-width: 700px) {
+      .threshold-heading {
+        grid-template-columns: 1fr;
+      }
+
+      .threshold-heading::before,
+      .threshold-heading::after {
+        width: min(220px, 70vw);
+        justify-self: center;
+      }
+
+      .threshold-sequence {
+        grid-template-columns: 1fr;
+        gap: 0;
+        width: min(340px, 100%);
+        margin: 0 auto;
+      }
+
+      .threshold-sequence::before {
+        top: 0.6rem;
+        bottom: 0.6rem;
+        left: 0.36rem;
+        right: auto;
+        width: 1px;
+        height: auto;
+        background: linear-gradient(180deg, var(--gold), var(--teal), var(--gold));
+      }
+
+      .threshold-stage {
+        min-height: 5.2rem;
+        padding: 0 0 1.7rem 2.1rem;
+        text-align: left;
+      }
+
+      .threshold-stage::before {
+        top: 0.25rem;
+        left: 0.36rem;
+      }
+
+      .threshold-stage small {
+        margin-left: 0;
+      }
+
+      .velin-directions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .threshold-sequence::before,
+      .entry-orbit,
+      .warp-portal,
+      .velin-chamber,
+      .velin-chamber::before {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="entry-shell" aria-label="Threshold hub entry">
+    <section class="entry-panel">
+      <div class="entry-copy">
+        <img class="entry-mark" src="assets/logo/threshold-logo.svg" alt="Threshold logo" loading="eager" decoding="async" />
+        <h1>Threshold Hub</h1>
+        <p class="entry-kicker">Entry Point</p>
+        <p>
+          Start from the hub. Route into the engine when you want to tune matrix waves,
+          hub energy, and field mechanics.
+        </p>
+        <div class="entry-orbit" role="button" tabindex="0" aria-label="Activate the Threshold portal field" aria-describedby="portal-status" data-state="dormant">
+          <span class="entry-core"></span>
+          <span class="entry-spoke entry-spoke-a"></span>
+          <span class="entry-spoke entry-spoke-b"></span>
+          <span class="entry-spoke entry-spoke-c"></span>
+          <span class="entry-whisper">Touch the field. See what answers.</span>
+        </div>
+        <p class="portal-status" id="portal-status" role="status" aria-live="polite">The field is listening.</p>
+      </div>
+
+      <aside class="entry-nav" aria-label="Hub routes">
+        <h2>Choose A Route</h2>
+        <nav class="entry-actions" aria-label="Threshold pages">
+          <a href="housegarden.html">House and Garden</a>
+          <a href="ethos.html">Ethos</a>
+          <a href="discover.html">Discover</a>
+          <a href="invitation.html">Invitation</a>
+          <a href="mythology.html">Mythology</a>
+          <a href="dialogues.html">Dialogues</a>
+          <a href="glyphs.html">Glyphs</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <a class="entry-engine" href="engine.html" aria-label="Enter engine mechanics">Enter Engine</a>
+      </aside>
+    </section>
+  </main>
+  <section class="threshold-crossing" aria-labelledby="threshold-crossing-title">
+    <div class="threshold-passage">
+      <header class="threshold-heading">
+        <h2 class="threshold-title" id="threshold-crossing-title">
+          <span>The Threshold Motive</span>
+          What remains still. What moves when called.
+        </h2>
+      </header>
+      <ol class="threshold-sequence">
+        <li class="threshold-stage">
+          <strong>Anchor</strong>
+          <small>The place that remains.</small>
+        </li>
+        <li class="threshold-stage">
+          <strong>Drift</strong>
+          <small>The path that changes.</small>
+        </li>
+        <li class="threshold-stage">
+          <strong>Vault</strong>
+          <small>The depth held out of sight.</small>
+        </li>
+        <li class="threshold-stage">
+          <strong>Activation</strong>
+          <small>The crossing made present.</small>
+        </li>
+        <li class="threshold-stage">
+          <strong>Recovery</strong>
+          <small>The way the system remembers.</small>
+        </li>
+      </ol>
+      <p class="threshold-inscription">The rest only exists when activated.</p>
+    </div>
+  </section>
+  <script>
+    (function () {
+      "use strict";
+
+      const orbit = document.querySelector(".entry-orbit");
+      const status = document.querySelector(".portal-status");
+      const routes = [
+        ["HG", "House and Garden", "housegarden.html"],
+        ["ET", "Ethos", "ethos.html"],
+        ["DI", "Discover", "discover.html"],
+        ["IN", "Invitation", "invitation.html"],
+        ["MY", "Mythology", "mythology.html"],
+        ["VO", "Dialogues", "dialogues.html"],
+        ["GL", "Glyphs", "glyphs.html"],
+        ["CO", "Contact", "contact.html"],
+        ["LW", "Learning Wheel", "learningwheel.html"],
+        ["EN", "Engine", "engine.html"]
+      ];
+      const directions = [
+        ["North", "Ascent", "engine.html?trek=ascent"],
+        ["South", "Depth", "mythology.html?trek=depth"],
+        ["East", "Change", "discover.html?trek=change"],
+        ["West", "Return", "index.html?trek=return"]
+      ];
+      const encountered = new Set();
+      let field;
+      let circleThree;
+      let audioContext;
+
+      function chirp(frequency, delay, duration) {
+        try {
+          audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          const starts = audioContext.currentTime + delay;
+          oscillator.type = "sine";
+          oscillator.frequency.setValueAtTime(frequency, starts);
+          gain.gain.setValueAtTime(0.0001, starts);
+          gain.gain.exponentialRampToValueAtTime(0.045, starts + 0.025);
+          gain.gain.exponentialRampToValueAtTime(0.0001, starts + duration);
+          oscillator.connect(gain).connect(audioContext.destination);
+          oscillator.start(starts);
+          oscillator.stop(starts + duration + 0.02);
+        } catch (_) {
+          // Sound is atmospheric; interaction remains complete without it.
+        }
+      }
+
+      function reaction() {
+        const ring = document.createElement("span");
+        ring.className = "portal-reaction";
+        orbit.appendChild(ring);
+        ring.addEventListener("animationend", function () { ring.remove(); });
+      }
+
+      function remember(event, value) {
+        try {
+          const memory = JSON.parse(localStorage.getItem("threshold-trek") || "{}");
+          memory[event] = value;
+          memory.lastAction = Date.now();
+          localStorage.setItem("threshold-trek", JSON.stringify(memory));
+        } catch (_) {
+          // Storage is optional on local and privacy-restricted pages.
+        }
+      }
+
+      function revealCircleThree() {
+        if (circleThree) return;
+        circleThree = document.createElement("button");
+        circleThree.type = "button";
+        circleThree.className = "warp-portal";
+        circleThree.dataset.warp = "circle-three";
+        circleThree.textContent = "III";
+        circleThree.setAttribute("aria-label", "Enter Circle 3: Veiled Shelter");
+        circleThree.addEventListener("click", enterVeiledShelter);
+        field.appendChild(circleThree);
+        status.textContent = "A path that was not there has noticed you.";
+        chirp(330, 0, 0.5);
+        chirp(495, 0.16, 0.7);
+      }
+
+      function notice(portal, index) {
+        portal.dataset.seen = "true";
+        encountered.add(index);
+        status.textContent = encountered.size < 3
+          ? "The field remembers that choice."
+          : "Three signals form a Fibonacci spoke.";
+        chirp(220 + index * 27, 0, 0.2);
+        if (encountered.size >= 3) revealCircleThree();
+      }
+
+      function choosePortal(portal, route) {
+        orbit.dataset.state = "reacting";
+        status.textContent = route[1] + " answers. The others drift.";
+        remember("concretePath", route[1]);
+        reaction();
+        chirp(196, 0, 0.22);
+        chirp(293.66, 0.1, 0.35);
+        window.setTimeout(function () { window.location.href = route[2]; }, 720);
+      }
+
+      function activateField() {
+        if (orbit.dataset.state !== "dormant") return;
+        orbit.dataset.state = "awake";
+        orbit.setAttribute("role", "group");
+        orbit.removeAttribute("tabindex");
+        orbit.setAttribute("aria-label", "Threshold portal field active");
+        field = document.createElement("span");
+        field.className = "portal-field";
+        routes.forEach(function (route, index) {
+          const portal = document.createElement("button");
+          portal.type = "button";
+          portal.className = "warp-portal";
+          portal.textContent = route[0];
+          portal.title = route[1];
+          portal.setAttribute("aria-label", "Warp to " + route[1]);
+          portal.style.setProperty("--portal-angle", (index * 36) + "deg");
+          portal.style.setProperty("--portal-delay", (index * 55) + "ms");
+          portal.addEventListener("pointerenter", function () { notice(portal, index); }, { once: true });
+          portal.addEventListener("focus", function () { notice(portal, index); }, { once: true });
+          portal.addEventListener("click", function (event) {
+            event.stopPropagation();
+            choosePortal(portal, route);
+          });
+          field.appendChild(portal);
+        });
+        orbit.appendChild(field);
+        status.textContent = "Ten concrete paths. The field may know another.";
+        reaction();
+        chirp(146.83, 0, 0.45);
+        chirp(220, 0.12, 0.55);
+        chirp(349.23, 0.28, 0.7);
+      }
+
+      function enterVeiledShelter(event) {
+        event.stopPropagation();
+        remember("fib", 3);
+        orbit.dataset.state = "reacting";
+        status.textContent = "Circle III creates Veiled Shelter.";
+        reaction();
+        chirp(261.63, 0, 0.5);
+        chirp(392, 0.25, 0.8);
+        window.setTimeout(createVelinChamber, 760);
+      }
+
+      function createVelinChamber() {
+        const chamber = document.createElement("section");
+        chamber.className = "velin-chamber";
+        chamber.setAttribute("aria-labelledby", "velin-title");
+        chamber.innerHTML = '<div class="velin-book">' +
+          '<p class="entry-kicker">Circle III · Veiled Shelter</p>' +
+          '<h2 id="velin-title">Velin opens the book.</h2>' +
+          '<p class="velin-question">The band has faded. The crickets ask: <strong>What do you choose to achieve?</strong></p>' +
+          '<div class="velin-directions"></div>' +
+          '</div>';
+        const choices = chamber.querySelector(".velin-directions");
+        directions.forEach(function (direction, index) {
+          const choice = document.createElement("button");
+          choice.type = "button";
+          choice.className = "velin-direction";
+          choice.innerHTML = "<strong>" + direction[0] + "</strong><small>" + direction[1] + "</small>";
+          choice.addEventListener("pointerenter", function () {
+            const patterns = [[523, 659], [330, 247], [392, 466], [294, 294]];
+            patterns[index].forEach(function (tone, toneIndex) { chirp(tone, toneIndex * 0.11, 0.18); });
+          });
+          choice.addEventListener("click", function () {
+            chamber.dataset.leaving = "true";
+            remember("intention", direction[1].toLowerCase());
+            remember("cycle", "gate");
+            window.setTimeout(function () { window.location.href = direction[2]; }, 850);
+          });
+          choices.appendChild(choice);
+        });
+        document.body.appendChild(chamber);
+        chamber.querySelector("button").focus();
+      }
+
+      orbit.addEventListener("click", activateField);
+      orbit.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activateField();
+        }
+      });
+    }());
+  </script>
+</body>
+</html>

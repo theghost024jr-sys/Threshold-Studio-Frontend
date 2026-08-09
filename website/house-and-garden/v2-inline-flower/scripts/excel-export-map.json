@@ -1,0 +1,215 @@
+{
+  "version": "1.0.0",
+  "root": "C:/StockMarket/data/Excel",
+  "sourcePriority": [
+    "Stability Engine v0.xlsx",
+    "Stability Engine v0.xlsm",
+    "StabilityEngine_v0_minimal.xlsx",
+    "Book 1.xlsx"
+  ],
+  "targets": [
+    {
+      "target": "data/vault-dialogues.json",
+      "sources": [
+        {
+          "workbook": "Book 1.xlsx",
+          "sheet": "Dials",
+          "columns": [
+            "Date",
+            "W_Bias",
+            "W_Momentum",
+            "W_Acceleration",
+            "W_Bias_Mean",
+            "W_Momentum_Mean",
+            "W_Accel_Mean",
+            "W_Bias_Slope"
+          ]
+        },
+        {
+          "workbook": "Book 1.xlsx",
+          "sheet": "Engine",
+          "columns": [
+            "SpotClose",
+            "WeeklyCallWall",
+            "WeeklyPutWall",
+            "MonthlyCallWall",
+            "MonthlyPutWall"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "ENGINE",
+          "columns": [
+            "Ticker",
+            "State",
+            "MomentumScore",
+            "PressureScore",
+            "ThresholdFlag",
+            "NodeType"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "AUDIT",
+          "columns": [
+            "invariant checks"
+          ]
+        }
+      ],
+      "outputSchema": [
+        "season",
+        "legacy",
+        "rootMachine",
+        "voice",
+        "meta"
+      ]
+    },
+    {
+      "target": "data/vault-mythic.json",
+      "sources": [
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "INTERACTIONS",
+          "columns": [
+            "EntityA",
+            "EntityB",
+            "InteractionType",
+            "ResultState",
+            "StabilityImpact",
+            "RoleA",
+            "RoleB",
+            "InteractionBias"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "PHYSICS",
+          "columns": [
+            "Entity",
+            "State",
+            "Energy",
+            "Stability",
+            "DecayFlag",
+            "PhaseShiftChance",
+            "Role"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "CLUSTERS",
+          "columns": [
+            "cluster labels",
+            "stability indexes",
+            "type"
+          ]
+        }
+      ],
+      "outputSchema": [
+        "spirit",
+        "legacy",
+        "meta"
+      ]
+    },
+    {
+      "target": "data/vault-glyphs.json",
+      "sources": [
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "MAP3",
+          "columns": [
+            "Node",
+            "NodeType",
+            "ConnectsTo",
+            "Status",
+            "ClusterAffinity",
+            "ClusterInertia",
+            "Cluster",
+            "ClusterMass",
+            "ClusterEnergy",
+            "ClusterPressure",
+            "ClusterType",
+            "ClusterStabilityIndex",
+            "AssignedCluster"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "TERRITORY",
+          "columns": [
+            "spatial projection fields"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "MAP2",
+          "columns": [
+            "Node",
+            "NodeType",
+            "ConnectsTo",
+            "Status"
+          ]
+        }
+      ],
+      "outputSchema": [
+        "glyphs",
+        "meta"
+      ]
+    },
+    {
+      "target": "data/vault-branches.json",
+      "sources": [
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "MAP3",
+          "columns": [
+            "Node",
+            "NodeType",
+            "ConnectsTo",
+            "Status",
+            "Cluster",
+            "ClusterType",
+            "ClusterPressure",
+            "ClusterStabilityIndex"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "MAP2",
+          "columns": [
+            "Node",
+            "NodeType",
+            "ConnectsTo",
+            "Status"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "MAP_OLD",
+          "columns": [
+            "NodeName",
+            "NodeType",
+            "ConnectsTo",
+            "Status"
+          ]
+        },
+        {
+          "workbook": "Stability Engine v0.xlsx",
+          "sheet": "TERRITORY",
+          "columns": [
+            "spatial zone and cluster projection fields"
+          ]
+        }
+      ],
+      "outputSchema": [
+        "branches",
+        "meta"
+      ]
+    }
+  ],
+  "exportOrder": [
+    "data/vault-branches.json",
+    "data/vault-glyphs.json",
+    "data/vault-mythic.json",
+    "data/vault-dialogues.json"
+  ]
+}

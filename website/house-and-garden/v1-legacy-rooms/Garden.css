@@ -1,0 +1,148 @@
+body {
+  font-family: 'Inter', sans-serif;
+  color: white;
+  margin: 0;
+  overflow: hidden;
+}
+
+#return-home {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#ui-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+}
+
+#ui-nav button {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.room {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+
+.room.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#herb-room { background: linear-gradient(#4a5f3a, #2e3f27); }
+#greenhouse { background: radial-gradient(circle, #1a2a1f, #0b120d); }
+#lagoon { background: linear-gradient(#1b2f33, #0a0f12); }
+#cave-corridor { background: linear-gradient(#0d0d0f, #1a1a1c); }
+#meadow { background: linear-gradient(#6b7a8f, #3f4a5a); }
+#shore { background: linear-gradient(#5a7fa8, #2f4f6b); }
+#camp { background: linear-gradient(#3a2f28, #1e1814); }
+
+#herb-room { background: radial-gradient(circle at bottom, #3f5f3a, #1e2f1d); }
+#greenhouse { background: radial-gradient(circle at center, #0f1f17, #07100a); }
+#lagoon { background: linear-gradient(#0f2f33, #05080a); }
+#cave-corridor { background: linear-gradient(#0a0a0c, #16161a); }
+#meadow { background: linear-gradient(#7b8fa8, #4a5568); }
+#shore { background: linear-gradient(#6a8fb8, #3a4f6b); }
+#camp { background: linear-gradient(#4a3a2a, #1e1814); }
+
+.content {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  max-width: 400px;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #fff, transparent);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.firefly-trail {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transition: opacity 0.3s;
+}
+
+.grass {
+  width: 4px;
+  height: 40px;
+  background: #7fa06b;
+  position: absolute;
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+.tide-light {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 20vh;
+  background: linear-gradient(to top, rgba(100,150,200,0.4), transparent);
+}
+
+.glow-plant {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.lore-object {
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  cursor: pointer;
+}
+
+#ocean-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% { filter: brightness(0.6); }
+  50% { filter: brightness(1.4); }
+  100% { filter: brightness(0.6); }
+}

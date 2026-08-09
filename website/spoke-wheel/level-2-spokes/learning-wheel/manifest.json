@@ -1,0 +1,91 @@
+{
+    "page":  "learningwheel",
+    "slug":  "learning-wheel",
+    "level":  "level-2-spokes",
+    "architecturalRole":  "legacy-engine",
+    "generated":  "2026-08-09",
+    "snapshots":  [
+                      {
+                          "role":  "git-history",
+                          "blob":  "326c31b5f45f1b1b5e5dd5b3b7d881fbd44a6953",
+                          "output":  "git-history/326c31b5f45f.html",
+                          "knownPath":  "threshold/core/learningwheel.html",
+                          "worktreeAliases":  [
+                                                  "threshold/core/learningwheel.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "4f6d01094980992decc12466b35af825b1fc9aa6",
+                          "output":  "git-history/4f6d01094980.html",
+                          "knownPath":  "docs/learningwheel.html",
+                          "worktreeAliases":  [
+                                                  "docs/learningwheel.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "591d71d2376d1d491695e30decc2564d1f7b1346",
+                          "output":  "git-history/591d71d2376d.html",
+                          "knownPath":  "Threshold Studio Website/ThresholdStudio/learningwheel.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "c227a274e04ca79d9cd2f07e994ea8e310619b6d",
+                          "output":  "git-history/c227a274e04c.html",
+                          "knownPath":  "website/learningwheel.html",
+                          "worktreeAliases":  [
+                                                  "website/learningwheel.html",
+                                                  "website/website constructs/learningwheel.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "d17e823fca894eca670aeef9dce5849c3d797952",
+                          "output":  "git-history/d17e823fca89.html",
+                          "knownPath":  "ThresholdStudio/learningwheel.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "f6273675ce700a4e753623c45263d8c7d94bdf78",
+                          "output":  "git-history/f6273675ce70.html",
+                          "knownPath":  "learningwheel.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "current-worker-source",
+                          "blob":  "c227a274e04ca79d9cd2f07e994ea8e310619b6d",
+                          "output":  "current/source.html",
+                          "knownPath":  "website/learningwheel.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "core-prototype",
+                          "blob":  "326c31b5f45f1b1b5e5dd5b3b7d881fbd44a6953",
+                          "output":  "core-prototype/source.html",
+                          "knownPath":  "threshold/core/learningwheel.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "legacy-construct",
+                          "blob":  "c227a274e04ca79d9cd2f07e994ea8e310619b6d",
+                          "output":  "legacy-constructs/learningwheel.html",
+                          "knownPath":  "website/website constructs/learningwheel.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      }
+                  ]
+}

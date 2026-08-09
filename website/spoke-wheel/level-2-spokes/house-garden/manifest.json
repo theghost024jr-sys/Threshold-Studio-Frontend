@@ -1,0 +1,72 @@
+{
+    "page":  "housegarden",
+    "slug":  "house-garden",
+    "level":  "level-2-spokes",
+    "architecturalRole":  "current-manifest",
+    "generated":  "2026-08-09",
+    "snapshots":  [
+                      {
+                          "role":  "git-history",
+                          "blob":  "01d4339754dea2b9e21fedae968512b510374988",
+                          "output":  "git-history/01d4339754de.html",
+                          "knownPath":  "housegarden.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "507fb8dfc84186911c2eb67959e372fbb7dc418d",
+                          "output":  "git-history/507fb8dfc841.html",
+                          "knownPath":  "ThresholdStudio/housegarden.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "59eead6fff16d0410c3a94f213dad25e3efee048",
+                          "output":  "git-history/59eead6fff16.html",
+                          "knownPath":  "Threshold Studio Website/ThresholdStudio/housegarden.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "65b91805cd5063b6447f718320877c787f9ee944",
+                          "output":  "git-history/65b91805cd50.html",
+                          "knownPath":  "docs/housegarden.html",
+                          "worktreeAliases":  [
+                                                  "docs/housegarden.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "f449ab002fc8b505c4482bb666f269ae40bec45c",
+                          "output":  "git-history/f449ab002fc8.html",
+                          "knownPath":  "threshold/core/housegarden.html",
+                          "worktreeAliases":  [
+                                                  "threshold/core/housegarden.html"
+                                              ]
+                      },
+                      {
+                          "role":  "current-worker-source",
+                          "blob":  "6b3d1a6bd493fdc079798c8252f2d76d433e1eda",
+                          "output":  "current/source.html",
+                          "knownPath":  "website/housegarden.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "core-prototype",
+                          "blob":  "f449ab002fc8b505c4482bb666f269ae40bec45c",
+                          "output":  "core-prototype/source.html",
+                          "knownPath":  "threshold/core/housegarden.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      }
+                  ]
+}

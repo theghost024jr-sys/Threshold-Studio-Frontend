@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "activationEndpoint": "/api/nodes/activate",
+  "hub": "index.html",
+  "spokes": [
+    {
+      "id": "house-garden",
+      "label": "House and Garden",
+      "entry": "housegarden.html",
+      "repository": "threshold-spoke-house-garden",
+      "bootstrapActivation": "house-garden"
+    },
+    {
+      "id": "ethos",
+      "label": "Ethos",
+      "entry": "ethos.html",
+      "repository": "threshold-spoke-ethos",
+      "bootstrapActivation": "ethos"
+    },
+    {
+      "id": "discover",
+      "label": "Discover",
+      "entry": "discover.html",
+      "repository": "threshold-spoke-discover",
+      "bootstrapActivation": "discover"
+    },
+    {
+      "id": "invitation",
+      "label": "Invitation",
+      "entry": "invitation.html",
+      "repository": "threshold-spoke-invitation",
+      "bootstrapActivation": "invitation"
+    },
+    {
+      "id": "mythology",
+      "label": "Mythology",
+      "entry": "mythology.html",
+      "repository": "threshold-spoke-mythology",
+      "bootstrapActivation": "mythology"
+    },
+    {
+      "id": "glyphs",
+      "label": "Glyphs",
+      "entry": "glyphs.html",
+      "repository": "threshold-spoke-glyphs",
+      "bootstrapActivation": "glyphs"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "entry": "contact.html",
+      "repository": "threshold-spoke-contact",
+      "bootstrapActivation": "contact"
+    },
+    {
+      "id": "engine",
+      "label": "Engine",
+      "entry": "engine.html",
+      "repository": "threshold-spoke-engine",
+      "bootstrapActivation": "engine"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+    "page":  "glyphs",
+    "slug":  "glyphs",
+    "level":  "level-2-spokes",
+    "architecturalRole":  "current-manifest",
+    "generated":  "2026-08-09",
+    "snapshots":  [
+                      {
+                          "role":  "git-history",
+                          "blob":  "0caf7d9dca23c3e6363dded2720908c5884b24c2",
+                          "output":  "git-history/0caf7d9dca23.html",
+                          "knownPath":  "glyphs.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "14e38c22a47610b4dec36d17d35a9a2fbf0c4364",
+                          "output":  "git-history/14e38c22a476.html",
+                          "knownPath":  "threshold/core/glyphs.html",
+                          "worktreeAliases":  [
+                                                  "threshold/core/glyphs.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "3fd2cdbda0d500c92afdd613d0bb4b96b5875de0",
+                          "output":  "git-history/3fd2cdbda0d5.html",
+                          "knownPath":  "website/glyphs.html",
+                          "worktreeAliases":  [
+                                                  "website/glyphs.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "4db915109bb2473c0f8ba7461e62912240d18fc9",
+                          "output":  "git-history/4db915109bb2.html",
+                          "knownPath":  "ThresholdStudio/glyphs.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "690e0f08b3787ad55d08936ec681edf8ee240f0b",
+                          "output":  "git-history/690e0f08b378.html",
+                          "knownPath":  "Threshold Studio Website/ThresholdStudio/archive/legacy_html/glyphs.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "af25c057570eedda534e92a9ff5e7d17363935b9",
+                          "output":  "git-history/af25c057570e.html",
+                          "knownPath":  "docs/glyphs.html",
+                          "worktreeAliases":  [
+                                                  "docs/glyphs.html"
+                                              ]
+                      },
+                      {
+                          "role":  "git-history",
+                          "blob":  "db729358183e540f8e13a3cf85b2fb74f8316d6e",
+                          "output":  "git-history/db729358183e.html",
+                          "knownPath":  "Threshold Studio Website/ThresholdStudio/glyphs.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "current-worker-source",
+                          "blob":  "3fd2cdbda0d500c92afdd613d0bb4b96b5875de0",
+                          "output":  "current/source.html",
+                          "knownPath":  "website/glyphs.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      },
+                      {
+                          "role":  "core-prototype",
+                          "blob":  "14e38c22a47610b4dec36d17d35a9a2fbf0c4364",
+                          "output":  "core-prototype/source.html",
+                          "knownPath":  "threshold/core/glyphs.html",
+                          "worktreeAliases":  [
+
+                                              ]
+                      }
+                  ]
+}

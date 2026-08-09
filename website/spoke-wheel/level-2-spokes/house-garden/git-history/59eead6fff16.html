@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Studio - House and Garden</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="/vault/vault.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/housegarden.css" />
+</head>
+<body class="housegarden-page vault-frame" data-vault-room="housegarden">
+  <a id='return-home' href='index.html'>Return to Home Hub</a>
+  <canvas id="gardenCanvas"></canvas>
+  <canvas id="garden-growth"></canvas>
+  <nav class="vault-chamber-surface vault-chamber-border">
+    <a class="vault-law-structural" href="index.html">Home</a>
+    <a class="vault-law-structural" href="ethos.html">Ethos</a>
+    <a class="vault-law-structural" href="glyphs.html">Glyphs</a>
+    <a class="vault-law-structural" href="learningwheel.html">Learning Wheel</a>
+    <a class="vault-law-structural" href="ledger.html">Ledger</a>
+    <a class="vault-law-structural" href="dialogues.html">Dialogues</a>
+    <a class="vault-law-structural" href="mythology.html">Mythology</a>
+    <a class="vault-law-structural" href="housegarden.html">House &amp; Garden</a>
+    <a class="vault-law-structural" href="chamber-palette-map.html">Chamber Map</a>
+    <a class="vault-law-structural" href="invitation.html">Invitation</a>
+    <a class="vault-law-structural" href="contact.html">Contact</a>
+  </nav>
+
+  <main id="flower-container" aria-label="House and Garden flower page">
+    <div id="flower-glyph" aria-hidden="true">✿</div>
+
+    <div id="flower-description">
+      <p class="flower-eyebrow">House &amp; Garden</p>
+      <h1>House &amp; Garden</h1>
+      <p>A Flower of warmth, growth, and quiet orientation.</p>
+      <p>Spirit form sourced from the Vault. Pulse aligned with the Meadow and Shore nodes.</p>
+      <p class="flower-physics">Soft ambient physics: pollen drift, leaf motes, warm dust, and gentle green static.</p>
+    </div>
+
+    <div id="flower-pulse" aria-hidden="true"></div>
+
+    <section id="room-list" aria-label="Enter the Rooms">
+      <h2>Enter the Rooms</h2>
+      <nav class="garden-navigation" aria-label="Garden navigation">
+        <button type="button" id="nav-herb">Herb Room</button>
+        <button type="button" id="nav-greenhouse">Greenhouse</button>
+        <button type="button" id="nav-lagoon">Lagoon</button>
+        <button type="button" id="nav-cave">Cave Corridor</button>
+        <button type="button" id="nav-meadow">Meadow</button>
+        <button type="button" id="nav-shore">Shore</button>
+        <button type="button" id="nav-camp">Camp</button>
+      </nav>
+    </section>
+  </main>
+
+  <section id="old-house" class="vault-chamber-surface vault-chamber-border" aria-label="Old house chamber">
+    <h2 class="old-title"></h2>
+    <p class="old-lore"></p>
+  </section>
+
+  <section id="new-house" class="vault-chamber-surface vault-chamber-border" aria-label="New house chamber">
+    <h2 class="new-title"></h2>
+    <p class="new-lore"></p>
+  </section>
+
+  <section id="garden" class="vault-chamber-surface vault-chamber-border" aria-label="Garden memory">
+    <h3>Garden Memory</h3>
+    <ul class="garden-notes"></ul>
+  </section>
+
+  <div id="garden" aria-label="Garden rooms">
+
+    <section class="room" id="herb-room">
+      <div class="content">
+        <p class="room-copy trigger">Warm herbs fill the air. The journey begins here.</p>
+      </div>
+    </section>
+    <section class="room" id="greenhouse">
+      <div class="content">
+        <p class="room-copy trigger">The plants glow softly, reacting to your presence.</p>
+        <svg class="glow-plant" width="20" height="60">
+          <ellipse cx="10" cy="30" rx="8" ry="25" fill="#4cffc3" opacity="0.6"/>
+        </svg>
+        <svg class="glow-plant" width="20" height="60">
+          <ellipse cx="10" cy="30" rx="8" ry="25" fill="#4cffc3" opacity="0.6"/>
+        </svg>
+      </div>
+    </section>
+    <section class="room" id="lagoon">
+      <div class="content">
+        <p class="room-copy trigger">Steam rises. Fireflies drift in patterns that hint at paths.</p>
+      </div>
+    </section>
+    <section class="room" id="cave-corridor"><div class="content"></div></section>
+    <section class="room" id="meadow"><div class="content"><div class="grass"></div><div class="grass"></div><canvas id="meadow-canvas"></canvas></div></section>
+    <section class="room" id="shore"><div class="content"></div></section>
+    <section class="room" id="camp">
+      <div class="content">
+        <div class="fire"></div>
+        <div id="ledger">
+          <textarea id="ledger-input" placeholder="Add your entry..."></textarea>
+          <button type="button" id="ledger-save">Save</button>
+          <div id="ledger-entries"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    House &amp; Garden is a Flower page first, with the rooms nested beneath it.
+  </footer>
+
+  <svg id="vine-layer" width="100%" height="300px" style="position:absolute; bottom:0; left:0;">
+    <path d="M100 300 C120 200, 140 150, 160 80"
+          stroke="rgba(80,180,120,0.9)"
+          stroke-width="4"
+          fill="none"
+          class="vine"/>
+  </svg>
+
+
+
+  <script src="/vault/vault.js"></script>
+  <script src="scripts/harmony-law.js"></script>
+  <script type="module" src="scripts/threshold-engine.js"></script>
+  <script src="scripts/chamber-loader.js"></script>
+  <script src="scripts/housegarden.js"></script>
+  <script src="scripts/Garden.js"></script>
+</body>
+</html>
+

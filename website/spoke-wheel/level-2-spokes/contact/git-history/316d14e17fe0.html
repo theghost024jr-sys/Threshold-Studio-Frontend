@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Studio - Contact</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="/vault/vault.css" />
+  <style>
+    .shell { max-width: 760px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+    .nav { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 0.8rem 0 1.4rem; }
+    .nav a { color: #d4af37; text-decoration: none; }
+    .panel { background: #0b3875; border: 1px solid rgba(212,175,55,0.35); border-radius: 12px; padding: 1rem; }
+    form { display: grid; gap: 0.8rem; margin-top: 0.8rem; }
+    input, textarea { width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid #d4af37; background: #f2f4f7; color: #0f1f39; }
+    button { width: fit-content; padding: 0.55rem 1rem; border: 1px solid #d4af37; border-radius: 999px; background: #002f6c; color: #d4af37; cursor: pointer; }
+  </style>
+</head>
+<body class="contact-page">
+  <a id='return-home' href='index.html'>Return to Home Hub</a>
+  <main class="shell">
+    <h1>Contact</h1>
+    <p>Reach the studio with a question, proposal, or signal from the edge of the map.</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="ethos.html">Ethos</a>
+      <a href="glyphs.html">Glyphs</a>
+      <a href="learningwheel.html">Learning Wheel</a>
+      <a href="ledger.html">Ledger</a>
+      <a href="dialogues.html">Dialogues</a>
+      <a href="mythology.html">Mythology</a>
+      <a href="housegarden.html">House &amp; Garden</a>
+      <a href="invitation.html">Invitation</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <section class="panel">
+      <h2>Send a Message</h2>
+      <form action="thankyou.html" method="GET">
+        <label for="contact-name">Name</label>
+        <input type="text" id="contact-name" name="name" required />
+
+        <label for="contact-email">Email</label>
+        <input type="email" id="contact-email" name="email" required />
+
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" rows="6" required></textarea>
+
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Threshold Studio. All glyphs, echoes, and transmissions belong to the garden that stays.</p>
+      <p>This garden honors unfinishedness.</p>
+    </footer>
+  </main>
+
+  <script src="/vault/vault.js"></script>
+  <script src="scripts/harmony-law.js"></script>
+</body>
+</html>

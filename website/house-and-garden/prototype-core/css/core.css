@@ -1,0 +1,16 @@
+:root { color-scheme: dark; font-family: Georgia, serif; background: #090b0d; color: #f4eee2; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(circle at 50% 15%, #263238, #090b0d 62%); }
+a, button { color: inherit; }
+.hub, .environment { width: min(880px, calc(100% - 2rem)); margin: 0 auto; padding: clamp(2rem, 8vw, 5rem) 0; }
+.hub img { display: block; }
+.eyebrow, .fib, .kind { color: #91d8ca; font: 700 0.72rem/1.2 sans-serif; text-transform: uppercase; }
+h1, h2 { font-weight: 500; }
+h1 { font-size: clamp(2.2rem, 8vw, 5rem); margin: 0.35rem 0 2rem; }
+.core-grid, .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.7rem; }
+.core-grid a, button { min-height: 42px; border: 1px solid #8f784b; border-radius: 4px; padding: 0.75rem; background: #191a18; text-decoration: none; }
+.core-nav { display: flex; gap: 1rem; padding: 1rem; font: 600 0.8rem sans-serif; }
+.environment header { border-left: 2px solid #d6ae60; padding-left: 1rem; }
+.content { max-width: 70ch; white-space: pre-wrap; color: #c9cfcc; line-height: 1.6; }
+.choices { margin-top: 1.5rem; }
+.status { color: #abb7b4; }

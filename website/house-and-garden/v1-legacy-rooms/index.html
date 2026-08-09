@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Garden</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Garden.css">
+</head>
+<body>
+
+<a id="return-home" href="../index.html">Return to Home Hub</a>
+
+<div id="ui-nav">
+  <button data-target="greenhouse">→ Greenhouse</button>
+  <button data-target="lagoon">→ Lagoon</button>
+  <button data-target="meadow">↑ Meadow</button>
+  <button data-target="shore">→ Shore</button>
+  <button data-target="camp">↓ Camp</button>
+</div>
+
+<div id="garden">
+
+  <section class="room" id="herb-room"><div class="content"></div></section>
+  <section class="room" id="greenhouse"><div class="content"><div class="glow-plant"></div><div class="glow-plant"></div></div></section>
+  <section class="room" id="lagoon"><div class="content"></div></section>
+  <section class="room" id="cave-corridor"><div class="content"></div></section>
+  <section class="room" id="meadow"><div class="content"><div class="grass"></div><div class="grass"></div></div></section>
+  <section class="room" id="shore"><div class="content"></div></section>
+  <section class="room" id="camp"><div class="content"><div class="lore-object" data-text="A traveler left this note: 'The storm listens.'"></div></div></section>
+
+</div>
+
+<canvas id="ocean-canvas"></canvas>
+
+<script src="Garden.js"></script>
+</body>
+</html>

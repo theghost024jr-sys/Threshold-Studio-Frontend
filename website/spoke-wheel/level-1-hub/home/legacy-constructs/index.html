@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Hub</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: serif;
+      background-color: #f5f0e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .hub-container {
+      position: relative;
+      width: 600px;
+      height: 600px;
+    }
+
+    .central-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle at 30% 30%, #fdfaf5, #e6e0d6);
+      border-radius: 50%;
+      border: 2px solid #999;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      font-size: 0.9em;
+      line-height: 1.4em;
+    }
+
+    .glyph-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      transform: translate(-50%, -50%);
+    }
+
+    .glyph {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: center;
+      width: 100px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #333;
+    }
+
+    /* Rotate each glyph evenly around the circle */
+    .glyph:nth-child(2) { transform: rotate(0deg) translate(250px) rotate(0deg); }
+    .glyph:nth-child(3) { transform: rotate(45deg) translate(250px) rotate(-45deg); }
+    .glyph:nth-child(4) { transform: rotate(90deg) translate(250px) rotate(-90deg); }
+    .glyph:nth-child(5) { transform: rotate(135deg) translate(250px) rotate(-135deg); }
+    .glyph:nth-child(6) { transform: rotate(180deg) translate(250px) rotate(-180deg); }
+    .glyph:nth-child(7) { transform: rotate(225deg) translate(250px) rotate(-225deg); }
+    .glyph:nth-child(8) { transform: rotate(270deg) translate(250px) rotate(-270deg); }
+    .glyph:nth-child(9) { transform: rotate(315deg) translate(250px) rotate(-315deg); }
+  </style>
+</head>
+<body>
+  <div class="hub-container">
+    <div class="central-circle">
+      Threshold Studio<br/>
+      is a being with in culture<br/>
+      provate’s personics<br/>
+      porcils, and every<br/>
+      contribution opens<br/>
+      a door.
+    </div>
+
+    <div class="glyph-ring">
+      <div class="glyph">Remember</div>
+      <div class="glyph">Uirfinishedness</div>
+      <div class="glyph">Echo</div>
+      <div class="glyph">Contribute</div>
+      <div class="glyph">Stay</div>
+      <div class="glyph">Refutal</div>
+      <div class="glyph">Stay</div>
+      <div class="glyph">Ache</div>
+    </div>
+  </div>
+</body>
+</html>

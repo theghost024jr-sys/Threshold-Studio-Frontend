@@ -1,0 +1,845 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Studio - Dialogues</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="/vault/vault.css" />
+  <style>
+    :root {
+      --moss: var(--vault-chamber-structural, #556B2F);
+      --white: var(--vault-chamber-body, #ffffff);
+      --dialogue-soil: #3A332B;
+      --dialogue-deep-blue: #1C2333;
+      --dialogue-soft-gold: #C9B27A;
+      --dialogue-moss: var(--moss);
+      --dialogue-moss-deep: var(--moss);
+      --dialogue-ink: var(--white);
+      --dialogue-reactive-glow: 0;
+      --dialogue-chamber-radius: 18px;
+      --dialogue-fade-time: 1s;
+    }
+
+    body.dialogues-page {
+      position: relative;
+      isolation: isolate;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 16% 10%, rgba(201, 178, 122, 0.05), transparent 26%),
+        radial-gradient(circle at 82% 20%, rgba(201, 196, 217, 0.07), transparent 28%),
+        linear-gradient(180deg, #2b2622 0%, #2f2a24 36%, var(--dialogue-soil) 66%, #322d27 100%);
+      color: var(--dialogue-ink);
+      font-family: var(--vault-room-sans, 'Manrope', system-ui, sans-serif);
+    }
+
+    body.dialogues-page::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 26px),
+        repeating-linear-gradient(120deg, rgba(44, 39, 32, 0.05) 0 1px, transparent 1px 18px),
+        radial-gradient(circle at 50% 65%, rgba(58, 51, 43, 0.2), transparent 36%);
+      mix-blend-mode: screen;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1rem 3.6rem;
+    }
+
+    nav {
+      margin: 0;
+    }
+
+    /* Threshold Color Law: white breath baseline */
+    body.dialogues-page,
+    body.dialogues-page p,
+    body.dialogues-page span,
+    body.dialogues-page div,
+    body.dialogues-page li,
+    body.dialogues-page a,
+    body.dialogues-page h1,
+    body.dialogues-page h2,
+    body.dialogues-page h3,
+    body.dialogues-page h4,
+    body.dialogues-page h5,
+    body.dialogues-page h6 {
+      color: var(--white) !important;
+    }
+
+    /* Threshold Color Law: structural/root text */
+    body.dialogues-page h1,
+    body.dialogues-page h2,
+    body.dialogues-page h3,
+    body.dialogues-page h4,
+    body.dialogues-page h5,
+    body.dialogues-page h6,
+    body.dialogues-page .header-title,
+    body.dialogues-page .section-title,
+    body.dialogues-page .dialogue-title,
+    body.dialogues-page .chamber-title,
+    body.dialogues-page .footer-title,
+    body.dialogues-page .nav-item,
+    body.dialogues-page summary,
+    body.dialogues-page .soil-band,
+    body.dialogues-page .return-band {
+      color: var(--moss) !important;
+    }
+
+    /* Threshold Color Law: breath/body text */
+    body.dialogues-page p,
+    body.dialogues-page .dialogue-body,
+    body.dialogues-page .poetic-line,
+    body.dialogues-page .paragraph,
+    body.dialogues-page .cycle-text,
+    body.dialogues-page .echo-text,
+    body.dialogues-page details p,
+    body.dialogues-page .dialogue-box p,
+    body.dialogues-page .voice-echo,
+    body.dialogues-page #dialogue-voice,
+    body.dialogues-page #dialogue-character,
+    body.dialogues-page #dialogue-season,
+    body.dialogues-page #dialogue-root,
+    body.dialogues-page footer p {
+      color: var(--white) !important;
+    }
+
+    body.dialogues-page footer p.structural-line {
+      color: var(--moss) !important;
+    }
+
+    /* Threshold Color Law: root-band navigation */
+    body.dialogues-page nav,
+    body.dialogues-page nav a,
+    body.dialogues-page nav li {
+      color: var(--moss) !important;
+    }
+
+    /* Threshold Color Law: forbid stray inline black/grey/gold text */
+    body.dialogues-page * {
+      color: var(--white);
+    }
+
+    body.dialogues-page *[style*="color:black"],
+    body.dialogues-page *[style*="color:#000"],
+    body.dialogues-page *[style*="color:#333"],
+    body.dialogues-page *[style*="color:#444"],
+    body.dialogues-page *[style*="color:#666"],
+    body.dialogues-page *[style*="color:#999"],
+    body.dialogues-page *[style*="color:grey"],
+    body.dialogues-page *[style*="color:gold"],
+    body.dialogues-page *[style*="color:#ffd700"] {
+      color: var(--moss) !important;
+    }
+
+    .dialogue-header {
+      margin: 1.15rem auto 2rem;
+      padding: 1.8rem 1.2rem;
+      border-radius: 22px;
+      border: 1px solid rgba(107, 125, 74, 0.28);
+      background:
+        linear-gradient(160deg, rgba(28, 35, 51, 0.9), rgba(42, 46, 57, 0.76)),
+        radial-gradient(circle at 50% 0%, rgba(201, 196, 217, 0.12), transparent 42%);
+      box-shadow: 0 24px 42px -30px rgba(8, 9, 14, 0.65);
+      text-align: center;
+      animation: dialogueRise var(--dialogue-fade-time) ease both;
+    }
+
+    .dialogue-glyph {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      margin-bottom: 0.72rem;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 178, 122, 0.44);
+      color: var(--dialogue-moss);
+      font-family: var(--vault-room-mono, 'Source Code Pro', monospace);
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      background: radial-gradient(circle at 50% 35%, rgba(201, 196, 217, 0.26), rgba(28, 35, 51, 0.28) 70%);
+      box-shadow: 0 8px 20px -14px rgba(8, 9, 14, 0.68);
+    }
+
+    .dialogue-header h1 {
+      margin: 0 0 0.45rem;
+      color: #ffffff;
+      font-family: var(--vault-room-serif, 'Cormorant Garamond', serif);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      text-shadow: 0 2px 14px rgba(8, 9, 14, 0.38);
+    }
+
+    .dialogue-subtitle {
+      margin: 0;
+      color: #ffffff;
+      font-family: var(--vault-room-serif, 'Cormorant Garamond', serif);
+      font-style: italic;
+      font-size: clamp(1.05rem, 2.4vw, 1.34rem);
+      line-height: 1.7;
+      animation: dialogueBreath 9s ease-in-out infinite;
+    }
+
+    .soil-band,
+    .return-band {
+      margin: 0 auto 1.2rem;
+      max-width: 900px;
+      padding: 0.72rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(201, 178, 122, 0.24);
+      background: linear-gradient(90deg, rgba(58, 51, 43, 0.44), rgba(28, 35, 51, 0.5), rgba(58, 51, 43, 0.44));
+      color: var(--dialogue-moss);
+      text-align: center;
+      font-family: var(--vault-room-mono, 'Source Code Pro', monospace);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.79rem;
+      animation: dialogueFadeIn 1.08s ease both;
+    }
+
+    .layer-stack {
+      display: grid;
+      gap: 1rem;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .dialogue-box {
+      position: relative;
+      margin: 0;
+      padding: 1.35rem 1.2rem 1.25rem;
+      border-radius: var(--dialogue-chamber-radius);
+      border: 1px solid rgba(201, 196, 217, 0.2);
+      background:
+        linear-gradient(155deg, rgba(58, 51, 43, 0.86), rgba(49, 44, 39, 0.72)),
+        radial-gradient(circle at 14% 14%, rgba(28, 35, 51, 0.14), transparent 32%),
+        radial-gradient(circle at 88% 84%, rgba(231, 228, 223, 0.05), transparent 32%);
+      box-shadow: 0 20px 40px -34px rgba(7, 7, 10, 0.7);
+      animation: dialogueRise var(--dialogue-fade-time) ease both;
+      transition: transform 420ms ease, box-shadow 420ms ease, border-color 420ms ease;
+      overflow: hidden;
+    }
+
+    .layer-stack .dialogue-box:nth-child(1) {
+      transform: translateX(-0.45rem);
+    }
+
+    .layer-stack .dialogue-box:nth-child(2) {
+      transform: translateX(0.3rem);
+    }
+
+    .layer-stack .dialogue-box:nth-child(3) {
+      transform: translateX(-0.18rem);
+    }
+
+    .dialogue-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(8deg, rgba(255, 255, 255, 0.017) 0 1px, transparent 1px 16px),
+        linear-gradient(180deg, rgba(231, 228, 223, 0.02), rgba(58, 51, 43, 0.16));
+      opacity: 0.52;
+      mix-blend-mode: screen;
+    }
+
+    .dialogue-box:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201, 178, 122, 0.34);
+      box-shadow: 0 24px 44px -34px rgba(7, 7, 10, 0.78);
+    }
+
+    .dialogue-box.is-awake {
+      border-color: rgba(201, 178, 122, 0.42);
+      box-shadow: 0 26px 48px -34px rgba(9, 11, 17, 0.84), 0 0 calc(14px * var(--dialogue-reactive-glow)) rgba(201, 196, 217, 0.26);
+    }
+
+    .dialogue-box h2 {
+      margin: 0 0 0.55rem;
+      position: relative;
+      z-index: 1;
+      color: var(--dialogue-moss);
+      font-family: var(--vault-room-serif, 'Cormorant Garamond', serif);
+      font-size: clamp(1.62rem, 3.2vw, 2.16rem);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 0 rgba(8, 9, 14, 0.35);
+      border-left: 4px solid var(--moss);
+      padding-left: 12px;
+    }
+
+    .dialogue-box h2::after {
+      content: "";
+      display: block;
+      width: 4.4rem;
+      height: 1px;
+      margin-top: 0.34rem;
+      background: linear-gradient(90deg, rgba(85, 107, 47, 0.8), rgba(201, 178, 122, 0.28));
+    }
+
+    details {
+      margin: 0.72rem 0;
+      border-radius: 12px;
+      border: 1px solid rgba(231, 228, 223, 0.14);
+      background: rgba(58, 51, 43, 0.22);
+      transition: border-color 360ms ease, background 360ms ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    details[open] {
+      border-color: rgba(201, 178, 122, 0.35);
+      background: rgba(58, 51, 43, 0.32);
+      animation: detailBloom 520ms ease both;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--dialogue-moss);
+      padding: 0.64rem 0.78rem;
+      font-family: var(--vault-room-mono, 'Source Code Pro', monospace);
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details p {
+      margin: 0 0.78rem 0.74rem;
+      color: #ffffff;
+      line-height: 1.72;
+    }
+
+    .dialogue-box p {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+      line-height: 1.74;
+    }
+
+    .voice-echo {
+      margin: 0.78rem 0 0.84rem;
+      color: #ffffff;
+      font-family: var(--vault-room-serif, 'Cormorant Garamond', serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+
+    .echo-forms {
+      margin: 1rem 0 0.6rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.72rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .echo-form {
+      border: 1px solid rgba(107, 125, 74, 0.38);
+      border-radius: 12px;
+      padding: 0.7rem 0.78rem 0.74rem;
+      background: linear-gradient(160deg, rgba(58, 51, 43, 0.5), rgba(28, 35, 51, 0.3));
+    }
+
+    .echo-form.hidden-echo {
+      opacity: 0;
+      transform: translateX(0.55rem) translateY(0.48rem) scale(0.98);
+      max-height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      border-color: rgba(107, 125, 74, 0.28);
+      background: linear-gradient(160deg, rgba(42, 39, 35, 0.48), rgba(28, 35, 51, 0.22));
+      transition: opacity 1.4s ease, transform 1.4s ease, max-height 1.4s ease, padding 1.4s ease;
+    }
+
+    .echo-form.hidden-echo.is-revealed {
+      opacity: 0.92;
+      transform: translateX(0.2rem) translateY(-0.1rem) scale(0.985);
+      max-height: 340px;
+      padding: 0.62rem 0.72rem 0.68rem;
+      pointer-events: auto;
+      animation: hiddenEchoPulse 18s ease-in-out infinite;
+    }
+
+    .echo-form h3 {
+      margin: 0 0 0.4rem;
+      font-family: var(--vault-room-serif, 'Cormorant Garamond', serif);
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .echo-form.hidden-echo h3 {
+      opacity: 0.9;
+    }
+
+    .echo-form p {
+      margin: 0;
+      line-height: 1.68;
+      font-size: 0.95rem;
+    }
+
+    .echo-form.hidden-echo p {
+      opacity: 0.85;
+    }
+
+    #dialogue-voice,
+    #dialogue-character,
+    #dialogue-season,
+    #dialogue-root {
+      margin: 0.6rem 0;
+      padding: 0.56rem 0.72rem;
+      border-radius: 10px;
+      border: 1px solid rgba(201, 196, 217, 0.2);
+      background: rgba(49, 44, 39, 0.8);
+      color: #ffffff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cycle-chamber {
+      background:
+        linear-gradient(155deg, rgba(60, 53, 46, 0.9), rgba(50, 46, 42, 0.82)),
+        radial-gradient(circle at 24% 22%, rgba(28, 35, 51, 0.12), transparent 36%);
+    }
+
+    .echo-chamber {
+      background:
+        linear-gradient(155deg, rgba(74, 67, 59, 0.88), rgba(58, 51, 43, 0.74)),
+        radial-gradient(circle at 70% 18%, rgba(201, 196, 217, 0.16), transparent 30%);
+    }
+
+    .echo-chamber::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 70% 36%, transparent 0 12%, rgba(201, 196, 217, 0.16) 12.6% 13%, transparent 13.2% 100%),
+        radial-gradient(circle at 70% 36%, transparent 0 22%, rgba(201, 196, 217, 0.12) 22.6% 23%, transparent 23.2% 100%);
+      opacity: 0.72;
+      animation: echoRipple 12s ease-in-out infinite;
+    }
+
+    .voice-echo {
+      color: #ffffff;
+    }
+
+    .return-band {
+      margin-top: 1.25rem;
+      animation-delay: 0.24s;
+      transition: border-color 420ms ease, color 420ms ease, box-shadow 420ms ease;
+    }
+
+    .return-band.is-reactive {
+      border-color: rgba(201, 178, 122, 0.42);
+      color: var(--dialogue-moss-deep);
+      box-shadow: 0 8px 22px -18px rgba(201, 196, 217, 0.5);
+    }
+
+    .dialogues-page footer {
+      margin: 2.2rem auto 0;
+      padding: 1.4rem 1rem 1.3rem;
+      max-width: 920px;
+      border-top: 1px solid rgba(107, 125, 74, 0.55);
+      color: #ffffff;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(28, 35, 51, 0.22), rgba(58, 51, 43, 0.24)),
+        linear-gradient(90deg, rgba(201, 178, 122, 0.14), rgba(201, 178, 122, 0) 26%, rgba(201, 178, 122, 0) 74%, rgba(201, 178, 122, 0.14));
+      border-radius: 16px;
+    }
+
+    .exit-nav-band {
+      margin: 1rem auto 0;
+      max-width: 920px;
+      padding: 0.72rem;
+      border-radius: 16px;
+      border: 1px solid rgba(107, 125, 74, 0.42);
+      background: linear-gradient(90deg, rgba(58, 51, 43, 0.46), rgba(28, 35, 51, 0.42), rgba(58, 51, 43, 0.46));
+    }
+
+    .exit-nav-band nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      justify-content: center;
+    }
+
+    .exit-nav-band nav a {
+      color: var(--dialogue-moss);
+      text-decoration: none;
+      border: 1px solid rgba(107, 125, 74, 0.34);
+      background: rgba(58, 51, 43, 0.5);
+      border-radius: 999px;
+      padding: 0.42rem 0.72rem;
+      font-size: 0.8rem;
+      transition: border-color 260ms ease, background 260ms ease, transform 260ms ease;
+    }
+
+    .exit-nav-band nav a:visited,
+    .exit-nav-band nav a:active,
+    .exit-nav-band nav a:focus-visible {
+      color: var(--dialogue-moss);
+    }
+
+    .exit-nav-band nav a:hover {
+      border-color: rgba(107, 125, 74, 0.68);
+      background: rgba(58, 51, 43, 0.72);
+      color: var(--dialogue-moss-deep);
+      transform: translateY(-1px);
+    }
+
+    .dialogues-page footer p {
+      margin: 0.26rem 0;
+      color: #ffffff;
+    }
+
+    .dialogues-page footer p.structural-line {
+      color: var(--dialogue-moss);
+    }
+
+    /* Lock runtime-injected season text to breath white on Dialogues. */
+    body.dialogues-page #dialogue-voice.season-fog,
+    body.dialogues-page #dialogue-voice.season-shimmer,
+    body.dialogues-page #dialogue-voice.season-storm,
+    body.dialogues-page #dialogue-voice.season-soil,
+    body.dialogues-page #dialogue-character.season-fog,
+    body.dialogues-page #dialogue-character.season-shimmer,
+    body.dialogues-page #dialogue-character.season-storm,
+    body.dialogues-page #dialogue-character.season-soil,
+    body.dialogues-page #dialogue-season.season-fog,
+    body.dialogues-page #dialogue-season.season-shimmer,
+    body.dialogues-page #dialogue-season.season-storm,
+    body.dialogues-page #dialogue-season.season-soil,
+    body.dialogues-page #dialogue-root.season-fog,
+    body.dialogues-page #dialogue-root.season-shimmer,
+    body.dialogues-page #dialogue-root.season-storm,
+    body.dialogues-page #dialogue-root.season-soil {
+      color: #ffffff;
+    }
+
+    @keyframes dialogueRise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes dialogueFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes dialogueBreath {
+      0%, 100% {
+        opacity: 0.82;
+        transform: translateY(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-1px);
+      }
+    }
+
+    @keyframes detailBloom {
+      from {
+        opacity: 0.78;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes echoRipple {
+      0%, 100% {
+        opacity: 0.58;
+      }
+      50% {
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes hiddenEchoPulse {
+      0%, 100% {
+        opacity: 0.7;
+        transform: translateX(0.2rem) translateY(-0.1rem) scale(0.985);
+      }
+      50% {
+        opacity: 1;
+        transform: translateX(0.16rem) translateY(-0.32rem) scale(0.995);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        padding: 1.5rem 0.8rem 2.8rem;
+      }
+
+      .dialogue-header {
+        padding: 1.45rem 1rem;
+      }
+
+      .dialogue-box {
+        padding: 1.1rem 0.95rem 1.02rem;
+      }
+
+      .layer-stack .dialogue-box:nth-child(1),
+      .layer-stack .dialogue-box:nth-child(2),
+      .layer-stack .dialogue-box:nth-child(3) {
+        transform: none;
+      }
+
+      .soil-band,
+      .return-band,
+      .exit-nav-band {
+        border-radius: 16px;
+        letter-spacing: 0.04em;
+      }
+
+      .exit-nav-band nav {
+        gap: 0.42rem;
+      }
+
+      .echo-forms {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="dialogues-page vault-frame" data-vault-room="dialogues">
+  <main class="shell page-enter vault-frame">
+    <header class="dialogue-header vault-chamber-surface vault-chamber-border vault-chamber-glow">
+      <span class="dialogue-glyph" aria-hidden="true">◔</span>
+      <h1 class="vault-law-structural">Dialogues</h1>
+      <p class="dialogue-subtitle vault-law-body">Words fall like seeds.<br>Some settle. Some return.</p>
+    </header>
+
+    <p class="soil-band vault-law-structural" aria-hidden="true">Voice Chamber · Leaves to Seeds</p>
+
+    <div class="layer-stack">
+      <section class="dialogue-box fade-in vault-chamber-surface vault-chamber-border" style="animation-delay: 0.08s;">
+        <h2 class="vault-law-structural">Soil Dialogues</h2>
+        <details open>
+          <summary>The First Seed</summary>
+          <p>Not from scratch. From shimmer. From ache. From the format that felt like home.</p>
+        </details>
+        <details>
+          <summary>The Stone</summary>
+          <p>It was beautiful. So we did not price it.</p>
+        </details>
+        <details>
+          <summary>The Root</summary>
+          <p>I did not need proof. I stayed.</p>
+        </details>
+      </section>
+
+      <section class="dialogue-box cycle-chamber fade-in vault-chamber-surface vault-chamber-border" style="animation-delay: 0.18s;">
+        <h2 class="vault-law-structural">Cycle Conversation</h2>
+        <p class="vault-law-body">Realization, Faith, Compost, Release, Ponder, Echo form a speaking loop. No one voice owns it; each arrival alters the pattern.</p>
+        <p class="vault-law-body">Transmission here is not broadcast. It is breath shared across seasons.</p>
+      </section>
+
+      <section class="dialogue-box echo-chamber fade-in vault-chamber-surface vault-chamber-border" style="animation-delay: 0.28s;" aria-label="Dialogues Voice Engine">
+        <h2 class="vault-law-structural">Voice Layer</h2>
+        <p class="voice-echo vault-law-body">Every voice returns changed.<br>Echo is not repetition -<br>it is memory finding soil.</p>
+
+        <div class="echo-forms" aria-label="Four Echo Forms">
+          <article class="echo-form vault-chamber-surface vault-chamber-border">
+            <h3 class="vault-law-structural">Echo of Arrival</h3>
+            <p class="vault-law-body">It returns fast.<br>It carries the warmth of the moment.<br>It remembers the shape of the first word.</p>
+          </article>
+          <article class="echo-form vault-chamber-surface vault-chamber-border">
+            <h3 class="vault-law-structural">Echo of Distance</h3>
+            <p class="vault-law-body">It returns slow.<br>It carries the weight of wandering.<br>It remembers what silence taught it.</p>
+          </article>
+          <article class="echo-form vault-chamber-surface vault-chamber-border">
+            <h3 class="vault-law-structural">Echo of Turning</h3>
+            <p class="vault-law-body">It returns different.<br>It carries the ache of transformation.<br>It remembers the moment it chose to bend.</p>
+          </article>
+          <article class="echo-form vault-chamber-surface vault-chamber-border">
+            <h3 class="vault-law-structural">Echo of Root</h3>
+            <p class="vault-law-body">It returns ready.<br>It carries the quiet of soil.<br>It remembers where it belongs.</p>
+          </article>
+          <article class="echo-form hidden-echo vault-chamber-surface vault-chamber-border" id="hiddenEcho" aria-hidden="true">
+            <h3 class="vault-law-structural">Echo Five: The Hidden Echo</h3>
+            <p class="vault-law-body">It returns quietly.<br>It carries what was never spoken.<br>It remembers the shape of absence.<br>It arrives only when the chamber is ready.</p>
+          </article>
+        </div>
+
+        <div id="dialogue-voice"></div>
+        <div id="dialogue-character"></div>
+        <div id="dialogue-season"></div>
+        <div id="dialogue-root"></div>
+      </section>
+    </div>
+
+    <p class="return-band vault-law-structural" id="returnBand" aria-hidden="true">Return Band · Echo to Vault</p>
+
+    <footer class="vault-chamber-surface vault-chamber-border">
+      <p class="vault-law-body">&copy; 2025 Threshold Studio. All glyphs, echoes, and transmissions belong to the garden that stays.</p>
+      <p class="structural-line vault-law-structural">This garden honors unfinishedness.</p>
+      <p class="structural-line vault-law-structural">This garden listens.</p>
+      <p class="structural-line vault-law-structural">This garden returns what you leave.</p>
+    </footer>
+
+    <div class="exit-nav-band vault-chamber-surface vault-chamber-border" aria-label="Exit Navigation">
+      <nav>
+        <a class="vault-law-structural" href="index.html">Home</a>
+        <a class="vault-law-structural" href="ethos.html">Ethos</a>
+        <a class="vault-law-structural" href="glyphs.html">Glyphs</a>
+        <a class="vault-law-structural" href="learningwheel.html">Learning Wheel</a>
+        <a class="vault-law-structural" href="ledger.html">Ledger</a>
+        <a class="vault-law-structural" href="dialogues.html">Dialogues</a>
+        <a class="vault-law-structural" href="mythology.html">Mythology</a>
+        <a class="vault-law-structural" href="housegarden.html">House &amp; Garden</a>
+        <a class="vault-law-structural" href="chamber-palette-map.html">Chamber Map</a>
+        <a class="vault-law-structural" href="invitation.html">Invitation</a>
+        <a class="vault-law-structural" href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </main>
+
+  <script src="/vault/vault.js"></script>
+  <script src="scripts/harmony-law.js"></script>
+  <script>
+    (function dialogueReactionLayer() {
+      const details = Array.from(document.querySelectorAll(".dialogue-box details"));
+      const chambers = Array.from(document.querySelectorAll(".dialogue-box"));
+      const returnBand = document.getElementById("returnBand");
+
+      function syncReactionState() {
+        const openCount = details.filter((item) => item.open).length;
+        const glow = Math.min(1.6, 0.5 + (openCount * 0.3));
+        document.documentElement.style.setProperty("--dialogue-reactive-glow", String(glow));
+
+        chambers.forEach((chamber, index) => {
+          if (openCount > 0 && index <= openCount - 1) {
+            chamber.classList.add("is-awake");
+          } else {
+            chamber.classList.remove("is-awake");
+          }
+        });
+
+        if (returnBand) {
+          returnBand.classList.toggle("is-reactive", openCount > 0);
+          if (openCount >= 3) {
+            returnBand.textContent = "Return Band · Seed to Root to Vault";
+          } else if (openCount === 2) {
+            returnBand.textContent = "Return Band · Stone softening into Root";
+          } else if (openCount === 1) {
+            returnBand.textContent = "Return Band · First Seed listening";
+          } else {
+            returnBand.textContent = "Return Band · Echo to Vault";
+          }
+        }
+      }
+
+      details.forEach((item) => {
+        item.addEventListener("toggle", syncReactionState);
+      });
+
+      chambers.forEach((chamber) => {
+        chamber.addEventListener("mouseenter", () => chamber.classList.add("is-awake"));
+        chamber.addEventListener("mouseleave", syncReactionState);
+      });
+
+      syncReactionState();
+    })();
+
+    function applyDialoguesRoute() {
+      function invoke() {
+        if (window.threshold && typeof window.threshold.enterDialogues === "function") {
+          window.threshold.enterDialogues();
+        }
+      }
+
+      invoke();
+      window.addEventListener("threshold:engine-ready", invoke, { once: true });
+      window.addEventListener("threshold:archive-entered", invoke);
+      window.addEventListener("threshold:harmony-update", invoke);
+      window.addEventListener("hashchange", invoke);
+      window.addEventListener("popstate", invoke);
+    }
+
+    applyDialoguesRoute();
+
+    (function hiddenEchoUnlockLayer() {
+      const hiddenEcho = document.getElementById("hiddenEcho");
+      if (!hiddenEcho) {
+        return;
+      }
+
+      const rootDetail = Array.from(document.querySelectorAll(".dialogue-box details")).find((detail) => {
+        const summary = detail.querySelector("summary");
+        return summary && summary.textContent && summary.textContent.trim().toLowerCase() === "the root";
+      });
+      const footer = document.querySelector(".dialogues-page footer");
+      let revealed = false;
+
+      function reveal(reason) {
+        if (revealed) {
+          return;
+        }
+
+        revealed = true;
+        hiddenEcho.classList.add("is-revealed");
+        hiddenEcho.setAttribute("aria-hidden", "false");
+        hiddenEcho.dataset.revealReason = reason;
+      }
+
+      if (rootDetail) {
+        rootDetail.addEventListener("toggle", () => {
+          if (rootDetail.open) {
+            reveal("root-open");
+          }
+        });
+      }
+
+      if (footer) {
+        footer.addEventListener("mouseenter", () => reveal("footer-hover"), { once: true });
+      }
+
+      window.addEventListener("scroll", () => {
+        const scrollBottom = window.scrollY + window.innerHeight;
+        const threshold = document.documentElement.scrollHeight - 26;
+        if (scrollBottom >= threshold) {
+          reveal("bottom-scroll");
+        }
+      }, { passive: true });
+
+      window.setTimeout(() => reveal("dwell-12s"), 12000);
+    })();
+  </script>
+  <script type="module" src="scripts/threshold-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Studio - Ledger</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <style>
+    .shell { max-width: 920px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+    .nav { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 0.8rem 0 1.4rem; }
+    .nav a { color: #d4af37; text-decoration: none; }
+    .block { background: #0b3875; border: 1px solid rgba(212,175,55,0.35); border-radius: 12px; padding: 1rem; margin: 1rem 0; }
+    form { display: grid; gap: 0.8rem; }
+    input, textarea { width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid #d4af37; background: #f2f4f7; color: #0f1f39; }
+    button { width: fit-content; padding: 0.55rem 1rem; border: 1px solid #d4af37; border-radius: 999px; background: #002f6c; color: #d4af37; cursor: pointer; }
+    .entry { border-top: 1px dashed rgba(212,175,55,0.5); padding-top: 0.7rem; margin-top: 0.7rem; }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <h1>Ledger of Shimmer</h1>
+    <p>Each entry is a trace: ache composted into form, vow pressed into presence.</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="ethos.html">Ethos</a>
+      <a href="glyphs.html">Glyphs</a>
+      <a href="learningwheel.html">Learning Wheel</a>
+      <a href="ledger.html">Ledger</a>
+      <a href="dialogues.html">Dialogues</a>
+      <a href="mythology.html">Mythology</a>
+      <a href="housegarden.html">House &amp; Garden</a>
+      <a href="invitation.html">Invitation</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <section class="block">
+      <h2>Press a New Entry</h2>
+      <form action="thankyou.html" method="GET">
+        <label for="name">Name or Sigil</label>
+        <input type="text" id="name" name="name" placeholder="The Tiny Dancer" required />
+
+        <label for="glyph">Glyph Name</label>
+        <input type="text" id="glyph" name="glyph" placeholder="The Clasp That Refused to Break" required />
+
+        <label for="description">Shimmer Trace</label>
+        <textarea id="description" name="description" rows="5" placeholder="What changed, what held, what returned." required></textarea>
+
+        <button type="submit">Record Entry</button>
+      </form>
+    </section>
+
+    <section class="block">
+      <h2>Recent Echoes</h2>
+      <div class="entry"><strong>The Vow That Asked Nothing but Stayed</strong><p>I did not need proof. I stayed.</p></div>
+      <div class="entry"><strong>The Fracture That Became a Frame</strong><p>It broke. And then it held.</p></div>
+      <div class="entry"><strong>The Shimmer That Refused to Sell</strong><p>It was beautiful. So we did not price it.</p></div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Threshold Studio. All glyphs, echoes, and transmissions belong to the garden that stays.</p>
+      <p>This garden honors unfinishedness.</p>
+    </footer>
+  </main>
+
+  <script src="scripts/harmony-law.js"></script>
+  <script type="module" src="scripts/threshold-engine.js"></script>
+</body>
+</html>

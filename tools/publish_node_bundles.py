@@ -326,7 +326,7 @@ def build_bundles(
 def parse_args() -> argparse.Namespace:
     root = Path(__file__).resolve().parent.parent
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--archive", type=Path, default=root / "vault-archive.json")
+    parser.add_argument("--archive", type=Path, required=True)
     parser.add_argument("--topology", type=Path, default=root / "tools" / "fib-topology.json")
     parser.add_argument("--asset-root", type=Path, default=root / "website" / "assets" / "vault")
     parser.add_argument("--output", type=Path, default=root / ".node-bundles")

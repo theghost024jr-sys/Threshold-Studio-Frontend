@@ -1,0 +1,81 @@
+@layer threshold.foundation, threshold.atmosphere, threshold.topology, threshold.interaction, threshold.restraint;
+
+@layer threshold.foundation {
+  body[data-complexity] {
+    overflow-x: hidden;
+  }
+
+  body[data-complexity] :where(main, section, article, nav, header, footer, div) {
+    min-width: 0;
+  }
+
+  body[data-complexity] :where(img, svg, canvas, video) {
+    max-width: 100%;
+  }
+}
+
+@layer threshold.atmosphere {
+  body[data-complexity~="atmosphere"] {
+    --threshold-atmosphere-opacity: 1;
+  }
+
+  body[data-complexity~="editorial"] {
+    --threshold-reading-width: 68ch;
+  }
+}
+
+@layer threshold.topology {
+  body[data-complexity~="topology"] :where([data-destination-layer], #archive, .hub-shell, #flower-container) {
+    isolation: isolate;
+  }
+}
+
+@layer threshold.interaction {
+  body[data-complexity~="interaction"] :where(button, a, input, textarea, select):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+@layer threshold.restraint {
+  @media (max-width: 720px) {
+    .hub-page :where(.hub-connection-layer, .hub-shell) {
+      max-width: 100vw;
+      overflow: hidden;
+    }
+  }
+
+  body[data-motion="bounded"] :where(
+    .entry-core,
+    .entry-orbit,
+    #flower-pulse,
+    .hub-core,
+    .hub-node,
+    .hub-node-pulse,
+    .weather-particle,
+    .mythology-pulse
+  ) {
+    --pulse-scale: 1;
+    animation-timing-function: linear;
+  }
+
+  body[data-motion="bounded"] :where(.entry-core, #flower-pulse, .hub-node-pulse, .mythology-pulse) {
+    scale: 1 !important;
+  }
+
+  body[data-motion="bounded"] :where(.entry-core, #flower-pulse, .hub-node-pulse, .mythology-pulse)::before,
+  body[data-motion="bounded"] :where(.entry-core, #flower-pulse, .hub-node-pulse, .mythology-pulse)::after {
+    scale: 1 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body[data-complexity] *,
+    body[data-complexity] *::before,
+    body[data-complexity] *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

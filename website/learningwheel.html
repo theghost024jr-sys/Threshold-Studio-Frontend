@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning Wheel - Threshold Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="styles/learning-wheel.css" />
+  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+  <link rel="stylesheet" href="styles/complexity-layers.css" />
+</head>
+<body class="learning-wheel-page" data-threshold-spoke="learning-wheel" data-complexity="foundation atmosphere topology interaction simulation" data-motion="bounded" data-season="spring">
+  <header class="wheel-site-header">
+    <a class="wheel-brand" href="index.html">
+      <img src="assets/logo/threshold-logo.svg" alt="" />
+      <span>Threshold Studio</span>
+    </a>
+    <nav aria-label="Learning Wheel navigation">
+      <a href="index.html">Hub</a>
+      <a href="housegarden.html">House &amp; Garden</a>
+      <a href="dialogues.html">Dialogues</a>
+    </nav>
+  </header>
+
+  <div class="wheel-weather" aria-hidden="true">
+    <span class="weather-fog"></span>
+    <span class="weather-ocean"></span>
+    <span class="weather-storm"></span>
+    <span class="weather-soil"></span>
+  </div>
+
+  <main class="learning-wheel-main">
+    <header class="wheel-heading">
+      <p>Seasonal learning system</p>
+      <h1>Learning Wheel</h1>
+      <blockquote>The ritual calendar of collapse, compost, clarity, and shimmer.</blockquote>
+    </header>
+
+    <section class="wheel-layout" aria-label="Seasonal Learning Wheel">
+      <aside class="season-notes season-notes-left">
+        <button class="season-note" type="button" data-season-choice="spring">
+          <span>Spring / Fog</span>
+          <strong>Learning begins in mist.</strong>
+        </button>
+        <button class="season-note" type="button" data-season-choice="winter">
+          <span>Winter / Soil</span>
+          <strong>Integration is compost.</strong>
+        </button>
+      </aside>
+
+      <div class="learning-wheel" id="learningWheel">
+        <div class="wheel-disc" id="wheelDisc">
+          <button class="season-sector season-spring" type="button" data-season-choice="spring"><span>Fog</span></button>
+          <button class="season-sector season-summer" type="button" data-season-choice="summer"><span>Ocean</span></button>
+          <button class="season-sector season-autumn" type="button" data-season-choice="autumn"><span>Storm</span></button>
+          <button class="season-sector season-winter" type="button" data-season-choice="winter"><span>Soil</span></button>
+          <span class="wheel-ring wheel-ring-one"></span>
+          <span class="wheel-ring wheel-ring-two"></span>
+          <span class="wheel-ring wheel-ring-three"></span>
+          <div class="wheel-core"><span>Cycle</span></div>
+        </div>
+      </div>
+
+      <aside class="season-notes season-notes-right">
+        <button class="season-note" type="button" data-season-choice="summer">
+          <span>Summer / Ocean</span>
+          <strong>Growth arrives like tide.</strong>
+        </button>
+        <button class="season-note" type="button" data-season-choice="autumn">
+          <span>Autumn / Storm</span>
+          <strong>Collapse is weather.</strong>
+        </button>
+      </aside>
+    </section>
+
+    <section class="wheel-readout" aria-live="polite">
+      <div><span>Season</span><strong id="wheelSeason">Spring</strong></div>
+      <div><span>Direction</span><strong id="wheelDirection">Drift</strong></div>
+      <div><span>Pulse</span><strong id="wheelPulse">Soft</strong></div>
+      <div><span>Weather</span><strong id="wheelWeather">Fog</strong></div>
+    </section>
+
+    <section class="season-portals" aria-labelledby="seasonPortalsTitle">
+      <header>
+        <p>Revealed by rotation</p>
+        <h2 id="seasonPortalsTitle">Seasonal Portals</h2>
+      </header>
+      <div class="portal-row">
+        <button type="button" data-season-portal="spring">Sprout Gallery</button>
+        <button type="button" data-season-portal="summer">Shimmer Chamber</button>
+        <button type="button" data-season-portal="autumn">Collapse Lore</button>
+        <button type="button" data-season-portal="winter">Soil Archive</button>
+      </div>
+      <p id="wheelStatus">Choose a season to turn the wheel.</p>
+    </section>
+
+    <dialog class="season-dialog" id="seasonDialog">
+      <button class="season-dialog-close" type="button" aria-label="Close seasonal portal">Close</button>
+      <p id="seasonDialogKicker"></p>
+      <h2 id="seasonDialogTitle"></h2>
+      <p id="seasonDialogBody"></p>
+    </dialog>
+  </main>
+
+  <footer class="wheel-footer">
+    <span>Threshold Studio</span>
+    <span>The wheel returns what the season teaches.</span>
+  </footer>
+
+  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/spoke-tabs.js"></script>
+  <script type="module" src="scripts/learning-wheel.js"></script>
+  <script type="module" src="scripts/destination-page.js"></script>
+</body>
+</html>

@@ -59,7 +59,7 @@ if (routeLinks.length) {
           link.dataset.fibonacciSpoke,
           link.dataset.fibonacciPath
         );
-        link.href = buildFibonacciUrl(lineage);
+        link.href = buildFibonacciUrl(lineage, link.getAttribute("href"));
         link.addEventListener("click", () => {
           sessionStorage.setItem("threshold.fibonacci.lineage", JSON.stringify(lineage));
         });

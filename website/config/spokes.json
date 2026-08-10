@@ -20,6 +20,13 @@
       "bootstrapActivation": "ethos"
     },
     {
+      "id": "learning-wheel",
+      "label": "Learning Wheel",
+      "entry": "learningwheel.html",
+      "repository": "threshold-spoke-learning-wheel",
+      "bootstrapActivation": "learning-wheel"
+    },
+    {
       "id": "discover",
       "label": "Discover",
       "entry": "discover.html",

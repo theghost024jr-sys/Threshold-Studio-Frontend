@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "sequence": [13, 8, 5, 3, 2, 1],
+  "directions": {
+    "inward": "13 -> 8 -> 5 -> 3 -> 2 -> 1",
+    "outward": "1 -> 2 -> 3 -> 5 -> 8 -> 13"
+  },
+  "complexity": {
+    "13": "entry",
+    "8": "full-expression",
+    "5": "emerging-clarity",
+    "3": "basic-2.5d",
+    "2": "intimate",
+    "1": "core"
+  },
+  "spokes": {
+    "house-garden": {
+      "fib": 8,
+      "children": ["root-archive", "lantern-pedal"]
+    },
+    "ethos": {
+      "fib": 8,
+      "children": ["root-archive", "lantern-vault"]
+    },
+    "learning-wheel": {
+      "fib": 8,
+      "children": ["seasonal-alcove"]
+    },
+    "discover": {
+      "fib": 8,
+      "children": []
+    },
+    "invitation": {
+      "fib": 8,
+      "children": []
+    },
+    "mythology": {
+      "fib": 8,
+      "children": ["fracture-pedal"]
+    },
+    "glyphs": {
+      "fib": 8,
+      "children": []
+    },
+    "dialogues": {
+      "fib": 8,
+      "children": []
+    },
+    "ledger": {
+      "fib": 8,
+      "children": []
+    },
+    "contact": {
+      "fib": 8,
+      "children": []
+    },
+    "engine": {
+      "fib": 8,
+      "children": []
+    }
+  },
+  "nodes": {
+    "root-archive": {
+      "fib": 5,
+      "label": "Root Archive",
+      "kind": "gallery",
+      "parents": ["house-garden", "ethos"],
+      "children": [],
+      "content": {
+        "excerpt": "Foundational vows, first fragments, and origin lines.",
+        "body": "Revealed after hovering five unique glyphs and revisiting once."
+      }
+    },
+    "lantern-pedal": {
+      "fib": 5,
+      "label": "Lantern Pedal",
+      "kind": "pedal",
+      "parents": ["house-garden"],
+      "children": ["lantern-vault"],
+      "content": {
+        "excerpt": "The House and Garden path into the Lantern Vault."
+      }
+    },
+    "lantern-vault": {
+      "fib": 3,
+      "fibByParent": {
+        "ethos": 5,
+        "lantern-pedal": 3
+      },
+      "label": "Lantern Vault",
+      "kind": "gallery",
+      "parents": ["lantern-pedal", "ethos"],
+      "children": [],
+      "content": {
+        "excerpt": "Quiet lore cards, care protocols, and return instructions.",
+        "body": "Revealed after a long hover over three glyphs in one session."
+      }
+    },
+    "seasonal-alcove": {
+      "fib": 5,
+      "label": "Seasonal Alcove",
+      "kind": "gallery",
+      "parents": ["learning-wheel"],
+      "children": ["storm-cabinet"],
+      "content": {
+        "excerpt": "Fog, ocean, storm, and soil fragments with unique visuals.",
+        "body": "Revealed after triggering one seasonal event in all four seasons."
+      }
+    },
+    "fracture-pedal": {
+      "fib": 5,
+      "label": "Fracture Pedal",
+      "kind": "pedal",
+      "parents": ["mythology"],
+      "children": ["storm-cabinet"],
+      "content": {
+        "excerpt": "The Mythology path into remapped fracture lore."
+      }
+    },
+    "storm-cabinet": {
+      "fib": 3,
+      "label": "Storm Cabinet",
+      "kind": "gallery",
+      "parents": ["seasonal-alcove", "fracture-pedal"],
+      "children": [],
+      "content": {
+        "excerpt": "Fracture myths, refusal stories, and remapped paths.",
+        "body": "Revealed after double-clicking two glyphs and triggering one rare event."
+      }
+    }
+  }
+}

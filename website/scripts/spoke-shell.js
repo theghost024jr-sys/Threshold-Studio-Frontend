@@ -254,6 +254,7 @@ import {
   }
 
   function renderNode(node, displayFib, displayLevel) {
+    const children = Array.isArray(node.children) ? node.children : [];
     activeFib = displayFib;
     activeLevel = displayLevel;
     nodeShell.hidden = false;
@@ -265,7 +266,7 @@ import {
       ? summarizeComponents(node.components)
       : summarize(node.content);
     choicesNode.replaceChildren();
-    (node.choices || []).forEach(function (choice) {
+    children.forEach(function (choice) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "spoke-node-choice";
@@ -276,7 +277,7 @@ import {
       choicesNode.appendChild(button);
     });
     backButton.hidden = history.length === 0;
-    statusNode.textContent = (node.choices || []).length
+    statusNode.textContent = children.length
       ? "Only the immediate choices below have been revealed."
       : activeLevel && activeLevel.crowned
         ? "Fib " + activeFib + " crowned."
@@ -291,10 +292,11 @@ import {
       let thresholdPass = null;
       let nextLevel = activeLevel;
       if (previous && moveInward) {
+        const previousChildren = Array.isArray(previous.children) ? previous.children : [];
         const completed = updateLevelState(activeLevel, { choice: choiceId });
         const crowned = crownLevel(completed);
         thresholdPass = createThresholdPass(crowned);
-        const versions = (previous.choices || []).map((choice) => String(choice.id));
+        const versions = previousChildren.map((choice) => String(choice.id));
         nextLevel = createRuntimeLevel(
           displayFib,
           versions,
@@ -316,11 +318,12 @@ import {
         }));
       }
       if (thresholdPass) {
+        const previousChildren = Array.isArray(previous.children) ? previous.children : [];
         nextLevel = createRuntimeLevel(
           displayFib,
-          (previous.choices || []).map((choice) => String(choice.id)),
+          previousChildren.map((choice) => String(choice.id)),
           String(choiceId),
-          (node.choices || []).length > 0
+          Array.isArray(node.children) && node.children.length > 0
         );
       }
       if (previous) {

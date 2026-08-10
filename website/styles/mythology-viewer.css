@@ -1,0 +1,19 @@
+@import url("styles.css");
+
+.mythology-shell,
+.mythology-panel,
+.mythology-grid,
+.mythology-card {
+  border-color: var(--line);
+}
+
+.mythology-panel,
+.mythology-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mythology-card {
+  padding: 0.9rem;
+}

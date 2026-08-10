@@ -49,7 +49,7 @@ jobs:
           repository: ${{ vars.NODE_SOURCE_REPOSITORY }}
           token: ${{ secrets.NODE_SOURCE_TOKEN }}
           ref: ${{ vars.NODE_SOURCE_REF || 'main' }}
-          path: .node-source
+          path: .node-source/ThresholdStudio
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"

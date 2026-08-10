@@ -1,4 +1,11 @@
-import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
+import {
+  createLevelState,
+  createThresholdPass,
+  crownLevel,
+  nextFibonacciFib,
+  readFibonacciLineage,
+  updateLevelState
+} from "./fibonacci-routing.js";
 
 (function () {
   "use strict";
@@ -20,6 +27,41 @@ import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
   const history = [];
   let spoke = null;
   let activeFib = routeLineage ? routeLineage.fib : 8;
+  let activeLevel = null;
+
+  function createRuntimeLevel(fib, versions, version, hasChoices) {
+    const validVersions = versions.length ? versions : [version];
+    const level = createLevelState({
+      fib,
+      versions: validVersions,
+      version,
+      fields: ["version", "choice", "shimmer"],
+      required: hasChoices ? ["version", "choice"] : ["version"],
+      pass: ["version", "choice"],
+      state: { shimmer: false }
+    });
+    return hasChoices ? level : crownLevel(level);
+  }
+
+  async function loadInitialVersions() {
+    if (!routeLineage) {
+      return [spokeId];
+    }
+    try {
+      const response = await fetch("config/fibonacci-routes.json", { cache: "no-store" });
+      if (!response.ok) {
+        return [routeLineage.version];
+      }
+      const config = await response.json();
+      const configured = config.spokes && config.spokes[spokeId];
+      const versions = (configured && configured.routes || [])
+        .filter((route) => route.targetFib === routeLineage.fib)
+        .map((route) => route.version);
+      return versions.length ? versions : [routeLineage.version];
+    } catch {
+      return [routeLineage.version];
+    }
+  }
 
   function summarize(content) {
     if (!content) {
@@ -39,11 +81,9 @@ import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
     }).join("\n\n");
   }
 
-  function renderNode(node, pushHistory, displayFib) {
-    if (pushHistory && window.ThresholdNodes.getActiveNode()) {
-      history.push({ node: window.ThresholdNodes.getActiveNode(), fib: activeFib });
-    }
-    activeFib = displayFib || activeFib;
+  function renderNode(node, displayFib, displayLevel) {
+    activeFib = displayFib;
+    activeLevel = displayLevel;
     nodeShell.hidden = false;
     enterButton.hidden = true;
     fibNode.textContent = "Fib " + String(activeFib);
@@ -66,7 +106,9 @@ import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
     backButton.hidden = history.length === 0;
     statusNode.textContent = (node.choices || []).length
       ? "Only the immediate choices below have been revealed."
-      : "This is the active depth node.";
+      : activeLevel && activeLevel.crowned
+        ? "Fib " + activeFib + " crowned."
+        : "This is the active depth node.";
   }
 
   async function activate(token, choiceId, moveInward) {
@@ -74,16 +116,46 @@ import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
     try {
       const previous = window.ThresholdNodes.getActiveNode();
       const displayFib = previous && moveInward ? nextFibonacciFib(activeFib) : activeFib;
+      let thresholdPass = null;
+      let nextLevel = activeLevel;
+      if (previous && moveInward) {
+        const completed = updateLevelState(activeLevel, { choice: choiceId });
+        const crowned = crownLevel(completed);
+        thresholdPass = createThresholdPass(crowned);
+        const versions = (previous.choices || []).map((choice) => String(choice.id));
+        nextLevel = createRuntimeLevel(
+          displayFib,
+          versions,
+          String(choiceId),
+          false
+        );
+        window.dispatchEvent(new CustomEvent("threshold:level-crowned", {
+          detail: { fib: crowned.fib, state: crowned.state }
+        }));
+      }
       const node = await window.ThresholdNodes.activate({
         spokeId,
         token,
         choiceId,
-        lineage: routeLineage
+        pass: thresholdPass
       });
-      if (previous) {
-        history.push({ node: previous, fib: activeFib });
+      if (thresholdPass) {
+        nextLevel = createRuntimeLevel(
+          displayFib,
+          (previous.choices || []).map((choice) => String(choice.id)),
+          String(choiceId),
+          (node.choices || []).length > 0
+        );
       }
-      renderNode(node, false, displayFib);
+      if (previous) {
+        history.push({ node: previous, fib: activeFib, level: activeLevel });
+      }
+      renderNode(node, displayFib, nextLevel);
+      if (thresholdPass) {
+        window.dispatchEvent(new CustomEvent("threshold:level-passed", {
+          detail: thresholdPass
+        }));
+      }
     } catch (error) {
       statusNode.textContent = error instanceof Error ? error.message : "Activation failed";
     }
@@ -94,7 +166,7 @@ import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
     if (!previous) {
       return;
     }
-    renderNode(previous.node, false, previous.fib);
+    renderNode(previous.node, previous.fib, previous.level);
   });
 
   enterButton.addEventListener("click", function () {
@@ -104,8 +176,13 @@ import { nextFibonacciFib, readFibonacciLineage } from "./fibonacci-routing.js";
     activate(spoke.bootstrapActivation, routeChoice);
   });
 
-  window.ThresholdNodes.resolveSpoke(spokeId).then(function (resolved) {
+  Promise.all([
+    window.ThresholdNodes.resolveSpoke(spokeId),
+    loadInitialVersions()
+  ]).then(function ([resolved, versions]) {
     spoke = resolved;
+    const version = routeLineage ? routeLineage.version : spoke.id;
+    activeLevel = createRuntimeLevel(activeFib, versions, version, true);
     body.dataset.thresholdSpoke = spoke.id;
     document.title = spoke.label + " - Threshold";
     titleNode.textContent = spoke.label;

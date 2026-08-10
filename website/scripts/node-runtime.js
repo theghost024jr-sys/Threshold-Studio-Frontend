@@ -60,7 +60,7 @@
         spoke: spokeId,
         activation: token,
         choice: options && options.choiceId ? String(options.choiceId) : null,
-        lineage: options && options.lineage ? options.lineage : null
+        pass: options && options.pass ? options.pass : null
       })
     });
     if (!response.ok) {

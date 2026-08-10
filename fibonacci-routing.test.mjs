@@ -10,6 +10,7 @@ import {
   createThresholdPass,
   crownLevel,
   FIBONACCI_SEQUENCE,
+  navigateSettlingZone,
   nextFibonacciFib,
   readFibonacciLineage,
   rotateLevel,
@@ -26,6 +27,14 @@ function level(overrides = {}) {
     required: ["version", "choice"],
     pass: ["version", "choice"],
     state: { shimmer: false },
+    ...overrides
+  });
+}
+
+function settlingLevel(overrides = {}) {
+  return level({
+    fields: ["version", "choice", "shimmer", "stays"],
+    state: { choice: "snail", shimmer: true, stays: 0 },
     ...overrides
   });
 }
@@ -122,4 +131,50 @@ test("passes only the whitelisted final state to the next level", () => {
   });
   assert.equal(canShimmer(crowned), true);
   assert.equal("shimmer" in createThresholdPass(crowned).state, false);
+});
+
+test("keeps east and west inside the settling zone", () => {
+  const east = navigateSettlingZone(settlingLevel(), "east");
+  assert.equal(east.action, "lateral");
+  assert.equal(east.level.fib, 8);
+  assert.equal(east.level.state.version, "v2-black-shapers");
+  assert.equal(east.relic.direction, "east");
+
+  const west = navigateSettlingZone(settlingLevel(), "west");
+  assert.equal(west.level.fib, 8);
+  assert.equal(west.level.state.version, "v3-vines");
+  assert.equal(west.relic.direction, "west");
+});
+
+test("makes staying local and leaves no relic", () => {
+  const result = navigateSettlingZone(settlingLevel(), "stay");
+  assert.equal(result.action, "stay");
+  assert.equal(result.level.state.stays, 1);
+  assert.equal(result.relic, null);
+  assert.equal(result.seed, null);
+});
+
+test("compresses a return into a hub seed and relic", () => {
+  const result = navigateSettlingZone(settlingLevel(), "south");
+  assert.equal(result.action, "return");
+  assert.deepEqual(result.seed, {
+    kind: "return",
+    fromFib: 8,
+    state: {
+      version: "v1-green-box",
+      choice: "snail",
+      shimmer: true,
+      stays: 0
+    },
+    relic: result.relic
+  });
+  assert.equal("vault" in result.seed.state, false);
+});
+
+test("limits settling navigation to Fib 5-8", () => {
+  assert.equal(navigateSettlingZone(settlingLevel({ fib: 5 }), "north").action, "proceed");
+  assert.throws(
+    () => navigateSettlingZone(settlingLevel({ fib: 3 }), "stay"),
+    /only in Fib 5-8/
+  );
 });

@@ -24,7 +24,9 @@ h2 { font-size: clamp(1.45rem, 4vw, 2.5rem); }
 
 .spoke-enter,
 .spoke-back,
-.spoke-node-choice {
+.spoke-node-choice,
+.spoke-card-close,
+.spoke-zone-grid button {
   min-height: 40px;
   border: 1px solid rgba(224, 184, 102, 0.55);
   border-radius: 4px;
@@ -43,4 +45,51 @@ h2 { font-size: clamp(1.45rem, 4vw, 2.5rem); }
 .spoke-node-choice:hover,
 .spoke-node-choice:focus-visible,
 .spoke-enter:hover,
-.spoke-enter:focus-visible { border-color: #8be4d5; outline: none; background: rgba(139, 228, 213, 0.1); }
+.spoke-enter:focus-visible,
+.spoke-card-close:hover,
+.spoke-card-close:focus-visible,
+.spoke-zone-grid button:hover,
+.spoke-zone-grid button:focus-visible { border-color: #8be4d5; outline: none; background: rgba(139, 228, 213, 0.1); }
+
+.spoke-card {
+  width: min(620px, calc(100% - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  border: 1px solid rgba(224, 184, 102, 0.55);
+  border-radius: 6px;
+  background: #0d1318;
+  color: #f5efe3;
+  padding: clamp(1.25rem, 5vw, 2rem);
+}
+
+.spoke-card::backdrop { background: rgba(3, 6, 9, 0.82); }
+.spoke-card-close { float: right; width: 40px; padding: 0; font-size: 1.4rem; }
+.spoke-card-version { margin: 0; color: #8be4d5; font-size: 0.72rem; text-transform: uppercase; }
+.spoke-card-image { display: block; width: 100%; max-height: 300px; margin-top: 1rem; object-fit: contain; background: #070a10; }
+.spoke-card-image[hidden] { display: none; }
+.spoke-card-story { margin-top: 1rem; color: rgba(235, 239, 237, 0.82); line-height: 1.55; white-space: pre-wrap; }
+.spoke-card-status { min-height: 1.5rem; margin: 1rem 0 0; color: #8be4d5; }
+
+.spoke-zone-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(72px, 1fr));
+  grid-template-areas:
+    ". north ."
+    "west stay east"
+    ". south .";
+  gap: 0.5rem;
+  width: min(100%, 360px);
+  margin: 1.5rem auto 0;
+}
+
+.spoke-zone-grid button { min-height: 48px; }
+.spoke-zone-north { grid-area: north; }
+.spoke-zone-south { grid-area: south; }
+.spoke-zone-east { grid-area: east; }
+.spoke-zone-west { grid-area: west; }
+.spoke-zone-stay { grid-area: stay; border-color: rgba(139, 228, 213, 0.7); }
+
+@media (max-width: 480px) {
+  .spoke-node-heading { align-items: stretch; flex-direction: column; }
+  .spoke-zone-grid { grid-template-columns: repeat(3, minmax(64px, 1fr)); }
+}

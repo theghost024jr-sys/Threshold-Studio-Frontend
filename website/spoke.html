@@ -27,6 +27,22 @@
       <div class="spoke-node-choices" data-node-choices></div>
     </section>
 
+    <dialog class="spoke-card" data-zone-card aria-labelledby="spoke-card-title">
+      <button type="button" class="spoke-card-close" data-card-close aria-label="Close card" autofocus>&times;</button>
+      <p class="spoke-card-version" data-card-version></p>
+      <h2 id="spoke-card-title" data-card-title></h2>
+      <img class="spoke-card-image" data-card-image alt="" hidden />
+      <div class="spoke-card-story" data-card-story></div>
+      <nav class="spoke-zone-grid" data-zone-grid aria-label="Fib zone movement">
+        <button type="button" class="spoke-zone-north" data-zone-direction="north">North</button>
+        <button type="button" class="spoke-zone-west" data-zone-direction="west">West</button>
+        <button type="button" class="spoke-zone-stay" data-zone-direction="stay">Stay</button>
+        <button type="button" class="spoke-zone-east" data-zone-direction="east">East</button>
+        <button type="button" class="spoke-zone-south" data-zone-direction="south">South</button>
+      </nav>
+      <p class="spoke-card-status" data-card-status role="status"></p>
+    </dialog>
+
     <button type="button" class="spoke-enter" data-spoke-enter>Enter Spoke</button>
   </main>
 

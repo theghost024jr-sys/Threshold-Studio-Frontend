@@ -14,7 +14,16 @@
     "rotationScope": "current-level-versions",
     "crownRule": "required-fields-complete",
     "thresholdPass": "whitelisted-final-state-only",
-    "shimmerRule": "explicit-and-crown-gated"
+    "shimmerRule": "explicit-and-crown-gated",
+    "settlingZone": [8, 5],
+    "navigation": {
+      "north": "proceed",
+      "south": "return-with-seed",
+      "east": "lateral-next-version",
+      "west": "lateral-previous-version",
+      "stay": "cultivate-current-biome"
+    },
+    "relicRule": "leave-on-movement-never-on-stay"
   },
   "spokes": {
     "house-garden": {

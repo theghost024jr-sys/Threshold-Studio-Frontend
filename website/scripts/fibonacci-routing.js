@@ -1,4 +1,6 @@
 const FIBONACCI_SEQUENCE = Object.freeze([13, 8, 5, 3, 2, 1]);
+const SETTLING_FIBS = Object.freeze([8, 5]);
+const ZONE_DIRECTIONS = Object.freeze(["north", "south", "east", "west", "stay"]);
 
 function assertSequence(config) {
   const sequence = config && config.sequence;
@@ -132,9 +134,10 @@ export function updateLevelState(level, values) {
   return freezeLevel({ ...level, state, crowned: false });
 }
 
-export function rotateLevel(level) {
+export function rotateLevel(level, step = 1) {
   const current = level.versions.indexOf(level.state.version);
-  const version = level.versions[(current + 1) % level.versions.length];
+  const offset = step < 0 ? -1 : 1;
+  const version = level.versions[(current + offset + level.versions.length) % level.versions.length];
   return freezeLevel({
     ...level,
     state: { version },
@@ -176,4 +179,66 @@ export function canShimmer(level) {
   return level.crowned === true && level.state.shimmer === true;
 }
 
-export { FIBONACCI_SEQUENCE };
+function assertSettlingLevel(level) {
+  if (!level || !SETTLING_FIBS.includes(level.fib)) {
+    throw new Error("Zone navigation is available only in Fib 5-8");
+  }
+}
+
+function createRelic(level, direction) {
+  const state = {};
+  ["version", "choice", "shimmer", "stays"].forEach((key) => {
+    if (level.fields.includes(key) && level.state[key] !== undefined) {
+      state[key] = level.state[key];
+    }
+  });
+  return Object.freeze({
+    fib: level.fib,
+    direction,
+    state: Object.freeze(state)
+  });
+}
+
+export function navigateSettlingZone(level, direction) {
+  assertSettlingLevel(level);
+  const normalized = String(direction || "").toLowerCase();
+  if (!ZONE_DIRECTIONS.includes(normalized)) {
+    throw new Error("Unknown zone direction: " + normalized);
+  }
+  if (normalized === "stay") {
+    if (!level.fields.includes("stays")) {
+      throw new Error("Settling levels must declare stays");
+    }
+    return Object.freeze({
+      action: "stay",
+      level: updateLevelState(level, {
+        stays: Number(level.state.stays || 0) + 1
+      }),
+      relic: null,
+      seed: null
+    });
+  }
+
+  const relic = createRelic(level, normalized);
+  const action = normalized === "north"
+    ? "proceed"
+    : normalized === "south"
+      ? "return"
+      : "lateral";
+  const nextLevel = normalized === "east"
+    ? rotateLevel(level, 1)
+    : normalized === "west"
+      ? rotateLevel(level, -1)
+      : level;
+  const seed = normalized === "south"
+    ? Object.freeze({
+        kind: "return",
+        fromFib: level.fib,
+        state: relic.state,
+        relic
+      })
+    : null;
+  return Object.freeze({ action, level: nextLevel, relic, seed });
+}
+
+export { FIBONACCI_SEQUENCE, SETTLING_FIBS, ZONE_DIRECTIONS };

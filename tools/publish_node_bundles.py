@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build activation-scoped node bundles from the exported Obsidian vault archive."""
+"""Build activation-scoped node bundles from a Threshold level archive."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ def activation_token(secret: str, *parts: str) -> str:
 
 def file_sha256(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as source:
+    with path.open("rb", "rb") as source:
         for chunk in iter(lambda: source.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
@@ -106,20 +106,20 @@ def package_assets(
             relative = Path("assets") / spoke / token / object_name
             item["webPath"] = f"/api/nodes/assets/{spoke}/{token}/{object_name}"
             if object_name not in seen:
-                    canonical_path = output / relative
-                    repository_path = output / "repositories" / repository / relative
-                    canonical_path.parent.mkdir(parents=True, exist_ok=True)
-                    repository_path.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(source_path, canonical_path)
-                    shutil.copy2(source_path, repository_path)
-                    records.append({
-                        "type": "asset",
-                        "key": relative.as_posix(),
-                        "repository": repository,
-                        "sha256": digest,
-                        "bytes": size,
-                    })
-                    seen.add(object_name)
+                canonical_path = output / relative
+                repository_path = output / "repositories" / repository / relative
+                canonical_path.parent.mkdir(parents=True, exist_ok=True)
+                repository_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source_path, canonical_path)
+                shutil.copy2(source_path, repository_path)
+                records.append({
+                    "type": "asset",
+                    "key": relative.as_posix(),
+                    "repository": repository,
+                    "sha256": digest,
+                    "bytes": size,
+                })
+                seen.add(object_name)
 
         for child in item.values():
             visit(child)
@@ -215,6 +215,9 @@ def build_bundles(
     secret: str,
     branches: tuple[str, ...] = PUBLIC_SPOKES,
 ) -> dict[str, Any]:
+    if not archive_path.is_file():
+        raise FileNotFoundError(f"Archive not found: {archive_path}")
+
     source = json.loads(archive_path.read_text(encoding="utf-8-sig"))
     archive = source.get("archive", {})
     topology = json.loads(topology_path.read_text(encoding="utf-8"))

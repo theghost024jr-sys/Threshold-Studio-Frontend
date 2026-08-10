@@ -11,10 +11,10 @@ def load_manifest(path: Path) -> Dict[str, Any]:
 
 
 def load_all_manifests(manifest_dir: Path) -> Dict[int, Dict[str, Any]]:
-    """Load all level manifests (1.json, 2.json, 3.json, 5.json, 8.json)."""
+    """Load all level manifests (level1.json, level2.json, level3.json, level5.json, level8.json)."""
     manifests = {}
     for file in manifest_dir.glob("*.json"):
-        level = int(file.stem)
+        level = int(file.stem.removeprefix("level"))
         manifests[level] = load_manifest(file)
     return manifests
 

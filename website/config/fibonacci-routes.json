@@ -23,7 +23,12 @@
       "west": "lateral-previous-version",
       "stay": "cultivate-current-biome"
     },
-    "relicRule": "leave-on-movement-never-on-stay"
+    "relicRule": "leave-on-movement-never-on-stay",
+    "pulse": {
+      "fields": ["state", "seed", "signal"],
+      "acceptWhen": ["previous-node-crowned", "state-stable", "seed-valid", "signal-clear"],
+      "rejectRule": "remain-in-current-node"
+    }
   },
   "spokes": {
     "house-garden": {

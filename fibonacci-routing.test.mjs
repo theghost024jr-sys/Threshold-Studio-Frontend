@@ -7,6 +7,7 @@ import {
   buildFibonacciUrl,
   canShimmer,
   createLevelState,
+  createNodePulse,
   createThresholdPass,
   crownLevel,
   FIBONACCI_SEQUENCE,
@@ -176,5 +177,58 @@ test("limits settling navigation to Fib 5-8", () => {
   assert.throws(
     () => navigateSettlingZone(settlingLevel({ fib: 3 }), "stay"),
     /only in Fib 5-8/
+  );
+});
+
+test("accepts only state seed and signal in a crowned pulse", () => {
+  const crowned = crownLevel(settlingLevel());
+  const movement = navigateSettlingZone(crowned, "north");
+  const pulse = createNodePulse(crowned, movement, "north");
+  assert.deepEqual(Object.keys(pulse), ["state", "seed", "signal"]);
+  assert.deepEqual(pulse.state, {
+    version: "v1-green-box",
+    choice: "snail",
+    direction: "north"
+  });
+  assert.equal(pulse.seed.kind, "relic");
+  assert.equal(pulse.seed.relic.direction, "north");
+  assert.equal(pulse.signal, "proceed");
+});
+
+test("accepts stay without transferring a relic", () => {
+  const crowned = crownLevel(settlingLevel());
+  const pulse = createNodePulse(crowned, navigateSettlingZone(crowned, "stay"), "stay");
+  assert.equal(pulse.seed, null);
+  assert.equal(pulse.signal, "stay");
+});
+
+test("rejects a pulse unless crown state seed and signal are valid", () => {
+  const uncrowned = settlingLevel();
+  const movement = navigateSettlingZone(uncrowned, "south");
+  assert.throws(
+    () => createNodePulse(uncrowned, movement, "south"),
+    /previous node is not crowned/
+  );
+
+  const crowned = crownLevel(uncrowned);
+  assert.throws(
+    () => createNodePulse(crowned, { ...movement, action: "lateral" }, "south"),
+    /signal does not match direction/
+  );
+  assert.throws(
+    () => createNodePulse(crowned, { ...movement, seed: { kind: "return" } }, "south"),
+    /seed is invalid/
+  );
+  const contaminatedState = { ...movement.seed.state, vault: { heavy: true } };
+  assert.throws(
+    () => createNodePulse(crowned, {
+      ...movement,
+      seed: {
+        ...movement.seed,
+        state: contaminatedState,
+        relic: { ...movement.seed.relic, state: contaminatedState }
+      }
+    }, "south"),
+    /seed is invalid/
   );
 });

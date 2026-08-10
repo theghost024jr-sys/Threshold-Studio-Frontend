@@ -59,12 +59,18 @@
       body: JSON.stringify({
         spoke: spokeId,
         activation: token,
-        choice: options && options.choiceId ? String(options.choiceId) : null,
-        pass: options && options.pass ? options.pass : null
+        pulse: options && options.pulse ? options.pulse : null
       })
     });
     if (!response.ok) {
-      throw new Error("Node activation failed (" + response.status + ")");
+      let message = "Node activation failed (" + response.status + ")";
+      try {
+        const payload = await response.json();
+        message = payload && payload.error ? String(payload.error) : message;
+      } catch {
+        // Keep the status-based fallback when the response is not JSON.
+      }
+      throw new Error(message);
     }
 
     const node = await response.json();

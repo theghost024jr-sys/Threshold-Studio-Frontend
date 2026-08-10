@@ -1,5 +1,6 @@
 import {
   createLevelState,
+  createNodePulse,
   createThresholdPass,
   crownLevel,
   navigateSettlingZone,
@@ -193,8 +194,33 @@ import {
 
   async function moveInZone(direction) {
     const choice = activeCardChoice;
-    const movement = navigateSettlingZone(activeLevel, direction);
-    activeLevel = movement.level;
+    let movement;
+    let pulse;
+    try {
+      const crowned = crownLevel(activeLevel);
+      movement = navigateSettlingZone(crowned, direction);
+      pulse = createNodePulse(crowned, movement, direction);
+    } catch (error) {
+      window.dispatchEvent(new CustomEvent("threshold:pulse-rejected", {
+        detail: {
+          signal: String(direction || ""),
+          reason: error instanceof Error ? error.message : "Pulse rejected"
+        }
+      }));
+      throw error;
+    }
+    if (movement.action === "proceed") {
+      const accepted = await activate(choice.activation, choice.id, true, pulse);
+      if (!accepted) {
+        return;
+      }
+      closeCard(false);
+    } else {
+      window.dispatchEvent(new CustomEvent("threshold:pulse-accepted", {
+        detail: pulse
+      }));
+      activeLevel = movement.level;
+    }
     if (movement.relic) {
       window.dispatchEvent(new CustomEvent("threshold:relic-left", {
         detail: movement.relic
@@ -206,6 +232,9 @@ import {
         detail: movement.seed
       }));
     }
+    if (movement.action === "proceed") {
+      return;
+    }
     if (movement.action === "stay") {
       cardStatusNode.textContent = "Biome active · stay " + activeLevel.state.stays;
       window.dispatchEvent(new CustomEvent("threshold:biome-stayed", {
@@ -214,10 +243,6 @@ import {
       return;
     }
     closeCard(false);
-    if (movement.action === "proceed") {
-      await activate(choice.activation, choice.id, true);
-      return;
-    }
     if (movement.action === "return") {
       restorePrevious();
       return;
@@ -258,7 +283,7 @@ import {
         : "This is the active depth node.";
   }
 
-  async function activate(token, choiceId, moveInward) {
+  async function activate(token, choiceId, moveInward, pulse = null) {
     statusNode.textContent = "Activating next node...";
     try {
       const previous = window.ThresholdNodes.getActiveNode();
@@ -283,9 +308,13 @@ import {
       const node = await window.ThresholdNodes.activate({
         spokeId,
         token,
-        choiceId,
-        pass: thresholdPass
+        pulse
       });
+      if (pulse) {
+        window.dispatchEvent(new CustomEvent("threshold:pulse-accepted", {
+          detail: pulse
+        }));
+      }
       if (thresholdPass) {
         nextLevel = createRuntimeLevel(
           displayFib,
@@ -303,8 +332,18 @@ import {
           detail: thresholdPass
         }));
       }
+      return true;
     } catch (error) {
       statusNode.textContent = error instanceof Error ? error.message : "Activation failed";
+      if (pulse) {
+        window.dispatchEvent(new CustomEvent("threshold:pulse-rejected", {
+          detail: {
+            signal: pulse.signal,
+            reason: error instanceof Error ? error.message : "Pulse rejected"
+          }
+        }));
+      }
+      return false;
     }
   }
 

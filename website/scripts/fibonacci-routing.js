@@ -1,6 +1,7 @@
 const FIBONACCI_SEQUENCE = Object.freeze([13, 8, 5, 3, 2, 1]);
 const SETTLING_FIBS = Object.freeze([8, 5]);
 const ZONE_DIRECTIONS = Object.freeze(["north", "south", "east", "west", "stay"]);
+const PULSE_SIGNALS = Object.freeze(["proceed", "return", "lateral", "stay"]);
 
 function assertSequence(config) {
   const sequence = config && config.sequence;
@@ -241,4 +242,93 @@ export function navigateSettlingZone(level, direction) {
   return Object.freeze({ action, level: nextLevel, relic, seed });
 }
 
-export { FIBONACCI_SEQUENCE, SETTLING_FIBS, ZONE_DIRECTIONS };
+function pulseSeed(movement) {
+  if (movement.seed) {
+    return movement.seed;
+  }
+  if (!movement.relic) {
+    return null;
+  }
+  return Object.freeze({
+    kind: "relic",
+    fromFib: movement.relic.fib,
+    state: movement.relic.state,
+    relic: movement.relic
+  });
+}
+
+function assertPulseSeed(seed, level, signal, direction) {
+  if (seed === null) {
+    if (signal !== "stay") {
+      throw new Error("Movement pulse requires a seed");
+    }
+    return;
+  }
+  const seedKeys = seed && typeof seed === "object" ? Object.keys(seed) : [];
+  const relicKeys = seed && seed.relic && typeof seed.relic === "object" ? Object.keys(seed.relic) : [];
+  const stateKeys = seed && seed.state && typeof seed.state === "object" ? Object.keys(seed.state) : [];
+  if (!seed || typeof seed !== "object"
+    || seedKeys.length !== 4
+    || !["kind", "fromFib", "state", "relic"].every((key) => seedKeys.includes(key))
+    || !["relic", "return"].includes(seed.kind)
+    || seed.fromFib !== level.fib
+    || !seed.state || typeof seed.state !== "object"
+    || stateKeys.length !== 4
+    || !["version", "choice", "shimmer", "stays"].every((key) => stateKeys.includes(key))
+    || typeof seed.state.version !== "string"
+    || typeof seed.state.choice !== "string"
+    || typeof seed.state.shimmer !== "boolean"
+    || !Number.isInteger(seed.state.stays)
+    || seed.state.stays < 0
+    || !seed.relic || seed.relic.fib !== level.fib
+    || relicKeys.length !== 3
+    || !["fib", "direction", "state"].every((key) => relicKeys.includes(key))
+    || seed.relic.direction !== direction
+    || seed.relic.state !== seed.state) {
+    throw new Error("Pulse seed is invalid");
+  }
+  if (signal === "return" && seed.kind !== "return") {
+    throw new Error("Return pulse requires a return seed");
+  }
+}
+
+export function createNodePulse(level, movement, direction) {
+  assertSettlingLevel(level);
+  const normalized = String(direction || "").toLowerCase();
+  const signal = movement && movement.action;
+  if (!level.crowned) {
+    throw new Error("Pulse rejected: previous node is not crowned");
+  }
+  if (!Object.isFrozen(level.state)
+    || level.state.version === undefined
+    || level.state.choice === undefined) {
+    throw new Error("Pulse rejected: state is not stable");
+  }
+  if (!ZONE_DIRECTIONS.includes(normalized)
+    || !PULSE_SIGNALS.includes(signal)) {
+    throw new Error("Pulse rejected: signal is not clear");
+  }
+  const expectedSignal = normalized === "north"
+    ? "proceed"
+    : normalized === "south"
+      ? "return"
+      : normalized === "stay"
+        ? "stay"
+        : "lateral";
+  if (signal !== expectedSignal) {
+    throw new Error("Pulse rejected: signal does not match direction");
+  }
+  const seed = pulseSeed(movement);
+  assertPulseSeed(seed, level, signal, normalized);
+  return Object.freeze({
+    state: Object.freeze({
+      version: level.state.version,
+      choice: level.state.choice,
+      direction: normalized
+    }),
+    seed,
+    signal
+  });
+}
+
+export { FIBONACCI_SEQUENCE, PULSE_SIGNALS, SETTLING_FIBS, ZONE_DIRECTIONS };

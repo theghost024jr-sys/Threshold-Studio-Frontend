@@ -1,1 +1,82 @@
+{
+  "level": 3,
+
+  "rules": {
+    "max_assets": 128,
+    "rarity_ceiling": 5,
+    "allow_drift_in": true,
+    "allow_drift_out": true,
+    "tags_required": [],
+    "tags_excluded": []
+  },
+
+  "sources": {
+    "assets_repo": "Threshold-Studio-Assets",
+    "website_repo": "Threshold-Studio-Website",
+    "frontend_repo": "Threshold-Studio-Frontend"
+  },
+
+  "assets": [
+    {
+      "id": "wolf-spirit",
+      "path": "spirit-animals/wolf.png",
+      "rarity": 1,
+      "tags": ["animal", "guardian"],
+      "drift": {
+        "up": 0.15,
+        "down": 0.05
+      }
+    },
+    {
+      "id": "raven-spirit",
+      "path": "spirit-animals/raven.png",
+      "rarity": 2,
+      "tags": ["animal", "messenger"],
+      "drift": {
+        "up": 0.20,
+        "down": 0.10
+      }
+    },
+    {
+      "id": "nebula-01",
+      "path": "space/nebula-01.png",
+      "rarity": 3,
+      "tags": ["space", "ambient"],
+      "drift": {
+        "up": 0.25,
+        "down": 0.10
+      }
+    },
+    {
+      "id": "threshold-path-glyph",
+      "path": "glyphs/threshold/path.svg",
+      "rarity": 3,
+      "tags": ["glyph", "path"],
+      "drift": {
+        "up": 0.10,
+        "down": 0.15
+      }
+    },
+    {
+      "id": "first-gate-chamber",
+      "path": "chambers/first-gate.json",
+      "rarity": 4,
+      "tags": ["chamber", "entry"],
+      "drift": {
+        "up": 0.12,
+        "down": 0.18
+      }
+    },
+    {
+      "id": "cosmic-current",
+      "path": "space/cosmic-current.png",
+      "rarity": 5,
+      "tags": ["space", "energy"],
+      "drift": {
+        "up": 0.05,
+        "down": 0.20
+      }
+    }
+  ]
+}
 

@@ -48,6 +48,7 @@ jobs:
         with:
           repository: ${{ vars.NODE_SOURCE_REPOSITORY }}
           token: ${{ secrets.NODE_SOURCE_TOKEN }}
+          ref: ${{ vars.NODE_SOURCE_REF || 'main' }}
           path: .node-source
       - uses: actions/setup-python@v5
         with:

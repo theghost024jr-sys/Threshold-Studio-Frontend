@@ -1,0 +1,82 @@
+name: Publish Activated Node Bundles
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to rebuild, validate, and publish
+        required: true
+        type: choice
+        options:
+          - house-garden
+          - learning-wheel
+          - ethos
+          - discover
+          - invitation
+          - mythology
+          - glyphs
+          - contact
+          - engine
+
+permissions:
+  contents: read
+
+concurrency:
+  group: node-bundles
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      THRESHOLD_NODE_SECRET: ${{ secrets.THRESHOLD_NODE_SECRET }}
+      R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      R2_BUCKET: ${{ vars.R2_NODE_BUCKET }}
+      NODE_BRANCH: ${{ inputs.branch }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check publication configuration
+        env:
+          NODE_SOURCE_REPOSITORY: ${{ vars.NODE_SOURCE_REPOSITORY }}
+          NODE_SOURCE_TOKEN: ${{ secrets.NODE_SOURCE_TOKEN }}
+        run: test -n "$NODE_SOURCE_REPOSITORY" && test -n "$NODE_SOURCE_TOKEN"
+      - name: Check out private node source
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.NODE_SOURCE_REPOSITORY }}
+          token: ${{ secrets.NODE_SOURCE_TOKEN }}
+          path: .node-source
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - name: Test activation publisher
+        run: python -m unittest test_publish_node_bundles.py
+      - name: Build activation bundles
+        run: >-
+          python tools/publish_node_bundles.py
+          --archive .node-source/vault-archive.json
+          --asset-root .node-source/website/assets/vault
+          --branch "$NODE_BRANCH"
+      - name: Install R2 client
+        run: python -m pip install --disable-pip-version-check awscli
+      - name: Publish immutable node objects
+        run: >-
+          aws s3 sync ".node-bundles/nodes/${NODE_BRANCH}" "s3://${R2_BUCKET}/nodes/${NODE_BRANCH}"
+          --endpoint-url "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+          --delete
+          --cache-control "private, no-store"
+      - name: Publish token-scoped node assets
+        run: >-
+          aws s3 sync ".node-bundles/assets/${NODE_BRANCH}" "s3://${R2_BUCKET}/assets/${NODE_BRANCH}"
+          --endpoint-url "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+          --delete
+          --cache-control "private, max-age=3600"
+      - name: Upload publication manifest
+        run: >-
+          aws s3 cp .node-bundles/upload-manifest.json
+          "s3://${R2_BUCKET}/manifests/${NODE_BRANCH}.json"
+          --endpoint-url "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+          --cache-control "private, no-store"

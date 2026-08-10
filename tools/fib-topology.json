@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "fibs": [13, 8, 5, 3, 2, 1],
+  "spokeTemplate": {
+    "fib": 8,
+    "children": ["fog-crossing", "expansion-crossing", "collapse-crossing", "soil-crossing"]
+  },
+  "spokes": {
+    "house-garden": {
+      "fib": 8,
+      "children": ["root-archive", "lantern-pedal"]
+    },
+    "ethos": {
+      "fib": 8,
+      "children": ["root-archive", "lantern-vault"]
+    },
+    "learning-wheel": {
+      "fib": 8,
+      "children": ["seasonal-alcove"]
+    },
+    "mythology": {
+      "fib": 8,
+      "children": ["fracture-pedal"]
+    }
+  },
+  "nodes": {
+    "root-archive": {
+      "fib": 5,
+      "label": "Root Archive",
+      "kind": "gallery",
+      "repository": "threshold-fib-5-root-archive",
+      "content": {
+        "title": "Root Archive",
+        "excerpt": "Foundational vows, first fragments, and origin lines.",
+        "body": "Reveal by hovering five unique glyphs and revisiting once."
+      },
+      "components": [],
+      "children": []
+    },
+    "lantern-pedal": {
+      "fib": 5,
+      "label": "Lantern Pedal",
+      "kind": "pedal",
+      "repository": "threshold-fib-5-lantern-pedal",
+      "content": {
+        "title": "Lantern Pedal",
+        "excerpt": "The House and Garden path into the Lantern Vault."
+      },
+      "components": [],
+      "children": ["lantern-vault"]
+    },
+    "lantern-vault": {
+      "fib": 3,
+      "fibByParent": {
+        "ethos": 5,
+        "lantern-pedal": 3
+      },
+      "label": "Lantern Vault",
+      "kind": "gallery",
+      "repository": "threshold-fib-3-lantern-vault",
+      "content": {
+        "title": "Lantern Vault",
+        "excerpt": "Quiet lore cards, care protocols, and return instructions.",
+        "body": "Reveal by long-hovering three glyphs in one session."
+      },
+      "components": [],
+      "children": []
+    },
+    "seasonal-alcove": {
+      "fib": 5,
+      "label": "Seasonal Alcove",
+      "kind": "gallery",
+      "repository": "threshold-fib-5-seasonal-alcove",
+      "content": {
+        "title": "Seasonal Alcove",
+        "excerpt": "Fog, ocean, storm, and soil fragments with unique visuals.",
+        "body": "Trigger one seasonal reveal in all four seasons. The alcove is the Learning Wheel branch layer."
+      },
+      "components": [],
+      "children": ["storm-cabinet"]
+    },
+    "storm-cabinet": {
+      "fib": 3,
+      "label": "Storm Cabinet",
+      "kind": "gallery",
+      "repository": "threshold-fib-3-storm-cabinet",
+      "content": {
+        "title": "Storm Cabinet",
+        "excerpt": "Fracture myths, refusal stories, and remapped paths.",
+        "body": "Unlock by double-clicking two glyphs and triggering one rare event."
+      },
+      "components": [],
+      "children": []
+    },
+    "fracture-pedal": {
+      "fib": 5,
+      "label": "Fracture Pedal",
+      "kind": "pedal",
+      "repository": "threshold-fib-5-fracture-pedal",
+      "content": {
+        "title": "Fracture Pedal",
+        "excerpt": "The Mythology path into remapped fracture lore."
+      },
+      "components": [],
+      "children": ["storm-cabinet"]
+    },
+    "fog-crossing": {
+      "fib": 5,
+      "label": "Mist Gate",
+      "repository": "threshold-fib-3-mist-gate",
+      "components": [
+        { "type": "chamber", "source": "chambers.fog" },
+        { "type": "weather", "source": "weather.fog" },
+        { "type": "spirit-animal", "source": "species.fog" }
+      ],
+      "children": []
+    },
+    "expansion-crossing": {
+      "fib": 5,
+      "label": "Expansion Crossing",
+      "repository": "threshold-fib-3-expansion",
+      "components": [
+        { "type": "chamber", "source": "chambers.expand" },
+        { "type": "weather", "source": "weather.expand" },
+        { "type": "spirit-animal", "source": "species.expand" }
+      ],
+      "children": []
+    },
+    "collapse-crossing": {
+      "fib": 5,
+      "label": "Collapse Crossing",
+      "repository": "threshold-fib-3-collapse",
+      "components": [
+        { "type": "chamber", "source": "chambers.collapse" },
+        { "type": "weather", "source": "weather.collapse" },
+        { "type": "spirit-animal", "source": "species.collapse" }
+      ],
+      "children": []
+    },
+    "soil-crossing": {
+      "fib": 5,
+      "label": "Forest Threshold",
+      "repository": "threshold-fib-3-forest",
+      "components": [
+        { "type": "chamber", "source": "chambers.soil" },
+        { "type": "weather", "source": "weather.soil" },
+        { "type": "spirit-animal", "source": "species.soil" }
+      ],
+      "children": []
+    }
+  }
+}

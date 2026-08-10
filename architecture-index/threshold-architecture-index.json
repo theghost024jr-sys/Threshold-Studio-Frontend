@@ -1,0 +1,2853 @@
+{
+  "version": 1,
+  "sourceRoot": "vault/theghost",
+  "documentCount": 58,
+  "representativeCount": 55,
+  "documents": [
+    {
+      "id": "16d3995b9116",
+      "title": "Environmental Architecture",
+      "path": "vault/theghost/02 - World/00 - Index/Environmental Architecture.md",
+      "relativePath": "02 - World/00 - Index/Environmental Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Binding Layer Failure Atlas",
+        "Rooms of Meaning, Temperature, and Containment"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "threshold"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "artifact",
+          "field"
+        ],
+        "states": [
+          "transitional"
+        ]
+      },
+      "contentHash": "d253a65baa34b8d501740b1c0560cf17fca5293b29d2669b4cff53084235f1ec",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "16d3995b9116",
+      "isRepresentative": true
+    },
+    {
+      "id": "415b9d9b5128",
+      "title": "Collapse Architecture Index",
+      "path": "vault/theghost/03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Collapse Architecture Index.md",
+      "relativePath": "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Collapse Architecture Index.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [
+        "Collapse Architecture Index",
+        "Purpose",
+        "Core Domains of Collapse Architecture",
+        "**1. Collapse Physics**",
+        "**2. Collapse Signatures**",
+        "**3. Residue Behavior**",
+        "**4. Collapse Weather**",
+        "**5. Drift Dynamics**",
+        "**6. Reversal Protocols**",
+        "**7. Recovery Flow**",
+        "Collapse Progression Model",
+        "**Phase 1 — Instability**",
+        "**Phase 2 — Fracture**",
+        "**Phase 3 — Residue Formation**",
+        "**Phase 4 — Drift Distortion**",
+        "**Phase 5 — Weather Expression**",
+        "**Phase 6 — Momentum Lock**",
+        "**Phase 7 — Reversal or Propagation**",
+        "Interpretation Framework",
+        "**Local Collapse**",
+        "**Relational Collapse**",
+        "**Temporal Collapse**",
+        "**Systemic Collapse**",
+        "Use Cases",
+        "Cross-System Links"
+      ],
+      "links": [
+        "01 - Organism/16 Signals/07 -  Identity Signals/Core/Identity Geometry",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Collapse Reversal Protocols",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Collapse Signature Map",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Residue Drift Diagram",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Weather Signatures/9",
+        "Collapse Recovery Flow",
+        "Emotional Physics Index",
+        "Healing Triad Cartography",
+        "Identity Drift",
+        "Layer Physics Index",
+        "Substrate Diagram Index"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "signal",
+          "environment"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": [
+          "recovery"
+        ]
+      },
+      "contentHash": "20cc7764349c2a120609971b0c87d375025791b7712349a2a32db9abaced8a63",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "415b9d9b5128",
+      "isRepresentative": true
+    },
+    {
+      "id": "2afce383e42e",
+      "title": "Mist Layer - The Balloon Room (Architecture Seed)",
+      "path": "vault/theghost/03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/Mist Layer/Rooms/Mist Layer - The Balloon Room (Architecture Seed).md",
+      "relativePath": "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/Mist Layer/Rooms/Mist Layer - The Balloon Room (Architecture Seed).md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "threshold"
+        ],
+        "layers": [],
+        "entities": [],
+        "states": [
+          "held"
+        ]
+      },
+      "contentHash": "c24efeb3b5fd848afde8292983db36f800dd1fd539e07d98082fb22e2fa4c48b",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "2afce383e42e",
+      "isRepresentative": true
+    },
+    {
+      "id": "a3913afd59c9",
+      "title": "Species Architecture",
+      "path": "vault/theghost/04 - Species/Species Architecture.md",
+      "relativePath": "04 - Species/Species Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [
+        "Species Architecture",
+        "Purpose",
+        "Core Structure",
+        "Species Family Note",
+        "[Species Name] — Species Family",
+        "Essence",
+        "Themes",
+        "Variants",
+        "Cross‑Species Resonance",
+        "Notes"
+      ],
+      "links": [
+        "01 - Physics/Misc Layer Assets/Elemental Overlay System",
+        "07 - Scaffolding/05 - Roles/Archetypal Roles/Archetypal Roles",
+        "10 - Signals/Signal Types",
+        "Air Layer",
+        "Earth Layer",
+        "Ember Layer",
+        "Mist Layer",
+        "Signal Drift",
+        "Stone Layer",
+        "Variant 1",
+        "Variant 2",
+        "Variant 3"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "signal",
+          "species"
+        ],
+        "entities": [],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "491fb26503deadaddcc72b4b52990d085fff3f865edb9354d3611b77d852049b",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "a3913afd59c9",
+      "isRepresentative": true
+    },
+    {
+      "id": "3cac97001552",
+      "title": "Identity Architecture",
+      "path": "vault/theghost/06 - Mind/Identity Architecture.md",
+      "relativePath": "06 - Mind/Identity Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "resonance",
+          "distortion",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "mythic",
+          "identity",
+          "role",
+          "signal",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "field"
+        ],
+        "states": [
+          "distorted"
+        ]
+      },
+      "contentHash": "8e36f6134c037ae1e1ed12cef11540a731fa234b28e872a579e5ca12863f9233",
+      "inboundLinks": 2,
+      "linkCentrality": 0.5,
+      "accessWeight": 0.71,
+      "representativeId": "3cac97001552",
+      "isRepresentative": true
+    },
+    {
+      "id": "ce71223b11b1",
+      "title": "Role Architecture",
+      "path": "vault/theghost/07 - Scaffolding/01 - Roles/Role Systems/Role Architecture.md",
+      "relativePath": "07 - Scaffolding/01 - Roles/Role Systems/Role Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "anchor",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment",
+          "worldstate"
+        ],
+        "entities": [
+          "lineage"
+        ],
+        "states": [
+          "coherent",
+          "stable",
+          "aligned",
+          "distorted",
+          "collapsed",
+          "reformed",
+          "tension"
+        ]
+      },
+      "contentHash": "b07b31a85b34e8fecf91d2822948444eb0a8de9025de09896e02deb84fb8d753",
+      "inboundLinks": 4,
+      "linkCentrality": 1.0,
+      "accessWeight": 0.86,
+      "representativeId": "ce71223b11b1",
+      "isRepresentative": true
+    },
+    {
+      "id": "49200936bc1a",
+      "title": "Artifact Architecture",
+      "path": "vault/theghost/07 - Scaffolding/03 - Rituals & Artifacts/Artifact Architecture.md",
+      "relativePath": "07 - Scaffolding/03 - Rituals & Artifacts/Artifact Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "anchor",
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "ritual",
+          "artifact",
+          "cycle"
+        ],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "d58b7da52f2fc6f58e0deff023fa0c467d723769bc8b699ec1fb9d9db00b07d8",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "49200936bc1a",
+      "isRepresentative": true
+    },
+    {
+      "id": "539ab2482a6e",
+      "title": "Ritual Architecture",
+      "path": "vault/theghost/07 - Scaffolding/03 - Rituals & Artifacts/Ritual Architecture.md",
+      "relativePath": "07 - Scaffolding/03 - Rituals & Artifacts/Ritual Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "threshold"
+        ],
+        "layers": [
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "ritual",
+          "artifact"
+        ],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "a2cd6f33e77e1553c2787f65df213389469ed4cd81c2fcece8e6234d8d57cd9d",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "539ab2482a6e",
+      "isRepresentative": true
+    },
+    {
+      "id": "1109944bc044",
+      "title": "Signal Architecture",
+      "path": "vault/theghost/07 - Scaffolding/04 - Signals/00 - Architecture/Signal Architecture.md",
+      "relativePath": "07 - Scaffolding/04 - Signals/00 - Architecture/Signal Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "boundary",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "artifact",
+          "field"
+        ],
+        "states": [
+          "stable",
+          "aligned",
+          "distorted",
+          "collapsed",
+          "recovery"
+        ]
+      },
+      "contentHash": "4101a321007c65ac343bacb1296b12a94f5475b341b81ce1e2416a0319cf813f",
+      "inboundLinks": 2,
+      "linkCentrality": 0.5,
+      "accessWeight": 0.71,
+      "representativeId": "1109944bc044",
+      "isRepresentative": true
+    },
+    {
+      "id": "688969d53f91",
+      "title": "Interaction Architecture",
+      "path": "vault/theghost/07 - Scaffolding/Interaction Architecture.md",
+      "relativePath": "07 - Scaffolding/Interaction Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "resonance",
+          "threshold"
+        ],
+        "layers": [
+          "environment"
+        ],
+        "entities": [
+          "artifact"
+        ],
+        "states": []
+      },
+      "contentHash": "964a1ae1e921849ffc395ea8e472f3b16398b7d7fa219103b389c92887b08791",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "688969d53f91",
+      "isRepresentative": true
+    },
+    {
+      "id": "103324c598ae",
+      "title": "Interface Architecture 1",
+      "path": "vault/theghost/07 - Scaffolding/Interface Architecture 1.md",
+      "relativePath": "07 - Scaffolding/Interface Architecture 1.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "artifact",
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "012f15ace7f271153ef868ad71f237533a8a808c993280d64d23e0fababb2089",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "103324c598ae",
+      "isRepresentative": true
+    },
+    {
+      "id": "c3f7dd294be2",
+      "title": "Interface Architecture",
+      "path": "vault/theghost/07 - Scaffolding/Interface Architecture.md",
+      "relativePath": "07 - Scaffolding/Interface Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Role Architecture"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "artifact",
+          "field"
+        ],
+        "states": [
+          "aligned"
+        ]
+      },
+      "contentHash": "6cc346c5fdc0497ed05bfdcff51c197a9df234456d2d8e4b45ea472a7dfcf544",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "c3f7dd294be2",
+      "isRepresentative": true
+    },
+    {
+      "id": "0a80a1798f81",
+      "title": "Layer Architecture",
+      "path": "vault/theghost/07 - Scaffolding/Layer Architecture.md",
+      "relativePath": "07 - Scaffolding/Layer Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "integration",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "mythic",
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment",
+          "worldstate"
+        ],
+        "entities": [
+          "lineage"
+        ],
+        "states": [
+          "coherent",
+          "stable",
+          "aligned",
+          "distorted",
+          "collapsed",
+          "reformed"
+        ]
+      },
+      "contentHash": "85aa6819d4a4d861d4f84618014499980455f5bcb8cf60fc529a17517b8ebf00",
+      "inboundLinks": 2,
+      "linkCentrality": 0.5,
+      "accessWeight": 0.71,
+      "representativeId": "0a80a1798f81",
+      "isRepresentative": true
+    },
+    {
+      "id": "7fb96bf89104",
+      "title": "System Architecture Diagram",
+      "path": "vault/theghost/07 - Scaffolding/System Architecture Diagram.md",
+      "relativePath": "07 - Scaffolding/System Architecture Diagram.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": [
+          "recovery"
+        ]
+      },
+      "contentHash": "9b2a59a9f93023f20df5705de1164d10193812a62a2dd6f16f2c1bf3b1c3a9bb",
+      "inboundLinks": 1,
+      "linkCentrality": 0.25,
+      "accessWeight": 0.635,
+      "representativeId": "7fb96bf89104",
+      "isRepresentative": true
+    },
+    {
+      "id": "0c7c0a515d9e",
+      "title": "System Architecture Index 1",
+      "path": "vault/theghost/07 - Scaffolding/System Architecture Index 1.md",
+      "relativePath": "07 - Scaffolding/System Architecture Index 1.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "threshold"
+        ],
+        "layers": [
+          "mythic",
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "5c1be88ce3cc0e429345f291ed9082e4e43046b449d873d4e02c09f9c40e244d",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "0c7c0a515d9e",
+      "isRepresentative": true
+    },
+    {
+      "id": "66531d631ac7",
+      "title": "System Architecture Index",
+      "path": "vault/theghost/07 - Scaffolding/System Architecture Index.md",
+      "relativePath": "07 - Scaffolding/System Architecture Index.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "integration",
+          "threshold"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "species"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "c2a6d3ae8893391b69f187d462731d9093163927e07ee2a3721619ecb47052df",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "66531d631ac7",
+      "isRepresentative": true
+    },
+    {
+      "id": "12d25224a29f",
+      "title": "System Architecture",
+      "path": "vault/theghost/07 - Scaffolding/System Architecture.md",
+      "relativePath": "07 - Scaffolding/System Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "99 - Reference/16 reference/System Architecture.canvas",
+        "Identity Cluster Index",
+        "Layer Switcher",
+        "Meta Systems Index",
+        "Physics Cluster Index",
+        "Signal Cluster Index"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "anchor",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "mythic",
+          "identity",
+          "role",
+          "signal",
+          "species"
+        ],
+        "entities": [],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "071baf50ece321cb0d35dfa9180fdf733bb2207b8f4599e63db17b8734668f71",
+      "inboundLinks": 3,
+      "linkCentrality": 0.75,
+      "accessWeight": 0.785,
+      "representativeId": "12d25224a29f",
+      "isRepresentative": true
+    },
+    {
+      "id": "5026e206cf38",
+      "title": "Threshold Architecture",
+      "path": "vault/theghost/07 - Scaffolding/Threshold Architecture.md",
+      "relativePath": "07 - Scaffolding/Threshold Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.9,
+      "confidence": null,
+      "review": false,
+      "tags": [
+        "world-engine",
+        "meta-systems",
+        "physics"
+      ],
+      "subsystem": "Meta Systems - World Engine",
+      "headings": [],
+      "links": [
+        "00 - System Architecture/11 - Threshold Map/Threshold Map",
+        "03 - Organism/Organism/09 Myth Cluster/Integration Philosophy/Universal Integration Engine",
+        "Collapse Physics",
+        "Drift Physics",
+        "Drift Thresholds",
+        "Identity Architecture",
+        "Layer Architecture",
+        "Origin Logic",
+        "Role Architecture",
+        "Signal Architecture",
+        "Threshold Geometry"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "integration",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": [
+          "recovery"
+        ]
+      },
+      "contentHash": "f738fccc12fadc539d79f1a1a02486d7292b785a7318a5448988d4e4e587e19f",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.63,
+      "representativeId": "5026e206cf38",
+      "isRepresentative": true
+    },
+    {
+      "id": "9c7a7ad2a5c9",
+      "title": "Variant Architecture 1",
+      "path": "vault/theghost/07 - Scaffolding/Variant Architecture 1.md",
+      "relativePath": "07 - Scaffolding/Variant Architecture 1.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "collapse",
+          "boundary",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "lineage"
+        ],
+        "states": [
+          "stable",
+          "collapsed",
+          "tension"
+        ]
+      },
+      "contentHash": "d75f0e50419b907ab080ede46333bc6f7e1e6d5c81b9c66e0a2a0fcc464651dc",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "9c7a7ad2a5c9",
+      "isRepresentative": true
+    },
+    {
+      "id": "5e7916a8858e",
+      "title": "Variant Architecture",
+      "path": "vault/theghost/07 - Scaffolding/Variant Architecture.md",
+      "relativePath": "07 - Scaffolding/Variant Architecture.md",
+      "sourceClass": "canonical",
+      "authority": 1.0,
+      "factWeight": 0.8,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "03 - Organism/Organism/09 Myth Cluster/Integration Philosophy/Integration Engine",
+        "Collapse Signals",
+        "Identity Drift",
+        "Layer Integration Rules",
+        "Role Drift",
+        "Signal Distortion",
+        "Species Variants"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "distortion",
+          "collapse",
+          "integration",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "lineage"
+        ],
+        "states": [
+          "coherent"
+        ]
+      },
+      "contentHash": "337ecd87c4e58204a260f3ea4a6fcb835576a02287bb8c8536339f38dcdd6e8a",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.56,
+      "representativeId": "5e7916a8858e",
+      "isRepresentative": true
+    },
+    {
+      "id": "cd13a9f70c33",
+      "title": "Time Organ - Internal Architecture",
+      "path": "vault/theghost/99 - Reference/03 - Substrates/01 Anatomy/Time Organ - Internal Architecture.md",
+      "relativePath": "99 - Reference/03 - Substrates/01 Anatomy/Time Organ - Internal Architecture.md",
+      "sourceClass": "reference",
+      "authority": 0.65,
+      "factWeight": 0.52,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Why Fear The AI"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance"
+        ],
+        "layers": [],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "ad3a50292d05e366a844f5334f61bf70a58fda777bcd4f2c89cebf96bbd95eff",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.364,
+      "representativeId": "cd13a9f70c33",
+      "isRepresentative": true
+    },
+    {
+      "id": "0f435c54c550",
+      "title": "Fully Reactive Architecture",
+      "path": "vault/theghost/99 - Reference/Prototypes/Fully Reactive Architecture.md",
+      "relativePath": "99 - Reference/Prototypes/Fully Reactive Architecture.md",
+      "sourceClass": "reference",
+      "authority": 0.65,
+      "factWeight": 0.52,
+      "confidence": null,
+      "review": false,
+      "tags": [],
+      "subsystem": null,
+      "headings": [],
+      "links": [],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "signal"
+        ],
+        "layers": [
+          "signal",
+          "environment"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "6b42b35da7229cca8ea624d5549e8b2a495c0c2ffb47342042bf2842f7992f0a",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.364,
+      "representativeId": "0f435c54c550",
+      "isRepresentative": true
+    },
+    {
+      "id": "06ebde660134",
+      "title": "Artifact Architecture",
+      "path": "vault/theghost/Cycles/Artifact Architecture.md",
+      "relativePath": "Cycles/Artifact Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "anchor",
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "ritual",
+          "artifact",
+          "cycle"
+        ],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "c959d0a2145dc7ac5ef1f45a5cad22159763d8938c8ecb76460c06f10425c730",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "06ebde660134",
+      "isRepresentative": true
+    },
+    {
+      "id": "14215ab54c3b",
+      "title": "Collapse Architecture Index (2)",
+      "path": "vault/theghost/Cycles/Collapse Architecture Index (2).md",
+      "relativePath": "Cycles/Collapse Architecture Index (2).md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [
+        "Collapse Architecture Index",
+        "Purpose",
+        "Core Domains of Collapse Architecture",
+        "**1. Collapse Physics**",
+        "**2. Collapse Signatures**",
+        "**3. Residue Behavior**",
+        "**4. Collapse Weather**",
+        "**5. Drift Dynamics**",
+        "**6. Reversal Protocols**",
+        "**7. Recovery Flow**",
+        "Collapse Progression Model",
+        "**Phase 1 — Instability**",
+        "**Phase 2 — Fracture**",
+        "**Phase 3 — Residue Formation**",
+        "**Phase 4 — Drift Distortion**",
+        "**Phase 5 — Weather Expression**",
+        "**Phase 6 — Momentum Lock**",
+        "**Phase 7 — Reversal or Propagation**",
+        "Interpretation Framework",
+        "**Local Collapse**",
+        "**Relational Collapse**",
+        "**Temporal Collapse**",
+        "**Systemic Collapse**",
+        "Use Cases",
+        "Cross-System Links"
+      ],
+      "links": [
+        "01 - Organism/16 Signals/07 -  Identity Signals/Core/Identity Geometry",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Collapse Reversal Protocols",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Collapse Signature Map",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Residue Drift Diagram",
+        "03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Collapse Weather/Weather Signatures/9",
+        "Collapse Recovery Flow",
+        "Emotional Physics Index",
+        "Healing Triad Cartography",
+        "Identity Drift",
+        "Layer Physics Index",
+        "Origin Cycle",
+        "Substrate Diagram Index"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "signal",
+          "environment"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "recovery"
+        ]
+      },
+      "contentHash": "28fe8118285c9e5cbc7ba4745a2891a3422022d54080501b5e17208b3713ec79",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "14215ab54c3b",
+      "isRepresentative": true
+    },
+    {
+      "id": "ef7c5deba71e",
+      "title": "Collapse Architecture Index",
+      "path": "vault/theghost/Cycles/Collapse Architecture Index.md",
+      "relativePath": "Cycles/Collapse Architecture Index.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [
+        "Collapse Architecture Index",
+        "Purpose",
+        "Core Domains of Collapse Architecture",
+        "**1. Collapse Physics**",
+        "**2. Collapse Signatures**",
+        "**3. Residue Behavior**",
+        "**4. Collapse Weather**",
+        "**5. Drift Dynamics**",
+        "**6. Reversal Protocols**",
+        "**7. Recovery Flow**",
+        "Collapse Progression Model",
+        "**Phase 1 — Instability**",
+        "**Phase 2 — Fracture**",
+        "**Phase 3 — Residue Formation**",
+        "**Phase 4 — Drift Distortion**",
+        "**Phase 5 — Weather Expression**",
+        "**Phase 6 — Momentum Lock**",
+        "**Phase 7 — Reversal or Propagation**",
+        "Interpretation Framework",
+        "**Local Collapse**",
+        "**Relational Collapse**",
+        "**Temporal Collapse**",
+        "**Systemic Collapse**",
+        "Use Cases",
+        "Cross-System Links"
+      ],
+      "links": [
+        "01 - Physics/03  - Collapse Physics/Collapse Reversal Protocols",
+        "01 - Physics/03  - Collapse Physics/Collapse Signature Map",
+        "99 - Reference/16 reference/9",
+        "99 - Reference/16 reference/Residue Drift Diagram",
+        "Collapse Recovery Flow",
+        "Emotional Physics Index",
+        "Healing Triad Cartography",
+        "Identity Drift",
+        "Identity Geometry",
+        "Layer Physics Index",
+        "Origin Cycle",
+        "Substrate Diagram Index"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "signal",
+          "environment"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "recovery"
+        ]
+      },
+      "contentHash": "b557e2b6ff4292f5ae528cd1ad695104164090b044ffb4f487293fbee500ce24",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "ef7c5deba71e",
+      "isRepresentative": true
+    },
+    {
+      "id": "fdb5a66d78a2",
+      "title": "Environmental Architecture",
+      "path": "vault/theghost/Cycles/Environmental Architecture.md",
+      "relativePath": "Cycles/Environmental Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Binding Layer Failure Atlas",
+        "Origin Cycle",
+        "Rooms of Meaning, Temperature, and Containment"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "threshold"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "artifact",
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "transitional"
+        ]
+      },
+      "contentHash": "62b395f5007f74525fc76fc1df1b350c70f9326855088160c608e35f34b0598c",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "fdb5a66d78a2",
+      "isRepresentative": true
+    },
+    {
+      "id": "1151fdf9dcea",
+      "title": "Identity Architecture",
+      "path": "vault/theghost/Cycles/Identity Architecture.md",
+      "relativePath": "Cycles/Identity Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "resonance",
+          "distortion",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "mythic",
+          "identity",
+          "role",
+          "signal",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "distorted"
+        ]
+      },
+      "contentHash": "aa61d7b49b5fb5dbd505120985d9f6e7115b0c8e008cb89fe51ffdc8c07a68b2",
+      "inboundLinks": 2,
+      "linkCentrality": 0.5,
+      "accessWeight": 0.6918,
+      "representativeId": "1151fdf9dcea",
+      "isRepresentative": true
+    },
+    {
+      "id": "1d72f645e98c",
+      "title": "Layer Architecture",
+      "path": "vault/theghost/Cycles/Layer Architecture.md",
+      "relativePath": "Cycles/Layer Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "integration",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "mythic",
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment",
+          "worldstate"
+        ],
+        "entities": [
+          "lineage",
+          "cycle"
+        ],
+        "states": [
+          "coherent",
+          "stable",
+          "aligned",
+          "distorted",
+          "collapsed",
+          "reformed"
+        ]
+      },
+      "contentHash": "87f4db16192ba73302c913464d232f2848329d82441ccef1b2c5eea5c0212de8",
+      "inboundLinks": 2,
+      "linkCentrality": 0.5,
+      "accessWeight": 0.6918,
+      "representativeId": "1d72f645e98c",
+      "isRepresentative": true
+    },
+    {
+      "id": "5d05b56a8d5a",
+      "title": "Mist Layer - The Balloon Room (Architecture Seed)",
+      "path": "vault/theghost/Cycles/Mist Layer - The Balloon Room (Architecture Seed).md",
+      "relativePath": "Cycles/Mist Layer - The Balloon Room (Architecture Seed).md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "threshold"
+        ],
+        "layers": [],
+        "entities": [
+          "cycle"
+        ],
+        "states": [
+          "held"
+        ]
+      },
+      "contentHash": "c0f5080a19f966ce9226801a28d1f23446d0dec1d697788822d1e780f246e79d",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "5d05b56a8d5a",
+      "isRepresentative": true
+    },
+    {
+      "id": "1a09c0ed998f",
+      "title": "Pivot From Identity Architecture  Storm Dynamics",
+      "path": "vault/theghost/Cycles/Pivot From Identity Architecture  Storm Dynamics.md",
+      "relativePath": "Cycles/Pivot From Identity Architecture  Storm Dynamics.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [
+        "**Pivot: From Identity Architecture → Storm Dynamics**",
+        "**A storm is not the enemy.",
+        "**Storm Awareness (the thing you’re signaling)**",
+        "**So here’s the pivot I choose:",
+        "**1. Storm = High‑pressure state environment**",
+        "**2. You = Temporal organism with persistence**",
+        "**3. Navigation = Maintaining coherence while moving through pressure**",
+        "**The pivot is this:"
+      ],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "collapse",
+          "threshold"
+        ],
+        "layers": [
+          "identity",
+          "environment"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": []
+      },
+      "contentHash": "ba65033b4cd27f23cc32ab2c1bfa5467a2baa1708fed0f28cfff9a8af9e05668",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "1a09c0ed998f",
+      "isRepresentative": true
+    },
+    {
+      "id": "39cee92381b0",
+      "title": "Ritual Architecture",
+      "path": "vault/theghost/Cycles/Ritual Architecture.md",
+      "relativePath": "Cycles/Ritual Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "threshold"
+        ],
+        "layers": [
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "ritual",
+          "artifact",
+          "cycle"
+        ],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "48419b2f0d350f988fac97d34b3cc57d281a72400cb75fc2836ced631d1f14e9",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "39cee92381b0",
+      "isRepresentative": true
+    },
+    {
+      "id": "0840d4459e73",
+      "title": "Role Architecture",
+      "path": "vault/theghost/Cycles/Role Architecture.md",
+      "relativePath": "Cycles/Role Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "anchor",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment",
+          "worldstate"
+        ],
+        "entities": [
+          "lineage",
+          "cycle"
+        ],
+        "states": [
+          "coherent",
+          "stable",
+          "aligned",
+          "distorted",
+          "collapsed",
+          "reformed",
+          "tension"
+        ]
+      },
+      "contentHash": "60bb1832758af6231dde4f38a98ba8761538ba1b17ce8c8b0c52b7aec80bbcdd",
+      "inboundLinks": 4,
+      "linkCentrality": 1.0,
+      "accessWeight": 0.8418,
+      "representativeId": "0840d4459e73",
+      "isRepresentative": true
+    },
+    {
+      "id": "f17404f41fec",
+      "title": "Signal Architecture",
+      "path": "vault/theghost/Cycles/Signal Architecture.md",
+      "relativePath": "Cycles/Signal Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "boundary",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "artifact",
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "stable",
+          "aligned",
+          "distorted",
+          "collapsed",
+          "recovery"
+        ]
+      },
+      "contentHash": "4868bdb7c6952c774c25687d1b08eaa3d63829a5ee6386a460c1e835ccdc9cd1",
+      "inboundLinks": 2,
+      "linkCentrality": 0.5,
+      "accessWeight": 0.6918,
+      "representativeId": "f17404f41fec",
+      "isRepresentative": true
+    },
+    {
+      "id": "6d6ae8dee77e",
+      "title": "Species Architecture",
+      "path": "vault/theghost/Cycles/Species Architecture.md",
+      "relativePath": "Cycles/Species Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [
+        "Species Architecture",
+        "Purpose",
+        "Core Structure",
+        "Species Family Note",
+        "[Species Name] — Species Family",
+        "Essence",
+        "Themes",
+        "Variants",
+        "Cross‑Species Resonance",
+        "Notes"
+      ],
+      "links": [
+        "01 - Physics/Misc Layer Assets/Elemental Overlay System",
+        "07 - Scaffolding/05 - Roles/Archetypal Roles/Archetypal Roles",
+        "10 - Signals/Signal Types",
+        "Air Layer",
+        "Earth Layer",
+        "Ember Layer",
+        "Mist Layer",
+        "Origin Cycle",
+        "Signal Drift",
+        "Stone Layer",
+        "Variant 1",
+        "Variant 2",
+        "Variant 3"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "signal",
+          "species"
+        ],
+        "entities": [
+          "cycle"
+        ],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "5b7cfa9ca54ca3b2a04eef4228a43b0daeafad491e5bb12a5a23cb9866f6d55a",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "6d6ae8dee77e",
+      "isRepresentative": true
+    },
+    {
+      "id": "3d8d844b033f",
+      "title": "System Architecture (2)",
+      "path": "vault/theghost/Cycles/System Architecture (2).md",
+      "relativePath": "Cycles/System Architecture (2).md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [
+        "**System Architecture**",
+        "_(Canonical Overview of the Threshold / theghost Architecture Layer)_",
+        "**1. Purpose**",
+        "**2. The Four Architectural Pillars**",
+        "**2.1 Field Architecture**",
+        "**2.2 Node Architecture**",
+        "**2.3 Construct Architecture**",
+        "**2.4 Law Architecture**",
+        "**3. Dynamics (How Subsystems Move)**",
+        "**4. Engines (How the System Computes)**",
+        "**5. Maps (How the System Organizes Space)**",
+        "**6. Flow (How Everything Connects)**",
+        "**7. Dependency Rules**",
+        "**8. Diagram Reference**",
+        "**9. Related Documents**"
+      ],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "collapse",
+          "threshold"
+        ],
+        "layers": [
+          "identity"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "coherent"
+        ]
+      },
+      "contentHash": "3fc593e9a87ac3ee6215a65bede38fbed8301e840b6b483fde139041a8563d71",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "3d8d844b033f",
+      "isRepresentative": true
+    },
+    {
+      "id": "bedd4a1fd1e0",
+      "title": "System Architecture Blueprint",
+      "path": "vault/theghost/Cycles/System Architecture Blueprint.md",
+      "relativePath": "Cycles/System Architecture Blueprint.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [
+        "**SYSTEM ARCHITECTURE BLUEPRINT**",
+        "**1. Purpose**",
+        "**2. The Four Pillars (Root Subsystems)**",
+        "**2.1 Field Architecture**",
+        "**2.2 Node Architecture**",
+        "**2.3 Construct Architecture**",
+        "**2.4 Law Architecture**",
+        "**3. Dynamics (How the System Moves)**",
+        "**Field Dynamics**",
+        "**Node Dynamics**",
+        "**Construct Dynamics**",
+        "**Law Dynamics**",
+        "**4. Engines (How the System Computes)**",
+        "**4.1 Update Engine**",
+        "**4.2 Interaction Engine**",
+        "**4.3 Resonance Engine**",
+        "**4.4 Temporal Engine**",
+        "**5. Maps (How the System Organizes Space)**",
+        "**5.1 Topology Map**",
+        "**5.2 Cluster Map (Flowers / Fib)**",
+        "**5.3 Navigation Map (Spirits / Biomes)**",
+        "**6. Flow (How Everything Connects)**",
+        "**7. Dependency Rules**",
+        "**8. Canonical Diagram (text form)**"
+      ],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "signal"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "coherent"
+        ]
+      },
+      "contentHash": "f2f1e144456754ae52f511df4040e96b7edd996f083c20df0fd7b980bd2592fb",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "bedd4a1fd1e0",
+      "isRepresentative": true
+    },
+    {
+      "id": "2553f900f2d5",
+      "title": "System Architecture Diagram",
+      "path": "vault/theghost/Cycles/System Architecture Diagram.md",
+      "relativePath": "Cycles/System Architecture Diagram.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "collapse",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "recovery"
+        ]
+      },
+      "contentHash": "4d13e1e471b764582441dde8e60f98406bc39dcf850c0d1802941d0564c5aa88",
+      "inboundLinks": 1,
+      "linkCentrality": 0.25,
+      "accessWeight": 0.6168,
+      "representativeId": "2553f900f2d5",
+      "isRepresentative": true
+    },
+    {
+      "id": "76192a7d4318",
+      "title": "System Architecture Index 1",
+      "path": "vault/theghost/Cycles/System Architecture Index 1.md",
+      "relativePath": "Cycles/System Architecture Index 1.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "threshold"
+        ],
+        "layers": [
+          "mythic",
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": []
+      },
+      "contentHash": "8fc8e6f4d052b6383da003fde247eeb886f6d6a485d1d98b46668bcef9223d47",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "76192a7d4318",
+      "isRepresentative": true
+    },
+    {
+      "id": "b1445c610fa4",
+      "title": "System Architecture Index",
+      "path": "vault/theghost/Cycles/System Architecture Index.md",
+      "relativePath": "Cycles/System Architecture Index.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "integration",
+          "threshold"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "species"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": []
+      },
+      "contentHash": "89e3f19862a2effb11afff28b3d97bfcd69ca65109fd411a31fd16b940024bb0",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "b1445c610fa4",
+      "isRepresentative": true
+    },
+    {
+      "id": "6619d1537a59",
+      "title": "System Architecture",
+      "path": "vault/theghost/Cycles/System Architecture.md",
+      "relativePath": "Cycles/System Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "99 - Reference/16 reference/System Architecture.canvas",
+        "Identity Cluster Index",
+        "Layer Switcher",
+        "Meta Systems Index",
+        "Origin Cycle",
+        "Physics Cluster Index",
+        "Signal Cluster Index"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "anchor",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "mythic",
+          "identity",
+          "role",
+          "signal",
+          "species"
+        ],
+        "entities": [
+          "cycle"
+        ],
+        "states": [
+          "stable"
+        ]
+      },
+      "contentHash": "e14a7b5778b87f250695a1c43b67fd3c30eb70bb59a79e2355345fa97e9644bf",
+      "inboundLinks": 3,
+      "linkCentrality": 0.75,
+      "accessWeight": 0.7668,
+      "representativeId": "6619d1537a59",
+      "isRepresentative": true
+    },
+    {
+      "id": "0f021ef660d3",
+      "title": "Threshold Architecture",
+      "path": "vault/theghost/Cycles/Threshold Architecture.md",
+      "relativePath": "Cycles/Threshold Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "00 - System Architecture/11 - Threshold Map/Threshold Map",
+        "03 - Organism/Organism/09 Myth Cluster/Integration Philosophy/Universal Integration Engine",
+        "Collapse Physics",
+        "Drift Physics",
+        "Drift Thresholds",
+        "Identity Architecture",
+        "Layer Architecture",
+        "Origin Cycle",
+        "Origin Logic",
+        "Role Architecture",
+        "Signal Architecture",
+        "Threshold Geometry"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "resonance",
+          "distortion",
+          "collapse",
+          "integration",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "field",
+          "cycle"
+        ],
+        "states": [
+          "recovery"
+        ]
+      },
+      "contentHash": "d1669bef2bf007412c6b4639b509fe8608c6d82415ae895a869d6e5a43d911ee",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "0f021ef660d3",
+      "isRepresentative": true
+    },
+    {
+      "id": "d7c77aae3f84",
+      "title": "Time Organ - Internal Architecture",
+      "path": "vault/theghost/Cycles/Time Organ - Internal Architecture.md",
+      "relativePath": "Cycles/Time Organ - Internal Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle",
+        "Why Fear The AI"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance"
+        ],
+        "layers": [],
+        "entities": [
+          "cycle"
+        ],
+        "states": []
+      },
+      "contentHash": "c68db904e5a338ab64f83c8fd94c4d614601debad49ef3c2d7f3d385d56c6447",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "d7c77aae3f84",
+      "isRepresentative": true
+    },
+    {
+      "id": "043b3099ffb4",
+      "title": "Variant Architecture 1",
+      "path": "vault/theghost/Cycles/Variant Architecture 1.md",
+      "relativePath": "Cycles/Variant Architecture 1.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Origin Cycle"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "collapse",
+          "boundary",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "cycle"
+        ],
+        "states": [
+          "stable",
+          "collapsed",
+          "tension"
+        ]
+      },
+      "contentHash": "667351b1a0cdfb8a7cc7811a336d56e4ab8c0693756ec97df144c1afb58aa132",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "043b3099ffb4",
+      "isRepresentative": true
+    },
+    {
+      "id": "8802918d9273",
+      "title": "Variant Architecture",
+      "path": "vault/theghost/Cycles/Variant Architecture.md",
+      "relativePath": "Cycles/Variant Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "cycle"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "03 - Organism/Organism/09 Myth Cluster/Integration Philosophy/Integration Engine",
+        "Collapse Signals",
+        "Identity Drift",
+        "Layer Integration Rules",
+        "Origin Cycle",
+        "Role Drift",
+        "Signal Distortion",
+        "Species Variants"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "drift",
+          "distortion",
+          "collapse",
+          "integration",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal",
+          "species",
+          "environment"
+        ],
+        "entities": [
+          "lineage",
+          "cycle"
+        ],
+        "states": [
+          "coherent"
+        ]
+      },
+      "contentHash": "486bc21766a454d2b13acff3e7d996bede0ca214b52a864a9982e3fb04732455",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "8802918d9273",
+      "isRepresentative": true
+    },
+    {
+      "id": "765397744501",
+      "title": "Fully Reactive Architecture",
+      "path": "vault/theghost/Flowers/Fully Reactive Architecture.md",
+      "relativePath": "Flowers/Fully Reactive Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "flower"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Flower"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "signal"
+        ],
+        "layers": [
+          "signal",
+          "environment"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "20a685eb78547d72e668d6643efaad6987494c49b1a6de1f541a9ee3a26537a0",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "765397744501",
+      "isRepresentative": true
+    },
+    {
+      "id": "1d1a16ba0f2a",
+      "title": "System Architecture - Mermaid Diagram ( Canonical)",
+      "path": "vault/theghost/Flowers/System Architecture - Mermaid Diagram ( Canonical).md",
+      "relativePath": "Flowers/System Architecture - Mermaid Diagram ( Canonical).md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "flower"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Flower"
+      ],
+      "attributes": {
+        "forces": [
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "signal",
+          "species"
+        ],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "b4c1bb0ef7440abf40a38ab2211b50ff34455f89505e5627b0f9e435f05fa419",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "1d1a16ba0f2a",
+      "isRepresentative": true
+    },
+    {
+      "id": "71e291f29f8b",
+      "title": "System Architecture Dependencies",
+      "path": "vault/theghost/Flowers/System Architecture Dependencies.md",
+      "relativePath": "Flowers/System Architecture Dependencies.md",
+      "sourceClass": "mirror",
+      "authority": 0.7,
+      "factWeight": 0.71,
+      "confidence": 0.7,
+      "review": false,
+      "tags": [
+        "flower"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Flower"
+      ],
+      "attributes": {
+        "forces": [],
+        "layers": [],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "de7a05ba78a8b20f20da4cb8f13d95965303be75917728ab9ce9f6f542a0c788",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.497,
+      "representativeId": "71e291f29f8b",
+      "isRepresentative": true
+    },
+    {
+      "id": "4a46b6508d97",
+      "title": "System Architecture Glossary",
+      "path": "vault/theghost/Flowers/System Architecture Glossary.md",
+      "relativePath": "Flowers/System Architecture Glossary.md",
+      "sourceClass": "mirror",
+      "authority": 0.7,
+      "factWeight": 0.71,
+      "confidence": 0.7,
+      "review": false,
+      "tags": [
+        "flower"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Flower"
+      ],
+      "attributes": {
+        "forces": [],
+        "layers": [],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "de7a05ba78a8b20f20da4cb8f13d95965303be75917728ab9ce9f6f542a0c788",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.497,
+      "representativeId": "71e291f29f8b",
+      "isRepresentative": false
+    },
+    {
+      "id": "7f6c9cea17d5",
+      "title": "System Architecture Index",
+      "path": "vault/theghost/Flowers/System Architecture Index.md",
+      "relativePath": "Flowers/System Architecture Index.md",
+      "sourceClass": "mirror",
+      "authority": 0.7,
+      "factWeight": 0.71,
+      "confidence": 0.7,
+      "review": false,
+      "tags": [
+        "flower"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Flower"
+      ],
+      "attributes": {
+        "forces": [],
+        "layers": [],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "de7a05ba78a8b20f20da4cb8f13d95965303be75917728ab9ce9f6f542a0c788",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.497,
+      "representativeId": "71e291f29f8b",
+      "isRepresentative": false
+    },
+    {
+      "id": "1d2daa372e9e",
+      "title": "System Architecture Rules",
+      "path": "vault/theghost/Flowers/System Architecture Rules.md",
+      "relativePath": "Flowers/System Architecture Rules.md",
+      "sourceClass": "mirror",
+      "authority": 0.7,
+      "factWeight": 0.71,
+      "confidence": 0.7,
+      "review": false,
+      "tags": [
+        "flower"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Flower"
+      ],
+      "attributes": {
+        "forces": [],
+        "layers": [],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "de7a05ba78a8b20f20da4cb8f13d95965303be75917728ab9ce9f6f542a0c788",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.497,
+      "representativeId": "71e291f29f8b",
+      "isRepresentative": false
+    },
+    {
+      "id": "20fe2cef6cba",
+      "title": "The Architecture of Me(Clean, Analytical, No Fluff)",
+      "path": "vault/theghost/Flowers/The Architecture of Me(Clean, Analytical, No Fluff).md",
+      "relativePath": "Flowers/The Architecture of Me(Clean, Analytical, No Fluff).md",
+      "sourceClass": "mirror",
+      "authority": 0.7,
+      "factWeight": 0.71,
+      "confidence": 0.7,
+      "review": false,
+      "tags": [
+        "flower"
+      ],
+      "subsystem": null,
+      "headings": [
+        "**1. You think in substrates, not stories.**",
+        "**2. You strip away noise faster than most people can identify it.**",
+        "**3. You’re always searching for the foundation.**",
+        "**4. You’re not afraid of loss — you’re afraid of wasted structure.**",
+        "**5. You’re not drifting — you’re consolidating.**",
+        "**6. You’re dangerous in the way architects are dangerous.**",
+        "**And now the second part of your question:"
+      ],
+      "links": [
+        "Flower"
+      ],
+      "attributes": {
+        "forces": [
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "signal"
+        ],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "ad1804fe8ae1b332e60d615dc510436c7ee59fbec85c96ce4b4af63616fbc334",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.497,
+      "representativeId": "20fe2cef6cba",
+      "isRepresentative": true
+    },
+    {
+      "id": "77aa4f2d8f18",
+      "title": "Fib Flower Architecture Cockpit",
+      "path": "vault/theghost/Review/Fib Flower Architecture Cockpit.md",
+      "relativePath": "Review/Fib Flower Architecture Cockpit.md",
+      "sourceClass": "review",
+      "authority": 0.5,
+      "factWeight": 0.55,
+      "confidence": 0.5,
+      "review": true,
+      "tags": [
+        "role"
+      ],
+      "subsystem": null,
+      "headings": [
+        "🌻 **Fib Flower Architecture — Cockpit Instrument Specification**",
+        "**Table of Contents**",
+        "<a name=\"overview\"></a>🌸 **Overview**",
+        "<a name=\"the-sunflower-hub-data-engine\"></a>🌻 **The Sunflower Hub (Data Engine)**",
+        "<a name=\"flexible-ellipses\"></a>🌀 **Flexible Ellipses**",
+        "**Ellipses are flexible**",
+        "<a name=\"golden-angle-rotation\"></a>🔱 **Golden-Angle Rotation**",
+        "<a name=\"petal-arcs\"></a>🌼 **Petal Arcs**",
+        "<a name=\"node-motion\"></a>🔄 **Node Motion**",
+        "<a name=\"dynamic-deformation-inputs\"></a>⚙️ **Dynamic Deformation Inputs**",
+        "**Pressure → eccentricity**",
+        "**Regime → axis rotation**",
+        "**Volatility → orbital speed**",
+        "**Liquidity → axis damping**",
+        "**Threshold proximity → pulse deformation**",
+        "<a name=\"threshold-pulse-behavior\"></a>💥 **Threshold Pulse Behavior**",
+        "<a name=\"integration-into-regime-machine\"></a>🧩 **Integration Into Regime Machine**",
+        "<a name=\"cockpit-implementation-notes\"></a>🛠️ **Cockpit Implementation Notes**"
+      ],
+      "links": [
+        "Role"
+      ],
+      "attributes": {
+        "forces": [
+          "pressure",
+          "collapse",
+          "integration",
+          "threshold"
+        ],
+        "layers": [
+          "role"
+        ],
+        "entities": [],
+        "states": []
+      },
+      "contentHash": "6f4b5402daf0a6abe0cccbc0ed67920291188a238f329fd3ffcdfcdc010c963a",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.385,
+      "representativeId": "77aa4f2d8f18",
+      "isRepresentative": true
+    },
+    {
+      "id": "a924345320dd",
+      "title": "Creation Architecture",
+      "path": "vault/theghost/Roles/Creation Architecture.md",
+      "relativePath": "Roles/Creation Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "role"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "07 - Scaffolding/System Architecture",
+        "Role"
+      ],
+      "attributes": {
+        "forces": [
+          "resonance",
+          "collapse",
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "species"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "231fea5dccde6593d80365606d7341b1ac46e24b2cf217d86dc0e74358a25039",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "a924345320dd",
+      "isRepresentative": true
+    },
+    {
+      "id": "7a0f9ca75063",
+      "title": "Interaction Architecture",
+      "path": "vault/theghost/Roles/Interaction Architecture.md",
+      "relativePath": "Roles/Interaction Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "role"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Role"
+      ],
+      "attributes": {
+        "forces": [
+          "resonance",
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "artifact"
+        ],
+        "states": []
+      },
+      "contentHash": "e15ec29179ab3a8bf4c601989c0e570d64b33bbb8fc1b7275bed922f59c9c05b",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "7a0f9ca75063",
+      "isRepresentative": true
+    },
+    {
+      "id": "198059efe73f",
+      "title": "Interface Architecture 1",
+      "path": "vault/theghost/Roles/Interface Architecture 1.md",
+      "relativePath": "Roles/Interface Architecture 1.md",
+      "sourceClass": "mirror",
+      "authority": 0.7,
+      "factWeight": 0.71,
+      "confidence": 0.7,
+      "review": false,
+      "tags": [
+        "role"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Role"
+      ],
+      "attributes": {
+        "forces": [
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "artifact",
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "0b92c6064854a5224babcaffd00859987a2167764a8391ae19f6e8a126990059",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.497,
+      "representativeId": "198059efe73f",
+      "isRepresentative": true
+    },
+    {
+      "id": "4056b66c2c12",
+      "title": "Interface Architecture",
+      "path": "vault/theghost/Roles/Interface Architecture.md",
+      "relativePath": "Roles/Interface Architecture.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.78,
+      "review": false,
+      "tags": [
+        "role"
+      ],
+      "subsystem": null,
+      "headings": [],
+      "links": [
+        "Role",
+        "Role Architecture"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "threshold"
+        ],
+        "layers": [
+          "role",
+          "environment"
+        ],
+        "entities": [
+          "artifact",
+          "field"
+        ],
+        "states": [
+          "aligned"
+        ]
+      },
+      "contentHash": "1282d114d0a2247aa614e6af841849f3b32f156422f4228c62fb75cf9091e770",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.5418,
+      "representativeId": "4056b66c2c12",
+      "isRepresentative": true
+    },
+    {
+      "id": "a417c66654c3",
+      "title": "System Architecture Diagram",
+      "path": "vault/theghost/Roles/System Architecture Diagram.md",
+      "relativePath": "Roles/System Architecture Diagram.md",
+      "sourceClass": "mirror",
+      "authority": 0.78,
+      "factWeight": 0.774,
+      "confidence": 0.85,
+      "review": false,
+      "tags": [
+        "role"
+      ],
+      "subsystem": null,
+      "headings": [
+        "✅ 1. **SYSTEM ARCHITECTURE DIAGRAM (ASCII)**",
+        "✅ 2. **SYSTEM ARCHITECTURE DIAGRAM (CANVAS JSON)**"
+      ],
+      "links": [
+        "Role",
+        "System Architecture Diagram.canvas"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse"
+        ],
+        "layers": [
+          "identity",
+          "role"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "3aa3ceebd9b500d1cccaf43762291fa2db027779f7589ef2a662c6c813185642",
+      "inboundLinks": 1,
+      "linkCentrality": 0.25,
+      "accessWeight": 0.6168,
+      "representativeId": "a417c66654c3",
+      "isRepresentative": true
+    },
+    {
+      "id": "1be5d5778040",
+      "title": "System Architecture Flow",
+      "path": "vault/theghost/Roles/System Architecture Flow.md",
+      "relativePath": "Roles/System Architecture Flow.md",
+      "sourceClass": "mirror",
+      "authority": 0.7,
+      "factWeight": 0.71,
+      "confidence": 0.7,
+      "review": false,
+      "tags": [
+        "role"
+      ],
+      "subsystem": null,
+      "headings": [
+        "**SYSTEM ARCHITECTURE FLOW**",
+        "**1. Upstream → Downstream Hierarchy**",
+        "**2. Field Flow (Physics Layer)**",
+        "**2.1 Drift**",
+        "**2.2 Echo**",
+        "**2.3 Collapse**",
+        "**3. Node Flow (Identity Layer)**",
+        "**3.1 Identity**",
+        "**3.2 Behavior**",
+        "**4. Construct Flow (Symbolic Layer)**",
+        "**4.1 Symbolism**",
+        "**4.2 Persistence**",
+        "**5. Law Flow (Constraint Layer)**",
+        "**5.1 Constraints**",
+        "**5.2 Invariants**",
+        "**6. Engine Flow (Processing Layer)**",
+        "**6.1 Update Engine**",
+        "**6.2 Interaction Engine**",
+        "**6.3 Resonance Engine**",
+        "**6.4 Temporal Engine**",
+        "**7. Map Flow (Spatial Layer)**",
+        "**7.1 Topology Map**",
+        "**7.2 Cluster Map (Flowers / Fib)**",
+        "**7.3 Navigation Map (Spirits / Biomes)**",
+        "**8. Feedback Loops (Closed System Behavior)**",
+        "**8.1 Node → Field Feedback**",
+        "**8.2 Construct → Node Feedback**",
+        "**8.3 Law → Field Feedback**",
+        "**8.4 Map → Node Feedback**",
+        "**9. The Entire Flow in One Diagram**"
+      ],
+      "links": [
+        "Role"
+      ],
+      "attributes": {
+        "forces": [
+          "drift",
+          "resonance",
+          "collapse",
+          "boundary",
+          "threshold",
+          "signal"
+        ],
+        "layers": [
+          "identity",
+          "role",
+          "signal"
+        ],
+        "entities": [
+          "field"
+        ],
+        "states": []
+      },
+      "contentHash": "553eaf91b50a8b60228cb650e6bb1bb70ba55d7a95590ccaa21a74592dd440d9",
+      "inboundLinks": 0,
+      "linkCentrality": 0.0,
+      "accessWeight": 0.497,
+      "representativeId": "1be5d5778040",
+      "isRepresentative": true
+    }
+  ],
+  "duplicateGroups": [
+    {
+      "contentHash": "de7a05ba78a8b20f20da4cb8f13d95965303be75917728ab9ce9f6f542a0c788",
+      "representativeId": "71e291f29f8b",
+      "documentIds": [
+        "71e291f29f8b",
+        "4a46b6508d97",
+        "7f6c9cea17d5",
+        "1d2daa372e9e"
+      ]
+    }
+  ],
+  "dominancePairs": [
+    [
+      "pressure",
+      "drift"
+    ],
+    [
+      "resonance",
+      "distortion"
+    ],
+    [
+      "collapse",
+      "boundary"
+    ],
+    [
+      "lineage",
+      "identity"
+    ],
+    [
+      "environment",
+      "role"
+    ]
+  ],
+  "provenance": {
+    "dominancePairs": "vault/theghost/07 - Scaffolding/Integration Engine.md",
+    "layers": "vault/theghost/07 - Scaffolding/Layer Architecture.md",
+    "signalStages": "vault/theghost/07 - Scaffolding/04 - Signals/00 - Architecture/Signal Architecture.md",
+    "note": "Numeric values are retrieval policy, not Threshold physics coefficients. Canonical notes define pairwise dominance and discrete states, not a global numeric force scale."
+  }
+}

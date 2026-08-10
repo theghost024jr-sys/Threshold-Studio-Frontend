@@ -40,13 +40,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check publication configuration
         env:
-          NODE_SOURCE_REPOSITORY: ${{ vars.NODE_SOURCE_REPOSITORY }}
+          NODE_SOURCE_REPOSITORY: ${{ vars.NODE_SOURCE_REPOSITORY || 'theghost024jr-sys/Threshold-Studio-Website' }}
           NODE_SOURCE_TOKEN: ${{ secrets.NODE_SOURCE_TOKEN }}
         run: test -n "$NODE_SOURCE_REPOSITORY" && test -n "$NODE_SOURCE_TOKEN"
       - name: Check out private node source
         uses: actions/checkout@v4
         with:
-          repository: ${{ vars.NODE_SOURCE_REPOSITORY }}
+          repository: ${{ vars.NODE_SOURCE_REPOSITORY || 'theghost024jr-sys/Threshold-Studio-Website' }}
           token: ${{ secrets.NODE_SOURCE_TOKEN }}
           path: .node-source
       - uses: actions/setup-python@v5
@@ -57,8 +57,8 @@ jobs:
       - name: Build activation bundles
         run: >-
           python tools/publish_node_bundles.py
-          --archive .node-source/vault-archive.json
-          --asset-root .node-source/website/assets/vault
+          --archive .node-source/ThresholdStudio/data/vault-archive.json
+          --asset-root .node-source/ThresholdStudio/assets/vault
           --branch "$NODE_BRANCH"
       - name: Install R2 client
         run: python -m pip install --disable-pip-version-check awscli

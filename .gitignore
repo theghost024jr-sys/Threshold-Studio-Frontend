@@ -11,11 +11,11 @@
 *.import/
 *.translation
 
-# Cloudflare, publication, and static-build outputs
+# Cloudflare and static-build outputs
 /.wrangler/
 /.node-bundles/
 /_site/
-/threshold/publish/
+/threshold/
 /temp-vault/
 dist/
 build/

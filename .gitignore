@@ -1,0 +1,31 @@
+# Obsidian local state
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
+**/.obsidian/plugins/
+**/.obsidian/cache/
+
+# Godot project and generated imports
+/godot/
+**/.godot/
+*.import
+*.import/
+*.translation
+
+# Cloudflare, publication, and static-build outputs
+/.wrangler/
+/.node-bundles/
+/_site/
+/threshold/publish/
+/temp-vault/
+dist/
+build/
+
+# Python, Node.js, logs, and temporary files
+__pycache__/
+*.py[cod]
+node_modules/
+*.log
+
+# Generated vault indexes
+/vault-archive.json
+/vault-index.json

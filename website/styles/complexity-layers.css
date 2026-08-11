@@ -31,6 +31,57 @@
 }
 
 @layer threshold.interaction {
+  body.threshold-reveal-arrival {
+    animation: threshold-chamber-arrival 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .threshold-reveal-arrival-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    pointer-events: none;
+    border: 3px solid rgba(var(--threshold-reveal-color), 0.55);
+    background: radial-gradient(circle at center, rgba(var(--threshold-reveal-color), 0.2), transparent 48%);
+    box-shadow: inset 0 0 36px rgba(var(--threshold-reveal-color), 0.32);
+    animation: threshold-arrival-field 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .threshold-reveal-arrival-layer::before,
+  .threshold-reveal-arrival-layer::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    translate: -50% -50%;
+  }
+
+  .threshold-reveal-arrival-layer::before {
+    width: min(34vw, 260px);
+    aspect-ratio: 1;
+    border: 1px solid rgba(var(--threshold-reveal-color), 0.5);
+    box-shadow: 0 0 28px rgba(var(--threshold-reveal-color), 0.25);
+  }
+
+  .threshold-reveal-arrival-layer::after {
+    width: min(9vw, 62px);
+    aspect-ratio: 1;
+    background: rgba(var(--threshold-reveal-color), 0.5);
+    box-shadow: 0 0 30px rgba(var(--threshold-reveal-color), 0.55);
+  }
+
+  @keyframes threshold-chamber-arrival {
+    from { opacity: 0; filter: brightness(0.35) saturate(1.5); }
+    45% { opacity: 1; filter: brightness(1.16) saturate(1.18); }
+    to { opacity: 1; filter: none; }
+  }
+
+  @keyframes threshold-arrival-field {
+    from { opacity: 0; scale: 0.94; }
+    38% { opacity: 1; scale: 1; }
+    to { opacity: 0; scale: 1.025; }
+  }
+
   body[data-complexity~="interaction"] :where(button, a, input, textarea, select):focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;

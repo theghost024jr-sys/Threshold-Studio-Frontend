@@ -97,6 +97,51 @@
       z-index: 1;
     }
 
+    .entry-copy {
+      isolation: isolate;
+    }
+
+    .entry-reactor {
+      position: relative;
+      z-index: 2;
+    }
+
+    .entry-engine-core {
+      position: absolute;
+      left: 50%;
+      bottom: 3%;
+      width: clamp(86px, 12vw, 132px);
+      aspect-ratio: 1;
+      translate: -50% 0;
+      z-index: 1;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: calc(0.07 + var(--engine-pressure, 0) * 0.18);
+      background: radial-gradient(circle, rgba(214, 168, 75, 0.28), rgba(31, 59, 255, 0.08) 42%, transparent 70%);
+      filter: blur(1px);
+      scale: calc(0.92 + var(--engine-pressure, 0) * 0.08);
+      transition: opacity 280ms ease, scale 280ms ease;
+    }
+
+    .entry-engine-core::before,
+    .entry-engine-core::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border-radius: 50%;
+      border: 1px solid rgba(214, 168, 75, 0.3);
+      box-shadow: 0 0 22px rgba(31, 59, 255, 0.2);
+      animation: engine-core-heartbeat 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    .entry-engine-core::after {
+      inset: 36%;
+      border: 0;
+      background: rgba(214, 168, 75, 0.52);
+      box-shadow: 0 0 18px rgba(214, 168, 75, 0.42);
+      animation-delay: 120ms;
+    }
+
     .entry-mark {
       width: clamp(60px, 8vw, 92px);
       aspect-ratio: 1;
@@ -431,12 +476,21 @@
       100% { scale: 1; box-shadow: 0 0 10px rgba(139, 228, 213, 0.46); }
     }
 
+    @keyframes engine-core-heartbeat {
+      0%, 82%, 100% { scale: 1; opacity: 0.24; }
+      87% { scale: 1.18; opacity: 0.62; }
+      92% { scale: 1.05; opacity: 0.36; }
+      96% { scale: 1.12; opacity: 0.52; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       body::before,
       body::after,
       .entry-core,
       .entry-signal-ring,
       .entry-receptor::after,
+      .entry-engine-core::before,
+      .entry-engine-core::after,
       .entry-orbit-node {
         animation: none;
       }
@@ -506,6 +560,7 @@
           </div>
           <span class="entry-receptor" data-hub-receptor></span>
         </div>
+        <div class="entry-engine-core" data-engine-core data-engine-state="latent" aria-hidden="true"></div>
       </div>
 
       <aside class="entry-nav" aria-label="Hub routes">
@@ -521,7 +576,7 @@
           <a href="dialogues.html">Dialogues</a>
           <a href="contact.html">Contact</a>
         </nav>
-        <a class="entry-engine" href="engine.html" aria-label="Enter engine mechanics">Enter Engine</a>
+        <a class="entry-engine" href="deep-system/engine.html" aria-label="Enter engine mechanics">Enter Engine</a>
         <section class="entry-archive" data-hub-seed-archive hidden aria-labelledby="returned-seeds-title">
           <h2 id="returned-seeds-title">Returned Seeds</h2>
           <ol class="entry-archive-list" data-hub-seed-list></ol>
@@ -529,6 +584,6 @@
       </aside>
     </section>
   </main>
-  <script type="module" src="scripts/fibonacci-entry.js?v=frame-3"></script>
+  <script type="module" src="scripts/fibonacci-entry.js?v=reveal-5"></script>
 </body>
 </html>

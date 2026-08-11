@@ -55,18 +55,18 @@
       "bootstrapActivation": "glyphs"
     },
     {
+      "id": "dialogues",
+      "label": "Dialogues",
+      "entry": "dialogues.html",
+      "repository": "threshold-spoke-dialogues",
+      "bootstrapActivation": "dialogues"
+    },
+    {
       "id": "contact",
       "label": "Contact",
       "entry": "contact.html",
       "repository": "threshold-spoke-contact",
       "bootstrapActivation": "contact"
-    },
-    {
-      "id": "engine",
-      "label": "Engine",
-      "entry": "engine.html",
-      "repository": "threshold-spoke-engine",
-      "bootstrapActivation": "engine"
     }
   ]
 }

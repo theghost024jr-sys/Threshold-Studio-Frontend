@@ -9,6 +9,41 @@ const spokeId = document.body.dataset.thresholdSpoke || "";
 const params = new URLSearchParams(location.search);
 const nodeId = params.get("node");
 const transitionKey = nodeId ? `threshold:page-transition:${spokeId}:${nodeId}` : "";
+const revealArrivalColors = {
+  "root-bloom": "214, 168, 75",
+  "glyphfall-alignment": "244, 207, 132",
+  "cycle-burst": "64, 112, 255",
+  "drift-scatter": "155, 91, 214",
+  "threshold-opening": "91, 222, 194",
+  "firefall-origin": "205, 72, 38",
+  "symbol-cascade": "83, 137, 255",
+  "signal-oscillation": "99, 225, 235",
+  "transmission-burst": "255, 242, 210"
+};
+try {
+  const revealEvent = JSON.parse(sessionStorage.getItem("threshold:reveal-event") || "null");
+  if (revealEvent?.destination === location.pathname) {
+    document.body.dataset.revealArrival = revealEvent.theme;
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const arrivalLayer = document.createElement("div");
+      arrivalLayer.className = "threshold-reveal-arrival-layer";
+      arrivalLayer.setAttribute("aria-hidden", "true");
+      arrivalLayer.style.setProperty(
+        "--threshold-reveal-color",
+        revealArrivalColors[revealEvent.theme] || "214, 168, 75"
+      );
+      document.body.classList.add("threshold-reveal-arrival");
+      document.body.appendChild(arrivalLayer);
+      window.setTimeout(() => {
+        document.body.classList.remove("threshold-reveal-arrival");
+        arrivalLayer.remove();
+      }, 850);
+    }
+    sessionStorage.removeItem("threshold:reveal-event");
+  }
+} catch {
+  sessionStorage.removeItem("threshold:reveal-event");
+}
 const topologyPromise = fetch("config/page-topology.json", { cache: "no-store" }).then((response) => {
   if (!response.ok) {
     throw new Error(`Page topology unavailable (${response.status})`);

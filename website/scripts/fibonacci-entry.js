@@ -6,8 +6,9 @@ const seedList = document.querySelector("[data-hub-seed-list]");
 const hubWheel = document.querySelector("[data-hub-wheel]");
 const hubReceptor = document.querySelector("[data-hub-receptor]");
 const hubNodeField = document.querySelector("[data-hub-node-field]");
+const engineCore = document.querySelector("[data-engine-core]");
 const voidCanvas = document.querySelector("[data-void-field]");
-const categoryLinks = Array.from(document.querySelectorAll(".entry-actions a, .entry-engine"));
+const categoryLinks = Array.from(document.querySelectorAll(".entry-actions a"));
 
 const voidSignatures = {
   ethos: { color: [214, 168, 75], motion: "vertical" },
@@ -16,6 +17,27 @@ const voidSignatures = {
   dialogues: { color: [107, 224, 235], motion: "ripple" },
   contact: { color: [255, 239, 199], motion: "radiating" }
 };
+
+const revealDirections = {
+  left: { color: [31, 59, 255], spin: 1, distortion: "horizontal", glow: "left" },
+  right: { color: [214, 168, 75], spin: -1, distortion: "horizontal", glow: "right" },
+  top: { color: [201, 247, 255], spin: 0, tilt: 1, distortion: "vertical", glow: "top" },
+  bottom: { color: [220, 94, 48], spin: 0, tilt: -1, distortion: "vertical", glow: "bottom" }
+};
+
+const revealThemes = {
+  "house and garden": { id: "root-bloom", color: [214, 168, 75], duration: 900 },
+  ethos: { id: "glyphfall-alignment", color: [244, 207, 132], duration: 820 },
+  "learning wheel": { id: "cycle-burst", color: [64, 112, 255], duration: 780 },
+  discover: { id: "drift-scatter", color: [155, 91, 214], duration: 860 },
+  invitation: { id: "threshold-opening", color: [91, 222, 194], duration: 900 },
+  mythology: { id: "firefall-origin", color: [205, 72, 38], duration: 980 },
+  glyphs: { id: "symbol-cascade", color: [83, 137, 255], duration: 820 },
+  dialogues: { id: "signal-oscillation", color: [99, 225, 235], duration: 760 },
+  contact: { id: "transmission-burst", color: [255, 242, 210], duration: 700 }
+};
+
+const revealTiming = { directional: 400, transition: 720 };
 
 function title(value) {
   return String(value || "unknown").replace(/-/g, " ");
@@ -58,7 +80,7 @@ function renderReturnedSeeds() {
 renderReturnedSeeds();
 
 function initializeHubReactor() {
-  if (!hubWheel || !hubReceptor || !hubNodeField) {
+  if (!hubWheel || !hubReceptor || !hubNodeField || !engineCore) {
     return;
   }
 
@@ -83,11 +105,19 @@ function initializeHubReactor() {
     retreatFrom: 0,
     retreatTo: 0,
     scatterStartedAt: 0,
-    descendingStartedAt: 0,
+    selectedLink: null,
+    contactStartedAt: 0,
+    approachDirection: null,
+    gesture: null,
     lastSparkAt: 0,
     lastHeartbeatAt: 0,
     frameId: 0,
     lastFrameAt: performance.now()
+  };
+  const engineState = {
+    pressure: 0.08,
+    reveal: null,
+    transitionStartedAt: 0
   };
   const voidContext = voidCanvas?.getContext("2d", { alpha: true });
   const voidState = {
@@ -118,6 +148,23 @@ function initializeHubReactor() {
       centerY: rect.top + rect.height / 2,
       radius: rect.width / 2
     };
+  }
+
+  function approachDirection(metrics = wheelMetrics()) {
+    const deltaX = state.pointerX - metrics.centerX;
+    const deltaY = state.pointerY - metrics.centerY;
+    if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+      return deltaX < 0 ? "left" : "right";
+    }
+    return deltaY < 0 ? "top" : "bottom";
+  }
+
+  function revealStage(now) {
+    if (!engineState.reveal) return "idle";
+    const elapsed = now - engineState.reveal.startedAt;
+    if (elapsed < revealTiming.directional) return "directional";
+    if (elapsed < revealTiming.directional + engineState.reveal.theme.duration) return "chamber";
+    return "transition";
   }
 
   function resizeVoid() {
@@ -177,6 +224,76 @@ function initializeHubReactor() {
     voidState.waves = voidState.waves.slice(-9);
   }
 
+  function emitEngineEvent(type, detail = {}) {
+    window.dispatchEvent(new CustomEvent("threshold:engine-event", {
+      detail: { type, pressure: engineState.pressure, ...detail }
+    }));
+  }
+
+  function activateEngineReveal(reveal) {
+    if (engineState.reveal) return;
+    engineState.reveal = reveal;
+    engineState.transitionStartedAt = reveal.startedAt + revealTiming.directional + reveal.theme.duration;
+    engineState.pressure = 1;
+    engineCore.dataset.engineState = "opening";
+    engineCore.style.setProperty("--engine-pressure", "1");
+    document.body.dataset.revealStage = "directional";
+    document.body.dataset.revealDirection = reveal.direction;
+    document.body.dataset.revealTheme = reveal.theme.id;
+    document.body.classList.add("is-revealing");
+    sessionStorage.setItem("threshold:reveal-event", JSON.stringify({
+      activation: reveal.activation,
+      category: reveal.category,
+      direction: reveal.direction,
+      destination: new URL(reveal.destination).pathname,
+      theme: reveal.theme.id
+    }));
+    emitEngineEvent("reveal-generated", { reveal });
+    window.setTimeout(
+      () => window.location.assign(reveal.destination),
+      reducedMotion.matches ? 0 : reveal.totalDuration
+    );
+  }
+
+  function receiveHubSignal(event) {
+    const { type } = event.detail;
+    const pressureBySignal = {
+      idle: 0.08,
+      pulse: 0.34,
+      charge: 0.7,
+      resonance: 0.9,
+      "reveal-request": 1
+    };
+    engineState.pressure = pressureBySignal[type] ?? engineState.pressure;
+    engineCore.style.setProperty("--engine-pressure", engineState.pressure.toFixed(2));
+    engineCore.dataset.engineSignal = type;
+    if (type === "reveal-request") {
+      activateEngineReveal(event.detail.reveal);
+    } else if (!engineState.reveal) {
+      engineCore.dataset.engineState = type === "idle" ? "latent" : "receiving";
+    }
+  }
+
+  function receiveEngineEvent(event) {
+    const { type } = event.detail;
+    if (type === "heartbeat") {
+      engineCore.dataset.engineState = "heartbeat";
+      addPressureWave("heartbeat", 0.48);
+      window.setTimeout(() => {
+        if (!engineState.reveal) engineCore.dataset.engineState = "latent";
+      }, 520);
+    } else if (type === "descent") {
+      hubReceptor.dataset.signal = "descent";
+      engineCore.dataset.engineState = "descent";
+      addPressureWave("descent", 1.4);
+    } else {
+      hubReceptor.dataset.signal = "reveal";
+    }
+  }
+
+  window.addEventListener("threshold:hub-signal", receiveHubSignal);
+  window.addEventListener("threshold:engine-event", receiveEngineEvent);
+
   function emitSignal(type, detail = {}) {
     hubReceptor.dataset.signal = type;
     window.dispatchEvent(new CustomEvent("threshold:hub-signal", {
@@ -198,6 +315,14 @@ function initializeHubReactor() {
     state.previousZone = state.zone;
     state.zone = nextZone;
     document.body.dataset.reactorZone = nextZone;
+    if (nextZone === "approach" || nextZone === "contact") {
+      state.approachDirection = approachDirection();
+      document.body.dataset.revealContext = state.approachDirection;
+    } else if (nextZone === "idle") {
+      state.approachDirection = null;
+      state.selectedLink = null;
+      delete document.body.dataset.revealContext;
+    }
 
     if (state.hoveredLink && (nextZone === "approach" || nextZone === "contact")) {
       emitSignal("resonance", {
@@ -230,6 +355,7 @@ function initializeHubReactor() {
 
   function setCategory(link) {
     state.hoveredLink = link;
+    state.selectedLink = link;
     state.hoverAngle = categoryAngle(link);
     const category = link.textContent.trim().toLowerCase();
     voidState.signature = voidSignatures[category] || {
@@ -257,21 +383,28 @@ function initializeHubReactor() {
     emitSignal(state.zone === "contact" ? "charge" : state.zone === "approach" ? "pulse" : "idle");
   }
 
-  function beginDescent(event, link) {
-    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+  function beginReveal(event, link, activation = "activate", forcedDirection = null) {
+    if (engineState.reveal || event?.defaultPrevented || event && (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)) {
       return;
     }
     const destination = link.href;
     if (!destination) {
       return;
     }
-    event.preventDefault();
-    state.descendingStartedAt = performance.now();
-    document.body.classList.add("is-void-descending");
-    hubWheel.classList.add("is-descending");
-    hubReceptor.dataset.signal = "descent";
-    emitSignal("descent", { category: link.textContent.trim(), destination });
-    window.setTimeout(() => window.location.assign(destination), reducedMotion.matches ? 0 : 420);
+    event?.preventDefault();
+    const startedAt = performance.now();
+    const category = link.textContent.trim();
+    const theme = revealThemes[category.toLowerCase()] || {
+      id: "threshold-opening",
+      color: [91, 222, 194],
+      duration: 840
+    };
+    const direction = forcedDirection || approachDirection();
+    const context = revealDirections[direction];
+    const totalDuration = revealTiming.directional + theme.duration + revealTiming.transition;
+    emitSignal("reveal-request", {
+      reveal: { activation, category, context, destination, direction, startedAt, theme, totalDuration }
+    });
   }
 
   categoryLinks.forEach((link) => {
@@ -279,7 +412,7 @@ function initializeHubReactor() {
     link.addEventListener("pointerleave", () => clearCategory(link));
     link.addEventListener("focus", () => setCategory(link));
     link.addEventListener("blur", () => clearCategory(link));
-    link.addEventListener("click", (event) => beginDescent(event, link));
+    link.addEventListener("click", (event) => beginReveal(event, link, event.pointerType === "touch" ? "tap" : "click"));
   });
   if (categoryLinks.includes(document.activeElement)) {
     setCategory(document.activeElement);
@@ -288,6 +421,22 @@ function initializeHubReactor() {
   document.addEventListener("pointermove", (event) => {
     state.pointerX = event.clientX;
     state.pointerY = event.clientY;
+  }, { passive: true });
+
+  document.addEventListener("pointerdown", (event) => {
+    state.gesture = { x: event.clientX, y: event.clientY };
+  }, { passive: true });
+
+  document.addEventListener("pointerup", (event) => {
+    if (!state.gesture || !state.selectedLink || engineState.reveal) return;
+    const deltaX = event.clientX - state.gesture.x;
+    const deltaY = event.clientY - state.gesture.y;
+    state.gesture = null;
+    if (Math.hypot(deltaX, deltaY) < 72) return;
+    const direction = Math.abs(deltaX) >= Math.abs(deltaY)
+      ? deltaX < 0 ? "left" : "right"
+      : deltaY < 0 ? "top" : "bottom";
+    beginReveal(null, state.selectedLink, "gesture", direction);
   }, { passive: true });
 
   document.addEventListener("pointerleave", () => {
@@ -301,15 +450,21 @@ function initializeHubReactor() {
   }, { passive: true });
 
   function updateZone(now, metrics) {
-    if (state.descendingStartedAt) {
+    if (engineState.reveal) {
       return;
     }
     const distance = Math.hypot(state.pointerX - metrics.centerX, state.pointerY - metrics.centerY);
     if (distance <= metrics.radius) {
       setZone("contact", now);
+      if (!state.contactStartedAt) state.contactStartedAt = now;
+      if (state.selectedLink && now - state.contactStartedAt >= 320) {
+        beginReveal(null, state.selectedLink, "tight-radius");
+      }
     } else if (distance <= metrics.radius + 220) {
+      state.contactStartedAt = 0;
       setZone("approach", now);
     } else if (state.zone === "approach" || state.zone === "contact") {
+      state.contactStartedAt = 0;
       setZone("retreat", now);
     } else if (state.zone === "retreat" && now - state.retreatStartedAt >= 1200) {
       setZone("idle", now);
@@ -319,12 +474,20 @@ function initializeHubReactor() {
 
   function updateWheel(now, deltaSeconds, metrics, distance) {
     let proximity = 0;
-    if (state.zone === "contact") {
-      state.rotation += 15 * deltaSeconds;
+    const stage = revealStage(now);
+    const directionalContext = engineState.reveal?.context || revealDirections[state.approachDirection];
+    if (engineState.reveal && stage === "directional") {
+      state.rotation += 112 * (directionalContext.spin || 0.16) * deltaSeconds;
+      proximity = 1;
+    } else if (engineState.reveal && stage === "chamber") {
+      state.rotation += 34 * (directionalContext.spin || 0.2) * deltaSeconds;
+      proximity = 1;
+    } else if (state.zone === "contact") {
+      state.rotation += 15 * (directionalContext?.spin || 1) * deltaSeconds;
       proximity = 1;
     } else if (state.zone === "approach") {
       proximity = clamp((metrics.radius + 220 - distance) / 220, 0, 1);
-      state.rotation += (2 + proximity * 10) * deltaSeconds;
+      state.rotation += (2 + proximity * 10) * (directionalContext?.spin || 0.2) * deltaSeconds;
     } else if (state.zone === "retreat") {
       const progress = clamp((now - state.retreatStartedAt) / 1200, 0, 1);
       state.rotation = state.retreatFrom + (state.retreatTo - state.retreatFrom) * easeInOut(progress);
@@ -334,11 +497,12 @@ function initializeHubReactor() {
     if (vectorAngle === null && (state.zone === "approach" || state.zone === "contact")) {
       vectorAngle = Math.atan2(state.pointerY - metrics.centerY, state.pointerX - metrics.centerX);
     }
+    const revealTilt = engineState.reveal && stage === "directional" ? directionalContext.tilt || 0 : 0;
     const tiltStrength = state.hoveredLink ? 3 : state.zone === "contact" ? 3 : proximity * 1.6;
-    const tiltX = vectorAngle === null ? 0 : -Math.sin(vectorAngle) * tiltStrength;
+    const tiltX = (vectorAngle === null ? 0 : -Math.sin(vectorAngle) * tiltStrength) + revealTilt * 3;
     const tiltY = vectorAngle === null ? 0 : Math.cos(vectorAngle) * tiltStrength;
     const charge = state.hoveredLink ? 0.9 : state.zone === "contact" ? 0.82 : state.zone === "approach" ? 0.3 + proximity * 0.36 : 0;
-    const coreScale = state.descendingStartedAt ? 1.08 : 1 + proximity * 0.05;
+    const coreScale = stage === "transition" ? 1.08 : 1 + proximity * 0.05;
 
     hubWheel.style.setProperty("--wheel-rotation", state.rotation.toFixed(3) + "deg");
     hubWheel.style.setProperty("--wheel-tilt-x", tiltX.toFixed(3) + "deg");
@@ -359,8 +523,8 @@ function initializeHubReactor() {
     const scatterStrength = Math.sin(scatterProgress * Math.PI) * (1 - scatterProgress);
     const escapePhase = (now % 38000) / 38000;
     const escapingIndex = Math.floor(now / 38000) % nodeCount;
-    const descendingProgress = state.descendingStartedAt
-      ? clamp((now - state.descendingStartedAt) / 380, 0, 1)
+    const descendingProgress = engineState.transitionStartedAt
+      ? clamp((now - engineState.transitionStartedAt) / 380, 0, 1)
       : 0;
 
     nodes.forEach((node, index) => {
@@ -392,6 +556,11 @@ function initializeHubReactor() {
         const escapeProgress = escapePhase / 0.09;
         radius += Math.sin(escapeProgress * Math.PI) * (72 + (index % 3) * 18);
         opacity = 0.18 + Math.abs(Math.sin(escapeProgress * Math.PI * 7)) * 0.5;
+      }
+      if (engineState.reveal && revealStage(now) === "chamber" && engineState.reveal.theme.id === "cycle-burst") {
+        const burstProgress = clamp((now - engineState.reveal.startedAt - revealTiming.directional) / engineState.reveal.theme.duration, 0, 1);
+        radius += Math.sin(burstProgress * Math.PI) * metrics.radius * 0.58;
+        opacity = 0.68;
       }
       if (descendingProgress > 0) {
         radius *= 1 - easeInOut(descendingProgress);
@@ -436,12 +605,12 @@ function initializeHubReactor() {
     const engineFlicker = Math.pow(Math.max(0, Math.sin(seconds * Math.PI / 10.5)), 24);
     const shimmer = Math.pow(Math.max(0, Math.sin(seconds * Math.PI / 6)), 20);
     const retreatFade = state.zone === "retreat" ? 0.55 : 1;
-    const descentProgress = state.descendingStartedAt
-      ? clamp((now - state.descendingStartedAt) / 420, 0, 1)
+    const descentProgress = engineState.transitionStartedAt
+      ? clamp((now - engineState.transitionStartedAt) / 420, 0, 1)
       : 0;
     const inset = clamp(Math.min(width, height) * 0.026, 13, 28) + descentProgress * 5;
     const baseScale = 0.995 + Math.sin(seconds * Math.PI / 6) * 0.005;
-    const frameScale = state.descendingStartedAt ? baseScale - descentProgress * 0.006 : baseScale;
+    const frameScale = engineState.transitionStartedAt ? baseScale - descentProgress * 0.006 : baseScale;
     const influenceAngle = state.hoverAngle !== null
       ? state.hoverAngle
       : state.zone === "contact" || state.zone === "approach"
@@ -495,6 +664,26 @@ function initializeHubReactor() {
     context.shadowBlur = 12 + activity * 12;
     context.stroke();
 
+    if (engineState.reveal && revealStage(now) === "directional") {
+      const glow = engineState.reveal.context.glow;
+      const color = engineState.reveal.context.color;
+      context.beginPath();
+      if (glow === "left" || glow === "right") {
+        const x = glow === "left" ? inset : width - inset;
+        context.moveTo(x, height * 0.24);
+        context.lineTo(x, height * 0.76);
+      } else {
+        const y = glow === "top" ? inset : height - inset;
+        context.moveTo(width * 0.24, y);
+        context.lineTo(width * 0.76, y);
+      }
+      context.lineWidth = 2.2;
+      context.strokeStyle = `rgba(${color.join(",")},0.58)`;
+      context.shadowColor = `rgba(${color.join(",")},0.9)`;
+      context.shadowBlur = 28;
+      context.stroke();
+    }
+
     const frameSpeed = 1 + activity * 3.4;
     const escapePhase = (now % 37000) / 37000;
     voidState.frameParticles.forEach((particle, index) => {
@@ -515,6 +704,128 @@ function initializeHubReactor() {
     context.restore();
   }
 
+  function drawRevealEffect(context, now, metrics) {
+    if (!engineState.reveal) return;
+    const stage = revealStage(now);
+    const elapsed = now - engineState.reveal.startedAt;
+    const centerX = metrics.centerX;
+    const centerY = metrics.centerY;
+    const directionColor = engineState.reveal.context.color;
+    const themeColor = engineState.reveal.theme.color;
+    context.save();
+    context.translate(centerX, centerY);
+
+    if (stage === "directional") {
+      const progress = clamp(elapsed / revealTiming.directional, 0, 1);
+      const horizontal = engineState.reveal.context.distortion === "horizontal";
+      context.scale(horizontal ? 1.4 : 0.72, horizontal ? 0.72 : 1.4);
+      context.beginPath();
+      context.arc(0, 0, 28 + progress * Math.max(voidState.width, voidState.height) * 0.36, 0, Math.PI * 2);
+      context.strokeStyle = `rgba(${directionColor.join(",")},${(1 - progress) * 0.42})`;
+      context.lineWidth = 1.5;
+      context.shadowColor = `rgba(${directionColor.join(",")},0.7)`;
+      context.shadowBlur = 22;
+      context.stroke();
+      context.restore();
+      return;
+    }
+
+    if (stage !== "chamber") {
+      context.restore();
+      return;
+    }
+    const progress = clamp((elapsed - revealTiming.directional) / engineState.reveal.theme.duration, 0, 1);
+    const pulse = Math.sin(progress * Math.PI);
+    const color = themeColor.join(",");
+    context.strokeStyle = `rgba(${color},${0.18 + pulse * 0.5})`;
+    context.fillStyle = `rgba(${color},${0.08 + pulse * 0.34})`;
+    context.shadowColor = `rgba(${color},0.72)`;
+    context.shadowBlur = 18;
+    context.lineWidth = 1.2;
+
+    if (engineState.reveal.theme.id === "root-bloom") {
+      for (let index = 0; index < 12; index += 1) {
+        const angle = index / 12 * Math.PI * 2;
+        const radius = 22 + pulse * (54 + index * 2);
+        context.save();
+        context.rotate(angle);
+        context.beginPath();
+        context.ellipse(radius, 0, 14 * pulse, 4, 0, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
+      }
+      for (let index = 0; index < 7; index += 1) {
+        context.beginPath();
+        context.moveTo((index - 3) * 12, 8);
+        context.quadraticCurveTo((index - 3) * 20, 48, Math.sin(index * 3) * 46, 110 * pulse);
+        context.stroke();
+      }
+    } else if (engineState.reveal.theme.id === "glyphfall-alignment" || engineState.reveal.theme.id === "firefall-origin") {
+      for (let index = 0; index < 9; index += 1) {
+        const y = -160 + ((progress * 360 + index * 43) % 320);
+        const x = (1 - progress) * Math.sin(index * 2.4) * 70;
+        context.save();
+        context.translate(x, y);
+        context.rotate(engineState.reveal.theme.id === "firefall-origin" ? progress * Math.PI * 2 + index : 0);
+        context.strokeRect(-5, -5, 10, 10);
+        context.restore();
+      }
+      context.beginPath();
+      context.moveTo(0, -150);
+      context.lineTo(0, 150);
+      context.stroke();
+    } else if (engineState.reveal.theme.id === "cycle-burst") {
+      for (let index = 0; index < 4; index += 1) {
+        context.beginPath();
+        context.arc(0, 0, 35 + progress * (80 + index * 34), 0, Math.PI * 2);
+        context.stroke();
+      }
+    } else if (engineState.reveal.theme.id === "drift-scatter") {
+      for (let index = 0; index < 30; index += 1) {
+        const angle = index * 2.4 + progress * Math.PI * 3;
+        const radius = progress * (28 + index * 4.2);
+        context.beginPath();
+        context.arc(Math.cos(angle) * radius, Math.sin(angle) * radius, 1.4, 0, Math.PI * 2);
+        context.fill();
+      }
+    } else if (engineState.reveal.theme.id === "threshold-opening") {
+      const opening = 18 + progress * 92;
+      context.fillRect(-opening - 54, -170, 54, 340);
+      context.fillRect(opening, -170, 54, 340);
+      context.strokeRect(-opening, -130, opening * 2, 260);
+    } else if (engineState.reveal.theme.id === "symbol-cascade") {
+      for (let row = -3; row <= 3; row += 1) {
+        for (let column = -3; column <= 3; column += 1) {
+          const delay = (row + column + 6) / 12;
+          if (progress < delay * 0.45) continue;
+          context.save();
+          context.translate(column * 30, row * 30 + (1 - progress) * -70);
+          context.rotate((row + column) % 2 ? Math.PI / 4 : 0);
+          context.strokeRect(-5, -5, 10, 10);
+          context.restore();
+        }
+      }
+    } else if (engineState.reveal.theme.id === "signal-oscillation") {
+      context.beginPath();
+      for (let x = -180; x <= 180; x += 4) {
+        const y = Math.sin(x * 0.055 + progress * Math.PI * 8) * 34 * pulse;
+        if (x === -180) context.moveTo(x, y);
+        else context.lineTo(x, y);
+      }
+      context.stroke();
+    } else if (engineState.reveal.theme.id === "transmission-burst") {
+      for (let index = 0; index < 18; index += 1) {
+        const angle = index / 18 * Math.PI * 2;
+        context.beginPath();
+        context.moveTo(Math.cos(angle) * 28, Math.sin(angle) * 28);
+        context.lineTo(Math.cos(angle) * (45 + progress * 150), Math.sin(angle) * (45 + progress * 150));
+        context.stroke();
+      }
+      context.strokeRect(-12, -12, 24, 24);
+    }
+    context.restore();
+  }
+
   function drawVoid(now, deltaSeconds, metrics, staticFrame = false) {
     if (!voidContext || (reducedMotion.matches && !staticFrame)) {
       return;
@@ -524,12 +835,21 @@ function initializeHubReactor() {
     const height = voidState.height;
     const centerX = metrics.centerX;
     const centerY = metrics.centerY;
-    const activity = state.descendingStartedAt ? 1.5
+    const stage = revealStage(now);
+    const activity = stage === "transition" ? 1.5
+      : engineState.reveal ? 1.12
       : state.hoveredLink ? 1
       : state.zone === "contact" ? 0.82
       : state.zone === "approach" ? 0.46
       : state.zone === "retreat" ? 0.12 : 0.2;
-    const signature = voidState.signature;
+    const directionalSignature = state.approachDirection ? {
+      color: revealDirections[state.approachDirection].color,
+      motion: revealDirections[state.approachDirection].distortion
+    } : null;
+    const signature = engineState.reveal && stage === "directional" ? {
+      color: engineState.reveal.context.color,
+      motion: engineState.reveal.context.distortion
+    } : voidState.signature || directionalSignature;
     const fieldColor = signature?.color || [31, 59, 255];
     context.clearRect(0, 0, width, height);
 
@@ -541,6 +861,7 @@ function initializeHubReactor() {
     context.fillRect(0, 0, width, height);
 
     drawFieldFrame(context, now, deltaSeconds, metrics, activity, signature);
+    drawRevealEffect(context, now, metrics);
 
     const veinPulse = 0.5 + 0.5 * Math.sin(now / 1000 * Math.PI * 2 / 21);
     const veinOpacity = 0.028 + veinPulse * 0.026 + activity * 0.045;
@@ -588,8 +909,8 @@ function initializeHubReactor() {
       context.restore();
     });
 
-    const descentProgress = state.descendingStartedAt
-      ? clamp((now - state.descendingStartedAt) / 420, 0, 1)
+    const descentProgress = engineState.transitionStartedAt
+      ? clamp((now - engineState.transitionStartedAt) / 420, 0, 1)
       : 0;
     voidState.particles.forEach((particle, index) => {
       particle.previousX = particle.x;
@@ -649,7 +970,7 @@ function initializeHubReactor() {
 
     if (now - state.lastHeartbeatAt > 6000) {
       state.lastHeartbeatAt = now;
-      addPressureWave("heartbeat", 0.48);
+      emitEngineEvent("heartbeat");
     }
   }
 
@@ -658,6 +979,22 @@ function initializeHubReactor() {
     state.lastFrameAt = now;
     const metrics = wheelMetrics();
     const distance = updateZone(now, metrics);
+    if (engineState.reveal) {
+      const stage = revealStage(now);
+      if (document.body.dataset.revealStage !== stage) {
+        document.body.dataset.revealStage = stage;
+        if (stage === "transition") {
+          document.body.classList.add("is-void-descending");
+          hubWheel.classList.add("is-descending");
+        }
+        emitEngineEvent(stage === "transition" ? "descent" : "reveal-stage", {
+          category: engineState.reveal.category,
+          direction: engineState.reveal.direction,
+          stage,
+          theme: engineState.reveal.theme
+        });
+      }
+    }
     if (!reducedMotion.matches) {
       updateWheel(now, deltaSeconds, metrics, distance);
       updateNodes(now, metrics);
@@ -670,7 +1007,11 @@ function initializeHubReactor() {
   resizeVoid();
   emitSignal("idle");
   state.frameId = requestAnimationFrame(animate);
-  window.addEventListener("pagehide", () => cancelAnimationFrame(state.frameId), { once: true });
+  window.addEventListener("pagehide", () => {
+    cancelAnimationFrame(state.frameId);
+    window.removeEventListener("threshold:hub-signal", receiveHubSignal);
+    window.removeEventListener("threshold:engine-event", receiveEngineEvent);
+  }, { once: true });
 }
 
 initializeHubReactor();

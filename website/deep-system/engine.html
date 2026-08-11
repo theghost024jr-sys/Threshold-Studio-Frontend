@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Threshold Engine - Mechanics</title>
-  <link rel="stylesheet" href="styles/styles.css" />
-  <link rel="stylesheet" href="styles/hub-interaction.css?v=20260807d" />
-  <link rel="stylesheet" href="styles/complexity-layers.css" />
+  <link rel="stylesheet" href="../styles/styles.css" />
+  <link rel="stylesheet" href="../styles/hub-interaction.css?v=20260807d" />
+  <link rel="stylesheet" href="../styles/complexity-layers.css" />
 </head>
-<body class="page-hub hub-page" data-hub-state="idle" data-mode="schematic" data-threshold-spoke="engine" data-complexity="foundation atmosphere topology interaction simulation" data-motion="bounded">
-  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+<body class="page-hub hub-page" data-hub-state="idle" data-mode="schematic" data-complexity="foundation atmosphere interaction simulation" data-motion="bounded">
   <div class="hub-overlay" aria-hidden="true"></div>
   <div class="hub-connection-layer">
     <div id="space-layer" class="space-layer" aria-hidden="true"></div>
@@ -26,7 +25,7 @@
     <button class="hub-strand hub-strand-wake" type="button" data-hub-target="wake" aria-label="Begin at The Wake"></button>
     <button class="hub-strand hub-strand-fold" type="button" data-hub-target="fold" aria-label="Begin at The Fold"></button>
     <button class="hub-strand hub-strand-spire" type="button" data-hub-target="spire" aria-label="Begin at The Spire"></button>
-    <img class="hub-seed-logo" src="assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
+    <img class="hub-seed-logo" src="../assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
   </div>
 
   <main class="hub-shell" aria-label="Threshold Engine Schematic">
@@ -103,13 +102,13 @@
 
     <div class="hub-logo-cluster">
       <button class="hub-logo-mark hub-logo-trigger hub-logo-top-left" type="button" data-hub-target="wake" aria-label="Activate The Wake">
-        <img src="assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
+        <img src="../assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
       </button>
       <button class="hub-logo-mark hub-logo-trigger hub-logo-top-right" type="button" data-hub-target="fold" aria-label="Activate The Fold">
-        <img src="assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
+        <img src="../assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
       </button>
       <button class="hub-logo-mark hub-logo-trigger hub-logo-bottom-left" type="button" data-hub-target="spire" aria-label="Activate The Spire">
-        <img src="assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
+        <img src="../assets/logo/threshold-logo.svg" alt="" loading="eager" decoding="async" />
       </button>
     </div>
 
@@ -145,7 +144,7 @@
 
   <div id="glyph-layer" class="glyph-layer" aria-hidden="true"></div>
 
-  <script type="module" src="scripts/hub-engine.js?v=20260807h"></script>
+  <script type="module" src="../scripts/hub-engine.js?v=20260807h"></script>
 
   <template id="glyph-template">
     <span class="spawn-glyph">âœ§</span>
@@ -168,7 +167,7 @@
     }
 
   </style>
-  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
+  <a class="engine-architecture-link" href="../index.html" aria-label="Open hub entry">Hub Entry</a>
   <style>
     .engine-architecture-link {
       position: fixed;
@@ -193,9 +192,6 @@
       outline: none;
     }
   </style>
-  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
-  <script src="scripts/spoke-tabs.js"></script>
-  <script type="module" src="scripts/destination-page.js"></script>
 </body>
 </html>
 

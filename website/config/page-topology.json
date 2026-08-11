@@ -53,10 +53,6 @@
     "contact": {
       "fib": 8,
       "children": []
-    },
-    "engine": {
-      "fib": 8,
-      "children": []
     }
   },
   "nodes": {

@@ -24,6 +24,34 @@ test("routes Hub cards to owned destination pages", async () => {
   assert.doesNotMatch(hub, /href=["']spoke\.html/);
 });
 
+test("ships the Fib 13 Hub reactor interaction contract", async () => {
+  const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const reactor = await readFile(
+    new URL("../scripts/fibonacci-entry.js", import.meta.url),
+    "utf8"
+  );
+
+  assert.match(hub, /data-hub-wheel/);
+  assert.match(hub, /data-hub-node-field/);
+  assert.match(hub, /data-hub-receptor/);
+  assert.match(hub, /data-void-field/);
+  assert.match(hub, /fibonacci-entry\.js\?v=frame-3/);
+  assert.match(reactor, /const nodeCount = 8/);
+  assert.match(reactor, /threshold:hub-signal/);
+  for (const zone of ["idle", "approach", "contact", "retreat"]) {
+    assert.match(reactor, new RegExp(`setZone\\("${zone}"`));
+  }
+  assert.match(reactor, /emitSignal\("resonance"/);
+  assert.match(reactor, /emitSignal\("descent"/);
+  for (const signature of ["ethos", "glyphs", "mythology", "dialogues", "contact"]) {
+    assert.match(reactor, new RegExp(`${signature}:`));
+  }
+  assert.match(reactor, /drawVoid\(now, deltaSeconds, metrics\)/);
+  assert.match(reactor, /drawFieldFrame\(context, now, deltaSeconds, metrics, activity, signature\)/);
+  assert.match(reactor, /frameParticles/);
+  assert.match(reactor, /if \(reducedMotion\.matches\) \{\s*drawVoid\(performance\.now\(\), 0, wheelMetrics\(\), true\)/);
+});
+
 test("keeps Fibonacci lineage on the destination page", () => {
   assert.equal(
     buildFibonacciUrl({

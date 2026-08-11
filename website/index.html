@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="styles/complexity-layers.css" />
   <style>
     :root {
-      --bg-0: #030407;
-      --bg-1: #0b1222;
-      --bg-2: #17202f;
+      --bg-0: #000000;
+      --bg-1: #0a0f2b;
+      --bg-2: #1f3bff;
       --ink: rgba(248, 243, 232, 0.96);
       --ink-soft: rgba(217, 226, 235, 0.78);
       --gold: #f3be63;
@@ -28,11 +28,7 @@
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
-      background:
-        radial-gradient(circle at 58% 42%, rgba(244, 196, 108, 0.2), rgba(8, 10, 14, 0) 34%),
-        radial-gradient(circle at 16% 20%, rgba(136, 198, 255, 0.14), rgba(8, 10, 14, 0) 42%),
-        radial-gradient(circle at 86% 78%, rgba(114, 233, 216, 0.13), rgba(8, 10, 14, 0) 36%),
-        linear-gradient(160deg, var(--bg-0), var(--bg-1));
+      background: #000000;
       font-family: "Manrope", "Segoe UI", sans-serif;
       overflow-x: hidden;
     }
@@ -44,17 +40,37 @@
       inset: -20vmax;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.32;
-      background: conic-gradient(from 0deg, rgba(243, 190, 99, 0.28), rgba(139, 228, 213, 0.15), rgba(136, 198, 255, 0.08), rgba(243, 190, 99, 0.28));
+      opacity: 0.42;
+      background:
+        radial-gradient(circle at 58% 42%, rgba(214, 168, 75, 0.15), transparent 31%),
+        radial-gradient(circle at 15% 18%, rgba(31, 59, 255, 0.2), transparent 39%),
+        conic-gradient(from 0deg, #000000, #0a0f2b 26%, rgba(31, 59, 255, 0.18) 49%, #000000 74%, #0a0f2b);
       mix-blend-mode: screen;
-      animation: halo-spin 42s linear infinite;
+      animation: void-field-rotation 7200s linear infinite;
     }
 
     body::after {
-      opacity: 0.22;
-      filter: blur(34px);
-      animation-duration: 62s;
+      opacity: 0.16;
+      filter: blur(46px);
+      animation-duration: 9600s;
       animation-direction: reverse;
+    }
+
+    .void-field {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.92;
+      transition: opacity 420ms ease, filter 420ms ease;
+    }
+
+    body[data-reactor-zone="retreat"] .void-field { opacity: 0.68; }
+    body.is-void-descending .void-field {
+      opacity: 1;
+      filter: brightness(0.62) contrast(1.28);
     }
 
     .entry-shell {
@@ -63,34 +79,16 @@
       min-height: 100vh;
       display: grid;
       place-items: center;
-      padding: clamp(1rem, 2vw, 2rem);
+      padding: clamp(2.2rem, 5vw, 4.8rem);
     }
 
     .entry-panel {
       width: min(1020px, 100%);
-      padding: clamp(1.2rem, 3vw, 2.4rem);
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      background:
-        linear-gradient(145deg, rgba(255, 245, 221, 0.05), rgba(130, 220, 255, 0.03) 34%, rgba(8, 10, 18, 0.5)),
-        var(--panel);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 22px 80px rgba(0, 0, 0, 0.44), 0 0 36px rgba(243, 190, 99, 0.15);
+      padding: clamp(0.25rem, 1vw, 0.8rem);
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: clamp(1rem, 2.6vw, 2.2rem);
-      overflow: hidden;
       position: relative;
-    }
-
-    .entry-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 18% 22%, rgba(243, 190, 99, 0.18), transparent 38%),
-        radial-gradient(circle at 86% 84%, rgba(139, 228, 213, 0.13), transparent 36%);
-      pointer-events: none;
     }
 
     .entry-copy,
@@ -141,25 +139,54 @@
       border: 1px solid rgba(243, 190, 99, 0.34);
       background:
         radial-gradient(circle at center, rgba(243, 190, 99, 0.24), rgba(10, 14, 20, 0.14) 42%, rgba(10, 14, 20, 0) 70%);
-      animation: orbit-drift 9s ease-in-out infinite;
+      --wheel-rotation: 0deg;
+      --wheel-tilt-x: 0deg;
+      --wheel-tilt-y: 0deg;
+      --wheel-scale: 1;
+      --core-scale: 1;
+      --core-glow: 0.24;
+      --spoke-glow: 0;
+      --receptor-charge: 0;
+      perspective: 700px;
+      isolation: isolate;
     }
 
-    .entry-orbit::before,
-    .entry-orbit::after {
-      content: "";
+    .entry-rotor,
+    .entry-node-field,
+    .entry-signal-ring {
       position: absolute;
-      inset: 12%;
+      inset: 0;
       border-radius: 50%;
-      border: 1px dashed rgba(155, 214, 255, 0.32);
-      animation: halo-spin 20s linear infinite;
+      pointer-events: none;
     }
 
-    .entry-orbit::after {
+    .entry-rotor {
+      transform: rotateX(var(--wheel-tilt-x)) rotateY(var(--wheel-tilt-y)) rotate(var(--wheel-rotation)) scale(var(--wheel-scale));
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .entry-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .entry-ring-outer {
+      inset: 12%;
+      border: 1px dashed rgba(155, 214, 255, 0.32);
+    }
+
+    .entry-ring-inner {
       inset: 28%;
-      border-style: solid;
-      border-color: rgba(139, 228, 213, 0.34);
-      animation-duration: 13s;
-      animation-direction: reverse;
+      border: 1px solid rgba(139, 228, 213, 0.34);
+    }
+
+    .entry-signal-ring {
+      inset: 24%;
+      border: 1px solid rgba(243, 190, 99, calc(0.08 + var(--receptor-charge) * 0.36));
+      opacity: 0;
+      animation: reactor-signal 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
     .entry-core {
@@ -171,7 +198,11 @@
       transform: translate(-50%, -50%);
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255, 246, 227, 0.95) 0%, rgba(243, 190, 99, 0.78) 48%, rgba(12, 18, 26, 0.4) 100%);
-      box-shadow: 0 0 24px rgba(243, 190, 99, 0.46);
+      box-shadow: 0 0 24px rgba(243, 190, 99, calc(0.18 + var(--core-glow)));
+      scale: var(--core-scale);
+      animation: reactor-breathe 6s cubic-bezier(0.4, 0, 0.2, 1) infinite, reactor-flicker 21s linear infinite;
+      will-change: scale, box-shadow;
+      z-index: 4;
     }
 
     .entry-spoke {
@@ -182,12 +213,77 @@
       height: 1px;
       transform-origin: left center;
       background: linear-gradient(90deg, rgba(243, 190, 99, 0.85), rgba(139, 228, 213, 0));
-      opacity: 0.82;
+      opacity: calc(0.28 + var(--spoke-glow) * 0.54);
+      box-shadow: 0 0 calc(var(--spoke-glow) * 12px) rgba(243, 190, 99, 0.72);
+      transition: opacity 240ms ease-in-out, box-shadow 240ms ease-in-out;
     }
 
     .entry-spoke-a { transform: rotate(-22deg); }
     .entry-spoke-b { transform: rotate(102deg); }
     .entry-spoke-c { transform: rotate(218deg); }
+
+    .entry-orbit-node {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      margin: -4px;
+      border-radius: 50%;
+      background: rgba(181, 232, 226, 0.92);
+      box-shadow: 0 0 10px rgba(139, 228, 213, 0.46);
+      opacity: var(--node-opacity, 0.24);
+      translate: var(--node-x, 0) var(--node-y, 0);
+      scale: var(--node-scale, 1);
+      will-change: translate, opacity, scale;
+    }
+
+    .entry-orbit-node.is-sparking {
+      animation: reactor-spark 620ms ease-out;
+    }
+
+    .entry-receptor {
+      width: 78px;
+      height: 32px;
+      margin: -9px auto 0;
+      --receptor-charge: 0;
+      position: relative;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      opacity: calc(0.46 + var(--receptor-charge) * 0.5);
+      scale: calc(1 + var(--receptor-charge) * 0.06);
+      transition: opacity 400ms ease-in-out, scale 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .entry-receptor::before,
+    .entry-receptor::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .entry-receptor::before {
+      width: 58px;
+      height: 16px;
+      border: 1px solid rgba(139, 228, 213, calc(0.24 + var(--receptor-charge) * 0.48));
+      box-shadow: 0 0 14px rgba(139, 228, 213, calc(var(--receptor-charge) * 0.24));
+    }
+
+    .entry-receptor::after {
+      width: 8px;
+      height: 8px;
+      background: rgba(243, 190, 99, 0.86);
+      box-shadow: 0 0 12px rgba(243, 190, 99, 0.68);
+      animation: receptor-heartbeat 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    .entry-orbit.is-descending {
+      --wheel-scale: 0.96;
+      --core-scale: 1.08;
+      --core-glow: 0.8;
+      transition: transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
     .entry-nav {
       border: 1px solid rgba(243, 190, 99, 0.24);
@@ -294,7 +390,7 @@
     .entry-seed-version { color: var(--ink); font-size: 0.78rem; }
     .entry-seed-memory { grid-column: 2; color: var(--ink-soft); font-size: 0.7rem; }
 
-    @keyframes halo-spin {
+    @keyframes void-field-rotation {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
@@ -303,6 +399,56 @@
       0% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-4px) scale(1.01); }
       100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes reactor-breathe {
+      0%, 100% { scale: var(--core-scale); }
+      50% { scale: calc(var(--core-scale) * 1.03); }
+    }
+
+    @keyframes reactor-flicker {
+      0%, 84%, 86%, 100% { filter: brightness(1); }
+      84.6% { filter: brightness(1.42); }
+      85.2% { filter: brightness(0.88); }
+    }
+
+    @keyframes reactor-signal {
+      0%, 72% { opacity: 0; transform: scale(0.35); }
+      76% { opacity: calc(0.18 + var(--receptor-charge) * 0.42); }
+      88%, 100% { opacity: 0; transform: scale(3.1); }
+    }
+
+    @keyframes receptor-heartbeat {
+      0%, 86%, 100% { scale: 1; opacity: 0.38; }
+      89% { scale: 1.28; opacity: 0.92; }
+      92% { scale: 1.08; opacity: 0.56; }
+      95% { scale: 1.2; opacity: 0.82; }
+    }
+
+    @keyframes reactor-spark {
+      0% { scale: 1; box-shadow: 0 0 10px rgba(139, 228, 213, 0.46); }
+      35% { scale: 2.2; box-shadow: 0 0 22px rgba(255, 225, 160, 0.9); }
+      100% { scale: 1; box-shadow: 0 0 10px rgba(139, 228, 213, 0.46); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body::before,
+      body::after,
+      .entry-core,
+      .entry-signal-ring,
+      .entry-receptor::after,
+      .entry-orbit-node {
+        animation: none;
+      }
+
+      .void-field,
+      .entry-spoke,
+      .entry-receptor,
+      .entry-orbit.is-descending,
+      .entry-actions a,
+      .entry-engine {
+        transition: none;
+      }
     }
 
     @media (max-width: 900px) {
@@ -334,6 +480,7 @@
   </style>
 </head>
 <body data-complexity="foundation atmosphere topology interaction" data-motion="bounded">
+  <canvas class="void-field" data-void-field aria-hidden="true"></canvas>
   <main class="entry-shell" aria-label="Threshold hub entry">
     <section class="entry-panel">
       <div class="entry-copy">
@@ -344,11 +491,20 @@
           Start from the hub. Route into the engine when you want to tune matrix waves,
           hub energy, and field mechanics.
         </p>
-        <div class="entry-orbit" aria-hidden="true">
-          <span class="entry-core"></span>
-          <span class="entry-spoke entry-spoke-a"></span>
-          <span class="entry-spoke entry-spoke-b"></span>
-          <span class="entry-spoke entry-spoke-c"></span>
+        <div class="entry-reactor" aria-hidden="true">
+          <div class="entry-orbit" data-hub-wheel>
+            <span class="entry-signal-ring"></span>
+            <div class="entry-rotor">
+              <span class="entry-ring entry-ring-outer"></span>
+              <span class="entry-ring entry-ring-inner"></span>
+              <span class="entry-spoke entry-spoke-a"></span>
+              <span class="entry-spoke entry-spoke-b"></span>
+              <span class="entry-spoke entry-spoke-c"></span>
+              <span class="entry-node-field" data-hub-node-field></span>
+            </div>
+            <span class="entry-core"></span>
+          </div>
+          <span class="entry-receptor" data-hub-receptor></span>
         </div>
       </div>
 
@@ -373,6 +529,6 @@
       </aside>
     </section>
   </main>
-  <script type="module" src="scripts/fibonacci-entry.js?v=6765bcc"></script>
+  <script type="module" src="scripts/fibonacci-entry.js?v=frame-3"></script>
 </body>
 </html>

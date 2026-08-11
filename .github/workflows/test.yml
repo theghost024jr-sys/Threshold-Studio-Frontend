@@ -16,5 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Validate Cloudflare Pages build
+        run: npm run build
       - name: Test frontend routing and complexity
-        run: node --test website/tests/*.test.mjs
+        run: npm test

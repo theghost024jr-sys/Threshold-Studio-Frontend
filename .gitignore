@@ -1,31 +1,74 @@
-# Obsidian local state
-**/.obsidian/workspace.json
-**/.obsidian/workspace-mobile.json
-**/.obsidian/plugins/
-**/.obsidian/cache/
+# ============================
+# Obsidian (never version this)
+# ============================
+.obsidian/
+vault/
+website/assets/vault/
 
-# Godot project and generated imports
-/godot/
-**/.godot/
+# ============================
+# Cloudflare / Wrangler
+# ============================
+.wrangler/
+.node-bundles/
+dist/
+build/
+.cache/
+
+# ============================
+# Node / JS tooling
+# ============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ============================
+# Python tooling
+# ============================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ============================
+# Godot (viewport artifacts)
+# ============================
+godot/
+.godot/
 *.import
 *.import/
 *.translation
+.editor/
+.imported/
 
-# Cloudflare and static-build outputs
-/.wrangler/
-/.node-bundles/
-/_site/
-/threshold/
-/temp-vault/
-dist/
-build/
+# ============================
+# System / OS noise
+# ============================
+.DS_Store
+Thumbs.db
 
-# Python, Node.js, logs, and temporary files
-__pycache__/
-*.py[cod]
-node_modules/
-*.log
+# ============================
+# Build outputs (static site)
+# ============================
+_site/
+website/dist/
+website/build/
+website/.cache/
 
-# Generated vault indexes
-/vault-archive.json
-/vault-index.json
+# ============================
+# Retired local build outputs
+# ============================
+threshold/
+temp-vault/
+vault-archive.json
+vault-index.json
+
+# ============================
+# Local-only development files
+# ============================
+.env
+.env.*
+!.env.example
+*.local

@@ -4,8 +4,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Herb Room</title>
+  <style>
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: #10150f;
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    body > img {
+      display: block;
+      width: 100%;
+      min-height: 100vh;
+      object-fit: cover;
+    }
+
+    .chamber-controls a {
+      position: absolute;
+      z-index: 1;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      background: rgba(8, 12, 8, 0.72);
+      color: #fff;
+      font: 600 0.85rem/1 sans-serif;
+      text-decoration: none;
+    }
+
+    .exit-south {
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .exit-east {
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+    }
+  </style>
 </head>
 <body>
   <img src="/assets/weather/weather-038-herbroom.png" alt="Herb Room" />
+  <div class="chamber-controls" aria-label="Chamber exits">
+    <a href="/housegarden.html" class="exit-south">Retreat South</a>
+    <a href="/environment/herbroom-east.html" class="exit-east">Go East</a>
+  </div>
 </body>
 </html>

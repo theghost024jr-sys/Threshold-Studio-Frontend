@@ -29,3 +29,173 @@
   flex-wrap: wrap;
   gap: 0.55rem;
 }
+
+.flower-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.flower-signals span {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(196, 224, 166, 0.24);
+  border-radius: 999px;
+  color: rgba(230, 239, 216, 0.82);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.garden-scene {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 3.5rem auto;
+}
+
+.garden-scene__header {
+  width: min(680px, 100%);
+  margin-bottom: 2rem;
+}
+
+.garden-scene__header h2 {
+  margin: 0.2rem 0 0.6rem;
+  color: rgba(246, 239, 218, 0.98);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.garden-scene__header > p:last-child {
+  max-width: 58ch;
+  color: rgba(221, 225, 207, 0.74);
+  line-height: 1.7;
+}
+
+.garden-scene__path {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid rgba(198, 218, 174, 0.2);
+  border-left: 1px solid rgba(198, 218, 174, 0.2);
+}
+
+.garden-scene__moment {
+  position: relative;
+  min-height: 310px;
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+  border-right: 1px solid rgba(198, 218, 174, 0.2);
+  border-bottom: 1px solid rgba(198, 218, 174, 0.2);
+  background:
+    linear-gradient(145deg, rgba(18, 28, 20, 0.72), rgba(7, 10, 8, 0.9));
+}
+
+.garden-scene__moment--shore {
+  background: linear-gradient(145deg, rgba(18, 35, 34, 0.78), rgba(7, 12, 12, 0.92));
+}
+
+.garden-scene__moment--ember {
+  background: linear-gradient(145deg, rgba(42, 29, 18, 0.68), rgba(12, 9, 7, 0.92));
+}
+
+.garden-scene__index {
+  margin: 0 0 1.25rem;
+  color: rgba(181, 205, 153, 0.72);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.garden-scene__moment h3 {
+  margin: 0 0 0.8rem;
+  color: rgba(244, 237, 214, 0.96);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.garden-scene__moment p:not(.garden-scene__index) {
+  color: rgba(217, 220, 202, 0.72);
+  line-height: 1.7;
+}
+
+.garden-scene__moment strong {
+  color: rgba(211, 232, 178, 0.94);
+  font-weight: 500;
+}
+
+.garden-scene__moment button {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(201, 224, 171, 0.5);
+  border-radius: 0;
+  background: transparent;
+  color: rgba(228, 238, 211, 0.92);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.garden-scene__moment button:hover,
+.garden-scene__moment button:focus-visible {
+  border-bottom-color: rgba(228, 241, 207, 0.95);
+  color: #fff;
+}
+
+.garden-depth {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1rem;
+  border-top: 1px solid rgba(198, 218, 174, 0.2);
+}
+
+.garden-depth a {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1.25rem 1rem;
+  border-right: 1px solid rgba(198, 218, 174, 0.2);
+  color: rgba(232, 238, 218, 0.9);
+  text-decoration: none;
+}
+
+.garden-depth a:last-child {
+  border-right: 0;
+}
+
+.garden-depth span {
+  color: rgba(178, 194, 159, 0.68);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.garden-depth strong {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+@media (max-width: 720px) {
+  .garden-scene__path,
+  .garden-depth {
+    grid-template-columns: 1fr;
+  }
+
+  .garden-depth a {
+    border-right: 0;
+    border-bottom: 1px solid rgba(198, 218, 174, 0.2);
+  }
+
+  .garden-depth a:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -37,6 +37,11 @@
       <p>A Flower of warmth, growth, and quiet orientation.</p>
       <p>Spirit form sourced from the Vault. Pulse aligned with the Meadow and Shore nodes.</p>
       <p class="flower-physics">Soft ambient physics: pollen drift, leaf motes, warm dust, and gentle green static.</p>
+      <div class="flower-signals" aria-label="Chamber signals">
+        <span>Meadow warmth</span>
+        <span>Shore clarity</span>
+        <span>Vault spirit</span>
+      </div>
     </div>
 
     <div id="flower-pulse" aria-hidden="true"></div>
@@ -55,6 +60,54 @@
     </section>
   </main>
 
+  <section class="garden-scene" aria-labelledby="garden-scene-title">
+    <header class="garden-scene__header">
+      <p class="flower-eyebrow">The Flower opens</p>
+      <h2 id="garden-scene-title">You can begin here.</h2>
+      <p>The Fog Overlay breathes as you enter, a warm membrane that melts uncertainty into soil.</p>
+    </header>
+
+    <div class="garden-scene__path">
+      <article class="garden-scene__moment garden-scene__moment--meadow">
+        <p class="garden-scene__index">01 · Warmth</p>
+        <h3>Herb Room</h3>
+        <p>Terracotta pots hum with memory. Rosemary, mint, and basil move with the <strong>Meadow pulse</strong>, a green resonance rising from the floor like breath.</p>
+        <p>An open book shifts its pages as you pass. Fireflies sketch paths above the wood grain, then dissolve before they can become instructions.</p>
+        <button type="button" data-room-index="0">Enter Herb Room</button>
+      </article>
+
+      <article class="garden-scene__moment garden-scene__moment--growth">
+        <p class="garden-scene__index">02 · Formation</p>
+        <h3>Greenhouse</h3>
+        <p>Humidity gathers on the glass. Each droplet vibrates with <strong>seed-precursor resonance</strong> while pollen rises into clusters that pulse once, then fade.</p>
+        <p>Something is forming here. Not a seed yet, but the idea of one.</p>
+        <button type="button" data-room-index="1">Enter Greenhouse</button>
+      </article>
+
+      <article class="garden-scene__moment garden-scene__moment--shore">
+        <p class="garden-scene__index">03 · Clarity</p>
+        <h3>Lagoon</h3>
+        <p>Still water reflects the ceiling beams. <strong>Shore pulse</strong> carries each ripple inward, softening motion and returning it as orientation.</p>
+        <p>Fog dissolves. Memory aligns. Your pulse steadies.</p>
+        <button type="button" data-room-index="2">Enter Lagoon</button>
+      </article>
+
+      <article class="garden-scene__moment garden-scene__moment--ember">
+        <p class="garden-scene__index">04 · Orientation</p>
+        <h3>Camp</h3>
+        <p>A low fire holds its shape inside a ring of stones. Fireflies drift like almost-letters while the embers answer with <strong>orientation heat</strong>.</p>
+        <p>A glow rises in the Greenhouse. Meadow calls; Shore answers. The Garden Seed coheres between them and waits to be carried home.</p>
+        <button type="button" data-room-index="6">Enter Camp</button>
+      </article>
+    </div>
+
+    <nav class="garden-depth" aria-label="House and Garden depth navigation">
+      <a href="index.html"><span>Move outward · Fib 13</span><strong>Hub</strong></a>
+      <a href="housegarden.html?node=root-archive&amp;fib=5&amp;trail=house-garden"><span>Move inward · Fib 5</span><strong>Root Archive</strong></a>
+      <a href="housegarden.html?node=lantern-pedal&amp;fib=5&amp;trail=house-garden"><span>Move inward · Fib 5</span><strong>Lantern Pedal</strong></a>
+    </nav>
+  </section>
+
   <section id="old-house" class="vault-chamber-surface vault-chamber-border" aria-label="Old house chamber">
     <h2 class="old-title"></h2>
     <p class="old-lore"></p>
@@ -70,7 +123,7 @@
     <ul class="garden-notes"></ul>
   </section>
 
-  <div id="garden" aria-label="Garden rooms">
+  <div id="garden-rooms" aria-label="Garden rooms">
 
     <section class="room" id="herb-room">
       <div class="content">
@@ -157,6 +210,14 @@
   <script src="scripts/chamber-loader.js"></script>
   <script src="scripts/housegarden.js"></script>
   <script src="scripts/Garden.js"></script>
+  <script>
+    document.querySelectorAll('[data-room-index]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        window.showRoom(Number(button.dataset.roomIndex));
+        document.getElementById('garden-rooms')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
   <script type="module">
     import { deriveHouseGardenProfile } from './scripts/house-garden-state.js';
     const applyProfile = function (detail) {

@@ -101,13 +101,20 @@
       position: absolute;
       top: 50%;
       right: 34px;
+      z-index: 2;
       margin: 0;
       color: rgba(255, 255, 244, 0.96);
       font: 500 1rem/1.2 Georgia, serif;
       letter-spacing: 0.08em;
       opacity: var(--cue-reveal);
+      pointer-events: none;
+      text-decoration: none;
       text-shadow: 0 2px 18px rgba(18, 35, 24, 0.9);
       transform: translateY(-50%);
+    }
+
+    .east-threshold__cue.is-available {
+      pointer-events: auto;
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -126,13 +133,15 @@
   <div class="east-threshold" aria-hidden="true">
     <div class="east-threshold__water"></div>
     <div class="east-threshold__growth"></div>
-    <p class="east-threshold__cue">Step through.</p>
+    <a class="east-threshold__cue" href="/environment/basin.html" tabindex="-1">Step through.</a>
   </div>
   <div class="chamber-controls" aria-label="Chamber exits">
-    <a href="/housegarden.html" class="exit-south">Retreat South</a>
+    <a href="/environment/waterfall.html" class="exit-south">Look South</a>
   </div>
   <script>
     const chamber = document.body;
+    const eastThreshold = document.querySelector('.east-threshold');
+    const eastCue = document.querySelector('.east-threshold__cue');
 
     const revealEast = (clientX) => {
       const start = window.innerWidth * 0.52;
@@ -144,6 +153,11 @@
       chamber.style.setProperty('--cue-reveal', Math.max(0, Math.min(1, (progress - 0.68) * 4)).toFixed(3));
       chamber.style.setProperty('--interior-brightness', (1 - progress * 0.16).toFixed(3));
       chamber.style.setProperty('--interior-saturation', (1 - progress * 0.1).toFixed(3));
+      const isAvailable = progress >= 0.9;
+      eastThreshold.style.pointerEvents = isAvailable ? 'auto' : 'none';
+      eastThreshold.setAttribute('aria-hidden', String(!isAvailable));
+      eastCue.classList.toggle('is-available', isAvailable);
+      eastCue.tabIndex = isAvailable ? 0 : -1;
     };
 
     window.addEventListener('pointermove', (event) => revealEast(event.clientX), { passive: true });

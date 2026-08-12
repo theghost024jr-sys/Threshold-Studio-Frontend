@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "chamber": "house-and-garden",
+    "season": "summer",
+    "cycleYear": 2026
+  },
+  "seeds": [
+    {
+      "id": "seed-morning-fern",
+      "name": "Morning Fern",
+      "family": "Polypodiaceae",
+      "category": "perennial",
+      "season": "spring",
+      "tags": ["shade-tolerant", "groundcover", "native"],
+      "note": "Unfurls at first light; thrives under the garden canopy.",
+      "contributor": null,
+      "lineage": [],
+      "createdAt": "2026-03-01T06:00:00.000Z"
+    },
+    {
+      "id": "seed-ember-clover",
+      "name": "Ember Clover",
+      "family": "Fabaceae",
+      "category": "perennial",
+      "season": "summer",
+      "tags": ["pollinator", "nitrogen-fixer", "edible"],
+      "note": "Warm-season perennial; attracts bees and fixes soil nitrogen.",
+      "contributor": null,
+      "lineage": [],
+      "createdAt": "2026-04-15T09:00:00.000Z"
+    },
+    {
+      "id": "seed-shore-verbena",
+      "name": "Shore Verbena",
+      "family": "Verbenaceae",
+      "category": "annual",
+      "season": "summer",
+      "tags": ["salt-tolerant", "groundcover", "coastal"],
+      "note": "Salt-tolerant groundcover that carpets the shore edge in violet.",
+      "contributor": null,
+      "lineage": [],
+      "createdAt": "2026-05-10T11:30:00.000Z"
+    },
+    {
+      "id": "seed-meadow-campion",
+      "name": "Meadow Campion",
+      "family": "Caryophyllaceae",
+      "category": "biennial",
+      "season": "summer",
+      "tags": ["pollinator", "meadow", "wildflower"],
+      "note": "Tall pink spires that sway in the pulse of meadow wind.",
+      "contributor": null,
+      "lineage": [],
+      "createdAt": "2026-05-20T08:00:00.000Z"
+    }
+  ]
+}

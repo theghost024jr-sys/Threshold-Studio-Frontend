@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "chamber": "house-and-garden",
+    "season": "summer",
+    "cycleYear": 2026,
+    "description": "The Root Archive holds the lineage of every plant, seasonal note, and contributor record for the House & Garden chamber."
+  },
+  "entries": [
+    {
+      "id": "root-001",
+      "name": "Morning Fern",
+      "category": "perennial",
+      "tags": ["shade-tolerant", "groundcover", "native"],
+      "season": "spring",
+      "contributor": "Threshold Collective",
+      "notes": "First entry in the archive. Planted along the north wall.",
+      "createdAt": "2026-03-01T06:00:00.000Z",
+      "seedIds": ["seed-morning-fern"],
+      "lineage": []
+    },
+    {
+      "id": "root-002",
+      "name": "Ember Clover",
+      "category": "perennial",
+      "tags": ["pollinator", "nitrogen-fixer", "edible"],
+      "season": "summer",
+      "contributor": "Threshold Collective",
+      "notes": "Introduced to improve soil health in the meadow zone.",
+      "createdAt": "2026-04-15T09:00:00.000Z",
+      "seedIds": ["seed-ember-clover"],
+      "lineage": ["root-001"]
+    },
+    {
+      "id": "root-003",
+      "name": "Shore Verbena",
+      "category": "annual",
+      "tags": ["salt-tolerant", "groundcover", "coastal"],
+      "season": "summer",
+      "contributor": null,
+      "notes": "Planted along the shore path to stabilize the edge.",
+      "createdAt": "2026-05-10T11:30:00.000Z",
+      "seedIds": ["seed-shore-verbena"],
+      "lineage": []
+    },
+    {
+      "id": "root-004",
+      "name": "Meadow Campion",
+      "category": "biennial",
+      "tags": ["pollinator", "meadow", "wildflower"],
+      "season": "summer",
+      "contributor": null,
+      "notes": "Self-seeds vigorously; lineage traceable to root-001 microclimate.",
+      "createdAt": "2026-05-20T08:00:00.000Z",
+      "seedIds": ["seed-meadow-campion"],
+      "lineage": ["root-001"]
+    }
+  ]
+}

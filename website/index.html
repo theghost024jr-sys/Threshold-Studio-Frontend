@@ -106,6 +106,18 @@
       z-index: 2;
     }
 
+    .hub-heartbeat-spokes {
+      position: absolute;
+      left: 0;
+      top: 1.15rem;
+      width: min(320px, 76vw);
+      aspect-ratio: 1;
+      z-index: 0;
+      pointer-events: none;
+      opacity: calc(0.08 + var(--spoke-glow, 0) * 0.52);
+      filter: blur(0.2px);
+    }
+
     .entry-engine-core {
       position: absolute;
       left: 50%;
@@ -116,10 +128,10 @@
       z-index: 1;
       border-radius: 50%;
       pointer-events: none;
-      opacity: calc(0.07 + var(--engine-pressure, 0) * 0.18);
+      opacity: calc(0.07 + var(--engine-pressure, 0) * 0.18 + var(--heartbeat-pressure, 0) * 0.12);
       background: radial-gradient(circle, rgba(214, 168, 75, 0.28), rgba(31, 59, 255, 0.08) 42%, transparent 70%);
       filter: blur(1px);
-      scale: calc(0.92 + var(--engine-pressure, 0) * 0.08);
+      scale: calc(0.92 + var(--engine-pressure, 0) * 0.08 + var(--heartbeat-pressure, 0) * 0.04);
       transition: opacity 280ms ease, scale 280ms ease;
     }
 
@@ -131,7 +143,6 @@
       border-radius: 50%;
       border: 1px solid rgba(214, 168, 75, 0.3);
       box-shadow: 0 0 22px rgba(31, 59, 255, 0.2);
-      animation: engine-core-heartbeat 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
     .entry-engine-core::after {
@@ -148,6 +159,24 @@
       margin: 0 0 0.9rem;
       opacity: 0.92;
       filter: drop-shadow(0 0 18px rgba(255, 219, 136, 0.52));
+      scale: calc(1 + var(--logo-charge, 0) * 0.06);
+      rotate: calc(var(--logo-direction, 0) * 1deg);
+      transition: opacity 360ms ease, filter 360ms ease, scale 360ms ease, rotate 480ms ease;
+    }
+
+    body[data-prime-atom-state="listening"] .entry-mark,
+    body[data-prime-atom-state="resonant"] .entry-mark {
+      filter: drop-shadow(0 0 24px rgba(139, 228, 213, 0.68));
+    }
+
+    body[data-prime-atom-state="revealing"] .entry-mark {
+      opacity: 0.38;
+      scale: 0.82;
+    }
+
+    body[data-prime-atom-state="descending"] .entry-mark {
+      opacity: 0;
+      scale: 0.18;
     }
 
     h1 {
@@ -218,20 +247,119 @@
     }
 
     .entry-ring-outer {
-      inset: 12%;
+      inset: 18% 7%;
       border: 1px dashed rgba(155, 214, 255, 0.32);
+      transform: rotateX(64deg) rotateZ(12deg);
     }
 
     .entry-ring-inner {
-      inset: 28%;
+      inset: 18% 7%;
       border: 1px solid rgba(139, 228, 213, 0.34);
+      transform: rotateY(64deg) rotateZ(32deg);
+    }
+
+    .prime-atom-logo-field {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 72%;
+      aspect-ratio: 1;
+      translate: -50% -50%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: calc(0.05 + var(--receptor-charge) * 0.09);
+      filter: blur(0.4px) drop-shadow(0 0 24px rgba(243, 190, 99, 0.3));
+      transition: opacity 360ms ease, scale 520ms ease, filter 420ms ease;
+    }
+
+    .prime-reveal-box {
+      position: absolute;
+      inset: 5%;
+      z-index: 6;
+      pointer-events: none;
+      border: 1px solid transparent;
+      opacity: 0;
+      scale: 0.72;
+      transition: opacity 240ms ease, scale 520ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease;
+    }
+
+    body[data-heartbeat-phase="micro-pulse"] .entry-ring {
+      animation: heartbeat-ring-micro 640ms ease-out;
+    }
+
+    body[data-heartbeat-phase="micro-pulse"] .entry-core,
+    body[data-heartbeat-phase="micro-pulse"] .prime-atom-logo-field {
+      animation: heartbeat-life-pulse 640ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-ring {
+      animation: heartbeat-ring-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-core {
+      animation: heartbeat-nucleus-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-signal-ring {
+      animation: heartbeat-pressure-wave 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-engine-core::before,
+    body[data-heartbeat-phase="heartbeat"] .entry-engine-core::after,
+    body[data-heartbeat-phase="heartbeat"] .entry-receptor::after {
+      animation: heartbeat-engine-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-mark,
+    body[data-heartbeat-phase="heartbeat"] .prime-atom-logo-field {
+      animation: heartbeat-logo-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-panel {
+      filter: brightness(1.035);
+    }
+
+    body[data-heartbeat-phase="flicker"] .entry-core {
+      animation: heartbeat-nucleus-flicker 520ms linear;
+    }
+
+    body[data-heartbeat-phase="flicker"] .entry-ring,
+    body[data-heartbeat-phase="flicker"] .entry-orbit-node,
+    body[data-heartbeat-phase="flicker"] .entry-receptor {
+      animation: heartbeat-anomaly-glitch 520ms steps(2, end);
+    }
+
+    body[data-heartbeat-phase="flicker"] .entry-mark,
+    body[data-heartbeat-phase="flicker"] .prime-atom-logo-field {
+      animation: heartbeat-logo-echo 520ms steps(3, end);
+    }
+
+    body[data-heartbeat-phase="flicker"] .void-field {
+      animation: heartbeat-void-darken 520ms linear;
+    }
+
+    body[data-prime-atom-state="revealing"] .prime-reveal-box,
+    body[data-prime-atom-state="descending"] .prime-reveal-box {
+      opacity: 0.72;
+      scale: 1;
+      border-color: rgba(139, 228, 213, 0.38);
+    }
+
+    body[data-prime-atom-state="revealing"] .prime-atom-logo-field {
+      opacity: 0.18;
+      scale: 1.12 0.76;
+      filter: blur(1px) drop-shadow(0 0 30px rgba(139, 228, 213, 0.54));
+    }
+
+    body[data-prime-atom-state="descending"] .prime-atom-logo-field {
+      opacity: 0;
+      scale: 0.12;
     }
 
     .entry-signal-ring {
       inset: 24%;
       border: 1px solid rgba(243, 190, 99, calc(0.08 + var(--receptor-charge) * 0.36));
       opacity: 0;
-      animation: reactor-signal 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
     .entry-core {
@@ -245,9 +373,22 @@
       background: radial-gradient(circle, rgba(255, 246, 227, 0.95) 0%, rgba(243, 190, 99, 0.78) 48%, rgba(12, 18, 26, 0.4) 100%);
       box-shadow: 0 0 24px rgba(243, 190, 99, calc(0.18 + var(--core-glow)));
       scale: var(--core-scale);
-      animation: reactor-breathe 6s cubic-bezier(0.4, 0, 0.2, 1) infinite, reactor-flicker 21s linear infinite;
       will-change: scale, box-shadow;
       z-index: 4;
+    }
+
+    .prime-atom-logo-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 16%;
+      aspect-ratio: 1;
+      translate: -50% -50%;
+      z-index: 5;
+      pointer-events: none;
+      opacity: calc(0.3 + var(--receptor-charge) * 0.46);
+      filter: drop-shadow(0 0 9px rgba(255, 242, 210, 0.7));
+      mix-blend-mode: screen;
     }
 
     .entry-spoke {
@@ -257,9 +398,9 @@
       width: 50%;
       height: 1px;
       transform-origin: left center;
-      background: linear-gradient(90deg, rgba(243, 190, 99, 0.85), rgba(139, 228, 213, 0));
+      background: linear-gradient(90deg, rgba(var(--heartbeat-color-rgb, 243, 190, 99), 0.85), rgba(139, 228, 213, 0));
       opacity: calc(0.28 + var(--spoke-glow) * 0.54);
-      box-shadow: 0 0 calc(var(--spoke-glow) * 12px) rgba(243, 190, 99, 0.72);
+      box-shadow: 0 0 calc(var(--spoke-glow) * 12px) rgba(var(--heartbeat-color-rgb, 243, 190, 99), 0.72);
       transition: opacity 240ms ease-in-out, box-shadow 240ms ease-in-out;
     }
 
@@ -320,7 +461,6 @@
       height: 8px;
       background: rgba(243, 190, 99, 0.86);
       box-shadow: 0 0 12px rgba(243, 190, 99, 0.68);
-      animation: receptor-heartbeat 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
     .entry-orbit.is-descending {
@@ -392,7 +532,22 @@
       font-size: 0.76rem;
       font-weight: 600;
       box-shadow: 0 0 20px rgba(255, 214, 126, 0.3);
-      transition: transform 170ms ease, filter 170ms ease;
+      opacity: 0.34;
+      clip-path: inset(0 48% 0 48%);
+      pointer-events: none;
+      transition: transform 360ms ease, filter 170ms ease, opacity 360ms ease, clip-path 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .entry-engine[data-door-state="listening"] {
+      opacity: 0.62;
+      clip-path: inset(0 24% 0 24%);
+    }
+
+    .entry-engine[data-door-state="open"],
+    .entry-engine:focus-visible {
+      opacity: 1;
+      clip-path: inset(0);
+      pointer-events: auto;
     }
 
     .entry-engine:hover,
@@ -446,53 +601,90 @@
       100% { transform: translateY(0) scale(1); }
     }
 
-    @keyframes reactor-breathe {
-      0%, 100% { scale: var(--core-scale); }
-      50% { scale: calc(var(--core-scale) * 1.03); }
-    }
-
-    @keyframes reactor-flicker {
-      0%, 84%, 86%, 100% { filter: brightness(1); }
-      84.6% { filter: brightness(1.42); }
-      85.2% { filter: brightness(0.88); }
-    }
-
-    @keyframes reactor-signal {
-      0%, 72% { opacity: 0; transform: scale(0.35); }
-      76% { opacity: calc(0.18 + var(--receptor-charge) * 0.42); }
-      88%, 100% { opacity: 0; transform: scale(3.1); }
-    }
-
-    @keyframes receptor-heartbeat {
-      0%, 86%, 100% { scale: 1; opacity: 0.38; }
-      89% { scale: 1.28; opacity: 0.92; }
-      92% { scale: 1.08; opacity: 0.56; }
-      95% { scale: 1.2; opacity: 0.82; }
-    }
-
     @keyframes reactor-spark {
       0% { scale: 1; box-shadow: 0 0 10px rgba(139, 228, 213, 0.46); }
       35% { scale: 2.2; box-shadow: 0 0 22px rgba(255, 225, 160, 0.9); }
       100% { scale: 1; box-shadow: 0 0 10px rgba(139, 228, 213, 0.46); }
     }
 
-    @keyframes engine-core-heartbeat {
-      0%, 82%, 100% { scale: 1; opacity: 0.24; }
-      87% { scale: 1.18; opacity: 0.62; }
-      92% { scale: 1.05; opacity: 0.36; }
-      96% { scale: 1.12; opacity: 0.52; }
+    @keyframes heartbeat-ring-micro {
+      0%, 100% { translate: 0 0; filter: brightness(1); }
+      45% { translate: 0 -0.5px; filter: brightness(1.08); }
+    }
+
+    @keyframes heartbeat-life-pulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.12); }
+    }
+
+    @keyframes heartbeat-ring-primary {
+      0%, 100% { translate: 0 0; filter: brightness(1); }
+      25% { translate: 0 -1.5px; filter: brightness(1.22); }
+      38% { translate: 1px 0; }
+      52% { translate: -1px 0.5px; filter: brightness(1.35); }
+      68% { translate: 0.5px -0.5px; }
+    }
+
+    @keyframes heartbeat-nucleus-primary {
+      0%, 100% { filter: brightness(1); }
+      42% { filter: brightness(1.55); }
+      68% { filter: brightness(0.92); }
+    }
+
+    @keyframes heartbeat-pressure-wave {
+      0% { opacity: 0; transform: scale(0.35); }
+      30% { opacity: calc(0.18 + var(--receptor-charge) * 0.42); }
+      100% { opacity: 0; transform: scale(3.1); }
+    }
+
+    @keyframes heartbeat-engine-primary {
+      0%, 100% { scale: 1; opacity: 0.24; }
+      42% { scale: 1.18; opacity: 0.62; }
+      62% { scale: 1.05; opacity: 0.36; }
+      78% { scale: 1.12; opacity: 0.52; }
+    }
+
+    @keyframes heartbeat-logo-primary {
+      0%, 100% { filter: brightness(1) blur(0); }
+      48% { filter: brightness(1.32) blur(0.35px); }
+    }
+
+    @keyframes heartbeat-nucleus-flicker {
+      0%, 18%, 42%, 66%, 100% { filter: brightness(1); }
+      10%, 52% { filter: brightness(1.8); }
+      28%, 72% { filter: brightness(0.62); }
+    }
+
+    @keyframes heartbeat-anomaly-glitch {
+      0%, 100% { filter: brightness(1); }
+      35% { filter: brightness(1.55); }
+      58% { filter: brightness(0.68); }
+    }
+
+    @keyframes heartbeat-logo-echo {
+      0%, 100% { filter: brightness(1); translate: 0 0; }
+      40% { filter: brightness(1.45); translate: 1px -1px; }
+      62% { filter: brightness(0.74); translate: -1px 1px; }
+    }
+
+    @keyframes heartbeat-void-darken {
+      0%, 100% { opacity: 0.92; filter: brightness(1); }
+      50% { opacity: 0.78; filter: brightness(0.72) contrast(1.18); }
     }
 
     @media (prefers-reduced-motion: reduce) {
       body::before,
       body::after,
       .entry-core,
+      .entry-ring,
       .entry-signal-ring,
+      .entry-mark,
+      .prime-atom-logo-field,
       .entry-receptor::after,
       .entry-engine-core::before,
       .entry-engine-core::after,
       .entry-orbit-node {
-        animation: none;
+        animation: none !important;
       }
 
       .void-field,
@@ -501,7 +693,7 @@
       .entry-orbit.is-descending,
       .entry-actions a,
       .entry-engine {
-        transition: none;
+        transition: none !important;
       }
     }
 
@@ -527,36 +719,46 @@
         margin: 1rem auto 0;
       }
 
+      .hub-heartbeat-spokes {
+        top: 1rem;
+      }
+
       .entry-nav {
         width: 100%;
       }
     }
   </style>
 </head>
-<body data-complexity="foundation atmosphere topology interaction" data-motion="bounded">
-  <canvas class="void-field" data-void-field aria-hidden="true"></canvas>
+<body data-entry-chamber data-complexity="foundation atmosphere topology interaction" data-motion="bounded">
+  <canvas class="void-field" data-void-field data-field-frame aria-hidden="true"></canvas>
   <main class="entry-shell" aria-label="Threshold hub entry">
     <section class="entry-panel">
       <div class="entry-copy">
-        <img class="entry-mark" src="assets/logo/threshold-logo.svg" alt="Threshold logo" loading="eager" decoding="async" />
+        <img class="entry-mark" data-prime-logo src="assets/logo/threshold-logo.svg" alt="Threshold logo" loading="eager" decoding="async" />
         <h1>Threshold Hub</h1>
         <p class="entry-kicker">Fib 13 · Entry Point</p>
-        <p>
-          Start from the hub. Route into the engine when you want to tune matrix waves,
-          hub energy, and field mechanics.
+        <p class="entry-welcome">
+          You’ve come to Threshold — where beginnings gather, paths take shape,
+          and what you contribute becomes part of the whole.
         </p>
-        <div class="entry-reactor" aria-hidden="true">
-          <div class="entry-orbit" data-hub-wheel>
+        <p class="entry-invitation">Begin at the Hub. Follow what draws you inward.</p>
+        <div class="entry-reactor" data-hub-reactor>
+          <div class="hub-heartbeat-spokes" aria-hidden="true">
+            <span class="entry-spoke entry-spoke-a"></span>
+            <span class="entry-spoke entry-spoke-b"></span>
+            <span class="entry-spoke entry-spoke-c"></span>
+          </div>
+          <div class="entry-orbit" data-hub-wheel data-prime-atom role="img" aria-label="Prime Atom, the living threshold between the Hub and Engine">
+            <img class="prime-atom-logo-field" src="assets/logo/threshold-logo.svg" alt="" aria-hidden="true" />
             <span class="entry-signal-ring"></span>
             <div class="entry-rotor">
               <span class="entry-ring entry-ring-outer"></span>
               <span class="entry-ring entry-ring-inner"></span>
-              <span class="entry-spoke entry-spoke-a"></span>
-              <span class="entry-spoke entry-spoke-b"></span>
-              <span class="entry-spoke entry-spoke-c"></span>
               <span class="entry-node-field" data-hub-node-field></span>
             </div>
             <span class="entry-core"></span>
+            <img class="prime-atom-logo-core" src="assets/logo/threshold-logo.svg" alt="" aria-hidden="true" />
+            <span class="prime-reveal-box" data-reveal-box aria-hidden="true"></span>
           </div>
           <span class="entry-receptor" data-hub-receptor></span>
         </div>
@@ -576,7 +778,7 @@
           <a href="dialogues.html">Dialogues</a>
           <a href="contact.html">Contact</a>
         </nav>
-        <a class="entry-engine" href="deep-system/engine.html" aria-label="Enter engine mechanics">Enter Engine</a>
+        <a class="entry-engine" data-prime-door data-door-state="sealed" href="deep-system/engine.html" aria-label="Enter the next Engine ring">Enter Engine</a>
         <section class="entry-archive" data-hub-seed-archive hidden aria-labelledby="returned-seeds-title">
           <h2 id="returned-seeds-title">Returned Seeds</h2>
           <ol class="entry-archive-list" data-hub-seed-list></ol>

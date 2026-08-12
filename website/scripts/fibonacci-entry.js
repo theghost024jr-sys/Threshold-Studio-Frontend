@@ -1,4 +1,18 @@
 import { buildFibonacciUrl, resolveFibonacciRoute } from "./fibonacci-routing.js";
+import {
+  advanceHeartbeatClock,
+  createHeartbeatClock,
+  heartbeatEnvelope
+} from "./engine-heartbeat.js";
+import {
+  advanceHubActivation,
+  createHubActivationState
+} from "./hub-activation.js";
+import {
+  buildPrimeAtomSignalChain,
+  createChamberContext,
+  createDirectionVector
+} from "./prime-atom-signals.js";
 
 const routeLinks = document.querySelectorAll("[data-fibonacci-spoke][data-fibonacci-path]");
 const seedArchive = document.querySelector("[data-hub-seed-archive]");
@@ -8,7 +22,14 @@ const hubReceptor = document.querySelector("[data-hub-receptor]");
 const hubNodeField = document.querySelector("[data-hub-node-field]");
 const engineCore = document.querySelector("[data-engine-core]");
 const voidCanvas = document.querySelector("[data-void-field]");
+const hubReactor = document.querySelector("[data-hub-reactor]");
+const primeLogo = document.querySelector("[data-prime-logo]");
+const primeDoor = document.querySelector("[data-prime-door]");
+const revealBox = document.querySelector("[data-reveal-box]");
 const categoryLinks = Array.from(document.querySelectorAll(".entry-actions a"));
+
+const descentRings = { 13: 8, 8: 5, 5: 3, 3: 1 };
+const entryRing = 13;
 
 const voidSignatures = {
   ethos: { color: [214, 168, 75], motion: "vertical" },
@@ -34,7 +55,8 @@ const revealThemes = {
   mythology: { id: "firefall-origin", color: [205, 72, 38], duration: 980 },
   glyphs: { id: "symbol-cascade", color: [83, 137, 255], duration: 820 },
   dialogues: { id: "signal-oscillation", color: [99, 225, 235], duration: 760 },
-  contact: { id: "transmission-burst", color: [255, 242, 210], duration: 700 }
+  contact: { id: "transmission-burst", color: [255, 242, 210], duration: 700 },
+  "enter engine": { id: "ring-descent", color: [139, 228, 213], duration: 920 }
 };
 
 const revealTiming = { directional: 400, transition: 720 };
@@ -85,6 +107,8 @@ function initializeHubReactor() {
   }
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const heartbeatClock = createHeartbeatClock({ startedAt: performance.now() });
+  let hubActivation = createHubActivationState(performance.now());
   const nodeCount = 8;
   const nodes = Array.from({ length: nodeCount }, (_, index) => {
     const node = document.createElement("span");
@@ -96,6 +120,10 @@ function initializeHubReactor() {
   const state = {
     pointerX: -1000,
     pointerY: -1000,
+    previousPointerX: -1000,
+    previousPointerY: -1000,
+    pointerElapsedMs: 16,
+    pointerMovedAt: performance.now(),
     rotation: 0,
     zone: "idle",
     previousZone: "idle",
@@ -109,13 +137,17 @@ function initializeHubReactor() {
     contactStartedAt: 0,
     approachDirection: null,
     gesture: null,
+    doorUnlocked: false,
     lastSparkAt: 0,
-    lastHeartbeatAt: 0,
+    lastSignalChain: null,
     frameId: 0,
     lastFrameAt: performance.now()
   };
   const engineState = {
     pressure: 0.08,
+    signalScale: 1,
+    timingScale: 1,
+    heartbeatEvent: null,
     reveal: null,
     transitionStartedAt: 0
   };
@@ -211,7 +243,7 @@ function initializeHubReactor() {
     }
   }
 
-  function addPressureWave(type, strength = 1) {
+  function addPressureWave(type, strength = 1, signature = voidState.signature) {
     if (!voidContext || reducedMotion.matches) {
       return;
     }
@@ -219,7 +251,7 @@ function initializeHubReactor() {
       bornAt: performance.now(),
       type,
       strength,
-      signature: voidState.signature
+      signature
     });
     voidState.waves = voidState.waves.slice(-9);
   }
@@ -228,6 +260,108 @@ function initializeHubReactor() {
     window.dispatchEvent(new CustomEvent("threshold:engine-event", {
       detail: { type, pressure: engineState.pressure, ...detail }
     }));
+  }
+
+  function heartbeatSnapshot(now) {
+    const event = engineState.heartbeatEvent;
+    return {
+      event,
+      elapsed: event ? now - event.occurredAt : 0,
+      envelope: heartbeatEnvelope(event, now)
+    };
+  }
+
+  function heartbeatColor() {
+    const direction = state.lastSignalChain?.input.directionVector.direction || state.approachDirection || "left";
+    return revealDirections[direction].color;
+  }
+
+  function dispatchHeartbeatFieldEvent(fieldEvent) {
+    engineState.heartbeatEvent = fieldEvent;
+    const phase = fieldEvent.phase;
+    document.body.dataset.heartbeatPhase = phase;
+    [hubReactor, hubWheel, engineCore, voidCanvas, primeLogo, revealBox, primeDoor].forEach((element) => {
+      if (element) element.dataset.heartbeatPhase = phase;
+    });
+    engineCore.style.setProperty("--heartbeat-pressure", String(fieldEvent.effects.engineCore.pressure));
+    if (revealBox) revealBox.dataset.heartbeatTiming = fieldEvent.effects.revealEngine.timing;
+    if (primeDoor) primeDoor.dataset.heartbeatTiming = fieldEvent.effects.descentEngine.timing;
+    window.dispatchEvent(new CustomEvent("threshold:heartbeat-field", {
+      detail: {
+        ...fieldEvent,
+        chamber: state.lastSignalChain?.input.chamberContext.chamber || null,
+        direction: state.lastSignalChain?.input.directionVector.direction || state.approachDirection || null
+      }
+    }));
+    emitEngineEvent(phase, { fieldEvent });
+  }
+
+  function clearHeartbeatFieldEvent(now) {
+    const event = engineState.heartbeatEvent;
+    if (!event || now <= event.occurredAt + event.durationMs) return;
+    engineState.heartbeatEvent = null;
+    delete document.body.dataset.heartbeatPhase;
+    [hubReactor, hubWheel, engineCore, voidCanvas, primeLogo, revealBox, primeDoor].forEach((element) => {
+      if (element) delete element.dataset.heartbeatPhase;
+    });
+    engineCore.style.removeProperty("--heartbeat-pressure");
+    if (!engineState.reveal) engineCore.dataset.engineState = "latent";
+  }
+
+  function setPrimeState(primeState) {
+    document.body.dataset.primeAtomState = primeState;
+    if (primeLogo) primeLogo.dataset.logoState = primeState;
+  }
+
+  function updateHubActivation(now, exceptionalEvidence = {}) {
+    const participantPresence = state.zone === "contact"
+      ? 1
+      : state.hoveredLink
+        ? 0.75
+        : state.zone === "approach"
+          ? 0.3
+          : 0;
+    const signalCoherence = state.hoveredLink
+      ? 0.9
+      : state.zone === "contact"
+        ? 0.82
+        : state.zone === "approach"
+          ? 0.32
+          : 0;
+    const previousStage = hubActivation.stage;
+    hubActivation = advanceHubActivation(hubActivation, {
+      observedAt: now,
+      participantPresence,
+      signalCoherence,
+      assetProximity: 1,
+      temporalAlignment: true,
+      counterConditions: [],
+      ...exceptionalEvidence
+    });
+    document.body.dataset.hubActivation = hubActivation.stage;
+    if (hubReactor) hubReactor.dataset.hubActivation = hubActivation.stage;
+    if (hubActivation.stage !== previousStage) {
+      window.dispatchEvent(new CustomEvent("threshold:hub-activation", {
+        detail: {
+          from: previousStage,
+          to: hubActivation.stage,
+          reason: hubActivation.reason,
+          prerequisites: hubActivation.prerequisites,
+          observedAt: now
+        }
+      }));
+    }
+  }
+
+  function receiveHubActivationCommand(event) {
+    const { action, reason } = event.detail || {};
+    if (action === "fail") {
+      updateHubActivation(performance.now(), { failureReason: reason || "explicit-failure" });
+    } else if (action === "transcend") {
+      updateHubActivation(performance.now(), { transcendenceAuthorized: true });
+    } else if (action === "reset") {
+      updateHubActivation(performance.now(), { reset: true });
+    }
   }
 
   function activateEngineReveal(reveal) {
@@ -241,12 +375,16 @@ function initializeHubReactor() {
     document.body.dataset.revealDirection = reveal.direction;
     document.body.dataset.revealTheme = reveal.theme.id;
     document.body.classList.add("is-revealing");
+    if (revealBox) revealBox.dataset.revealBoxState = "opening";
+    setPrimeState("revealing");
     sessionStorage.setItem("threshold:reveal-event", JSON.stringify({
       activation: reveal.activation,
       category: reveal.category,
       direction: reveal.direction,
       destination: new URL(reveal.destination).pathname,
-      theme: reveal.theme.id
+      theme: reveal.theme.id,
+      fromFib: reveal.fromFib || null,
+      toFib: reveal.toFib || null
     }));
     emitEngineEvent("reveal-generated", { reveal });
     window.setTimeout(
@@ -257,6 +395,7 @@ function initializeHubReactor() {
 
   function receiveHubSignal(event) {
     const { type } = event.detail;
+    const signalChain = event.detail.signalChain;
     const pressureBySignal = {
       idle: 0.08,
       pulse: 0.34,
@@ -267,24 +406,67 @@ function initializeHubReactor() {
     engineState.pressure = pressureBySignal[type] ?? engineState.pressure;
     engineCore.style.setProperty("--engine-pressure", engineState.pressure.toFixed(2));
     engineCore.dataset.engineSignal = type;
-    if (type === "reveal-request") {
-      activateEngineReveal(event.detail.reveal);
-    } else if (!engineState.reveal) {
+    if (signalChain) {
+      engineState.timingScale = signalChain.engine.heartbeatSync.timingScale;
+      engineCore.dataset.spinDirective = signalChain.primeAtom.spinDirective;
+      engineCore.dataset.colorPulse = signalChain.primeAtom.colorPulse;
+      engineCore.dataset.pressureWave = signalChain.engine.pressureWave;
+      engineCore.dataset.ritualPayload = signalChain.engine.ritualPayload;
+      window.dispatchEvent(new CustomEvent("threshold:engine-response", {
+        detail: { ...event.detail, pressure: engineState.pressure }
+      }));
+    }
+    if (type !== "reveal-request" && !engineState.reveal) {
       engineCore.dataset.engineState = type === "idle" ? "latent" : "receiving";
     }
   }
 
+  function receiveEngineResponse(event) {
+    const { signalChain, type } = event.detail;
+    if (!signalChain) return;
+    hubWheel.dataset.pulseSync = signalChain.hub.pulseSync.spinDirective;
+    hubWheel.dataset.pressureResponse = signalChain.hub.pressureResponse;
+    hubWheel.dataset.resonanceGlow = signalChain.hub.resonanceGlow.colorPulse;
+    hubWheel.dataset.ritualTrigger = signalChain.hub.ritualTrigger;
+    const wheelScale = type === "idle" ? 1 : type === "pulse" ? 0.99 : type === "charge" ? 1.015 : 1.025;
+    engineState.signalScale = wheelScale;
+    hubWheel.style.setProperty("--spoke-glow", type === "idle" ? "0" : "0.72");
+    queueMicrotask(() => {
+      window.dispatchEvent(new CustomEvent("threshold:hub-response", {
+        detail: event.detail
+      }));
+    });
+  }
+
+  function receiveHubResponse(event) {
+    const { signalChain, type } = event.detail;
+    if (!signalChain) return;
+    const environment = signalChain.environment;
+    document.body.dataset.frameResponse = environment.fieldFrame.compression;
+    document.body.dataset.environmentColor = environment.voidField.colorShift;
+    if (voidCanvas) voidCanvas.dataset.voidResponse = environment.voidField.distortion;
+    if (revealBox) revealBox.dataset.ritual = environment.revealEngine.ritual;
+    const direction = signalChain.input.directionVector.direction;
+    addPressureWave(
+      signalChain.engine.pressureWave,
+      type === "reveal-request" ? 1.2 : 0.7,
+      { color: revealDirections[direction].color, motion: signalChain.engine.pressureWave }
+    );
+    if (type === "reveal-request") activateEngineReveal(event.detail.reveal);
+  }
+
   function receiveEngineEvent(event) {
     const { type } = event.detail;
-    if (type === "heartbeat") {
-      engineCore.dataset.engineState = "heartbeat";
-      addPressureWave("heartbeat", 0.48);
-      window.setTimeout(() => {
-        if (!engineState.reveal) engineCore.dataset.engineState = "latent";
-      }, 520);
+    if (type === "micro-pulse" || type === "heartbeat" || type === "flicker") {
+      const fieldEvent = event.detail.fieldEvent;
+      engineCore.dataset.engineState = type;
+      const wave = type === "micro-pulse" ? "vertical" : type === "flicker" ? "spiral" : "radial";
+      const strength = type === "micro-pulse" ? 0.24 : type === "flicker" ? 1.35 : 1;
+      addPressureWave(type, strength, { color: heartbeatColor(), motion: wave });
     } else if (type === "descent") {
       hubReceptor.dataset.signal = "descent";
       engineCore.dataset.engineState = "descent";
+      setPrimeState("descending");
       addPressureWave("descent", 1.4);
     } else {
       hubReceptor.dataset.signal = "reveal";
@@ -292,20 +474,38 @@ function initializeHubReactor() {
   }
 
   window.addEventListener("threshold:hub-signal", receiveHubSignal);
+  window.addEventListener("threshold:engine-response", receiveEngineResponse);
+  window.addEventListener("threshold:hub-response", receiveHubResponse);
+  window.addEventListener("threshold:hub-activation-command", receiveHubActivationCommand);
   window.addEventListener("threshold:engine-event", receiveEngineEvent);
 
   function emitSignal(type, detail = {}) {
+    const metrics = wheelMetrics();
+    const directionVector = createDirectionVector({
+      pointerX: state.pointerX,
+      pointerY: state.pointerY,
+      previousX: state.previousPointerX,
+      previousY: state.previousPointerY,
+      elapsedMs: state.pointerElapsedMs,
+      centerX: metrics.centerX,
+      centerY: metrics.centerY,
+      radius: metrics.radius
+    });
+    const category = detail.category || detail.reveal?.category || state.hoveredLink?.textContent || "";
+    const input = {
+      directionVector,
+      activation: detail.reveal?.activation || detail.activation || type,
+      chamberContext: createChamberContext(category)
+    };
+    const signalChain = buildPrimeAtomSignalChain(input);
+    state.lastSignalChain = signalChain;
     hubReceptor.dataset.signal = type;
-    window.dispatchEvent(new CustomEvent("threshold:hub-signal", {
-      detail: { type, zone: state.zone, ...detail }
+    window.dispatchEvent(new CustomEvent("threshold:prime-atom-signal", {
+      detail: signalChain
     }));
-    if (type === "pulse" || type === "charge") {
-      addPressureWave(type, type === "charge" ? 0.9 : 0.55);
-    } else if (type === "resonance") {
-      addPressureWave("resonance", 1);
-    } else if (type === "descent") {
-      addPressureWave("descent", 1.4);
-    }
+    window.dispatchEvent(new CustomEvent("threshold:hub-signal", {
+      detail: { type, zone: state.zone, signalChain, ...detail }
+    }));
   }
 
   function setZone(nextZone, now) {
@@ -318,10 +518,18 @@ function initializeHubReactor() {
     if (nextZone === "approach" || nextZone === "contact") {
       state.approachDirection = approachDirection();
       document.body.dataset.revealContext = state.approachDirection;
+      setPrimeState(nextZone === "contact" ? "resonant" : "listening");
+      if (primeDoor) primeDoor.dataset.doorState = nextZone === "contact" ? "open" : "listening";
+      if (nextZone === "contact") state.doorUnlocked = true;
     } else if (nextZone === "idle") {
       state.approachDirection = null;
       state.selectedLink = null;
       delete document.body.dataset.revealContext;
+      setPrimeState("resting");
+      if (primeDoor) primeDoor.dataset.doorState = state.doorUnlocked ? "open" : "sealed";
+    } else if (nextZone === "retreat") {
+      setPrimeState("resting");
+      if (primeDoor) primeDoor.dataset.doorState = state.doorUnlocked ? "open" : "sealed";
     }
 
     if (state.hoveredLink && (nextZone === "approach" || nextZone === "contact")) {
@@ -402,8 +610,11 @@ function initializeHubReactor() {
     const direction = forcedDirection || approachDirection();
     const context = revealDirections[direction];
     const totalDuration = revealTiming.directional + theme.duration + revealTiming.transition;
+    const descent = theme.id === "ring-descent"
+      ? { fromFib: entryRing, toFib: descentRings[entryRing] }
+      : {};
     emitSignal("reveal-request", {
-      reveal: { activation, category, context, destination, direction, startedAt, theme, totalDuration }
+      reveal: { activation, category, context, destination, direction, startedAt, theme, totalDuration, ...descent }
     });
   }
 
@@ -414,13 +625,26 @@ function initializeHubReactor() {
     link.addEventListener("blur", () => clearCategory(link));
     link.addEventListener("click", (event) => beginReveal(event, link, event.pointerType === "touch" ? "tap" : "click"));
   });
+  if (primeDoor) {
+    primeDoor.addEventListener("focus", () => {
+      state.doorUnlocked = true;
+      primeDoor.dataset.doorState = "open";
+      setPrimeState("resonant");
+    });
+    primeDoor.addEventListener("click", (event) => beginReveal(event, primeDoor, "door", "bottom"));
+  }
   if (categoryLinks.includes(document.activeElement)) {
     setCategory(document.activeElement);
   }
 
   document.addEventListener("pointermove", (event) => {
+    const movedAt = performance.now();
+    state.previousPointerX = state.pointerX === -1000 ? event.clientX : state.pointerX;
+    state.previousPointerY = state.pointerY === -1000 ? event.clientY : state.pointerY;
+    state.pointerElapsedMs = Math.max(1, movedAt - state.pointerMovedAt);
     state.pointerX = event.clientX;
     state.pointerY = event.clientY;
+    state.pointerMovedAt = movedAt;
   }, { passive: true });
 
   document.addEventListener("pointerdown", (event) => {
@@ -477,17 +701,17 @@ function initializeHubReactor() {
     const stage = revealStage(now);
     const directionalContext = engineState.reveal?.context || revealDirections[state.approachDirection];
     if (engineState.reveal && stage === "directional") {
-      state.rotation += 112 * (directionalContext.spin || 0.16) * deltaSeconds;
+      state.rotation += 112 * (directionalContext.spin || 0.16) * engineState.timingScale * deltaSeconds;
       proximity = 1;
     } else if (engineState.reveal && stage === "chamber") {
-      state.rotation += 34 * (directionalContext.spin || 0.2) * deltaSeconds;
+      state.rotation += 34 * (directionalContext.spin || 0.2) * engineState.timingScale * deltaSeconds;
       proximity = 1;
     } else if (state.zone === "contact") {
-      state.rotation += 15 * (directionalContext?.spin || 1) * deltaSeconds;
+      state.rotation += 15 * (directionalContext?.spin || 1) * engineState.timingScale * deltaSeconds;
       proximity = 1;
     } else if (state.zone === "approach") {
       proximity = clamp((metrics.radius + 220 - distance) / 220, 0, 1);
-      state.rotation += (2 + proximity * 10) * (directionalContext?.spin || 0.2) * deltaSeconds;
+      state.rotation += (2 + proximity * 10) * (directionalContext?.spin || 0.2) * engineState.timingScale * deltaSeconds;
     } else if (state.zone === "retreat") {
       const progress = clamp((now - state.retreatStartedAt) / 1200, 0, 1);
       state.rotation = state.retreatFrom + (state.retreatTo - state.retreatFrom) * easeInOut(progress);
@@ -502,20 +726,46 @@ function initializeHubReactor() {
     const tiltX = (vectorAngle === null ? 0 : -Math.sin(vectorAngle) * tiltStrength) + revealTilt * 3;
     const tiltY = vectorAngle === null ? 0 : Math.cos(vectorAngle) * tiltStrength;
     const charge = state.hoveredLink ? 0.9 : state.zone === "contact" ? 0.82 : state.zone === "approach" ? 0.3 + proximity * 0.36 : 0;
-    const coreScale = stage === "transition" ? 1.08 : 1 + proximity * 0.05;
+    const heartbeat = heartbeatSnapshot(now);
+    const heartbeatEffects = heartbeat.event?.effects;
+    const heartbeatScale = heartbeatEffects
+      ? 1 + (heartbeatEffects.hub.wheelScale - 1) * heartbeat.envelope
+      : 1;
+    const electronExpansion = (heartbeatEffects?.primeAtom.electronExpansion || 0) * heartbeat.envelope;
+    const coreScale = (stage === "transition" ? 1.08 : 1 + proximity * 0.05)
+      + (heartbeatEffects?.primeAtom.nucleusBrightness || 0) * heartbeat.envelope * 0.035;
+    const direction = state.lastSignalChain?.input.directionVector.direction || state.approachDirection;
+    const directionalTilt = heartbeat.event?.phase === "heartbeat"
+      ? (direction === "top" ? 0.7 : direction === "bottom" ? -0.7 : 0) * heartbeat.envelope
+      : 0;
+    const anomalyTilt = heartbeat.event?.phase === "flicker" ? heartbeat.envelope : 0;
 
     hubWheel.style.setProperty("--wheel-rotation", state.rotation.toFixed(3) + "deg");
-    hubWheel.style.setProperty("--wheel-tilt-x", tiltX.toFixed(3) + "deg");
-    hubWheel.style.setProperty("--wheel-tilt-y", tiltY.toFixed(3) + "deg");
+    hubWheel.style.setProperty("--wheel-tilt-x", (tiltX + directionalTilt).toFixed(3) + "deg");
+    hubWheel.style.setProperty("--wheel-tilt-y", (tiltY + anomalyTilt).toFixed(3) + "deg");
+    hubWheel.style.setProperty("--wheel-scale", (engineState.signalScale * heartbeatScale).toFixed(4));
     hubWheel.style.setProperty("--core-scale", coreScale.toFixed(3));
-    hubWheel.style.setProperty("--core-glow", (0.18 + charge * 0.42).toFixed(3));
-    hubWheel.style.setProperty("--spoke-glow", (state.hoveredLink ? 0.56 : charge * 0.32).toFixed(3));
+    hubWheel.style.setProperty("--core-glow", (0.18 + charge * 0.42 + heartbeat.envelope * 0.18).toFixed(3));
+    hubWheel.style.setProperty("--electron-expansion", electronExpansion.toFixed(4));
+    const spokeGlow = Math.max(state.hoveredLink ? 0.56 : charge * 0.32, (heartbeatEffects?.hub.spokeGlow || 0) * heartbeat.envelope).toFixed(3);
+    const heartbeatRgb = heartbeatColor().join(", ");
+    hubWheel.style.setProperty("--spoke-glow", spokeGlow);
+    if (hubReactor) {
+      hubReactor.style.setProperty("--spoke-glow", spokeGlow);
+      hubReactor.style.setProperty("--heartbeat-color-rgb", heartbeatRgb);
+    }
     hubWheel.style.setProperty("--receptor-charge", charge.toFixed(3));
     hubReceptor.style.setProperty("--receptor-charge", charge.toFixed(3));
+    if (primeLogo) {
+      primeLogo.style.setProperty("--logo-charge", charge.toFixed(3));
+      primeLogo.style.setProperty("--logo-direction", (tiltY * 0.8).toFixed(3));
+    }
   }
 
   function updateNodes(now, metrics) {
     const seconds = now / 1000;
+    const heartbeat = heartbeatSnapshot(now);
+    const nodeEffects = heartbeat.event?.effects.orbitNodes;
     const hoverSpread = 0.12;
     const scatterProgress = state.scatterStartedAt
       ? clamp((now - state.scatterStartedAt) / 1050, 0, 1)
@@ -531,11 +781,23 @@ function initializeHubReactor() {
       const idleRadius = metrics.radius * (0.34 + (index % 3) * 0.09);
       const pixelsPerSecond = 8 + (index % 5);
       const angularSpeed = pixelsPerSecond / idleRadius;
-      const idleAngle = index / nodeCount * Math.PI * 2 + seconds * angularSpeed;
+      const freeze = nodeEffects && heartbeat.elapsed < nodeEffects.freezeMs;
+      const nodeSeconds = freeze
+        ? heartbeat.event.occurredAt / 1000
+        : seconds + Math.max(0, heartbeat.elapsed - (nodeEffects?.freezeMs || 0)) / 1000 * ((nodeEffects?.acceleration || 1) - 1);
+      const idleAngle = index / nodeCount * Math.PI * 2 + nodeSeconds * angularSpeed;
       let angle = idleAngle;
       let radius = idleRadius + Math.sin(seconds * 0.7 + index * 1.9) * 7;
       let opacity = 0.24;
       let scale = 1;
+      if (heartbeat.event) {
+        radius *= 1 + heartbeat.event.effects.primeAtom.electronExpansion * heartbeat.envelope;
+        if (heartbeat.event.phase === "micro-pulse") radius += Math.sin(index * 2.1) * heartbeat.envelope * 1.5;
+        if (heartbeat.event.phase === "flicker" && !freeze) {
+          angle += Math.sin(index * 8.7 + now * 0.08) * heartbeat.envelope * 0.035;
+          radius += Math.cos(index * 5.3 + now * 0.06) * heartbeat.envelope * 3;
+        }
+      }
 
       if (state.zone === "approach" || state.zone === "contact") {
         const cursorAngle = Math.atan2(state.pointerY - metrics.centerY, state.pointerX - metrics.centerX);
@@ -601,26 +863,29 @@ function initializeHubReactor() {
     const width = voidState.width;
     const height = voidState.height;
     const seconds = now / 1000;
-    const heartbeat = Math.pow(Math.max(0, Math.sin(seconds * Math.PI / 3)), 12);
-    const engineFlicker = Math.pow(Math.max(0, Math.sin(seconds * Math.PI / 10.5)), 24);
-    const shimmer = Math.pow(Math.max(0, Math.sin(seconds * Math.PI / 6)), 20);
+    const heartbeat = heartbeatSnapshot(now);
+    const primaryPulse = heartbeat.event?.phase === "heartbeat" ? heartbeat.envelope : 0;
+    const anomalyPulse = heartbeat.event?.phase === "flicker" ? heartbeat.envelope : 0;
+    const microPulse = heartbeat.event?.phase === "micro-pulse" ? heartbeat.envelope : 0;
     const retreatFade = state.zone === "retreat" ? 0.55 : 1;
     const descentProgress = engineState.transitionStartedAt
       ? clamp((now - engineState.transitionStartedAt) / 420, 0, 1)
       : 0;
     const inset = clamp(Math.min(width, height) * 0.026, 13, 28) + descentProgress * 5;
-    const baseScale = 0.995 + Math.sin(seconds * Math.PI / 6) * 0.005;
+    const baseScale = 0.995 + microPulse * 0.005 - primaryPulse * 0.008;
     const frameScale = engineState.transitionStartedAt ? baseScale - descentProgress * 0.006 : baseScale;
     const influenceAngle = state.hoverAngle !== null
       ? state.hoverAngle
       : state.zone === "contact" || state.zone === "approach"
         ? Math.atan2(state.pointerY - metrics.centerY, state.pointerX - metrics.centerX)
         : 0;
-    const tilt = state.zone === "contact" ? Math.cos(influenceAngle) * Math.PI / 120 : 0;
+    const tilt = (state.zone === "contact" ? Math.cos(influenceAngle) * Math.PI / 120 : 0)
+      + anomalyPulse * Math.PI / 180;
     const signatureColor = signature?.color || [31, 59, 255];
-    const goldOpacity = (0.09 + activity * 0.07 + heartbeat * 0.07 + engineFlicker * 0.09) * retreatFade;
-    const blueOpacity = (0.08 + activity * 0.09 + shimmer * 0.08) * retreatFade;
-    const rippleStrength = state.hoveredLink ? 3.4 : state.zone === "contact" ? 2.4 : activity * 1.3;
+    const goldOpacity = (0.09 + activity * 0.07 + primaryPulse * 0.07 + anomalyPulse * 0.12 + microPulse * 0.02) * retreatFade;
+    const blueOpacity = (0.08 + activity * 0.09 + primaryPulse * 0.08 + microPulse * 0.02) * retreatFade;
+    const rippleStrength = (state.hoveredLink ? 3.4 : state.zone === "contact" ? 2.4 : activity * 1.3)
+      + primaryPulse * 2.2 + anomalyPulse * 1.4;
     const steps = width < 600 ? 96 : 152;
 
     context.save();
@@ -633,7 +898,8 @@ function initializeHubReactor() {
       const progress = index / steps;
       const point = framePoint(progress, inset, width, height);
       const organic = Math.sin(progress * Math.PI * 18 + seconds * 0.16) * 0.75
-        + Math.sin(progress * Math.PI * 37 - seconds * 0.09) * 0.38;
+        + Math.sin(progress * Math.PI * 37 - seconds * 0.09) * 0.38
+        + Math.sin(progress * Math.PI * 8 - seconds * 2.4) * primaryPulse * 1.6;
       let rippleX = 0;
       let rippleY = 0;
       if (signature?.motion === "vertical") rippleX = Math.sin(point.y * 0.035 + seconds * 1.4) * rippleStrength;
@@ -647,6 +913,7 @@ function initializeHubReactor() {
         rippleX = Math.cos(progress * Math.PI * 2) * rippleStrength;
         rippleY = Math.sin(progress * Math.PI * 2) * rippleStrength;
       }
+      if (microPulse && point.y === inset) rippleY -= Math.sin(progress * Math.PI * 10) * microPulse * 1.5;
       const x = point.x + rippleX + (point.x < width / 2 ? -organic : organic);
       const y = point.y + rippleY + (point.y < height / 2 ? -organic : organic);
       if (index === 0) context.moveTo(x, y);
@@ -774,10 +1041,11 @@ function initializeHubReactor() {
       context.moveTo(0, -150);
       context.lineTo(0, 150);
       context.stroke();
-    } else if (engineState.reveal.theme.id === "cycle-burst") {
+    } else if (engineState.reveal.theme.id === "cycle-burst" || engineState.reveal.theme.id === "ring-descent") {
       for (let index = 0; index < 4; index += 1) {
         context.beginPath();
-        context.arc(0, 0, 35 + progress * (80 + index * 34), 0, Math.PI * 2);
+        const direction = engineState.reveal.theme.id === "ring-descent" ? 1 - progress : progress;
+        context.arc(0, 0, 35 + direction * (80 + index * 34), 0, Math.PI * 2);
         context.stroke();
       }
     } else if (engineState.reveal.theme.id === "drift-scatter") {
@@ -918,12 +1186,22 @@ function initializeHubReactor() {
       const speed = particle.drift * (1 + activity * 2.4);
       let velocityX = Math.cos(particle.phase + now / 17000) * speed;
       let velocityY = Math.sin(particle.phase * 1.3 + now / 21000) * speed + 0.04;
+      const heartbeat = heartbeatSnapshot(now);
+      if (heartbeat.event?.phase === "micro-pulse") velocityY -= heartbeat.envelope * 0.12;
       if (signature?.motion === "vertical") velocityY -= speed * 1.1;
       if (signature?.motion === "horizontal") velocityX += speed * 1.2;
       if (signature?.motion === "ripple") velocityY += Math.sin(now / 360 + index) * speed;
       const deltaX = particle.x - centerX;
       const deltaY = particle.y - centerY;
       const distance = Math.max(24, Math.hypot(deltaX, deltaY));
+      if (heartbeat.event?.phase === "heartbeat") {
+        velocityX += deltaX / distance * heartbeat.envelope * 0.9;
+        velocityY += deltaY / distance * heartbeat.envelope * 0.9;
+      }
+      if (heartbeat.event?.phase === "flicker") {
+        velocityX *= -1 - heartbeat.envelope;
+        velocityY *= -1 - heartbeat.envelope;
+      }
       if (signature?.motion === "spiral") {
         velocityX += -deltaY / distance * speed * 1.5;
         velocityY += deltaX / distance * speed * 1.5;
@@ -968,17 +1246,16 @@ function initializeHubReactor() {
       context.fill();
     });
 
-    if (now - state.lastHeartbeatAt > 6000) {
-      state.lastHeartbeatAt = now;
-      emitEngineEvent("heartbeat");
-    }
   }
 
   function animate(now) {
     const deltaSeconds = clamp((now - state.lastFrameAt) / 1000, 0, 0.05);
     state.lastFrameAt = now;
     const metrics = wheelMetrics();
+    clearHeartbeatFieldEvent(now);
+    advanceHeartbeatClock(heartbeatClock, now).forEach(dispatchHeartbeatFieldEvent);
     const distance = updateZone(now, metrics);
+    updateHubActivation(now);
     if (engineState.reveal) {
       const stage = revealStage(now);
       if (document.body.dataset.revealStage !== stage) {
@@ -986,12 +1263,15 @@ function initializeHubReactor() {
         if (stage === "transition") {
           document.body.classList.add("is-void-descending");
           hubWheel.classList.add("is-descending");
+          if (revealBox) revealBox.dataset.revealBoxState = "descending";
         }
         emitEngineEvent(stage === "transition" ? "descent" : "reveal-stage", {
           category: engineState.reveal.category,
           direction: engineState.reveal.direction,
+          fromFib: engineState.reveal.fromFib || null,
           stage,
-          theme: engineState.reveal.theme
+          theme: engineState.reveal.theme,
+          toFib: engineState.reveal.toFib || null
         });
       }
     }
@@ -1004,12 +1284,17 @@ function initializeHubReactor() {
   }
 
   document.body.dataset.reactorZone = "idle";
+  setPrimeState("resting");
+  updateHubActivation(performance.now());
   resizeVoid();
   emitSignal("idle");
   state.frameId = requestAnimationFrame(animate);
   window.addEventListener("pagehide", () => {
     cancelAnimationFrame(state.frameId);
     window.removeEventListener("threshold:hub-signal", receiveHubSignal);
+    window.removeEventListener("threshold:engine-response", receiveEngineResponse);
+    window.removeEventListener("threshold:hub-response", receiveHubResponse);
+    window.removeEventListener("threshold:hub-activation-command", receiveHubActivationCommand);
     window.removeEventListener("threshold:engine-event", receiveEngineEvent);
   }, { once: true });
 }

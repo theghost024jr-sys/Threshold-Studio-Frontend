@@ -1,3 +1,24 @@
+const R2_BASE = "https://pub-bd996bc45ca7430ca83b15356c122015.r2.dev";
+const BUNDLE_URL = `${R2_BASE}/bundle.json`;
+const MANIFEST_URL = `${R2_BASE}/manifest.json`;
+
+async function fetchJSON(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${url}: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function loadBundle() {
+  const [bundle, manifest] = await Promise.all([
+    fetchJSON(BUNDLE_URL),
+    fetchJSON(MANIFEST_URL)
+  ]);
+
+  return { bundle, manifest };
+}
+
 const TARGET_IDS = [
   "cave",
   "stairs",
@@ -199,6 +220,9 @@ class ThresholdEngine {
     this.lastDetail = null;
     this.hubFadeTimer = null;
     this.hubActivationPromise = null;
+    this.bundle = null;
+    this.manifest = null;
+    this.contentLoadError = null;
     this.state = {
       hubActivated: false,
       hubActivating: false,
@@ -246,6 +270,19 @@ class ThresholdEngine {
         page: location.pathname.split("/").pop() || ""
       });
 
+      try {
+        const { bundle, manifest } = await loadBundle();
+        this.bundle = bundle;
+        this.manifest = manifest;
+        window.thresholdBundle = bundle;
+        window.thresholdManifest = manifest;
+      } catch (error) {
+        this.contentLoadError = error;
+        window.dispatchEvent(new CustomEvent("threshold:content-load-error", {
+          detail: { message: error.message }
+        }));
+      }
+
       if (this.state.hubActivated) {
         this.applyActivationPath(this.state.activationPath);
         this.activateNodeOrbit();
@@ -277,7 +314,8 @@ class ThresholdEngine {
       window.dispatchEvent(new CustomEvent("threshold:engine-ready", {
         detail: {
           booted: true,
-          hasVault: Boolean(this.vault)
+          hasVault: Boolean(this.vault),
+          hasBundle: Array.isArray(this.bundle)
         }
       }));
 

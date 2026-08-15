@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Immersive Learning Wheel - Threshold Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/learning-wheel-immersive.css" />
+</head>
+<body>
+  <header class="immersive-header">
+    <a class="brand" href="index.html">
+      <img src="assets/logo/threshold-logo.svg" alt="" />
+      <span>Threshold Studio</span>
+    </a>
+    <nav aria-label="Immersive Learning Wheel navigation">
+      <a href="learningwheel.html">Seasonal Wheel</a>
+      <a href="housegarden.html">Garden</a>
+      <a href="index.html">Hub</a>
+    </nav>
+  </header>
+
+  <main>
+    <header class="page-heading">
+      <p>Pedagogy portal / circle mandala</p>
+      <h1>The Threshold <span>Learning Wheel</span></h1>
+      <p class="intro">Five practices orbit one living center. Choose a practice to open its chamber.</p>
+    </header>
+
+    <section class="wheel-stage" aria-labelledby="wheelTitle">
+      <div class="orbit orbit-one" aria-hidden="true"></div>
+      <div class="orbit orbit-two" aria-hidden="true"></div>
+      <div class="learning-mandala" id="learningMandala">
+        <div class="mandala-color" aria-hidden="true"></div>
+        <button class="practice practice-story" type="button" data-practice="story" aria-pressed="true">
+          <strong>Immersive Storytelling</strong><span>Engage hearts &amp; minds</span>
+        </button>
+        <button class="practice practice-tech" type="button" data-practice="tech" aria-pressed="false">
+          <strong>Creative Technologies</strong><span>Innovate &amp; inspire</span>
+        </button>
+        <button class="practice practice-design" type="button" data-practice="design" aria-pressed="false">
+          <strong>Design Thinking</strong><span>Empathize &amp; solve</span>
+        </button>
+        <button class="practice practice-making" type="button" data-practice="making" aria-pressed="false">
+          <strong>Collaborative Making</strong><span>Create &amp; build</span>
+        </button>
+        <button class="practice practice-critical" type="button" data-practice="critical" aria-pressed="false">
+          <strong>Critical Pedagogy</strong><span>Reflect &amp; question</span>
+        </button>
+        <div class="mandala-core">
+          <span id="wheelTitle">Transformative</span>
+          <strong>Learning<br />Experiences</strong>
+        </div>
+      </div>
+
+      <aside class="practice-readout" aria-live="polite">
+        <p id="practiceNumber">01 / Immersive Lab</p>
+        <h2 id="practiceTitle">Awaken curiosity through story.</h2>
+        <p id="practiceBody">Enter a narrative chamber where ideas become places, choices, and remembered paths.</p>
+        <div class="practice-actions">
+          <button id="enterPractice" type="button">Enter chamber</button>
+          <a href="learningwheel.html">Return to seasonal wheel</a>
+        </div>
+      </aside>
+    </section>
+
+    <nav class="system-flow" aria-label="Threshold geometry hierarchy">
+      <a href="index.html"><span>Navigation hub</span><strong>Hex matrix</strong></a>
+      <a href="housegarden.html"><span>Natural sanctuary</span><strong>Organic branch</strong></a>
+      <a class="is-current" href="learningwheel-immersive.html" aria-current="page"><span>Learning wheel</span><strong>Circle mandala</strong></a>
+      <a href="glyphs.html"><span>Memory archive</span><strong>Layered frame</strong></a>
+    </nav>
+  </main>
+
+  <dialog id="practiceDialog">
+    <button class="dialog-close" type="button" aria-label="Close chamber">Close</button>
+    <p id="dialogKicker"></p>
+    <h2 id="dialogTitle"></h2>
+    <p id="dialogBody"></p>
+  </dialog>
+
+  <script type="module" src="scripts/learning-wheel-immersive.js"></script>
+</body>
+</html>

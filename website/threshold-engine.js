@@ -16,6 +16,13 @@ export async function loadBundle() {
     fetchJSON(MANIFEST_URL)
   ]);
 
+  if (!bundle || !Array.isArray(bundle.records)) {
+    throw new Error("Content bundle is missing records");
+  }
+  if (!manifest || manifest.count !== bundle.records.length || !Array.isArray(manifest.ids)) {
+    throw new Error("Content manifest does not match bundle");
+  }
+
   return { bundle, manifest };
 }
 
@@ -315,7 +322,7 @@ class ThresholdEngine {
         detail: {
           booted: true,
           hasVault: Boolean(this.vault),
-          hasBundle: Array.isArray(this.bundle)
+          hasBundle: Array.isArray(this.bundle && this.bundle.records)
         }
       }));
 

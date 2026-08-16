@@ -3,84 +3,286 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Waterfall</title>
+  <title>The Drift Falls — Threshold Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet" />
   <style>
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
-    }
-
-    html,
-    body {
-      min-height: 100%;
       margin: 0;
+      padding: 0;
     }
+
+    :root {
+      --bg: #0d1a14;
+      --text: #e8f5e9;
+      --muted: #8ab49a;
+      --accent: #4dd9ac;
+    }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Source Sans 3", sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    .nav {
+      left: 0;
+      padding: 1.25rem 1.75rem;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav a {
+      align-items: center;
+      backdrop-filter: blur(8px);
+      background: rgba(13, 26, 20, 0.55);
+      border: 1px solid rgba(77, 217, 172, 0.25);
+      border-radius: 4px;
+      color: var(--text);
+      display: inline-flex;
+      font-size: 0.8rem;
+      font-weight: 600;
+      gap: 0.5rem;
+      letter-spacing: 0.12em;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      background: rgba(77, 217, 172, 0.1);
+      border-color: rgba(77, 217, 172, 0.55);
+    }
+
+    .nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .nav a svg {
+      fill: none;
+      height: 14px;
+      stroke: var(--accent);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
+      width: 14px;
+    }
+
+    .hero {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      height: 92svh;
+      justify-content: center;
       overflow: hidden;
-      background: #101b1a;
-      color: #f2eee0;
-      font-family: Georgia, serif;
-    }
-
-    .terrain-image {
-      position: absolute;
-      pointer-events: none;
-    }
-
-    .terrain-image {
-      inset: 0;
+      position: relative;
       width: 100%;
+    }
+
+    .hero-img {
       height: 100%;
+      inset: 0;
       object-fit: cover;
       object-position: center;
+      position: absolute;
+      width: 100%;
+      z-index: 0;
     }
 
-    header {
+    .hero::before,
+    .hero::after {
+      content: "";
+      left: 0;
+      pointer-events: none;
       position: absolute;
-      top: clamp(1.2rem, 5vh, 3.5rem);
-      left: 50%;
-      z-index: 3;
+      right: 0;
+      z-index: 1;
+    }
+
+    .hero::before {
+      background: linear-gradient(to bottom, rgba(13, 26, 20, 0.88), transparent);
+      height: 35%;
+      top: 0;
+    }
+
+    .hero::after {
+      background: linear-gradient(to top, rgba(13, 26, 20, 0.92), transparent);
+      bottom: 0;
+      height: 40%;
+    }
+
+    .hero-content {
+      max-width: 720px;
+      padding: 0 1.5rem;
+      position: relative;
       text-align: center;
-      text-shadow: 0 2px 20px rgba(5, 12, 11, 0.9);
-      transform: translateX(-50%);
+      z-index: 2;
     }
 
-    h1 {
-      margin: 0;
-      font-size: clamp(2rem, 5vw, 4.6rem);
-      font-weight: 400;
-      letter-spacing: 0;
+    .hero-title {
+      animation: drift-pulse 5s ease-in-out infinite;
+      color: #d6f5ec;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
     }
 
-    .return-north {
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-style: italic;
+      letter-spacing: 0.04em;
+      margin-top: 1.1rem;
+    }
+
+    .scroll-arrow {
+      animation: arrow-bounce 2.2s ease-in-out infinite;
+      bottom: 2.25rem;
+      left: 50%;
       position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 4;
-      padding: 0.7rem 1rem;
-      border: 1px solid rgba(242, 238, 224, 0.64);
-      background: rgba(8, 14, 13, 0.72);
-      color: inherit;
-      font: 600 0.85rem/1 sans-serif;
-      text-decoration: none;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .scroll-arrow svg {
+      fill: none;
+      height: 22px;
+      opacity: 0.7;
+      stroke: var(--accent);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.5;
+      width: 22px;
+    }
+
+    .lore {
+      background: var(--bg);
+      padding: 6rem 2rem 7rem;
+    }
+
+    .lore-inner {
+      align-items: start;
+      display: grid;
+      gap: 0 2.5rem;
+      grid-template-columns: 4px 1fr;
+      margin: 0 auto;
+      max-width: 900px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .lore-bar {
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      border-radius: 2px;
+      box-shadow: 0 0 16px rgba(77, 217, 172, 0.35);
+      min-height: 180px;
+      width: 4px;
+    }
+
+    .lore-text h2 {
+      color: var(--text);
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+    }
+
+    .lore-text p {
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+      max-width: 620px;
+    }
+
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(77, 217, 172, 0.12);
+      color: rgba(138, 180, 154, 0.55);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 1.75rem 2rem;
+      text-align: center;
+    }
+
+    @keyframes drift-pulse {
+      0%, 100% { text-shadow: 0 0 30px rgba(77, 217, 172, 0.45), 0 0 70px rgba(77, 217, 172, 0.2), 0 2px 4px rgba(0, 0, 0, 0.6); }
+      50% { text-shadow: 0 0 55px rgba(77, 217, 172, 0.75), 0 0 110px rgba(77, 217, 172, 0.35), 0 2px 4px rgba(0, 0, 0, 0.6); }
+    }
+
+    @keyframes arrow-bounce {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(8px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-title, .scroll-arrow { animation: none; }
+      .lore-inner { opacity: 1; transform: none; transition: none; }
     }
 
     @media (max-width: 600px) {
-      .return-north {
-        top: auto;
-        bottom: 18px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
+      .nav { padding: 1rem; }
+      .lore { padding: 4rem 1.25rem 5rem; }
+      .lore-inner { gap: 0 1.5rem; grid-template-columns: 3px 1fr; }
     }
   </style>
 </head>
 <body>
-  <img class="terrain-image" src="/assets/images/Waterfall.jpg" alt="" aria-hidden="true" />
-  <header>
-    <h1>The Waterfall</h1>
-  </header>
-  <a class="return-north" href="/environment/herbroom.html">Return North</a>
+  <nav class="nav" aria-label="Chamber navigation">
+    <a href="/environment/herbroom.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Return North
+    </a>
+  </nav>
+
+  <section class="hero">
+    <img
+      class="hero-img"
+      src="/assets/images/Waterfall.jpg"
+      alt="The Drift Falls cascading through a moss-covered gorge into heavy mist"
+      width="1500"
+      height="809"
+      loading="eager"
+      decoding="async"
+    />
+    <div class="hero-content">
+      <h1 class="hero-title">The Drift Falls</h1>
+      <p class="hero-subtitle">Where the House &amp; Garden band yields to the deep Forest biome.</p>
+    </div>
+    <div class="scroll-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+  </section>
+
+  <section class="lore">
+    <div class="lore-inner" id="lore">
+      <div class="lore-bar"></div>
+      <div class="lore-text">
+        <h2>About the Falls</h2>
+        <p>
+          Tall beyond measure, the Drift Falls mark the threshold between two worlds.
+          Luminous Drift energy infuses every drop, glowing brightest at the crest
+          and fading into heavy mist below. Thick roots grip the stone walls.
+          The shallow pool at the base holds a silence that feels earned.
+          Natural stone shelves descend southward, carving the first steps
+          into the Forest biome.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Generated with Drift &nbsp;·&nbsp; &copy; 2026 Threshold Studio
+  </footer>
+
 </body>
 </html>

@@ -14,8 +14,8 @@ function element(tag, className, text) {
   return node;
 }
 
-function stateSection(title, rows) {
-  const section = element("section", "hub-organ-section");
+function stateSection(title, className, rows) {
+  const section = element("section", `hub-organ-section ${className}`);
   section.append(element("h2", "hub-organ-heading", title));
   const list = element("dl", "hub-organ-readout");
   for (const [label, value] of rows) {
@@ -71,7 +71,7 @@ export class ThresholdHubElement extends HTMLElementBase {
     if (typeof this.replaceChildren !== "function" || !globalThis.document) return;
 
     const { engine, biome, chambers, signals, player, visual, navigation } = this.#state;
-    const shell = element("section", "hub-organ");
+    const shell = element("section", "hub-organ hub-container");
     shell.style.setProperty("--hub-biome-color", biome.color || "var(--teal)");
 
     const header = element("header", "hub-organ-header");
@@ -80,7 +80,7 @@ export class ThresholdHubElement extends HTMLElementBase {
       element("p", "eyebrow", "Live organ / Engine feed"),
       element("h2", "hub-organ-title", "World state")
     );
-    const visualNode = element("div", "hub-organ-visual");
+    const visualNode = element("div", "hub-organ-visual hub-visual");
     if (visual.assetExists) {
       const image = element("img");
       image.src = `/assets/${visual.asset}`;
@@ -94,35 +94,35 @@ export class ThresholdHubElement extends HTMLElementBase {
 
     const grid = element("div", "hub-organ-grid");
     grid.append(
-      stateSection("Engine", [
+      stateSection("Engine", "hub-engine", [
         ["Drift", engine.drift],
         ["Pressure", engine.pressure],
         ["Cycle", engine.cycle],
         ["Position", engine.cyclePosition],
         ["World", engine.worldState]
       ]),
-      stateSection("Biome", [
+      stateSection("Biome", "hub-biome", [
         ["Current", biome.current],
         ["Color", biome.color]
       ]),
-      stateSection("Chambers", [
+      stateSection("Chambers", "hub-chambers", [
         ["Adjacent", chambers.adjacent],
         ["Reachable", chambers.reachable],
         ["Recent", chambers.recent]
       ]),
-      stateSection("Signals", [
+      stateSection("Signals", "hub-signals", [
         ["Active", signals.active],
         ["Warnings", signals.warnings],
         ["Distortions", signals.distortions]
       ]),
-      stateSection("Traveler", [
+      stateSection("Traveler", "hub-player", [
         ["Role", player.role],
         ["State", player.state],
         ["Location", player.location]
       ])
     );
 
-    const routeSection = element("nav", "hub-organ-routes");
+    const routeSection = element("nav", "hub-organ-routes hub-navigation");
     routeSection.setAttribute("aria-label", "Hub-owned routes");
     routeSection.append(element("h2", "hub-organ-heading", "Routes"));
     const routeList = element("ul");

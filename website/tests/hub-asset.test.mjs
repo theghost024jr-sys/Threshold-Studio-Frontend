@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const websiteDirectory = new URL("../", import.meta.url);
-const animatedHash = "0e611ff6405b368e6174eb1765b56661ac64500fcc52245c8cd60eb8d3225cbd";
+const animatedHash = "24586e26a1c9bd5bc436b6e77c07b24fa2ea8cb3584ba751710d5bcd547108dd";
 const rasterHashes = new Map([
   [128, "4c8a308f3c939825f3d4a559a73752f5d6126c9eb17b53d8bb126ffdc00b9cfc"],
   [240, "24d5055aa4303767fc805479344a24196fceb87e4127def12a409cf85279da49"],
@@ -31,16 +31,16 @@ test("ships and activates the five-layer Hub vector blueprint", async () => {
     assert.ok(svg.includes(`stroke="${color}"`), `missing biome stroke ${color}`);
   }
 
-  for (const id of ["hub-engine-core", "hub-cycle-ring", "hub-biome-ring", "hub-chamber-ring", "hub-signal-halo"]) {
+  for (const id of ["hub-core", "hub-cycle-ring", "hub-biome-ring", "hub-chamber-ring", "hub-halo"]) {
     assert.ok(animatedSvg.includes(`id="${id}"`), `missing animated layer ${id}`);
   }
-  assert.match(animatedSvg, /animation: hub-cycle-rotate 4s linear infinite/);
+  assert.match(animatedSvg, /animation: hub-cycle-rotate 6s linear infinite/);
   assert.match(animatedSvg, /animation: hub-halo-flicker 2\.4s ease-in-out infinite/);
   assert.match(animatedSvg, /prefers-reduced-motion: reduce/);
   assert.equal(createHash("sha256").update(animatedSvg).digest("hex"), animatedHash);
 
-  assert.match(themeCss, /cycle-early[\s\S]*animation-duration: 4s/);
-  assert.match(themeCss, /cycle-mid[\s\S]*animation-duration: 3s/);
+  assert.match(themeCss, /cycle-early[\s\S]*animation-duration: 6s/);
+  assert.match(themeCss, /cycle-mid[\s\S]*animation-duration: 4s/);
   assert.match(themeCss, /cycle-late[\s\S]*animation-duration: 2s/);
 
   assert.equal(state.visual.asset, "hub/animated-hub.svg");

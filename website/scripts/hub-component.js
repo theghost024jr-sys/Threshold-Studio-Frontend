@@ -5,7 +5,32 @@ const BIOMES = new Set(["house", "garden", "forest", "deepforest", "root", "ston
 const CYCLES = new Set(["early", "mid", "late"]);
 const INTENSITIES = new Set(["low", "medium", "high"]);
 const PULSE_MODES = new Set(["cycle-synced"]);
-const CYCLE_DURATIONS = new Map([["early", "4s"], ["mid", "3s"], ["late", "2s"]]);
+export const HUB_FEED_CALIBRATION = Object.freeze({
+  smoothingAlpha: 0.15,
+  settleEpsilon: 0.001,
+  cycleSeconds: { early: 6, mid: 4, late: 2 },
+  driftScales: { low: [1, 1.03], medium: [1, 1.06], high: [1, 1.1] },
+  pressureOpacities: { soft: [0.1, 0.25], tense: [0.25, 0.45], critical: [0.45, 0.7] },
+  adjacency: { arrayMaximum: 4, biomeSeconds: [16, 8], phaseSeconds: [0, -4] },
+  signals: {
+    quiet: { haloSeconds: 2.4, strokeWidth: 8, opacityBoost: 0 },
+    pulse: { haloSeconds: 1.6, strokeWidth: 10, opacityBoost: 0.1 },
+    burst: { haloSeconds: 0.8, strokeWidth: 14, opacityBoost: 0.2 }
+  }
+});
+const ANIMATION_NUMBER_KEYS = [
+  "cycleSeconds",
+  "coreMinScale",
+  "coreMaxScale",
+  "haloLowOpacity",
+  "haloMidOpacity",
+  "haloHighOpacity",
+  "haloSeconds",
+  "haloStrokeWidth",
+  "biomeSeconds",
+  "biomeDelaySeconds",
+  "adjacencyNormalized"
+];
 
 function themeClass(prefix, value, allowed) {
   const token = String(value || "").toLowerCase().replace(/[\s_]+/g, "");
@@ -33,57 +58,107 @@ function countSignals(signals) {
     .reduce((total, key) => total + (Array.isArray(signals?.[key]) ? signals[key].length : 0), 0);
 }
 
+function pressureLevel(value) {
+  if (value < 1) return "soft";
+  if (value < 3) return "tense";
+  return "critical";
+}
+
+function signalMode(signals) {
+  if (typeof signals === "string" && Object.hasOwn(HUB_FEED_CALIBRATION.signals, signals)) return signals;
+  if (hasSignal(signals?.warnings) || hasSignal(signals?.distortions)) return "burst";
+  if (countSignals(signals) > 0) return "pulse";
+  return "quiet";
+}
+
+function normalizedAdjacency(adjacency) {
+  if (typeof adjacency === "number" && Number.isFinite(adjacency)) return clamp(adjacency, 0, 1);
+  if (Array.isArray(adjacency)) {
+    return clamp(adjacency.length / HUB_FEED_CALIBRATION.adjacency.arrayMaximum, 0, 1);
+  }
+  return 0;
+}
+
 export function hubAnimationState({ cycle, drift, pressure, adjacency = [], signals = {} } = {}) {
-  const driftLevel = engineLevel(drift, "low");
-  const coreScale = { low: 1, medium: 1.05, high: 1.1 }[driftLevel];
-  const pressureOpacity = Number.isFinite(pressure) ? clamp(pressure / 5, 0, 1) : 0;
-  const adjacencyCount = Array.isArray(adjacency) ? adjacency.length : 0;
-  const signalCount = countSignals(signals);
-  const signalBoost = signalCount > 0 ? 0.15 : 0;
+  const normalizedDrift = Number.isFinite(drift) ? clamp(drift, 0, 5) : 0;
+  const normalizedPressure = Number.isFinite(pressure) ? clamp(pressure, 0, 5) : 0;
+  const driftLevel = engineLevel(normalizedDrift, "low");
+  const tensionLevel = pressureLevel(normalizedPressure);
+  const adjacencyNormalized = normalizedAdjacency(adjacency);
+  const mode = signalMode(signals);
+  const [coreMinScale, coreMaxScale] = HUB_FEED_CALIBRATION.driftScales[driftLevel];
+  const [haloLow, haloHigh] = HUB_FEED_CALIBRATION.pressureOpacities[tensionLevel];
+  const signalRule = HUB_FEED_CALIBRATION.signals[mode];
+  const haloLowOpacity = clamp(haloLow + signalRule.opacityBoost, 0, 1);
+  const haloHighOpacity = clamp(haloHigh + signalRule.opacityBoost, 0, 1);
 
   return {
-    cycleDuration: CYCLE_DURATIONS.get(cycle) || CYCLE_DURATIONS.get("early"),
+    cycleSeconds: HUB_FEED_CALIBRATION.cycleSeconds[cycle] || HUB_FEED_CALIBRATION.cycleSeconds.early,
     driftLevel,
-    coreMinScale: (coreScale * 0.96).toFixed(3),
-    coreMaxScale: (coreScale * 1.04).toFixed(3),
-    pressureOpacity,
-    haloLowOpacity: clamp(0.08 + pressureOpacity * 0.42, 0, 1).toFixed(3),
-    haloMidOpacity: clamp(0.18 + pressureOpacity * 0.52 + signalBoost, 0, 1).toFixed(3),
-    haloHighOpacity: clamp(0.2 + pressureOpacity * 0.65 + signalBoost, 0, 1).toFixed(3),
-    haloDuration: `${Math.max(0.6, 2.4 - signalCount * 0.25)}s`,
-    haloStrokeWidth: `${8 + Math.min(signalCount, 4) * 2}px`,
-    biomeDuration: `${Math.max(6, 16 - adjacencyCount * 2)}s`,
-    biomeDelay: `${-adjacencyCount}s`,
-    adjacencyCount,
-    signalCount
+    coreMinScale,
+    coreMaxScale,
+    pressureLevel: tensionLevel,
+    haloLowOpacity,
+    haloMidOpacity: (haloLowOpacity + haloHighOpacity) / 2,
+    haloHighOpacity,
+    haloSeconds: signalRule.haloSeconds,
+    haloStrokeWidth: signalRule.strokeWidth,
+    biomeSeconds: lerp(...HUB_FEED_CALIBRATION.adjacency.biomeSeconds, adjacencyNormalized),
+    biomeDelaySeconds: lerp(...HUB_FEED_CALIBRATION.adjacency.phaseSeconds, adjacencyNormalized),
+    adjacencyNormalized,
+    signalMode: mode
   };
 }
 
-export function updateHubAnimation(svg, feeds) {
-  const animation = hubAnimationState(feeds);
-  const cycle = svg?.querySelector?.("#hub-cycle-ring");
-  const core = svg?.querySelector?.("#hub-engine-core");
-  const biome = svg?.querySelector?.("#hub-biome-ring");
-  const halo = svg?.querySelector?.("#hub-signal-halo");
+export function lerp(previousValue, newValue, alpha = HUB_FEED_CALIBRATION.smoothingAlpha) {
+  return previousValue + (newValue - previousValue) * alpha;
+}
 
-  cycle?.style.setProperty("animation-duration", animation.cycleDuration);
-  core?.style.setProperty("--hub-core-min-scale", animation.coreMinScale);
-  core?.style.setProperty("--hub-core-max-scale", animation.coreMaxScale);
-  biome?.style.setProperty("animation-duration", animation.biomeDuration);
-  biome?.style.setProperty("animation-delay", animation.biomeDelay);
-  halo?.style.setProperty("--hub-halo-low-opacity", animation.haloLowOpacity);
-  halo?.style.setProperty("--hub-halo-mid-opacity", animation.haloMidOpacity);
-  halo?.style.setProperty("--hub-halo-high-opacity", animation.haloHighOpacity);
-  halo?.style.setProperty("animation-duration", animation.haloDuration);
-  halo?.style.setProperty("stroke-width", animation.haloStrokeWidth);
+export function smoothHubAnimation(previous, target, alpha = HUB_FEED_CALIBRATION.smoothingAlpha) {
+  if (!previous) return { ...target };
+  const smoothed = { ...target };
+  for (const key of ANIMATION_NUMBER_KEYS) {
+    smoothed[key] = lerp(previous[key], target[key], alpha);
+  }
+  return smoothed;
+}
+
+function animationSettled(current, target) {
+  return ANIMATION_NUMBER_KEYS.every((key) => (
+    Math.abs(current[key] - target[key]) <= HUB_FEED_CALIBRATION.settleEpsilon
+  ));
+}
+
+function applyHubAnimation(svg, animation) {
+  const cycle = svg?.querySelector?.("#hub-cycle-ring");
+  const core = svg?.querySelector?.("#hub-core");
+  const biome = svg?.querySelector?.("#hub-biome-ring");
+  const halo = svg?.querySelector?.("#hub-halo");
+
+  cycle?.style.setProperty("animation-duration", `${animation.cycleSeconds.toFixed(3)}s`);
+  core?.style.setProperty("--hub-core-min-scale", animation.coreMinScale.toFixed(3));
+  core?.style.setProperty("--hub-core-max-scale", animation.coreMaxScale.toFixed(3));
+  biome?.style.setProperty("animation-duration", `${animation.biomeSeconds.toFixed(3)}s`);
+  biome?.style.setProperty("animation-delay", `${animation.biomeDelaySeconds.toFixed(3)}s`);
+  halo?.style.setProperty("--hub-halo-low-opacity", animation.haloLowOpacity.toFixed(3));
+  halo?.style.setProperty("--hub-halo-mid-opacity", animation.haloMidOpacity.toFixed(3));
+  halo?.style.setProperty("--hub-halo-high-opacity", animation.haloHighOpacity.toFixed(3));
+  halo?.style.setProperty("animation-duration", `${animation.haloSeconds.toFixed(3)}s`);
+  halo?.style.setProperty("stroke-width", `${animation.haloStrokeWidth.toFixed(3)}px`);
 
   if (core) core.dataset.drift = animation.driftLevel;
-  if (biome) biome.dataset.adjacency = String(animation.adjacencyCount);
+  if (biome) biome.dataset.adjacency = animation.adjacencyNormalized.toFixed(3);
   if (halo) {
-    halo.dataset.pressure = String(animation.pressureOpacity);
-    halo.dataset.signals = String(animation.signalCount);
+    halo.dataset.pressure = animation.pressureLevel;
+    halo.dataset.signals = animation.signalMode;
   }
   return animation;
+}
+
+export function updateHubAnimation(svg, feeds, previous = null, alpha = 1) {
+  const target = hubAnimationState(feeds);
+  const animation = smoothHubAnimation(previous, target, alpha);
+  return applyHubAnimation(svg, animation);
 }
 
 export function hubThemeClasses({ engine = {}, biome = {}, signals = {}, visual = {} } = {}) {
@@ -132,6 +207,9 @@ function stateSection(title, className, rows) {
 }
 
 export class ThresholdHubElement extends HTMLElementBase {
+  #animationCurrent = null;
+  #animationFrame = null;
+  #animationTarget = null;
   #stopBinding = null;
   #visualAsset = null;
   #visualLoading = false;
@@ -158,6 +236,10 @@ export class ThresholdHubElement extends HTMLElementBase {
     this.#stopBinding = null;
     this.#visualRequest += 1;
     this.#visualLoading = false;
+    if (this.#animationFrame !== null && typeof globalThis.cancelAnimationFrame === "function") {
+      cancelAnimationFrame(this.#animationFrame);
+    }
+    this.#animationFrame = null;
   }
 
   get state() {
@@ -176,13 +258,44 @@ export class ThresholdHubElement extends HTMLElementBase {
   setNavigation(value) { this.#update("navigation", value); }
 
   updateHubAnimation(feeds) {
-    const svg = typeof this.querySelector === "function" ? this.querySelector(".hub-inline-glyph") : null;
-    if (svg) updateHubAnimation(svg, feeds);
+    this.#animationTarget = hubAnimationState(feeds);
+    if (!this.#animationCurrent) {
+      this.#animationCurrent = { ...this.#animationTarget };
+      this.#applyAnimationState();
+      return;
+    }
+    this.#scheduleAnimationFrame();
   }
 
   #update(domain, value) {
     this.#state[domain] = value;
     this.#render();
+  }
+
+  #applyAnimationState() {
+    const svg = typeof this.querySelector === "function" ? this.querySelector(".hub-inline-glyph") : null;
+    if (svg && this.#animationCurrent) applyHubAnimation(svg, this.#animationCurrent);
+  }
+
+  #scheduleAnimationFrame() {
+    if (this.#animationFrame !== null || !this.#animationTarget) return;
+    if (typeof globalThis.requestAnimationFrame !== "function") {
+      this.#animationCurrent = smoothHubAnimation(this.#animationCurrent, this.#animationTarget);
+      this.#applyAnimationState();
+      return;
+    }
+
+    this.#animationFrame = requestAnimationFrame(() => {
+      this.#animationFrame = null;
+      this.#animationCurrent = smoothHubAnimation(this.#animationCurrent, this.#animationTarget);
+      this.#applyAnimationState();
+      if (!animationSettled(this.#animationCurrent, this.#animationTarget)) {
+        this.#scheduleAnimationFrame();
+      } else {
+        this.#animationCurrent = { ...this.#animationTarget };
+        this.#applyAnimationState();
+      }
+    });
   }
 
   async #loadVisualAsset(visual = {}) {
@@ -244,13 +357,17 @@ export class ThresholdHubElement extends HTMLElementBase {
       if (svg) {
         visualNode.setAttribute("role", "img");
         visualNode.setAttribute("aria-label", "Animated Hub Glyph");
-        updateHubAnimation(svg, {
-          cycle: engine.cycle,
-          drift: engine.drift,
-          pressure: engine.pressure,
-          adjacency: chambers.adjacent,
-          signals
-        });
+        if (!this.#animationCurrent) {
+          this.#animationCurrent = hubAnimationState({
+            cycle: engine.cycle,
+            drift: engine.drift,
+            pressure: engine.pressure,
+            adjacency: chambers.adjacent,
+            signals
+          });
+          this.#animationTarget = { ...this.#animationCurrent };
+        }
+        applyHubAnimation(svg, this.#animationCurrent);
         visualNode.append(svg);
       } else {
         const image = element("img");

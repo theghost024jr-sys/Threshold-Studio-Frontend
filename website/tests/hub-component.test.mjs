@@ -4,6 +4,9 @@ import test from "node:test";
 import {
   hubAnimationState,
   hubThemeClasses,
+  HUB_FEED_CALIBRATION,
+  lerp,
+  smoothHubAnimation,
   ThresholdHubElement,
   updateHubAnimation
 } from "../scripts/hub-component.js";
@@ -39,26 +42,48 @@ test("maps all five runtime feeds to bounded animation values", () => {
     adjacency: ["basin", "herbroom", "waterfall"],
     signals: { active: ["pulse"], warnings: ["pressure"], distortions: [], environmental: [] }
   }), {
-    cycleDuration: "2s",
+    cycleSeconds: 2,
     driftLevel: "high",
-    coreMinScale: "1.056",
-    coreMaxScale: "1.144",
-    pressureOpacity: 1,
-    haloLowOpacity: "0.500",
-    haloMidOpacity: "0.850",
-    haloHighOpacity: "1.000",
-    haloDuration: "1.9s",
-    haloStrokeWidth: "12px",
-    biomeDuration: "10s",
-    biomeDelay: "-3s",
-    adjacencyCount: 3,
-    signalCount: 2
+    coreMinScale: 1,
+    coreMaxScale: 1.1,
+    pressureLevel: "critical",
+    haloLowOpacity: 0.65,
+    haloMidOpacity: 0.7749999999999999,
+    haloHighOpacity: 0.8999999999999999,
+    haloSeconds: 0.8,
+    haloStrokeWidth: 14,
+    biomeSeconds: 10,
+    biomeDelaySeconds: -3,
+    adjacencyNormalized: 0.75,
+    signalMode: "burst"
   });
+});
+
+test("calibrates boundaries and smooths numeric targets by fifteen percent", () => {
+  assert.equal(hubAnimationState({ drift: 0.999 }).driftLevel, "low");
+  assert.equal(hubAnimationState({ drift: 1 }).coreMaxScale, 1.06);
+  assert.equal(hubAnimationState({ drift: 3 }).coreMaxScale, 1.1);
+  assert.equal(hubAnimationState({ pressure: 0.999 }).pressureLevel, "soft");
+  assert.equal(hubAnimationState({ pressure: 1 }).pressureLevel, "tense");
+  assert.equal(hubAnimationState({ pressure: 3 }).pressureLevel, "critical");
+  assert.equal(HUB_FEED_CALIBRATION.smoothingAlpha, 0.15);
+  assert.equal(lerp(6, 2), 5.4);
+
+  const previous = hubAnimationState({ cycle: "early", drift: 0, pressure: 0, adjacency: 0, signals: "quiet" });
+  const target = hubAnimationState({ cycle: "late", drift: 5, pressure: 5, adjacency: 1, signals: "burst" });
+  const smoothed = smoothHubAnimation(previous, target);
+
+  assert.ok(Math.abs(smoothed.coreMaxScale - 1.0405) < 1e-12);
+  assert.ok(Math.abs(smoothed.haloHighOpacity - 0.3475) < 1e-12);
+  assert.equal(smoothed.biomeSeconds, 14.8);
+  assert.equal(smoothed.driftLevel, "high");
+  assert.equal(smoothed.pressureLevel, "critical");
+  assert.equal(smoothed.signalMode, "burst");
 });
 
 test("applies feed values to stable animated SVG layers", () => {
   const nodes = new Map();
-  for (const id of ["hub-cycle-ring", "hub-engine-core", "hub-biome-ring", "hub-signal-halo"]) {
+  for (const id of ["hub-cycle-ring", "hub-core", "hub-biome-ring", "hub-halo"]) {
     const properties = new Map();
     nodes.set(`#${id}`, {
       dataset: {},
@@ -75,12 +100,12 @@ test("applies feed values to stable animated SVG layers", () => {
     signals: { warnings: ["field"] }
   });
 
-  assert.equal(nodes.get("#hub-cycle-ring").properties.get("animation-duration"), "3s");
-  assert.equal(nodes.get("#hub-engine-core").dataset.drift, "medium");
-  assert.equal(nodes.get("#hub-engine-core").properties.get("--hub-core-max-scale"), "1.092");
-  assert.equal(nodes.get("#hub-biome-ring").properties.get("animation-delay"), "-1s");
-  assert.equal(nodes.get("#hub-signal-halo").dataset.pressure, "0.5");
-  assert.equal(nodes.get("#hub-signal-halo").dataset.signals, "1");
+  assert.equal(nodes.get("#hub-cycle-ring").properties.get("animation-duration"), "4.000s");
+  assert.equal(nodes.get("#hub-core").dataset.drift, "medium");
+  assert.equal(nodes.get("#hub-core").properties.get("--hub-core-max-scale"), "1.060");
+  assert.equal(nodes.get("#hub-biome-ring").properties.get("animation-delay"), "-1.000s");
+  assert.equal(nodes.get("#hub-halo").dataset.pressure, "tense");
+  assert.equal(nodes.get("#hub-halo").dataset.signals, "burst");
 });
 
 test("derives bounded theme classes from Hub runtime state", () => {

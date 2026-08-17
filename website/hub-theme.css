@@ -80,11 +80,11 @@
 }
 
 .hub-container.cycle-early .hub-visual.pulse-cycle-synced {
-	animation-duration: 4s;
+	animation-duration: 6s;
 }
 
 .hub-container.cycle-mid .hub-visual.pulse-cycle-synced {
-	animation-duration: 3s;
+	animation-duration: 4s;
 }
 
 .hub-container.cycle-late .hub-visual.pulse-cycle-synced {

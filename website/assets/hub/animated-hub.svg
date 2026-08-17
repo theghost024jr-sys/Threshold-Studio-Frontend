@@ -1,8 +1,8 @@
 <svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <style>
-    #hub-engine-core {
-      --hub-core-min-scale: 0.96;
-      --hub-core-max-scale: 1.04;
+    #hub-core {
+      --hub-core-min-scale: 1;
+      --hub-core-max-scale: 1.03;
       transform-box: fill-box;
       transform-origin: center;
       animation: hub-core-pulse 3s ease-in-out infinite;
@@ -10,7 +10,7 @@
 
     #hub-cycle-ring {
       transform-origin: 256px 256px;
-      animation: hub-cycle-rotate 4s linear infinite;
+      animation: hub-cycle-rotate 6s linear infinite;
     }
 
     #hub-biome-ring {
@@ -18,10 +18,10 @@
       animation: hub-biome-drift 16s linear infinite reverse;
     }
 
-    #hub-signal-halo {
-      --hub-halo-low-opacity: 0.08;
-      --hub-halo-mid-opacity: 0.18;
-      --hub-halo-high-opacity: 0.2;
+    #hub-halo {
+      --hub-halo-low-opacity: 0.1;
+      --hub-halo-mid-opacity: 0.175;
+      --hub-halo-high-opacity: 0.25;
       animation: hub-halo-flicker 2.4s ease-in-out infinite;
     }
 
@@ -46,16 +46,16 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      #hub-engine-core,
+      #hub-core,
       #hub-cycle-ring,
       #hub-biome-ring,
-      #hub-signal-halo {
+      #hub-halo {
         animation: none;
       }
     }
   </style>
 
-  <circle id="hub-engine-core" cx="256" cy="256" r="60" fill="#222222" />
+  <circle id="hub-core" cx="256" cy="256" r="60" fill="#222222" />
 
   <g id="hub-cycle-ring">
     <path d="M256 116 A140 140 0 0 1 396 256" stroke="#AAAAAA" stroke-width="12" fill="none" />
@@ -74,5 +74,5 @@
   </g>
 
   <circle id="hub-chamber-ring" cx="256" cy="256" r="200" stroke="#444444" stroke-width="24" fill="none" />
-  <circle id="hub-signal-halo" cx="256" cy="256" r="240" stroke="#FFFFFF" stroke-width="8" fill="none" opacity="0.10" />
+  <circle id="hub-halo" cx="256" cy="256" r="240" stroke="#FFFFFF" stroke-width="8" fill="none" opacity="0.10" />
 </svg>

@@ -1,3 +1,5 @@
+import { advanceGardenRuntime } from "./garden-runtime.js";
+
 const GARDEN_RUNTIME_STATE_URL = "/runtime/garden/garden-runtime-state.json";
 const GARDEN_TICK_EVENT = "threshold:heartbeat-field";
 export const GARDEN_TICK_INTERVAL_MS = 12000;
@@ -85,6 +87,7 @@ export function startGardenBinding(component, {
   clearIntervalImpl = globalThis.clearInterval,
   intervalMs = GARDEN_TICK_INTERVAL_MS,
   feeds = GARDEN_FEEDS,
+  advanceState = advanceGardenRuntime,
   onUpdate = () => {}
 } = {}) {
   assertComponent(component);
@@ -94,18 +97,22 @@ export function startGardenBinding(component, {
   if (typeof setIntervalImpl !== "function" || typeof clearIntervalImpl !== "function") {
     throw new TypeError("Garden binding requires interval scheduling");
   }
-  if (!Array.isArray(feeds) || typeof onUpdate !== "function") {
+  if (!Array.isArray(feeds) || typeof advanceState !== "function" || typeof onUpdate !== "function") {
     throw new TypeError("Garden binding requires feeds and an update handler");
   }
 
   let active = true;
+  let currentState = null;
   let refreshInFlight = null;
   const refresh = () => {
     if (!active) return Promise.resolve();
     if (refreshInFlight) return refreshInFlight;
     refreshInFlight = Promise.resolve(loadState())
       .then((gardenState) => {
-        if (active) onUpdate(bindGardenComponent(gardenState, component, { feeds }));
+        currentState = currentState && currentState.timestamp === gardenState.timestamp
+          ? advanceState(currentState, { tickSeconds: intervalMs / 1000 })
+          : gardenState;
+        if (active) onUpdate(bindGardenComponent(currentState, component, { feeds }));
       })
       .catch(onError)
       .finally(() => {

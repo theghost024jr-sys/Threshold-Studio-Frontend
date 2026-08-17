@@ -4,6 +4,11 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const websiteDirectory = new URL("../", import.meta.url);
+const rasterHashes = new Map([
+  [128, "a0ebef012607a8e188f4b0bd04eb23e433e57e626fafd5f984d0f57ba38ea7ab"],
+  [240, "1294e4fd3a67d131e89e138b356da0f30b368785d965dd81703c37c32bbf6a1f"],
+  [512, "23ba0d36a03a9f589284763c63372a41e84f6c8c6cedf5b70bb9d15037c5abfd"]
+]);
 
 test("ships the static and animated 13-petal Garden glyph", async () => {
   const [staticSvg, animatedSvg, stateText] = await Promise.all([
@@ -26,4 +31,14 @@ test("ships the static and animated 13-petal Garden glyph", async () => {
   assert.equal(state.visual.asset, "garden/animated-garden.svg");
   assert.equal(state.visual.assetExists, true);
   assert.equal(state.diagnostics.outerRingPetals, 13);
+});
+
+test("ships byte-stable Garden raster exports at every declared size", async () => {
+  for (const [size, expectedHash] of rasterHashes) {
+    const png = await readFile(new URL(`assets/garden/garden-${size}.png`, websiteDirectory));
+    assert.deepEqual(png.subarray(0, 8), Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+    assert.equal(png.readUInt32BE(16), size);
+    assert.equal(png.readUInt32BE(20), size);
+    assert.equal(createHash("sha256").update(png).digest("hex"), expectedHash);
+  }
 });

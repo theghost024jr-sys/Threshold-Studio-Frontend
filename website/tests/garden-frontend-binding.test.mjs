@@ -70,6 +70,7 @@ test("refreshes on the environmental heartbeat and stops", async () => {
   };
   const target = component();
   let loads = 0;
+  const updates = [];
   const stop = startGardenBinding(target, {
     eventTarget,
     setIntervalImpl: (listener, intervalMs) => {
@@ -80,12 +81,16 @@ test("refreshes on the environmental heartbeat and stops", async () => {
     loadState: async () => {
       loads += 1;
       return state;
-    }
+    },
+    onUpdate: (feeds) => updates.push(feeds)
   });
 
   await new Promise((resolve) => setImmediate(resolve));
   await listeners.get("threshold:heartbeat-field")();
   assert.equal(loads, 2);
+  assert.equal(updates.length, 2);
+  assert.ok(updates[1].growth.rate > updates[0].growth.rate);
+  assert.equal(updates[1].runtimeTick, undefined);
   assert.equal(intervals.get(1).intervalMs, 12000);
   stop();
   assert.equal(listeners.has("threshold:heartbeat-field"), false);

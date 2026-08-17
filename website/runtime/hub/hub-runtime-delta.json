@@ -1,0 +1,77 @@
+{
+  "id": "hub-runtime-delta",
+  "timestamp": "2026-08-16T21:40:00-04:00",
+  "source": "hub-runtime-state.json",
+  "mode": "engine-tick",
+  "changes": {
+    "engine": {
+      "drift": { "old": 0, "new": 0 },
+      "pressure": { "old": 0, "new": 0 },
+      "cyclePosition": { "old": 0, "new": 0 },
+      "worldState": { "old": "stable", "new": "stable" }
+    },
+    "biome": {
+      "current": { "old": "house", "new": "house" },
+      "color": { "old": "#F4D03F", "new": "#F4D03F" }
+    },
+    "chambers": {
+      "adjacent": { "old": ["basin", "herbroom", "waterfall"], "new": ["basin", "herbroom", "waterfall"] },
+      "reachable": { "old": ["house-garden", "ethos", "learning-wheel", "discover"], "new": ["house-garden", "ethos", "learning-wheel", "discover"] },
+      "recent": { "old": [], "new": [] }
+    },
+    "signals": {
+      "active": { "old": [], "new": [] },
+      "warnings": { "old": [], "new": [] },
+      "distortions": { "old": [], "new": [] },
+      "environmental": { "old": [], "new": [] }
+    },
+    "player": {
+      "location": { "old": "hub", "new": "hub" },
+      "state": { "old": "stable", "new": "stable" }
+    },
+    "visual": {
+      "assetExists": { "old": false, "new": false },
+      "pulse": {
+        "mode": { "old": "cycle-synced", "new": "cycle-synced" },
+        "intensity": {
+          "drift": { "old": "low", "new": "low" },
+          "pressure": { "old": "low", "new": "low" },
+          "cycle": { "old": "early", "new": "early" }
+        }
+      }
+    },
+    "navigation": {
+      "routes": {
+        "old": [
+          "/hub",
+          "/house-garden",
+          "/ethos",
+          "/learning-wheel",
+          "/discover",
+          "/invitation",
+          "/mythology",
+          "/glyphis",
+          "/dialogues",
+          "/contact"
+        ],
+        "new": [
+          "/hub",
+          "/house-garden",
+          "/ethos",
+          "/learning-wheel",
+          "/discover",
+          "/invitation",
+          "/mythology",
+          "/glyphis",
+          "/dialogues",
+          "/contact"
+        ]
+      }
+    }
+  },
+  "diagnostics": {
+    "deltaApplied": true,
+    "noChangesDetected": true,
+    "notes": "Delta is empty because feeds are unimplemented; activation contract remains declarative."
+  }
+}

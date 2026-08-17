@@ -1,0 +1,88 @@
+{
+  "id": "hub-runtime-state",
+  "timestamp": "2026-08-16T20:59:00-04:00",
+  "source": "hub-activation.json",
+  "mode": "engine-tick",
+  "engine": {
+    "drift": 0,
+    "pressure": 0,
+    "cycle": "early",
+    "cyclePosition": 0,
+    "worldState": "stable"
+  },
+  "biome": {
+    "current": "house",
+    "color": "#F4D03F",
+    "palette": {
+      "house": "#F4D03F",
+      "garden": "#E67E22",
+      "forest": "#A67C52",
+      "deepforest": "#556B2F",
+      "root": "#C0392B",
+      "stone": "#5D4037",
+      "shadow": "#000000"
+    }
+  },
+  "chambers": {
+    "adjacent": ["basin", "herbroom", "waterfall"],
+    "reachable": ["house-garden", "ethos", "learning-wheel", "discover"],
+    "recent": []
+  },
+  "signals": {
+    "active": [],
+    "warnings": [],
+    "distortions": [],
+    "environmental": []
+  },
+  "player": {
+    "role": "traveler",
+    "state": "stable",
+    "location": "hub"
+  },
+  "visual": {
+    "asset": "hub.png",
+    "assetExists": false,
+    "fallback": "orbital-wheel",
+    "pulse": {
+      "mode": "cycle-synced",
+      "intensity": {
+        "drift": "low",
+        "pressure": "low",
+        "cycle": "early"
+      }
+    }
+  },
+  "navigation": {
+    "routes": [
+      "/hub",
+      "/house-garden",
+      "/ethos",
+      "/learning-wheel",
+      "/discover",
+      "/invitation",
+      "/mythology",
+      "/glyphis",
+      "/dialogues",
+      "/contact"
+    ],
+    "mode": "dynamic"
+  },
+  "diagnostics": {
+    "feedsMissing": [
+      "/content/engine/engine.json",
+      "/content/biomes/index.json",
+      "/content/chambers/index.json",
+      "/content/signals/index.json",
+      "/content/player/player.json"
+    ],
+    "assetMissing": ["hub.png"],
+    "handlers": [
+      "updateHubState",
+      "updateBiomeDisplay",
+      "updateNavigation",
+      "updateSignalBoard",
+      "updatePlayerPanel"
+    ],
+    "notes": "Runtime state is declarative; no feed files, handlers, outputs, or assets are implemented."
+  }
+}

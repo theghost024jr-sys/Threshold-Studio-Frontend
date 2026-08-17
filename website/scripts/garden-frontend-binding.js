@@ -1,4 +1,4 @@
-import { advanceGardenRuntime } from "./garden-runtime.js";
+import { advanceGardenRuntime } from "./garden-runtime.js?v=1";
 
 const GARDEN_RUNTIME_STATE_URL = "/runtime/garden/garden-runtime-state.json";
 const GARDEN_TICK_EVENT = "threshold:heartbeat-field";

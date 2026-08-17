@@ -1,4 +1,4 @@
-import { startGardenBinding } from "./garden-frontend-binding.js";
+import { startGardenBinding } from "./garden-frontend-binding.js?v=2";
 import {
   applyGardenAnimation,
   gardenAnimationSettled,

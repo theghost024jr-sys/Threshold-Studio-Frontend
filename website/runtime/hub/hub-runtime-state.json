@@ -40,7 +40,7 @@
     "location": "hub"
   },
   "visual": {
-    "asset": "hub.svg",
+    "asset": "hub/hub.svg",
     "assetExists": true,
     "fallback": "orbital-wheel",
     "pulse": {

@@ -1,0 +1,70 @@
+{
+  "id": "garden-layout-map",
+  "timestamp": "2026-08-17T03:00:00-04:00",
+  "source": "garden.json",
+  "layout": {
+    "mode": "adaptive-environmental",
+    "notes": "Garden layout responds to growth, adjacency, drift capture, pressure spread, biome shift, and environment signals."
+  },
+  "regions": {
+    "fibFlower": {
+      "position": "center",
+      "priority": "high",
+      "petals": 13,
+      "expandsOn": ["growth-branching", "growth-stable"],
+      "contractsOn": ["pressure-systemic"]
+    },
+    "growthBand": {
+      "position": "left-top",
+      "priority": "high",
+      "expandsOn": ["new-seeded-chamber"]
+    },
+    "adjacencyBand": {
+      "position": "left-bottom",
+      "priority": "high",
+      "expandsOn": ["new-adjacency"]
+    },
+    "driftCaptureBand": {
+      "position": "right-top",
+      "priority": "medium",
+      "expandsOn": ["drift-captured"]
+    },
+    "pressureBand": {
+      "position": "right-middle",
+      "priority": "high",
+      "expandsOn": ["pressure-moving", "pressure-systemic"]
+    },
+    "biomeBand": {
+      "position": "right-bottom",
+      "priority": "high",
+      "expandsOn": ["biome-transition"]
+    },
+    "signalBand": {
+      "position": "bottom-full",
+      "priority": "high",
+      "expandsOn": ["signal-pulse", "signal-burst"]
+    }
+  },
+  "adaptiveRules": {
+    "growth": {
+      "seeded": { "flowerScale": 0.82, "spacing": "tight" },
+      "sprouting": { "flowerScale": 0.92, "spacing": "normal" },
+      "branching": { "flowerScale": 1.02, "spacing": "wide" },
+      "stable": { "flowerScale": 1.08, "spacing": "wide" }
+    },
+    "pressureSpread": {
+      "local": { "borderWidth": 2, "tension": "local" },
+      "moving": { "borderWidth": 4, "tension": "traveling" },
+      "systemic": { "borderWidth": 6, "tension": "world" }
+    },
+    "biomeShift": {
+      "colorDriven": true,
+      "path": ["house", "garden", "forest", "deepforest", "root", "stone", "shadow"]
+    }
+  },
+  "diagnostics": {
+    "regionsDefined": 7,
+    "outerRingPetals": 13,
+    "status": "active"
+  }
+}

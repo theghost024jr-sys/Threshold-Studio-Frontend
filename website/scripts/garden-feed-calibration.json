@@ -1,0 +1,74 @@
+{
+  "id": "garden-feed-calibration",
+  "version": "1.0",
+  "canonical": true,
+  "ranges": {
+    "growth": {
+      "input": [0, 1],
+      "levels": {
+        "seeded": [0, 0.25],
+        "sprouting": [0.25, 0.6],
+        "branching": [0.6, 0.85],
+        "stable": [0.85, 1]
+      }
+    },
+    "adjacency": {
+      "input": [0, 1],
+      "arrayNormalizationMaximum": 8
+    },
+    "driftCapture": {
+      "input": [0, 1]
+    },
+    "pressureSpread": {
+      "input": [0, 1],
+      "levels": {
+        "local": [0, 0.3],
+        "moving": [0.3, 0.7],
+        "systemic": [0.7, 1]
+      }
+    },
+    "biomeShift": {
+      "input": [0, 1],
+      "path": ["house", "garden", "forest", "deepforest", "root", "stone", "shadow"]
+    },
+    "environmentSignals": ["quiet", "pulse", "burst"]
+  },
+  "curves": {
+    "growthCoreScale": [1, 1.12],
+    "growthPetalScale": [0.82, 1.08],
+    "adjacencyRotationSeconds": [20, 8],
+    "driftArcSeconds": [12, 4],
+    "driftArcOpacity": [0.2, 0.9],
+    "pressureRingOpacity": [0.12, 0.72],
+    "pressureStrokeWidth": [6, 18],
+    "biomePetalOpacity": [0.45, 1]
+  },
+  "smoothing": {
+    "method": "lerp",
+    "alpha": 0.12,
+    "frameDriven": true,
+    "settleEpsilon": 0.001
+  },
+  "signalRules": {
+    "quiet": { "durationSeconds": 3.2, "opacityBoost": 0, "strokeWidth": 5 },
+    "pulse": { "durationSeconds": 1.8, "opacityBoost": 0.12, "strokeWidth": 8 },
+    "burst": { "durationSeconds": 0.9, "opacityBoost": 0.24, "strokeWidth": 12 }
+  },
+  "biomePalette": {
+    "house": "#E8C66A",
+    "garden": "#5FAF72",
+    "forest": "#477A55",
+    "deepforest": "#244C3A",
+    "root": "#A94F45",
+    "stone": "#69747A",
+    "shadow": "#252A31"
+  },
+  "targets": {
+    "growth": "#garden-growth-core",
+    "adjacency": "#garden-adjacency-ring",
+    "driftCapture": "#garden-drift-arcs",
+    "pressureSpread": "#garden-pressure-ring",
+    "biomeShift": "#garden-biome-petals",
+    "environmentSignals": "#garden-signal-halo"
+  }
+}

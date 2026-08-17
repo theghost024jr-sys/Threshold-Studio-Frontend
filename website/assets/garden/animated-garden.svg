@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Animated Threshold Garden Glyph</title>
+  <desc id="desc">A living thirteen-petal Fib Flower rendering Garden's six environmental feeds.</desc>
+  <style>
+    :root {
+      --garden-growth-scale: 1.05;
+      --garden-petal-scale: 1;
+      --garden-pressure-opacity: 0.33;
+      --garden-drift-opacity: 0.48;
+      --garden-signal-opacity: 0.42;
+      --garden-biome-color: #5FAF72;
+    }
+    #garden-growth-core { transform-box: fill-box; transform-origin: center; animation: garden-grow 4s ease-in-out infinite; }
+    #garden-adjacency-ring { transform-origin: 256px 256px; animation: garden-adjacency 14s linear infinite; }
+    #garden-drift-arcs { transform-origin: 256px 256px; opacity: var(--garden-drift-opacity); animation: garden-drift 8s linear infinite; }
+    #garden-pressure-ring { opacity: var(--garden-pressure-opacity); animation: garden-pressure 5s ease-in-out infinite; }
+    #garden-biome-petals { transform-origin: 256px 256px; color: var(--garden-biome-color); animation: garden-petals 6s ease-in-out infinite; }
+    #garden-signal-halo { opacity: var(--garden-signal-opacity); animation: garden-signals 3.2s ease-in-out infinite; }
+    @keyframes garden-grow { 50% { transform: scale(var(--garden-growth-scale)); } }
+    @keyframes garden-adjacency { to { transform: rotate(360deg); } }
+    @keyframes garden-drift { to { transform: rotate(-360deg); } }
+    @keyframes garden-pressure { 50% { opacity: calc(var(--garden-pressure-opacity) + 0.12); } }
+    @keyframes garden-petals { 50% { transform: scale(var(--garden-petal-scale)); } }
+    @keyframes garden-signals { 50% { opacity: calc(var(--garden-signal-opacity) + 0.18); } }
+    @media (prefers-reduced-motion: reduce) {
+      #garden-growth-core, #garden-adjacency-ring, #garden-drift-arcs,
+      #garden-pressure-ring, #garden-biome-petals, #garden-signal-halo { animation: none !important; }
+    }
+  </style>
+  <rect width="512" height="512" fill="#F3F0E6"/>
+  <circle id="garden-signal-halo" cx="256" cy="256" r="232" fill="none" stroke="#E8C66A" stroke-width="5"/>
+  <g id="garden-biome-petals" fill="currentColor" stroke="#244C3A" stroke-width="3">
+    <ellipse cx="256" cy="93" rx="31" ry="75"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(27.692 256 256)" fill="#E8C66A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(55.384 256 256)" fill="#6D9E78"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(83.076 256 256)" fill="#75A9B8"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(110.768 256 256)" fill="#A94F45"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(138.460 256 256)" fill="#69747A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(166.152 256 256)" fill="#477A55"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(193.844 256 256)" fill="#E8C66A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(221.536 256 256)" fill="#75A9B8"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(249.228 256 256)"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(276.920 256 256)" fill="#A94F45"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(304.612 256 256)" fill="#69747A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(332.304 256 256)" fill="#477A55"/>
+  </g>
+  <circle id="garden-adjacency-ring" cx="256" cy="256" r="143" fill="none" stroke="#E8C66A" stroke-width="10" stroke-dasharray="5 17"/>
+  <g id="garden-drift-arcs" fill="none" stroke="#75A9B8" stroke-width="11" stroke-linecap="round">
+    <path d="M119 214 A148 148 0 0 1 179 129"/>
+    <path d="M333 129 A148 148 0 0 1 393 214"/>
+    <path d="M393 298 A148 148 0 0 1 333 383"/>
+    <path d="M179 383 A148 148 0 0 1 119 298"/>
+  </g>
+  <circle id="garden-pressure-ring" cx="256" cy="256" r="108" fill="#F3F0E6" stroke="#A94F45" stroke-width="9"/>
+  <g id="garden-growth-core">
+    <circle cx="256" cy="256" r="62" fill="#244C3A" stroke="#5FAF72" stroke-width="12"/>
+    <path d="M256 287 C220 255 230 213 256 194 C282 213 292 255 256 287Z" fill="#E8C66A"/>
+  </g>
+</svg>

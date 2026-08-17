@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Threshold Garden Glyph</title>
+  <desc id="desc">A thirteen-petal Fib Flower surrounded by environmental rings and drift-capture arcs.</desc>
+  <rect width="512" height="512" fill="#F3F0E6"/>
+  <circle cx="256" cy="256" r="228" fill="none" stroke="#252A31" stroke-width="4" opacity="0.28"/>
+  <g fill="#5FAF72" stroke="#244C3A" stroke-width="3">
+    <ellipse cx="256" cy="93" rx="31" ry="75"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(27.692 256 256)" fill="#E8C66A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(55.384 256 256)" fill="#6D9E78"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(83.076 256 256)" fill="#75A9B8"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(110.768 256 256)" fill="#A94F45"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(138.460 256 256)" fill="#69747A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(166.152 256 256)" fill="#477A55"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(193.844 256 256)" fill="#E8C66A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(221.536 256 256)" fill="#75A9B8"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(249.228 256 256)" fill="#5FAF72"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(276.920 256 256)" fill="#A94F45"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(304.612 256 256)" fill="#69747A"/>
+    <ellipse cx="256" cy="93" rx="31" ry="75" transform="rotate(332.304 256 256)" fill="#477A55"/>
+  </g>
+  <circle cx="256" cy="256" r="143" fill="none" stroke="#E8C66A" stroke-width="10" stroke-dasharray="5 17"/>
+  <g fill="none" stroke="#75A9B8" stroke-width="11" stroke-linecap="round">
+    <path d="M119 214 A148 148 0 0 1 179 129"/>
+    <path d="M333 129 A148 148 0 0 1 393 214"/>
+    <path d="M393 298 A148 148 0 0 1 333 383"/>
+    <path d="M179 383 A148 148 0 0 1 119 298"/>
+  </g>
+  <circle cx="256" cy="256" r="108" fill="#F3F0E6" stroke="#A94F45" stroke-width="9"/>
+  <circle cx="256" cy="256" r="62" fill="#244C3A" stroke="#5FAF72" stroke-width="12"/>
+  <path d="M256 287 C220 255 230 213 256 194 C282 213 292 255 256 287Z" fill="#E8C66A"/>
+</svg>

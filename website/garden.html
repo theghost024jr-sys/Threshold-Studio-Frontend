@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="garden.css">
+  <link rel="stylesheet" href="garden-theme.css">
 </head>
 <body>
   <header class="site-header">
@@ -18,17 +20,10 @@
       <a href="garden.html" aria-current="page">Garden</a>
     </nav>
   </header>
-  <main class="shell">
-    <p class="eyebrow">Circle II / House and Garden</p>
-    <h1>What roots may branch.</h1>
-    <p class="lead">The house remembers structure. The garden tests what can emerge without losing the path home.</p>
-    <a class="action" href="hub.html">Return to the hub</a>
-    <section class="field-grid" aria-label="Garden field">
-      <article class="field"><h2>House</h2><p>A boundary that shelters identity without sealing it away.</p></article>
-      <article class="field"><h2>Garden</h2><p>A living field where response becomes pattern and pattern becomes form.</p></article>
-      <article class="field"><h2>Gate</h2><p>Deeper circles remain cold until their activation is earned.</p></article>
-    </section>
+  <main class="garden-shell">
+    <threshold-garden aria-label="Live Garden environmental state"></threshold-garden>
   </main>
   <script type="module" src="/threshold-engine.js"></script>
+  <script type="module" src="scripts/garden-component.js"></script>
 </body>
 </html>

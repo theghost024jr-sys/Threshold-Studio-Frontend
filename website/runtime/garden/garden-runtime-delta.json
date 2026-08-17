@@ -1,0 +1,38 @@
+{
+  "id": "garden-runtime-delta",
+  "timestamp": "2026-08-17T03:00:00-04:00",
+  "source": "garden-runtime-state.json",
+  "mode": "environment-tick",
+  "changes": {
+    "growth": {
+      "rate": { "old": 0.48, "new": 0.62 },
+      "stage": { "old": "sprouting", "new": "branching" },
+      "seededChambers": { "old": [], "new": ["herbroom"] }
+    },
+    "adjacency": {
+      "density": { "old": 0.375, "new": 0.5 },
+      "chambers": { "old": ["hub", "herbroom", "basin"], "new": ["hub", "herbroom", "waterfall", "basin"] }
+    },
+    "driftCapture": {
+      "rate": { "old": 0.2, "new": 0.4 },
+      "capturedNodes": { "old": 1, "new": 2 }
+    },
+    "pressureSpread": {
+      "intensity": { "old": 0.2, "new": 0.35 },
+      "affectedBiomes": { "old": ["garden"], "new": ["garden", "forest"] }
+    },
+    "biomeShift": {
+      "progress": { "old": 0.42, "new": 0.68 },
+      "to": { "old": "garden", "new": "garden" }
+    },
+    "environmentSignals": {
+      "active": { "old": [], "new": ["germination"] },
+      "transitions": { "old": [], "new": ["house:garden"] }
+    }
+  },
+  "diagnostics": {
+    "deltaApplied": true,
+    "noChangesDetected": false,
+    "status": "coherent"
+  }
+}

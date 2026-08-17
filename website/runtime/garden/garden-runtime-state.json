@@ -1,0 +1,53 @@
+{
+  "id": "garden-runtime-state",
+  "timestamp": "2026-08-17T03:00:00-04:00",
+  "source": "garden.json",
+  "mode": "environment-tick",
+  "growth": {
+    "rate": 0.62,
+    "stage": "branching",
+    "stability": 0.78,
+    "seededChambers": ["herbroom"]
+  },
+  "adjacency": {
+    "density": 0.5,
+    "chambers": ["hub", "herbroom", "waterfall", "basin"],
+    "outerRingPetals": 13
+  },
+  "driftCapture": {
+    "rate": 0.4,
+    "capturedNodes": 2,
+    "availableNodes": 5
+  },
+  "pressureSpread": {
+    "intensity": 0.35,
+    "direction": "outward",
+    "affectedBiomes": ["garden", "forest"]
+  },
+  "biomeShift": {
+    "from": "house",
+    "to": "garden",
+    "progress": 0.68,
+    "path": ["house", "garden", "forest", "deepforest", "root", "stone", "shadow"]
+  },
+  "environmentSignals": {
+    "active": ["germination"],
+    "warnings": [],
+    "transitions": ["house:garden"]
+  },
+  "visual": {
+    "asset": "garden/animated-garden.svg",
+    "assetExists": true,
+    "fallback": "fib-flower"
+  },
+  "navigation": {
+    "routes": ["/hub", "/garden", "/house-garden", "/environment/herbroom", "/environment/waterfall", "/environment/basin"],
+    "mode": "environmental"
+  },
+  "diagnostics": {
+    "feedsMissing": [],
+    "assetMissing": [],
+    "outerRingPetals": 13,
+    "status": "active"
+  }
+}

@@ -27,7 +27,7 @@ test("implements the seven-domain Hub component interface", () => {
 
 test("derives bounded theme classes from Hub runtime state", () => {
   assert.deepEqual(hubThemeClasses({
-    engine: { cycle: "early" },
+    engine: { cycle: "early", drift: 0, pressure: 0 },
     biome: { current: "house" },
     signals: { warnings: [], distortions: [], environmental: [] },
     visual: {
@@ -40,6 +40,28 @@ test("derives bounded theme classes from Hub runtime state", () => {
     container: ["biome-house", "cycle-early", "drift-low", "pressure-low"],
     visual: ["pulse-cycle-synced"]
   });
+});
+
+test("normalizes numeric engine load at reactive class boundaries", () => {
+  const cases = [
+    { value: 0, level: "low" },
+    { value: 1, level: "medium" },
+    { value: 2.999, level: "medium" },
+    { value: 3, level: "high" }
+  ];
+
+  for (const { value, level } of cases) {
+    const theme = hubThemeClasses({
+      engine: { drift: value, pressure: value },
+      visual: { pulse: { intensity: { drift: "high", pressure: "high" } } }
+    });
+    assert.deepEqual(theme.container, [`drift-${level}`, `pressure-${level}`]);
+  }
+
+  assert.deepEqual(hubThemeClasses({
+    engine: { drift: Number.NaN },
+    visual: { pulse: { intensity: { drift: "medium", pressure: "low" } } }
+  }).container, ["drift-medium", "pressure-low"]);
 });
 
 test("replaces stale theme classes and flags warning signals", () => {

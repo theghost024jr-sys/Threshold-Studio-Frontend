@@ -15,13 +15,20 @@ function hasSignal(values) {
   return Array.isArray(values) && values.length > 0;
 }
 
+function engineLevel(value, fallback) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+  if (value < 1) return "low";
+  if (value < 3) return "medium";
+  return "high";
+}
+
 export function hubThemeClasses({ engine = {}, biome = {}, signals = {}, visual = {} } = {}) {
   const intensity = visual.pulse?.intensity || {};
   const container = [
     themeClass("biome", biome.current, BIOMES),
     themeClass("cycle", engine.cycle || intensity.cycle, CYCLES),
-    themeClass("drift", intensity.drift, INTENSITIES),
-    themeClass("pressure", intensity.pressure, INTENSITIES)
+    themeClass("drift", engineLevel(engine.drift, intensity.drift), INTENSITIES),
+    themeClass("pressure", engineLevel(engine.pressure, intensity.pressure), INTENSITIES)
   ].filter(Boolean);
 
   if (hasSignal(signals.warnings) || hasSignal(signals.distortions) || hasSignal(signals.environmental)) {

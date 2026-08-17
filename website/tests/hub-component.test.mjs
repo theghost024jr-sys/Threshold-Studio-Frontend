@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { ThresholdHubElement } from "../scripts/hub-component.js";
+import { hubThemeClasses, ThresholdHubElement } from "../scripts/hub-component.js";
 
 test("implements the seven-domain Hub component interface", () => {
   const component = new ThresholdHubElement();
@@ -23,4 +23,39 @@ test("implements the seven-domain Hub component interface", () => {
     visual: { fallback: "orbital-wheel" },
     navigation: { routes: ["/hub"] }
   });
+});
+
+test("derives bounded theme classes from Hub runtime state", () => {
+  assert.deepEqual(hubThemeClasses({
+    engine: { cycle: "early" },
+    biome: { current: "house" },
+    signals: { warnings: [], distortions: [], environmental: [] },
+    visual: {
+      pulse: {
+        mode: "cycle-synced",
+        intensity: { drift: "low", pressure: "low", cycle: "early" }
+      }
+    }
+  }), {
+    container: ["biome-house", "cycle-early", "drift-low", "pressure-low"],
+    visual: ["pulse-cycle-synced"]
+  });
+});
+
+test("replaces stale theme classes and flags warning signals", () => {
+  assert.deepEqual(hubThemeClasses({
+    engine: { cycle: "late" },
+    biome: { current: "root" },
+    signals: { distortions: ["field-instability"] },
+    visual: { pulse: { intensity: { drift: "high", pressure: "medium" } } }
+  }), {
+    container: ["biome-root", "cycle-late", "drift-high", "pressure-medium", "signal-warning"],
+    visual: []
+  });
+
+  assert.deepEqual(hubThemeClasses({
+    engine: { cycle: "untrusted-class" },
+    biome: { current: "unknown" },
+    visual: { pulse: { mode: "unknown", intensity: { drift: "extreme" } } }
+  }), { container: [], visual: [] });
 });

@@ -1,6 +1,38 @@
 import { startHubBinding } from "./hub-frontend-binding.js";
 
 const HTMLElementBase = globalThis.HTMLElement ?? class {};
+const BIOMES = new Set(["house", "garden", "forest", "deepforest", "root", "stone", "shadow"]);
+const CYCLES = new Set(["early", "mid", "late"]);
+const INTENSITIES = new Set(["low", "medium", "high"]);
+const PULSE_MODES = new Set(["cycle-synced"]);
+
+function themeClass(prefix, value, allowed) {
+  const token = String(value || "").toLowerCase().replace(/[\s_]+/g, "");
+  return allowed.has(token) ? `${prefix}-${token}` : null;
+}
+
+function hasSignal(values) {
+  return Array.isArray(values) && values.length > 0;
+}
+
+export function hubThemeClasses({ engine = {}, biome = {}, signals = {}, visual = {} } = {}) {
+  const intensity = visual.pulse?.intensity || {};
+  const container = [
+    themeClass("biome", biome.current, BIOMES),
+    themeClass("cycle", engine.cycle || intensity.cycle, CYCLES),
+    themeClass("drift", intensity.drift, INTENSITIES),
+    themeClass("pressure", intensity.pressure, INTENSITIES)
+  ].filter(Boolean);
+
+  if (hasSignal(signals.warnings) || hasSignal(signals.distortions) || hasSignal(signals.environmental)) {
+    container.push("signal-warning");
+  }
+
+  return {
+    container,
+    visual: [themeClass("pulse", visual.pulse?.mode, PULSE_MODES)].filter(Boolean)
+  };
+}
 
 function displayValue(value) {
   if (Array.isArray(value)) return value.length > 0 ? value.join(", ") : "None";
@@ -71,7 +103,8 @@ export class ThresholdHubElement extends HTMLElementBase {
     if (typeof this.replaceChildren !== "function" || !globalThis.document) return;
 
     const { engine, biome, chambers, signals, player, visual, navigation } = this.#state;
-    const shell = element("section", "hub-organ hub-container");
+    const theme = hubThemeClasses({ engine, biome, signals, visual });
+    const shell = element("section", ["hub-organ", "hub-container", ...theme.container].join(" "));
     shell.style.setProperty("--hub-biome-color", biome.color || "var(--teal)");
 
     const header = element("header", "hub-organ-header");
@@ -80,7 +113,7 @@ export class ThresholdHubElement extends HTMLElementBase {
       element("p", "eyebrow", "Live organ / Engine feed"),
       element("h2", "hub-organ-title", "World state")
     );
-    const visualNode = element("div", "hub-organ-visual hub-visual");
+    const visualNode = element("div", ["hub-organ-visual", "hub-visual", ...theme.visual].join(" "));
     if (visual.assetExists) {
       const image = element("img");
       image.src = `/assets/${visual.asset}`;

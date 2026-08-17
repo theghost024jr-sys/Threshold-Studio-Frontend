@@ -1,0 +1,112 @@
+{
+  "id": "hub-layout-map",
+  "timestamp": "2026-08-16T21:48:00-04:00",
+  "source": "hub-synthesis.json",
+  "layout": {
+    "mode": "adaptive",
+    "notes": "Hub layout changes based on biome, cycle, adjacency, and engine pressure."
+  },
+  "regions": {
+    "visualCore": {
+      "position": "center-top",
+      "expandsOn": ["cycle-mid", "cycle-late"],
+      "contractsOn": ["pressure-high"],
+      "notes": "The Hub glyph grows or tightens based on cycle and pressure."
+    },
+    "enginePanel": {
+      "position": "left-column",
+      "priority": "high",
+      "expandsOn": ["drift-high", "pressure-high"],
+      "contractsOn": ["cycle-early"],
+      "notes": "Engine state becomes more prominent under load."
+    },
+    "biomePanel": {
+      "position": "left-column",
+      "priority": "medium",
+      "colorDriven": true,
+      "expandsOn": ["biome-change"],
+      "notes": "Biome panel shifts color and border based on biome feed."
+    },
+    "chamberPanel": {
+      "position": "center-column",
+      "priority": "medium",
+      "expandsOn": ["new-adjacent-chamber"],
+      "contractsOn": ["no-recent-chambers"],
+      "notes": "Chamber adjacency drives spatial expansion."
+    },
+    "signalPanel": {
+      "position": "right-column",
+      "priority": "high",
+      "expandsOn": ["signal-warning", "signal-distortion"],
+      "contractsOn": ["no-signals"],
+      "notes": "Signal activity pushes the panel outward."
+    },
+    "playerPanel": {
+      "position": "right-column",
+      "priority": "medium",
+      "expandsOn": ["player-state-change"],
+      "notes": "Player movement or state changes adjust panel prominence."
+    },
+    "navigationBand": {
+      "position": "bottom-full",
+      "priority": "high",
+      "expandsOn": ["new-route", "cycle-late"],
+      "contractsOn": ["pressure-high"],
+      "notes": "Navigation expands when world opens, contracts under load."
+    }
+  },
+  "adaptiveRules": {
+    "cycle": {
+      "early": {
+        "visualCoreScale": 1.0,
+        "panelSpacing": "normal",
+        "navigationDensity": "normal"
+      },
+      "mid": {
+        "visualCoreScale": 1.05,
+        "panelSpacing": "wide",
+        "navigationDensity": "expanded"
+      },
+      "late": {
+        "visualCoreScale": 1.1,
+        "panelSpacing": "wide",
+        "navigationDensity": "max"
+      }
+    },
+    "enginePressure": {
+      "low": {
+        "borderWidth": 2,
+        "visualTension": "relaxed"
+      },
+      "medium": {
+        "borderWidth": 4,
+        "visualTension": "tight"
+      },
+      "high": {
+        "borderWidth": 6,
+        "visualTension": "compressed",
+        "navigationDensity": "reduced"
+      }
+    },
+    "drift": {
+      "low": {
+        "brightness": 1.0,
+        "saturation": 1.0
+      },
+      "medium": {
+        "brightness": 0.95,
+        "saturation": 1.1
+      },
+      "high": {
+        "brightness": 0.9,
+        "saturation": 1.2
+      }
+    }
+  },
+  "diagnostics": {
+    "layoutMode": "adaptive",
+    "regionsDefined": 7,
+    "rulesets": ["cycle", "enginePressure", "drift"],
+    "notes": "Layout map is declarative; no DOM or CSS mutations occur."
+  }
+}

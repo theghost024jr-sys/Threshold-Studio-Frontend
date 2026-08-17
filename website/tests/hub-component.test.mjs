@@ -1,15 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { hubThemeClasses, ThresholdHubElement } from "../scripts/hub-component.js";
 import {
+  applyHubCalibration,
   hubAnimationState,
-  hubThemeClasses,
   HUB_FEED_CALIBRATION,
   lerp,
-  smoothHubAnimation,
-  ThresholdHubElement,
-  updateHubAnimation
-} from "../scripts/hub-component.js";
+  smoothHubAnimation
+} from "../scripts/hub-animation-binding.js";
 
 test("implements the feed-aware Hub component interface", () => {
   const component = new ThresholdHubElement();
@@ -66,7 +65,7 @@ test("calibrates boundaries and smooths numeric targets by fifteen percent", () 
   assert.equal(hubAnimationState({ pressure: 0.999 }).pressureLevel, "soft");
   assert.equal(hubAnimationState({ pressure: 1 }).pressureLevel, "tense");
   assert.equal(hubAnimationState({ pressure: 3 }).pressureLevel, "critical");
-  assert.equal(HUB_FEED_CALIBRATION.smoothingAlpha, 0.15);
+  assert.equal(HUB_FEED_CALIBRATION.smoothing.alpha, 0.15);
   assert.equal(lerp(6, 2), 5.4);
 
   const previous = hubAnimationState({ cycle: "early", drift: 0, pressure: 0, adjacency: 0, signals: "quiet" });
@@ -92,12 +91,17 @@ test("applies feed values to stable animated SVG layers", () => {
     });
   }
 
-  updateHubAnimation({ querySelector: (selector) => nodes.get(selector) }, {
+  applyHubCalibration({
     cycle: "mid",
     drift: 1,
     pressure: 2.5,
     adjacency: ["basin"],
     signals: { warnings: ["field"] }
+  }, {
+    cycleRing: nodes.get("#hub-cycle-ring"),
+    core: nodes.get("#hub-core"),
+    biomeRing: nodes.get("#hub-biome-ring"),
+    halo: nodes.get("#hub-halo")
   });
 
   assert.equal(nodes.get("#hub-cycle-ring").properties.get("animation-duration"), "4.000s");

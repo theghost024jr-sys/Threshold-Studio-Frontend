@@ -1,0 +1,92 @@
+{
+  "id": "hub-feed-calibration",
+  "version": "1.0",
+  "canonical": true,
+  "ranges": {
+    "drift": {
+      "input": [0, 5],
+      "levels": {
+        "low": [0, 1],
+        "medium": [1, 3],
+        "high": [3, 5]
+      }
+    },
+    "pressure": {
+      "input": [0, 5],
+      "levels": {
+        "soft": [0, 1],
+        "tense": [1, 3],
+        "critical": [3, 5]
+      }
+    },
+    "adjacency": {
+      "input": [0, 1],
+      "arrayNormalizationMaximum": 4
+    },
+    "signals": ["quiet", "pulse", "burst"]
+  },
+  "curves": {
+    "driftCorePulse": {
+      "low": [1.0, 1.03],
+      "medium": [1.0, 1.06],
+      "high": [1.0, 1.1],
+      "easing": "ease-in-out"
+    },
+    "pressureHaloOpacity": {
+      "soft": [0.1, 0.25],
+      "tense": [0.25, 0.45],
+      "critical": [0.45, 0.7],
+      "easing": "ease-in-out"
+    },
+    "cycleSeconds": {
+      "early": 6,
+      "mid": 4,
+      "late": 2
+    }
+  },
+  "smoothing": {
+    "method": "lerp",
+    "alpha": 0.15,
+    "frameDriven": true,
+    "settleEpsilon": 0.001
+  },
+  "adjacencyModulation": {
+    "biomeRotationSeconds": [16, 8],
+    "phaseOffsetSeconds": [0, -4]
+  },
+  "signalBurstRules": {
+    "quiet": {
+      "haloSeconds": 2.4,
+      "strokeWidth": 8,
+      "opacityBoost": 0
+    },
+    "pulse": {
+      "haloSeconds": 1.6,
+      "strokeWidth": 10,
+      "opacityBoost": 0.1
+    },
+    "burst": {
+      "haloSeconds": 0.8,
+      "strokeWidth": 14,
+      "opacityBoost": 0.2
+    }
+  },
+  "targets": {
+    "core": "#hub-core",
+    "cycle": "#hub-cycle-ring",
+    "biome": "#hub-biome-ring",
+    "halo": "#hub-halo"
+  },
+  "verification": {
+    "windowSeconds": 30,
+    "status": "coherent",
+    "sameNodeAcrossUpdates": true,
+    "outcomes": {
+      "drift": "breathing",
+      "pressure": "tension",
+      "cycle": "time-passing",
+      "adjacency": "environment",
+      "signals": "communication"
+    }
+  }
+}

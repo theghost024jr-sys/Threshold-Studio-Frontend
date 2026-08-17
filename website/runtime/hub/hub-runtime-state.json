@@ -40,8 +40,8 @@
     "location": "hub"
   },
   "visual": {
-    "asset": "hub.png",
-    "assetExists": false,
+    "asset": "hub.svg",
+    "assetExists": true,
     "fallback": "orbital-wheel",
     "pulse": {
       "mode": "cycle-synced",
@@ -75,7 +75,7 @@
       "/content/signals/index.json",
       "/content/player/player.json"
     ],
-    "assetMissing": ["hub.png"],
+    "assetMissing": [],
     "handlers": [
       "updateHubState",
       "updateBiomeDisplay",
@@ -83,6 +83,6 @@
       "updateSignalBoard",
       "updatePlayerPanel"
     ],
-    "notes": "Runtime state is declarative; no feed files, handlers, outputs, or assets are implemented."
+    "notes": "Runtime state is declarative; no feed files, handlers, or outputs are implemented."
   }
 }

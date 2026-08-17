@@ -1,0 +1,98 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- ========================= -->
+  <!-- 1. ENGINE CORE            -->
+  <!-- ========================= -->
+  <circle
+    cx="256" cy="256" r="60"
+    fill="#222222"
+  />
+
+  <!-- ========================= -->
+  <!-- 2. CYCLE RING (3 segments) -->
+  <!-- ========================= -->
+  <!-- Early -->
+  <path d="
+    M256 116
+    A140 140 0 0 1 396 256
+  " stroke="#AAAAAA" stroke-width="12" fill="none" />
+
+  <!-- Mid -->
+  <path d="
+    M396 256
+    A140 140 0 0 1 256 396
+  " stroke="#DDDDDD" stroke-width="12" fill="none" />
+
+  <!-- Late -->
+  <path d="
+    M256 396
+    A140 140 0 0 1 256 116
+  " stroke="#FFFFFF" stroke-width="12" fill="none" />
+
+  <!-- ========================= -->
+  <!-- 3. BIOME RING (7 segments) -->
+  <!-- ========================= -->
+  <!-- House -->
+  <path d="
+    M256 96
+    A160 160 0 0 1 330 116
+  " stroke="#F4D03F" stroke-width="16" fill="none" />
+
+  <!-- Garden -->
+  <path d="
+    M330 116
+    A160 160 0 0 1 396 180
+  " stroke="#E67E22" stroke-width="16" fill="none" />
+
+  <!-- Forest -->
+  <path d="
+    M396 180
+    A160 160 0 0 1 416 256
+  " stroke="#A67C52" stroke-width="16" fill="none" />
+
+  <!-- Deepforest -->
+  <path d="
+    M416 256
+    A160 160 0 0 1 396 332
+  " stroke="#556B2F" stroke-width="16" fill="none" />
+
+  <!-- Root -->
+  <path d="
+    M396 332
+    A160 160 0 0 1 330 396
+  " stroke="#C0392B" stroke-width="16" fill="none" />
+
+  <!-- Stone -->
+  <path d="
+    M330 396
+    A160 160 0 0 1 256 416
+  " stroke="#5D4037" stroke-width="16" fill="none" />
+
+  <!-- Shadow -->
+  <path d="
+    M256 416
+    A160 160 0 0 1 256 96
+  " stroke="#000000" stroke-width="16" fill="none" />
+
+  <!-- ========================= -->
+  <!-- 4. CHAMBER RING (thick)   -->
+  <!-- ========================= -->
+  <circle
+    cx="256" cy="256" r="200"
+    stroke="#444444"
+    stroke-width="24"
+    fill="none"
+  />
+
+  <!-- ========================= -->
+  <!-- 5. SIGNAL HALO (outer glow) -->
+  <!-- ========================= -->
+  <circle
+    cx="256" cy="256" r="240"
+    stroke="white"
+    stroke-width="8"
+    fill="none"
+    opacity="0.10"
+  />
+
+</svg>

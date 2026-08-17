@@ -30,7 +30,7 @@
       "state": { "old": "stable", "new": "stable" }
     },
     "visual": {
-      "assetExists": { "old": false, "new": false },
+      "assetExists": { "old": true, "new": true },
       "pulse": {
         "mode": { "old": "cycle-synced", "new": "cycle-synced" },
         "intensity": {

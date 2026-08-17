@@ -79,6 +79,18 @@
 	animation: hub-pulse 4s ease-in-out infinite;
 }
 
+.hub-container.cycle-early .hub-visual.pulse-cycle-synced {
+	animation-duration: 4s;
+}
+
+.hub-container.cycle-mid .hub-visual.pulse-cycle-synced {
+	animation-duration: 3s;
+}
+
+.hub-container.cycle-late .hub-visual.pulse-cycle-synced {
+	animation-duration: 2s;
+}
+
 @keyframes hub-pulse {
 	0%,
 	100% {

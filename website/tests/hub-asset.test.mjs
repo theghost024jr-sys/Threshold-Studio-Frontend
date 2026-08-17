@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const websiteDirectory = new URL("../", import.meta.url);
+const animatedHash = "f99b92bda7eeddbd604fa9d674fa1c93d1b696861a010a18725f6c8d192ff515";
 const rasterHashes = new Map([
   [128, "4c8a308f3c939825f3d4a559a73752f5d6126c9eb17b53d8bb126ffdc00b9cfc"],
   [240, "24d5055aa4303767fc805479344a24196fceb87e4127def12a409cf85279da49"],
@@ -11,9 +12,11 @@ const rasterHashes = new Map([
 ]);
 
 test("ships and activates the five-layer Hub vector blueprint", async () => {
-  const [svg, stateText] = await Promise.all([
+  const [svg, animatedSvg, stateText, themeCss] = await Promise.all([
     readFile(new URL("assets/hub/hub.svg", websiteDirectory), "utf8"),
-    readFile(new URL("runtime/hub/hub-runtime-state.json", websiteDirectory), "utf8")
+    readFile(new URL("assets/hub/animated-hub.svg", websiteDirectory), "utf8"),
+    readFile(new URL("runtime/hub/hub-runtime-state.json", websiteDirectory), "utf8"),
+    readFile(new URL("hub-theme.css", websiteDirectory), "utf8")
   ]);
   const state = JSON.parse(stateText);
 
@@ -28,7 +31,19 @@ test("ships and activates the five-layer Hub vector blueprint", async () => {
     assert.ok(svg.includes(`stroke="${color}"`), `missing biome stroke ${color}`);
   }
 
-  assert.equal(state.visual.asset, "hub/hub.svg");
+  for (const id of ["hub-engine-core", "hub-cycle-ring", "hub-biome-ring", "hub-chamber-ring", "hub-signal-halo"]) {
+    assert.ok(animatedSvg.includes(`id="${id}"`), `missing animated layer ${id}`);
+  }
+  assert.match(animatedSvg, /animation: hub-cycle-rotate 4s linear infinite/);
+  assert.match(animatedSvg, /animation: hub-halo-flicker 2\.4s ease-in-out infinite/);
+  assert.match(animatedSvg, /prefers-reduced-motion: reduce/);
+  assert.equal(createHash("sha256").update(animatedSvg).digest("hex"), animatedHash);
+
+  assert.match(themeCss, /cycle-early[\s\S]*animation-duration: 4s/);
+  assert.match(themeCss, /cycle-mid[\s\S]*animation-duration: 3s/);
+  assert.match(themeCss, /cycle-late[\s\S]*animation-duration: 2s/);
+
+  assert.equal(state.visual.asset, "hub/animated-hub.svg");
   assert.equal(state.visual.assetExists, true);
   assert.deepEqual(state.diagnostics.assetMissing, []);
 });

@@ -5,6 +5,10 @@ threshold-hub {
 	margin-top: clamp(3rem, 8vh, 6rem);
 }
 
+.hub-shell threshold-hub {
+	margin-top: 0;
+}
+
 .hub-container {
 	color: var(--ink);
 	background: rgba(5, 7, 11, 0.72);

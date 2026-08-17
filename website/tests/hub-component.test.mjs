@@ -1,9 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { hubThemeClasses, ThresholdHubElement } from "../scripts/hub-component.js";
+import {
+  hubAnimationState,
+  hubThemeClasses,
+  ThresholdHubElement,
+  updateHubAnimation
+} from "../scripts/hub-component.js";
 
-test("implements the seven-domain Hub component interface", () => {
+test("implements the feed-aware Hub component interface", () => {
   const component = new ThresholdHubElement();
 
   component.setEngine({ cycle: "early" });
@@ -13,6 +18,7 @@ test("implements the seven-domain Hub component interface", () => {
   component.setPlayer({ role: "traveler" });
   component.setVisual({ fallback: "orbital-wheel" });
   component.setNavigation({ routes: ["/hub"] });
+  component.updateHubAnimation({ cycle: "early", drift: 0, pressure: 0, adjacency: [], signals: {} });
 
   assert.deepEqual(component.state, {
     engine: { cycle: "early" },
@@ -23,6 +29,58 @@ test("implements the seven-domain Hub component interface", () => {
     visual: { fallback: "orbital-wheel" },
     navigation: { routes: ["/hub"] }
   });
+});
+
+test("maps all five runtime feeds to bounded animation values", () => {
+  assert.deepEqual(hubAnimationState({
+    cycle: "late",
+    drift: 3,
+    pressure: 5,
+    adjacency: ["basin", "herbroom", "waterfall"],
+    signals: { active: ["pulse"], warnings: ["pressure"], distortions: [], environmental: [] }
+  }), {
+    cycleDuration: "2s",
+    driftLevel: "high",
+    coreMinScale: "1.056",
+    coreMaxScale: "1.144",
+    pressureOpacity: 1,
+    haloLowOpacity: "0.500",
+    haloMidOpacity: "0.850",
+    haloHighOpacity: "1.000",
+    haloDuration: "1.9s",
+    haloStrokeWidth: "12px",
+    biomeDuration: "10s",
+    biomeDelay: "-3s",
+    adjacencyCount: 3,
+    signalCount: 2
+  });
+});
+
+test("applies feed values to stable animated SVG layers", () => {
+  const nodes = new Map();
+  for (const id of ["hub-cycle-ring", "hub-engine-core", "hub-biome-ring", "hub-signal-halo"]) {
+    const properties = new Map();
+    nodes.set(`#${id}`, {
+      dataset: {},
+      properties,
+      style: { setProperty: (name, value) => properties.set(name, value) }
+    });
+  }
+
+  updateHubAnimation({ querySelector: (selector) => nodes.get(selector) }, {
+    cycle: "mid",
+    drift: 1,
+    pressure: 2.5,
+    adjacency: ["basin"],
+    signals: { warnings: ["field"] }
+  });
+
+  assert.equal(nodes.get("#hub-cycle-ring").properties.get("animation-duration"), "3s");
+  assert.equal(nodes.get("#hub-engine-core").dataset.drift, "medium");
+  assert.equal(nodes.get("#hub-engine-core").properties.get("--hub-core-max-scale"), "1.092");
+  assert.equal(nodes.get("#hub-biome-ring").properties.get("animation-delay"), "-1s");
+  assert.equal(nodes.get("#hub-signal-halo").dataset.pressure, "0.5");
+  assert.equal(nodes.get("#hub-signal-halo").dataset.signals, "1");
 });
 
 test("derives bounded theme classes from Hub runtime state", () => {

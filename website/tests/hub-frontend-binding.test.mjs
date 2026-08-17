@@ -3,6 +3,8 @@ import test from "node:test";
 
 import {
   bindHubComponent,
+  HUB_FEEDS,
+  hubFeedSnapshot,
   loadHubState,
   startHubBinding
 } from "../scripts/hub-frontend-binding.js";
@@ -27,7 +29,8 @@ function component() {
     setSignals: (value) => calls.push(["signals", value]),
     setPlayer: (value) => calls.push(["player", value]),
     setVisual: (value) => calls.push(["visual", value]),
-    setNavigation: (value) => calls.push(["navigation", value])
+    setNavigation: (value) => calls.push(["navigation", value]),
+    updateHubAnimation: (value) => calls.push(["animation", value])
   };
 }
 
@@ -44,13 +47,15 @@ test("loads uncached Hub runtime state", async () => {
   assert.deepEqual(requests, [["/runtime/hub/hub-runtime-state.json", { cache: "no-store" }]]);
 });
 
-test("binds all seven Hub state domains", () => {
+test("binds all state domains and the five animation feeds", () => {
   const target = component();
   bindHubComponent(state, target);
 
   assert.deepEqual(target.calls.map(([domain]) => domain), [
-    "engine", "biome", "chambers", "signals", "player", "visual", "navigation"
+    "engine", "biome", "chambers", "signals", "player", "visual", "navigation", "animation"
   ]);
+  assert.deepEqual(target.calls.at(-1)[1], hubFeedSnapshot(state));
+  assert.deepEqual(HUB_FEEDS, ["cycle", "drift", "pressure", "adjacency", "signals"]);
 });
 
 test("refreshes initially and on engine heartbeat, then stops", async () => {
@@ -63,6 +68,7 @@ test("refreshes initially and on engine heartbeat, then stops", async () => {
   };
   const target = component();
   let loads = 0;
+  const updates = [];
   const stop = startHubBinding(target, {
     eventTarget,
     setIntervalImpl: (listener, intervalMs) => {
@@ -74,12 +80,15 @@ test("refreshes initially and on engine heartbeat, then stops", async () => {
     loadState: async () => {
       loads += 1;
       return state;
-    }
+    },
+    onUpdate: (feeds) => updates.push(feeds)
   });
 
   await new Promise((resolve) => setImmediate(resolve));
   await listeners.get("threshold:heartbeat-field")();
   assert.equal(loads, 2);
+  assert.equal(updates.length, 2);
+  assert.deepEqual(updates[0], hubFeedSnapshot(state));
   assert.equal(intervals.get(1).intervalMs, 12000);
 
   stop();

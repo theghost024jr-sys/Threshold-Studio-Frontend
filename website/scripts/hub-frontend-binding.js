@@ -1,6 +1,7 @@
 const HUB_RUNTIME_STATE_URL = "/runtime/hub/hub-runtime-state.json";
 const HUB_TICK_EVENT = "threshold:heartbeat-field";
 export const HUB_TICK_INTERVAL_MS = 12000;
+export const HUB_FEEDS = Object.freeze(["cycle", "drift", "pressure", "adjacency", "signals"]);
 const COMPONENT_METHODS = [
   "setEngine",
   "setBiome",
@@ -8,8 +9,26 @@ const COMPONENT_METHODS = [
   "setSignals",
   "setPlayer",
   "setVisual",
-  "setNavigation"
+  "setNavigation",
+  "updateHubAnimation"
 ];
+
+export function hubFeedSnapshot(hubState) {
+  return {
+    cycle: hubState.engine.cycle,
+    drift: hubState.engine.drift,
+    pressure: hubState.engine.pressure,
+    adjacency: hubState.chambers.adjacent,
+    signals: hubState.signals
+  };
+}
+
+function selectFeeds(hubState, feeds) {
+  const snapshot = hubFeedSnapshot(hubState);
+  const unknown = feeds.filter((feed) => !HUB_FEEDS.includes(feed));
+  if (unknown.length > 0) throw new TypeError(`Unknown Hub feeds: ${unknown.join(", ")}`);
+  return Object.fromEntries(feeds.map((feed) => [feed, snapshot[feed]]));
+}
 
 export async function loadHubState({
   fetchImpl = globalThis.fetch,
@@ -33,7 +52,7 @@ function assertComponent(component) {
   }
 }
 
-export function bindHubComponent(hubState, component) {
+export function bindHubComponent(hubState, component, { feeds = HUB_FEEDS } = {}) {
   assertComponent(component);
 
   component.setEngine({
@@ -74,6 +93,9 @@ export function bindHubComponent(hubState, component) {
     routes: hubState.navigation.routes,
     mode: hubState.navigation.mode
   });
+  const snapshot = selectFeeds(hubState, feeds);
+  component.updateHubAnimation(snapshot);
+  return snapshot;
 }
 
 export function startHubBinding(component, {
@@ -82,7 +104,9 @@ export function startHubBinding(component, {
   onError = (error) => console.error("Hub binding error:", error),
   setIntervalImpl = globalThis.setInterval,
   clearIntervalImpl = globalThis.clearInterval,
-  intervalMs = HUB_TICK_INTERVAL_MS
+  intervalMs = HUB_TICK_INTERVAL_MS,
+  feeds = HUB_FEEDS,
+  onUpdate = () => {}
 } = {}) {
   assertComponent(component);
   if (typeof eventTarget?.addEventListener !== "function") {
@@ -90,6 +114,9 @@ export function startHubBinding(component, {
   }
   if (typeof setIntervalImpl !== "function" || typeof clearIntervalImpl !== "function") {
     throw new TypeError("Hub binding requires interval scheduling");
+  }
+  if (!Array.isArray(feeds) || typeof onUpdate !== "function") {
+    throw new TypeError("Hub binding requires feeds and an update handler");
   }
 
   let active = true;
@@ -101,7 +128,7 @@ export function startHubBinding(component, {
 
     refreshInFlight = Promise.resolve(loadState())
       .then((hubState) => {
-        if (active) bindHubComponent(hubState, component);
+        if (active) onUpdate(bindHubComponent(hubState, component, { feeds }));
       })
       .catch(onError)
       .finally(() => {

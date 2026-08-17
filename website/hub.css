@@ -42,7 +42,8 @@ threshold-hub {
 	text-align: center;
 }
 
-.hub-visual img {
+.hub-visual img,
+.hub-inline-glyph {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;

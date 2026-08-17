@@ -5,6 +5,7 @@ const BIOMES = new Set(["house", "garden", "forest", "deepforest", "root", "ston
 const CYCLES = new Set(["early", "mid", "late"]);
 const INTENSITIES = new Set(["low", "medium", "high"]);
 const PULSE_MODES = new Set(["cycle-synced"]);
+const CYCLE_DURATIONS = new Map([["early", "4s"], ["mid", "3s"], ["late", "2s"]]);
 
 function themeClass(prefix, value, allowed) {
   const token = String(value || "").toLowerCase().replace(/[\s_]+/g, "");
@@ -20,6 +21,69 @@ function engineLevel(value, fallback) {
   if (value < 1) return "low";
   if (value < 3) return "medium";
   return "high";
+}
+
+function clamp(value, minimum, maximum) {
+  return Math.min(Math.max(value, minimum), maximum);
+}
+
+function countSignals(signals) {
+  if (Array.isArray(signals)) return signals.length;
+  return ["active", "warnings", "distortions", "environmental"]
+    .reduce((total, key) => total + (Array.isArray(signals?.[key]) ? signals[key].length : 0), 0);
+}
+
+export function hubAnimationState({ cycle, drift, pressure, adjacency = [], signals = {} } = {}) {
+  const driftLevel = engineLevel(drift, "low");
+  const coreScale = { low: 1, medium: 1.05, high: 1.1 }[driftLevel];
+  const pressureOpacity = Number.isFinite(pressure) ? clamp(pressure / 5, 0, 1) : 0;
+  const adjacencyCount = Array.isArray(adjacency) ? adjacency.length : 0;
+  const signalCount = countSignals(signals);
+  const signalBoost = signalCount > 0 ? 0.15 : 0;
+
+  return {
+    cycleDuration: CYCLE_DURATIONS.get(cycle) || CYCLE_DURATIONS.get("early"),
+    driftLevel,
+    coreMinScale: (coreScale * 0.96).toFixed(3),
+    coreMaxScale: (coreScale * 1.04).toFixed(3),
+    pressureOpacity,
+    haloLowOpacity: clamp(0.08 + pressureOpacity * 0.42, 0, 1).toFixed(3),
+    haloMidOpacity: clamp(0.18 + pressureOpacity * 0.52 + signalBoost, 0, 1).toFixed(3),
+    haloHighOpacity: clamp(0.2 + pressureOpacity * 0.65 + signalBoost, 0, 1).toFixed(3),
+    haloDuration: `${Math.max(0.6, 2.4 - signalCount * 0.25)}s`,
+    haloStrokeWidth: `${8 + Math.min(signalCount, 4) * 2}px`,
+    biomeDuration: `${Math.max(6, 16 - adjacencyCount * 2)}s`,
+    biomeDelay: `${-adjacencyCount}s`,
+    adjacencyCount,
+    signalCount
+  };
+}
+
+export function updateHubAnimation(svg, feeds) {
+  const animation = hubAnimationState(feeds);
+  const cycle = svg?.querySelector?.("#hub-cycle-ring");
+  const core = svg?.querySelector?.("#hub-engine-core");
+  const biome = svg?.querySelector?.("#hub-biome-ring");
+  const halo = svg?.querySelector?.("#hub-signal-halo");
+
+  cycle?.style.setProperty("animation-duration", animation.cycleDuration);
+  core?.style.setProperty("--hub-core-min-scale", animation.coreMinScale);
+  core?.style.setProperty("--hub-core-max-scale", animation.coreMaxScale);
+  biome?.style.setProperty("animation-duration", animation.biomeDuration);
+  biome?.style.setProperty("animation-delay", animation.biomeDelay);
+  halo?.style.setProperty("--hub-halo-low-opacity", animation.haloLowOpacity);
+  halo?.style.setProperty("--hub-halo-mid-opacity", animation.haloMidOpacity);
+  halo?.style.setProperty("--hub-halo-high-opacity", animation.haloHighOpacity);
+  halo?.style.setProperty("animation-duration", animation.haloDuration);
+  halo?.style.setProperty("stroke-width", animation.haloStrokeWidth);
+
+  if (core) core.dataset.drift = animation.driftLevel;
+  if (biome) biome.dataset.adjacency = String(animation.adjacencyCount);
+  if (halo) {
+    halo.dataset.pressure = String(animation.pressureOpacity);
+    halo.dataset.signals = String(animation.signalCount);
+  }
+  return animation;
 }
 
 export function hubThemeClasses({ engine = {}, biome = {}, signals = {}, visual = {} } = {}) {
@@ -69,6 +133,10 @@ function stateSection(title, className, rows) {
 
 export class ThresholdHubElement extends HTMLElementBase {
   #stopBinding = null;
+  #visualAsset = null;
+  #visualLoading = false;
+  #visualRequest = 0;
+  #visualSvg = null;
   #state = {
     engine: {},
     biome: {},
@@ -81,12 +149,15 @@ export class ThresholdHubElement extends HTMLElementBase {
 
   connectedCallback() {
     this.#render();
+    void this.#loadVisualAsset(this.#state.visual);
     this.#stopBinding ??= startHubBinding(this);
   }
 
   disconnectedCallback() {
     this.#stopBinding?.();
     this.#stopBinding = null;
+    this.#visualRequest += 1;
+    this.#visualLoading = false;
   }
 
   get state() {
@@ -98,12 +169,54 @@ export class ThresholdHubElement extends HTMLElementBase {
   setChambers(value) { this.#update("chambers", value); }
   setSignals(value) { this.#update("signals", value); }
   setPlayer(value) { this.#update("player", value); }
-  setVisual(value) { this.#update("visual", value); }
+  setVisual(value) {
+    this.#update("visual", value);
+    void this.#loadVisualAsset(value);
+  }
   setNavigation(value) { this.#update("navigation", value); }
+
+  updateHubAnimation(feeds) {
+    const svg = typeof this.querySelector === "function" ? this.querySelector(".hub-inline-glyph") : null;
+    if (svg) updateHubAnimation(svg, feeds);
+  }
 
   #update(domain, value) {
     this.#state[domain] = value;
     this.#render();
+  }
+
+  async #loadVisualAsset(visual = {}) {
+    const asset = visual.asset;
+    if (!visual.assetExists || typeof asset !== "string" || !asset.endsWith(".svg")) return;
+    if (typeof globalThis.fetch !== "function" || typeof globalThis.DOMParser !== "function") return;
+    if (this.#visualAsset === asset && (this.#visualSvg || this.#visualLoading)) return;
+
+    const request = ++this.#visualRequest;
+    this.#visualAsset = asset;
+    this.#visualSvg = null;
+    this.#visualLoading = true;
+
+    try {
+      const response = await fetch(`/assets/${asset}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Hub visual unavailable (${response.status})`);
+      const parsed = new DOMParser().parseFromString(await response.text(), "image/svg+xml");
+      const svg = parsed.documentElement;
+      if (svg.localName !== "svg" || parsed.querySelector("parsererror")) {
+        throw new Error("Hub visual is not valid SVG");
+      }
+      if (request !== this.#visualRequest || this.#state.visual.asset !== asset) return;
+
+      svg.classList.add("hub-inline-glyph");
+      svg.dataset.asset = asset;
+      svg.setAttribute("aria-hidden", "true");
+      svg.setAttribute("focusable", "false");
+      this.#visualSvg = svg;
+      this.#render();
+    } catch (error) {
+      console.error("Hub visual error:", error);
+    } finally {
+      if (request === this.#visualRequest) this.#visualLoading = false;
+    }
   }
 
   #render() {
@@ -122,10 +235,29 @@ export class ThresholdHubElement extends HTMLElementBase {
     );
     const visualNode = element("div", ["hub-organ-visual", "hub-visual", ...theme.visual].join(" "));
     if (visual.assetExists) {
-      const image = element("img");
-      image.src = `/assets/${visual.asset}`;
-      image.alt = "Threshold Hub glyph";
-      visualNode.append(image);
+      const existingSvg = typeof this.querySelector === "function"
+        ? this.querySelector(`.hub-inline-glyph[data-asset="${visual.asset}"]`)
+        : null;
+      const svg = existingSvg || (this.#visualSvg && this.#visualAsset === visual.asset
+        ? document.importNode(this.#visualSvg, true)
+        : null);
+      if (svg) {
+        visualNode.setAttribute("role", "img");
+        visualNode.setAttribute("aria-label", "Animated Hub Glyph");
+        updateHubAnimation(svg, {
+          cycle: engine.cycle,
+          drift: engine.drift,
+          pressure: engine.pressure,
+          adjacency: chambers.adjacent,
+          signals
+        });
+        visualNode.append(svg);
+      } else {
+        const image = element("img");
+        image.src = `/assets/${visual.asset}`;
+        image.alt = "Animated Hub Glyph";
+        visualNode.append(image);
+      }
     } else {
       visualNode.textContent = displayValue(visual.fallback);
       visualNode.dataset.fallback = "true";

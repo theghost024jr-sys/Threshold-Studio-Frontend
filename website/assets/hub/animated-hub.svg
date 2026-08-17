@@ -1,6 +1,8 @@
 <svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <style>
     #hub-engine-core {
+      --hub-core-min-scale: 0.96;
+      --hub-core-max-scale: 1.04;
       transform-box: fill-box;
       transform-origin: center;
       animation: hub-core-pulse 3s ease-in-out infinite;
@@ -17,12 +19,15 @@
     }
 
     #hub-signal-halo {
+      --hub-halo-low-opacity: 0.08;
+      --hub-halo-mid-opacity: 0.18;
+      --hub-halo-high-opacity: 0.2;
       animation: hub-halo-flicker 2.4s ease-in-out infinite;
     }
 
     @keyframes hub-core-pulse {
-      0%, 100% { transform: scale(0.96); opacity: 0.88; }
-      50% { transform: scale(1.04); opacity: 1; }
+      0%, 100% { transform: scale(var(--hub-core-min-scale)); opacity: 0.88; }
+      50% { transform: scale(var(--hub-core-max-scale)); opacity: 1; }
     }
 
     @keyframes hub-cycle-rotate {
@@ -34,10 +39,10 @@
     }
 
     @keyframes hub-halo-flicker {
-      0%, 100% { opacity: 0.08; }
-      45% { opacity: 0.18; }
-      55% { opacity: 0.11; }
-      70% { opacity: 0.2; }
+      0%, 100% { opacity: var(--hub-halo-low-opacity); }
+      45% { opacity: var(--hub-halo-mid-opacity); }
+      55% { opacity: var(--hub-halo-low-opacity); }
+      70% { opacity: var(--hub-halo-high-opacity); }
     }
 
     @media (prefers-reduced-motion: reduce) {

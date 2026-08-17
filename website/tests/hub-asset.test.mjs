@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const websiteDirectory = new URL("../", import.meta.url);
-const animatedHash = "f99b92bda7eeddbd604fa9d674fa1c93d1b696861a010a18725f6c8d192ff515";
+const animatedHash = "0e611ff6405b368e6174eb1765b56661ac64500fcc52245c8cd60eb8d3225cbd";
 const rasterHashes = new Map([
   [128, "4c8a308f3c939825f3d4a559a73752f5d6126c9eb17b53d8bb126ffdc00b9cfc"],
   [240, "24d5055aa4303767fc805479344a24196fceb87e4127def12a409cf85279da49"],

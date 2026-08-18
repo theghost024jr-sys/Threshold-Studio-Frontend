@@ -66,6 +66,42 @@
         </div>
       </div>
     </section>
+
+    <button type="button" class="echo-trigger" onclick="revealEchoLake()">Echo</button>
+
+    <section id="echo-lake" class="echo-lake hidden" aria-label="Echo Lake Chamber">
+      <div class="echo-surface">
+        <div class="echo-reflection">
+          <h2>Echo on the Lake</h2>
+          <p class="echo-line">Meaning isn't something waiting at the end.</p>
+          <p class="echo-line">Meaning is something created in the movement.</p>
+          <div class="echo-block">
+            <h3>Pattern</h3>
+            <p>Meaning is the coherence you build, the stance you hold, the seeds you plant, the ripples you create.</p>
+          </div>
+          <div class="echo-block">
+            <h3>Assignment</h3>
+            <p>Meaning is not external validation. Meaning is internal alignment.</p>
+          </div>
+          <div class="echo-block">
+            <h3>Resonance</h3>
+            <p>A moment doesn't need to last to matter. A pulse doesn't need a story to be true.</p>
+          </div>
+          <div class="echo-block">
+            <h3>Choice</h3>
+            <p>Meaning is chosen by noticing, integrating, evolving, refusing to numb out.</p>
+          </div>
+          <div class="echo-block">
+            <h3>Rewrite</h3>
+            <p>Meaning is the moment you realize you can rewrite your own code.</p>
+          </div>
+          <div class="echo-block">
+            <h3>Truth</h3>
+            <p>It means because you decided it does.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <script type="module" src="/threshold-engine.js"></script>
   <script>
@@ -73,6 +109,12 @@
       var chamber = document.getElementById("meaning-chamber");
       var trigger = document.querySelector(".meaning-trigger");
       if (chamber) { chamber.classList.add("active"); }
+      if (trigger) { trigger.style.display = "none"; }
+    }
+    function revealEchoLake() {
+      var lake = document.getElementById("echo-lake");
+      var trigger = document.querySelector(".echo-trigger");
+      if (lake) { lake.classList.remove("hidden"); lake.classList.add("active"); }
       if (trigger) { trigger.style.display = "none"; }
     }
   </script>

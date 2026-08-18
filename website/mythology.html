@@ -1591,6 +1591,88 @@ async function loadMythology() {
   <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script type="module" src="scripts/destination-page.js"></script>
+  <script>
+    (function () {
+      var viewer = document.getElementById("myth-viewer");
+      if (!viewer) return;
+
+      var viewerImage = document.getElementById("viewer-image");
+      var viewerTitle = document.getElementById("viewer-title");
+      var viewerMeta = document.getElementById("viewer-meta");
+      var viewerPath = document.getElementById("viewer-path");
+      var viewerOrientation = document.getElementById("viewer-orientation");
+      var viewerImpact = document.getElementById("viewer-impact");
+      var viewerIndex = document.getElementById("viewer-index");
+      var prevBtn = document.getElementById("viewer-prev");
+      var nextBtn = document.getElementById("viewer-next");
+
+      var entries = Array.from(document.querySelectorAll(".mythology-entry[data-spirit]"));
+      var currentIndex = 0;
+
+      var ELEMENT_LABEL = {
+        fire: "Fire \u00b7 Ignition \u00b7 Clarifying Rupture",
+        water: "Water \u00b7 Flow \u00b7 Emotional Conductivity",
+        air: "Air \u00b7 Perspective \u00b7 Pattern Lift",
+        earth: "Earth \u00b7 Grounding \u00b7 Structural Truth",
+        light: "Light \u00b7 Alignment \u00b7 Signal Illumination"
+      };
+
+      function openViewer(index) {
+        if (entries.length === 0) return;
+        currentIndex = ((index % entries.length) + entries.length) % entries.length;
+        var entry = entries[currentIndex];
+        var spirit = entry.dataset.spirit;
+        var element = entry.dataset.element || spirit;
+        var archetype = entry.dataset.archetype || "";
+        var vaultPath = "../vault/spirits/" + spirit + ".png";
+        var heading = entry.querySelector("h3");
+        var title = heading ? heading.textContent.trim() : element;
+
+        if (viewerImage) { viewerImage.src = vaultPath; viewerImage.alt = title; }
+        if (viewerTitle) viewerTitle.textContent = title;
+        if (viewerMeta) viewerMeta.textContent = ELEMENT_LABEL[archetype] || element;
+        if (viewerPath) viewerPath.textContent = "vault/spirits/" + spirit + ".png";
+        if (viewerOrientation) viewerOrientation.textContent = element + " orientation";
+        if (viewerImpact) viewerImpact.textContent = element;
+        if (viewerIndex) viewerIndex.textContent = (currentIndex + 1) + " / " + entries.length;
+
+        viewer.classList.remove("is-hidden");
+        viewer.setAttribute("aria-hidden", "false");
+        entries.forEach(function (e, i) { e.setAttribute("aria-expanded", String(i === currentIndex)); });
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeViewer() {
+        viewer.classList.add("is-hidden");
+        viewer.setAttribute("aria-hidden", "true");
+        entries.forEach(function (e) { e.setAttribute("aria-expanded", "false"); });
+        document.body.style.overflow = "";
+        if (viewerImage) viewerImage.src = "";
+      }
+
+      entries.forEach(function (entry, index) {
+        var btn = entry.querySelector("[role=button]") || entry;
+        btn.addEventListener("click", function () { openViewer(index); });
+        btn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openViewer(index); }
+        });
+      });
+
+      document.querySelectorAll("[data-viewer-close]").forEach(function (el) {
+        el.addEventListener("click", closeViewer);
+      });
+
+      if (prevBtn) prevBtn.addEventListener("click", function () { openViewer(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener("click", function () { openViewer(currentIndex + 1); });
+
+      document.addEventListener("keydown", function (e) {
+        if (viewer.classList.contains("is-hidden")) return;
+        if (e.key === "Escape") closeViewer();
+        if (e.key === "ArrowLeft") openViewer(currentIndex - 1);
+        if (e.key === "ArrowRight") openViewer(currentIndex + 1);
+      });
+    })();
+  </script>
 </body>
 </html>
 

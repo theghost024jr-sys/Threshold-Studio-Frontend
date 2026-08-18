@@ -57,6 +57,10 @@
         <p id="archiveTrail" class="archive-trail">Maze depth 0</p>
       </div>
       <div id="chamber" aria-live="polite"></div>
+      <div style="margin-top:1.2rem;">
+        <button type="button" id="glyph-core-btn" aria-label="Reveal glyph core">&#9671; Reveal Glyph Core</button>
+        <img id="glyph-core-viewer" alt="Glyph core" loading="lazy" style="display:none;max-width:100%;border-radius:12px;margin-top:0.8rem;" />
+      </div>
     </section>
   </main>
 
@@ -69,6 +73,19 @@
   <script src="scripts/spoke-tabs.js"></script>
   <script src="scripts/glyphs.js"></script>
   <script type="module" src="scripts/destination-page.js"></script>
+  <script>
+    (function () {
+      var glyphBtn = document.getElementById("glyph-core-btn");
+      var glyphViewer = document.getElementById("glyph-core-viewer");
+      if (glyphBtn && glyphViewer) {
+        glyphBtn.addEventListener("click", function () {
+          glyphViewer.src = "../vault/glyphs/glyph-core.png";
+          glyphViewer.style.display = "block";
+          glyphBtn.style.display = "none";
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
 

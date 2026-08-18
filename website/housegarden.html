@@ -58,6 +58,8 @@
   <section id="old-house" class="vault-chamber-surface vault-chamber-border" aria-label="Old house chamber">
     <h2 class="old-title"></h2>
     <p class="old-lore"></p>
+    <button type="button" id="house-reveal-btn" class="vault-law-structural">Reveal House</button>
+    <img id="house-viewer" alt="House core" loading="lazy" style="display:none;max-width:100%;border-radius:12px;margin-top:0.8rem;" />
   </section>
 
   <section id="new-house" class="vault-chamber-surface vault-chamber-border" aria-label="New house chamber">
@@ -68,6 +70,8 @@
   <section id="garden" class="vault-chamber-surface vault-chamber-border" aria-label="Garden memory">
     <h3>Garden Memory</h3>
     <ul class="garden-notes"></ul>
+    <button type="button" id="garden-reveal-btn" class="vault-law-structural">Reveal Garden</button>
+    <img id="garden-viewer" alt="Garden core" loading="lazy" style="display:none;max-width:100%;border-radius:12px;margin-top:0.8rem;" />
   </section>
 
   <div id="garden" aria-label="Garden rooms">
@@ -244,6 +248,30 @@
   <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script type="module" src="scripts/destination-page.js"></script>
+  <script>
+    (function () {
+      var houseBtn = document.getElementById("house-reveal-btn");
+      var houseViewer = document.getElementById("house-viewer");
+      var gardenBtn = document.getElementById("garden-reveal-btn");
+      var gardenViewer = document.getElementById("garden-viewer");
+
+      if (houseBtn && houseViewer) {
+        houseBtn.addEventListener("click", function () {
+          houseViewer.src = "../vault/house/house-core.png";
+          houseViewer.style.display = "block";
+          houseBtn.style.display = "none";
+        });
+      }
+
+      if (gardenBtn && gardenViewer) {
+        gardenBtn.addEventListener("click", function () {
+          gardenViewer.src = "../vault/garden/garden-core.png";
+          gardenViewer.style.display = "block";
+          gardenBtn.style.display = "none";
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
 

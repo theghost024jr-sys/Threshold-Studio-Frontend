@@ -50,6 +50,9 @@
 
     <h2>We Refuse to Collapse</h2>
     <p>Collapse is compost. Ache is architecture. Waiting is generative. We honor the breath between blooms and the hush that holds us. We stay.</p>
+
+    <button type="button" id="ethos-symbol" aria-label="Reveal Ethos">&#9670; Reveal Ethos</button>
+    <img id="ethos-viewer" alt="Ethos core" loading="lazy" style="display:none;max-width:100%;border-radius:12px;margin-top:0.8rem;" />
   </section>
 
   <footer>
@@ -84,6 +87,19 @@
   <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script type="module" src="scripts/destination-page.js"></script>
+  <script>
+    (function () {
+      var ethosSymbol = document.getElementById("ethos-symbol");
+      var ethosViewer = document.getElementById("ethos-viewer");
+      if (ethosSymbol && ethosViewer) {
+        ethosSymbol.addEventListener("click", function () {
+          ethosViewer.src = "../vault/ethos/ethos-core.png";
+          ethosViewer.style.display = "block";
+          ethosSymbol.style.display = "none";
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
 

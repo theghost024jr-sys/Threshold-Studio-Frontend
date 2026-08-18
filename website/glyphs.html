@@ -47,10 +47,10 @@
         <span class="archive-sigil">◇</span>
       </div>
       <div id="paths" role="group" aria-label="Choose an archive path">
-        <button class="path" type="button" data-choice="collapse" aria-pressed="false"><span>01</span>Collapse</button>
-        <button class="path" type="button" data-choice="expand" aria-pressed="false"><span>02</span>Expand</button>
-        <button class="path" type="button" data-choice="fog" aria-pressed="false"><span>03</span>Fog</button>
-        <button class="path" type="button" data-choice="soil" aria-pressed="false"><span>04</span>Soil</button>
+        <button class="path" type="button" data-choice="collapse" aria-pressed="false" onclick="activateGlyphEngine('collapse')"><span>01</span>Collapse</button>
+        <button class="path" type="button" data-choice="expand" aria-pressed="false" onclick="activateGlyphEngine('expand')"><span>02</span>Expand</button>
+        <button class="path" type="button" data-choice="fog" aria-pressed="false" onclick="activateGlyphEngine('fog')"><span>03</span>Fog</button>
+        <button class="path" type="button" data-choice="soil" aria-pressed="false" onclick="activateGlyphEngine('soil')"><span>04</span>Soil</button>
       </div>
       <div class="archive-reading">
         <p id="archiveStatus" class="archive-status" role="status">Stand at the threshold. Four paths are listening.</p>
@@ -58,9 +58,15 @@
       </div>
       <div id="chamber" aria-live="polite"></div>
       <div style="margin-top:1.2rem;">
-        <button type="button" id="glyph-core-btn" aria-label="Reveal glyph core">&#9671; Reveal Glyph Core</button>
+        <button type="button" id="glyph-core-btn" aria-label="Reveal glyph core" onclick="activateGlyphEngine('core')">&#9671; Reveal Glyph Core</button>
         <img id="glyph-core-viewer" alt="Glyph core" loading="lazy" style="display:none;max-width:100%;border-radius:12px;margin-top:0.8rem;" />
       </div>
+
+      <section id="glyph-engine" aria-label="Glyph Engine">
+        <h3 id="glyph-name" class="glyph-engine-name"></h3>
+        <img id="glyph-image" alt="Active glyph" />
+        <button type="button" id="glyph-next-btn" class="path glyph-next-btn" onclick="nextGlyphVariant()" style="display:none;">Next Variant</button>
+      </section>
     </section>
   </main>
 
@@ -85,6 +91,60 @@
         });
       }
     })();
+  </script>
+  <script>
+    var glyphVariants = {
+      collapse: [
+        "vault/glyphs/collapse/variant1.png",
+        "vault/glyphs/collapse/variant2.png",
+        "vault/glyphs/collapse/variant3.png"
+      ],
+      expand: [
+        "vault/glyphs/expand/variant1.png",
+        "vault/glyphs/expand/variant2.png"
+      ],
+      fog: [
+        "vault/glyphs/fog/variant1.png",
+        "vault/glyphs/fog/variant2.png"
+      ],
+      soil: [
+        "vault/glyphs/soil/variant1.png",
+        "vault/glyphs/soil/variant2.png"
+      ],
+      core: [
+        "vault/glyphs/core/variant1.png"
+      ]
+    };
+
+    var currentGlyph = null;
+    var currentGlyphVariant = 0;
+
+    function activateGlyphEngine(glyph) {
+      var viewer = document.getElementById("glyph-engine");
+      var img = document.getElementById("glyph-image");
+      var name = document.getElementById("glyph-name");
+      var nextBtn = document.getElementById("glyph-next-btn");
+
+      currentGlyph = glyph;
+      currentGlyphVariant = 0;
+
+      viewer.classList.add("revealed", "breathe");
+      img.src = glyphVariants[glyph][currentGlyphVariant];
+      name.innerText = glyph.toUpperCase();
+
+      if (nextBtn && glyphVariants[glyph].length > 1) {
+        nextBtn.style.display = "";
+      } else if (nextBtn) {
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function nextGlyphVariant() {
+      if (!currentGlyph || !glyphVariants[currentGlyph]) return;
+      var img = document.getElementById("glyph-image");
+      currentGlyphVariant = (currentGlyphVariant + 1) % glyphVariants[currentGlyph].length;
+      img.src = glyphVariants[currentGlyph][currentGlyphVariant];
+    }
   </script>
 </body>
 </html>

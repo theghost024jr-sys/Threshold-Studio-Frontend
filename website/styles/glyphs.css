@@ -200,3 +200,53 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+#glyph-engine {
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  margin-top: 1.2rem;
+}
+
+#glyph-engine.revealed {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+#glyph-engine.breathe {
+  animation: glyphBreath 4s ease-in-out infinite;
+}
+
+#glyph-image {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.6));
+}
+
+.glyph-engine-name {
+  text-align: center;
+  letter-spacing: 0.12em;
+  color: var(--archive-gold);
+  margin-bottom: 12px;
+  font-family: "Cinzel", serif;
+}
+
+.glyph-next-btn {
+  display: block;
+  margin: 12px auto 0;
+  min-height: auto;
+  padding: 10px 24px;
+  font-size: 0.78rem;
+}
+
+@keyframes glyphBreath {
+  0%, 100% { transform: scale(1.03); }
+  50% { transform: scale(1.06); }
+}

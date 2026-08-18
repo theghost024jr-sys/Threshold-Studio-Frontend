@@ -934,35 +934,35 @@
     </section>
 
     <section class="grid" aria-label="Elemental archetypes">
-      <article class="chamber mythology-entry" data-fade-section data-archetype="fire" data-spirit="cindervox" data-element="Fire" aria-expanded="false" onclick="activateSpiritEngine('cindervox')">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="fire" data-spirit="cindervox" data-element="Fire" aria-expanded="false">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Fire Â· Cindervox">
           <h3><span class="glyph-mark">âœ¶</span>Fire Â· Cindervox</h3>
           <p>Fire Â· Ignition Â· Clarifying Rupture</p>
         </div>
         <img class="mythology-image" alt="Cindervox" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="water" data-spirit="porpoise" data-element="Water" aria-expanded="false" onclick="activateSpiritEngine('porpoise')">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="water" data-spirit="porpoise" data-element="Water" aria-expanded="false">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Water Â· Porpoise">
           <h3><span class="glyph-mark">â—Œ</span>Water Â· Porpoise</h3>
           <p>Water Â· Flow Â· Emotional Conductivity</p>
         </div>
         <img class="mythology-image" alt="Porpoise" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="air" data-spirit="whisperhawk" data-element="Air" aria-expanded="false" onclick="activateSpiritEngine('whisperhawk')">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="air" data-spirit="whisperhawk" data-element="Air" aria-expanded="false">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Air Â· Whisperhawk">
           <h3><span class="glyph-mark">âœ§</span>Air Â· Whisperhawk</h3>
           <p>Air Â· Perspective Â· Pattern Lift</p>
         </div>
         <img class="mythology-image" alt="Whisperhawk" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="earth" data-spirit="stonecat" data-element="Earth" aria-expanded="false" onclick="activateSpiritEngine('stonecat')">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="earth" data-spirit="stonecat" data-element="Earth" aria-expanded="false">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Earth Â· Stonecat">
           <h3><span class="glyph-mark">â—</span>Earth Â· Stonecat</h3>
           <p>Earth Â· Grounding Â· Structural Truth</p>
         </div>
         <img class="mythology-image" alt="Stonecat" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="light" data-spirit="lumenstag" data-element="Light" aria-expanded="false" onclick="activateSpiritEngine('lumenstag')">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="light" data-spirit="lumenstag" data-element="Light" aria-expanded="false">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Light Â· Lumenstag">
           <h3><span class="glyph-mark">âœ¦</span>Light Â· Lumenstag</h3>
           <p>Light Â· Alignment Â· Signal Illumination</p>
@@ -1598,6 +1598,32 @@ async function loadMythology() {
   <script src="scripts/spoke-tabs.js"></script>
   <script type="module" src="scripts/destination-page.js"></script>
   <script>
+    var spiritVariants = {
+      cindervox: [
+        "vault/spirits/cindervox/variant1.png",
+        "vault/spirits/cindervox/variant2.png",
+        "vault/spirits/cindervox/variant3.png"
+      ],
+      porpoise: [
+        "vault/spirits/porpoise/variant1.png",
+        "vault/spirits/porpoise/variant2.png",
+        "vault/spirits/porpoise/variant3.png"
+      ],
+      whisperhawk: [
+        "vault/spirits/whisperhawk/variant1.png",
+        "vault/spirits/whisperhawk/variant2.png"
+      ],
+      stonecat: [
+        "vault/spirits/stonecat/variant1.png",
+        "vault/spirits/stonecat/variant2.png"
+      ],
+      lumenstag: [
+        "vault/spirits/lumenstag/variant1.png",
+        "vault/spirits/lumenstag/variant2.png"
+      ]
+    };
+  </script>
+  <script>
     (function () {
       var viewer = document.getElementById("myth-viewer");
       if (!viewer) return;
@@ -1715,31 +1741,6 @@ async function loadMythology() {
     })();
   </script>
   <script>
-    var spiritVariants = {
-      cindervox: [
-        "vault/spirits/cindervox/variant1.png",
-        "vault/spirits/cindervox/variant2.png",
-        "vault/spirits/cindervox/variant3.png"
-      ],
-      porpoise: [
-        "vault/spirits/porpoise/variant1.png",
-        "vault/spirits/porpoise/variant2.png",
-        "vault/spirits/porpoise/variant3.png"
-      ],
-      whisperhawk: [
-        "vault/spirits/whisperhawk/variant1.png",
-        "vault/spirits/whisperhawk/variant2.png"
-      ],
-      stonecat: [
-        "vault/spirits/stonecat/variant1.png",
-        "vault/spirits/stonecat/variant2.png"
-      ],
-      lumenstag: [
-        "vault/spirits/lumenstag/variant1.png",
-        "vault/spirits/lumenstag/variant2.png"
-      ]
-    };
-
     var currentSpirit = null;
     var currentVariant = 0;
 

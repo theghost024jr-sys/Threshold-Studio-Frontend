@@ -1757,6 +1757,34 @@ async function loadMythology() {
         "vault/spirits/lumenstag/variant2.png"
       ]
     };
+
+    // Lookup table: display name → primary Vault PNG path.
+    // Bridges the name-based API to the local spirit vault.
+    var mythologyMap = {
+      "Cindervox":   "vault/spirits/cindervox/variant1.png",
+      "Porpoise":    "vault/spirits/porpoise/variant1.png",
+      "Whisperhawk": "vault/spirits/whisperhawk/variant1.png",
+      "Stonecat":    "vault/spirits/stonecat/variant1.png",
+      "Lumenstag":   "vault/spirits/lumenstag/variant1.png"
+    };
+
+    // Show an animal by display name (e.g. "Cindervox").
+    // Delegates to activateSpiritEngine so all variant cycling still works.
+    function showMythologyAnimal(name) {
+      var path = mythologyMap[name];
+      if (!path) return;
+      var key = name.toLowerCase();
+      if (typeof activateSpiritEngine === "function") {
+        activateSpiritEngine(key);
+      } else {
+        var viewer = document.getElementById("spirit-viewer");
+        var img = document.getElementById("spirit-image");
+        var label = document.getElementById("spirit-name");
+        if (img) { img.src = path; }
+        if (label) { label.innerText = name.toUpperCase(); }
+        if (viewer) { viewer.classList.add("revealed", "breathe"); }
+      }
+    }
   </script>
   <script>
     (function () {

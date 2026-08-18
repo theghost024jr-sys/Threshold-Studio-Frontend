@@ -57,3 +57,11 @@
   0%, 100% { transform: scale(1.03); }
   50% { transform: scale(1.06); }
 }
+
+/* Mythology entry thumbnail */
+.mythology-img {
+  width: 400px;
+  height: auto;
+  display: block;
+  margin-top: 20px;
+}

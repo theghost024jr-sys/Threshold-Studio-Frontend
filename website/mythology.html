@@ -974,6 +974,7 @@
     <section id="spirit-viewer" aria-label="Spirit Engine">
       <h3 id="spirit-name" class="spirit-engine-name"></h3>
       <img id="spirit-image" alt="Active spirit" />
+      <button type="button" id="spirit-next-btn" class="viewer-btn spirit-next-btn" onclick="nextVariant(currentSpirit)" style="display:none;">Next Variant</button>
     </section>
 
     <section id="myth-viewer" class="myth-viewer is-hidden" aria-hidden="true" role="dialog" aria-label="Spirit image viewer">
@@ -1679,14 +1680,57 @@ async function loadMythology() {
     })();
   </script>
   <script>
+    var spiritVariants = {
+      cindervox: [
+        "vault/spirits/cindervox/variant1.png",
+        "vault/spirits/cindervox/variant2.png",
+        "vault/spirits/cindervox/variant3.png"
+      ],
+      porpoise: [
+        "vault/spirits/porpoise/variant1.png",
+        "vault/spirits/porpoise/variant2.png",
+        "vault/spirits/porpoise/variant3.png"
+      ],
+      whisperhawk: [
+        "vault/spirits/whisperhawk/variant1.png",
+        "vault/spirits/whisperhawk/variant2.png"
+      ],
+      stonecat: [
+        "vault/spirits/stonecat/variant1.png",
+        "vault/spirits/stonecat/variant2.png"
+      ],
+      lumenstag: [
+        "vault/spirits/lumenstag/variant1.png",
+        "vault/spirits/lumenstag/variant2.png"
+      ]
+    };
+
+    var currentSpirit = null;
+    var currentVariant = 0;
+
     function activateSpiritEngine(spirit) {
       var viewer = document.getElementById("spirit-viewer");
       var img = document.getElementById("spirit-image");
       var name = document.getElementById("spirit-name");
+      var nextBtn = document.getElementById("spirit-next-btn");
+
+      currentSpirit = spirit;
+      currentVariant = 0;
 
       viewer.classList.add("revealed", "breathe");
-      img.src = "../vault/spirits/" + spirit + ".png";
+      img.src = spiritVariants[spirit][currentVariant];
       name.innerText = spirit.toUpperCase();
+
+      if (nextBtn && spiritVariants[spirit].length > 1) {
+        nextBtn.style.display = "";
+      }
+    }
+
+    function nextVariant(spirit) {
+      if (!spirit || !spiritVariants[spirit]) return;
+      var img = document.getElementById("spirit-image");
+      currentVariant = (currentVariant + 1) % spiritVariants[spirit].length;
+      img.src = spiritVariants[spirit][currentVariant];
     }
   </script>
 </body>

@@ -6,6 +6,7 @@
   <title>Ethos Â· Threshold Studio</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="styles/complexity-layers.css" />
+  <link rel="stylesheet" href="styles/ethos.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Source+Code+Pro&display=swap" rel="stylesheet">
   <style>
     .ethos-section {
@@ -53,6 +54,19 @@
 
     <button type="button" id="ethos-symbol" aria-label="Reveal Ethos">&#9670; Reveal Ethos</button>
     <img id="ethos-viewer" alt="Ethos core" loading="lazy" style="display:none;max-width:100%;border-radius:12px;margin-top:0.8rem;" />
+
+    <div class="ethos-glyphs" role="group" aria-label="Ethos glyphs">
+      <button type="button" class="ethos-glyph-tab" onclick="activateEthosEngine('adjacency')">Adjacency</button>
+      <button type="button" class="ethos-glyph-tab" onclick="activateEthosEngine('tension')">Tension</button>
+      <button type="button" class="ethos-glyph-tab" onclick="activateEthosEngine('boundary')">Boundary</button>
+      <button type="button" class="ethos-glyph-tab" onclick="activateEthosEngine('seam')">Seam</button>
+    </div>
+
+    <div id="ethos-engine" class="ethos-engine hidden" aria-label="Ethos Engine" aria-live="polite">
+      <h2 id="ethos-name">ETHOS ENGINE</h2>
+      <img id="ethos-image" src="" alt="Ethos Glyph" />
+      <button type="button" class="ethos-next-btn" onclick="nextEthosVariant()">Next Variant</button>
+    </div>
   </section>
 
   <footer>
@@ -99,6 +113,54 @@
         });
       }
     })();
+  </script>
+  <script>
+    // --- ETHOS ENGINE ---
+
+    var ethosVariants = {
+      adjacency: [
+        "vault/ethos/adjacency/variant1.png",
+        "vault/ethos/adjacency/variant2.png",
+        "vault/ethos/adjacency/variant3.png"
+      ],
+      tension: [
+        "vault/ethos/tension/variant1.png",
+        "vault/ethos/tension/variant2.png"
+      ],
+      boundary: [
+        "vault/ethos/boundary/variant1.png",
+        "vault/ethos/boundary/variant2.png"
+      ],
+      seam: [
+        "vault/ethos/seam/variant1.png",
+        "vault/ethos/seam/variant2.png"
+      ]
+    };
+
+    var currentEthos = null;
+    var currentEthosVariant = 0;
+
+    function activateEthosEngine(glyph) {
+      currentEthos = glyph;
+      currentEthosVariant = 0;
+
+      var viewer = document.getElementById("ethos-engine");
+      var img = document.getElementById("ethos-image");
+
+      viewer.classList.remove("hidden");
+      viewer.classList.add("revealed", "breathe");
+
+      img.src = ethosVariants[glyph][currentEthosVariant];
+      document.getElementById("ethos-name").innerText = glyph.toUpperCase();
+    }
+
+    function nextEthosVariant() {
+      if (!currentEthos) return;
+      currentEthosVariant =
+        (currentEthosVariant + 1) % ethosVariants[currentEthos].length;
+      var img = document.getElementById("ethos-image");
+      img.src = ethosVariants[currentEthos][currentEthosVariant];
+    }
   </script>
 </body>
 </html>

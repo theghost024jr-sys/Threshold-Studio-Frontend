@@ -1614,6 +1614,7 @@ async function loadMythology() {
 
       var entries = Array.from(document.querySelectorAll(".mythology-entry[data-spirit]"));
       var currentIndex = 0;
+      var currentVariantIndex = 0;
 
       var ELEMENT_LABEL = {
         fire: "Fire \u00b7 Ignition \u00b7 Clarifying Rupture",
@@ -1623,24 +1624,36 @@ async function loadMythology() {
         light: "Light \u00b7 Alignment \u00b7 Signal Illumination"
       };
 
-      function openViewer(index) {
+      function getVariants(spirit) {
+        return (window.spiritVariants && window.spiritVariants[spirit]) || ["vault/spirits/" + spirit + "/variant1.png"];
+      }
+
+      function loadVariant(spirit, variantIdx) {
+        var variants = getVariants(spirit);
+        currentVariantIndex = ((variantIdx % variants.length) + variants.length) % variants.length;
+        var imgPath = variants[currentVariantIndex];
+        if (viewerImage) { viewerImage.src = imgPath; }
+        if (viewerPath) viewerPath.textContent = imgPath;
+        if (viewerIndex) viewerIndex.textContent = (currentVariantIndex + 1) + " / " + variants.length;
+      }
+
+      function openViewer(index, variantIdx) {
         if (entries.length === 0) return;
         currentIndex = ((index % entries.length) + entries.length) % entries.length;
         var entry = entries[currentIndex];
         var spirit = entry.dataset.spirit;
         var element = entry.dataset.element || spirit;
         var archetype = entry.dataset.archetype || "";
-        var vaultPath = "../vault/spirits/" + spirit + ".png";
         var heading = entry.querySelector("h3");
         var title = heading ? heading.textContent.trim() : element;
 
-        if (viewerImage) { viewerImage.src = vaultPath; viewerImage.alt = title; }
         if (viewerTitle) viewerTitle.textContent = title;
         if (viewerMeta) viewerMeta.textContent = ELEMENT_LABEL[archetype] || element;
-        if (viewerPath) viewerPath.textContent = "vault/spirits/" + spirit + ".png";
         if (viewerOrientation) viewerOrientation.textContent = element + " orientation";
         if (viewerImpact) viewerImpact.textContent = element;
-        if (viewerIndex) viewerIndex.textContent = (currentIndex + 1) + " / " + entries.length;
+        if (viewerImage) viewerImage.alt = title;
+
+        loadVariant(spirit, variantIdx !== undefined ? variantIdx : 0);
 
         viewer.classList.remove("is-hidden");
         viewer.setAttribute("aria-hidden", "false");
@@ -1658,9 +1671,9 @@ async function loadMythology() {
 
       entries.forEach(function (entry, index) {
         var btn = entry.querySelector("[role=button]") || entry;
-        btn.addEventListener("click", function () { openViewer(index); });
+        btn.addEventListener("click", function () { openViewer(index, 0); });
         btn.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openViewer(index); }
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openViewer(index, 0); }
         });
       });
 
@@ -1668,14 +1681,36 @@ async function loadMythology() {
         el.addEventListener("click", closeViewer);
       });
 
-      if (prevBtn) prevBtn.addEventListener("click", function () { openViewer(currentIndex - 1); });
-      if (nextBtn) nextBtn.addEventListener("click", function () { openViewer(currentIndex + 1); });
+      if (prevBtn) prevBtn.addEventListener("click", function () {
+        var spirit = entries[currentIndex] && entries[currentIndex].dataset.spirit;
+        if (spirit && getVariants(spirit).length > 1) {
+          loadVariant(spirit, currentVariantIndex - 1);
+        } else {
+          openViewer(currentIndex - 1, 0);
+        }
+      });
+      if (nextBtn) nextBtn.addEventListener("click", function () {
+        var spirit = entries[currentIndex] && entries[currentIndex].dataset.spirit;
+        if (spirit && getVariants(spirit).length > 1) {
+          loadVariant(spirit, currentVariantIndex + 1);
+        } else {
+          openViewer(currentIndex + 1, 0);
+        }
+      });
 
       document.addEventListener("keydown", function (e) {
         if (viewer.classList.contains("is-hidden")) return;
         if (e.key === "Escape") closeViewer();
-        if (e.key === "ArrowLeft") openViewer(currentIndex - 1);
-        if (e.key === "ArrowRight") openViewer(currentIndex + 1);
+        if (e.key === "ArrowLeft") {
+          var spirit = entries[currentIndex] && entries[currentIndex].dataset.spirit;
+          if (spirit && getVariants(spirit).length > 1) { loadVariant(spirit, currentVariantIndex - 1); }
+          else { openViewer(currentIndex - 1, 0); }
+        }
+        if (e.key === "ArrowRight") {
+          var spirit = entries[currentIndex] && entries[currentIndex].dataset.spirit;
+          if (spirit && getVariants(spirit).length > 1) { loadVariant(spirit, currentVariantIndex + 1); }
+          else { openViewer(currentIndex + 1, 0); }
+        }
       });
     })();
   </script>

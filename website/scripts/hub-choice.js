@@ -119,6 +119,11 @@ const smoothedPulse = {
 // --- String-fabric void: Echo-Lake binding ---
 const playerState = {
   atVoidBoundary: false,
+  // Burdens are the resonant words the lake recognises — drawn from the echo-blocks.
+  burdens: ["pattern", "assignment", "resonance", "choice", "rewrite", "truth",
+            "coherence", "alignment", "pulse", "meaning", "presence", "weight",
+            "drift", "tension", "vibration", "echo", "release", "movement"],
+  correctStone: null,
 };
 
 function bindEchoToVoid() {
@@ -128,6 +133,10 @@ function bindEchoToVoid() {
     lake.classList.add("active");
     const trigger = document.querySelector(".echo-trigger");
     if (trigger) { trigger.style.display = "none"; }
+    const locator = document.getElementById("stone-locator");
+    const cast = document.getElementById("stone-cast");
+    if (locator) { locator.classList.remove("hidden"); locator.classList.add("active"); }
+    if (cast) { cast.classList.remove("hidden"); cast.classList.add("active"); }
   }
 }
 
@@ -144,6 +153,54 @@ function senseVoidBoundary(pulse) {
     bindEchoToVoid();
   }
 }
+
+function locateStone() {
+  const input = document.getElementById("stone-search");
+  const feedback = document.getElementById("stone-feedback");
+  if (!input || !feedback) return;
+  const query = input.value.trim();
+  if (!query) return;
+
+  // The stone echoes with the player if it matches their internal state.
+  const echoMatch = playerState.burdens.includes(query.toLowerCase());
+
+  if (echoMatch) {
+    feedback.textContent = `"${query}" echoes with you. The lake will accept this stone.`;
+    playerState.correctStone = query;
+  } else {
+    feedback.textContent = `"${query}" does not echo with you. The lake remains still.`;
+    playerState.correctStone = null;
+  }
+  feedback.classList.remove("hidden");
+  feedback.classList.add("active");
+}
+
+function castStone() {
+  const burden = playerState.correctStone;
+  const result = document.getElementById("stone-result");
+  if (!result) return;
+
+  if (!burden) {
+    result.textContent = "The lake refuses the stone. It carries no echo.";
+  } else {
+    result.textContent =
+      `The lake accepts "${burden}" and carries its weight into the fog. ` +
+      "Your shoulders lighten. The burden dissolves beneath the surface.";
+    playerState.correctStone = null;
+    // Remove the cast burden from the recognised list so it cannot be re-cast.
+    playerState.burdens = playerState.burdens.filter(b => b !== burden.toLowerCase());
+    const input = document.getElementById("stone-search");
+    if (input) { input.value = ""; }
+    const feedback = document.getElementById("stone-feedback");
+    if (feedback) { feedback.classList.add("hidden"); feedback.classList.remove("active"); }
+  }
+  result.classList.remove("hidden");
+  result.classList.add("active");
+}
+
+// Expose to inline onclick handlers in hub.html
+window.locateStone = locateStone;
+window.castStone = castStone;
 // --- End void binding ---
 
 const SPACE_CONFIG = {

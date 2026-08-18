@@ -99,6 +99,25 @@
           </div>
         </div>
       </div>
+
+      <div id="stone-locator" class="stone-locator hidden" aria-label="Stone locator">
+        <div class="stone-inner">
+          <h3>Find Your Stone</h3>
+          <p class="stone-line">
+            Only the stone that echoes with you can be cast.
+          </p>
+          <input id="stone-search" type="text" placeholder="search for your stone" aria-label="Stone search">
+          <button type="button" onclick="locateStone()">Locate</button>
+          <p id="stone-feedback" class="stone-feedback hidden" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div id="stone-cast" class="stone-cast hidden" aria-label="Stone casting">
+        <div class="stone-inner">
+          <button type="button" onclick="castStone()">Cast Stone</button>
+          <p id="stone-result" class="stone-result hidden" aria-live="polite"></p>
+        </div>
+      </div>
     </section>
   </main>
   <script type="module" src="/threshold-engine.js"></script>

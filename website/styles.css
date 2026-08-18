@@ -205,3 +205,76 @@ h1 {
   0%, 100% { transform: scale(1.03); }
   50%       { transform: scale(1.06); }
 }
+
+
+/* --- Echo-Lake: correct-stone mechanic --- */
+.stone-locator,
+.stone-cast {
+  margin-top: 40px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.stone-locator.active,
+.stone-cast.active {
+  opacity: 1;
+}
+
+.stone-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stone-line {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.stone-inner input[type="text"] {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.stone-inner input[type="text"]:focus {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.stone-inner button {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  padding: 8px 20px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.stone-inner button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.38);
+}
+
+.stone-feedback,
+.stone-result {
+  font-style: italic;
+  margin-top: 4px;
+  opacity: 0.9;
+  transition: opacity 0.6s ease;
+}
+/* --- End correct-stone mechanic --- */

@@ -67,8 +67,6 @@
       </div>
     </section>
 
-    <button type="button" class="echo-trigger" onclick="revealEchoLake()">Echo</button>
-
     <section id="echo-lake" class="echo-lake hidden" aria-label="Echo Lake Chamber">
       <div class="echo-surface">
         <div class="echo-reflection">
@@ -109,12 +107,6 @@
       var chamber = document.getElementById("meaning-chamber");
       var trigger = document.querySelector(".meaning-trigger");
       if (chamber) { chamber.classList.add("active"); }
-      if (trigger) { trigger.style.display = "none"; }
-    }
-    function revealEchoLake() {
-      var lake = document.getElementById("echo-lake");
-      var trigger = document.querySelector(".echo-trigger");
-      if (lake) { lake.classList.remove("hidden"); lake.classList.add("active"); }
       if (trigger) { trigger.style.display = "none"; }
     }
   </script>

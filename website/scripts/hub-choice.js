@@ -116,6 +116,36 @@ const smoothedPulse = {
   blend: 0,
 };
 
+// --- String-fabric void: Echo-Lake binding ---
+const playerState = {
+  atVoidBoundary: false,
+};
+
+function bindEchoToVoid() {
+  const lake = document.getElementById("echo-lake");
+  if (lake && playerState.atVoidBoundary === true) {
+    lake.classList.remove("hidden");
+    lake.classList.add("active");
+    const trigger = document.querySelector(".echo-trigger");
+    if (trigger) { trigger.style.display = "none"; }
+  }
+}
+
+function senseVoidBoundary(pulse) {
+  // A pulse entering the void becomes a vibration.
+  // No echo, no shimmer, no reaction — only drift.
+  const drift = Math.abs(pulse.blend);
+  const tension = Math.abs(pulse.inner);
+  const vibration = Math.abs(pulse.outer);
+
+  // The void is sensed when drift is low, tension is soft, vibration is faint.
+  if (!playerState.atVoidBoundary && drift < 0.2 && tension < 0.3 && vibration < 0.4) {
+    playerState.atVoidBoundary = true;
+    bindEchoToVoid();
+  }
+}
+// --- End void binding ---
+
 const SPACE_CONFIG = {
   orbCount: REDUCED_MOTION ? 10 : 18,
   glyphCount: REDUCED_MOTION ? 8 : 14,
@@ -488,6 +518,8 @@ function tickDiamondPull(timestamp) {
     const eC = Number(hubC?.style.getPropertyValue("--hub-energy") || 0);
     telemetryEnergy.textContent = Math.max(eA, eB, eC).toFixed(4);
   }
+
+  senseVoidBoundary(pulse);
 
   diamondPullAnimationHandle = window.requestAnimationFrame(tickDiamondPull);
 }

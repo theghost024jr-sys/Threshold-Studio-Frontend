@@ -32,7 +32,49 @@
       <article class="field"><h2>Drift</h2><p>Branches remain dormant until a chosen path gives them motion.</p></article>
       <article class="field"><h2>Activation</h2><p>The Worker opens protected material only when its threshold is crossed.</p></article>
     </section>
+
+    <button type="button" class="meaning-trigger" onclick="revealMeaningChamber()">Reveal Meaning</button>
+
+    <section id="meaning-chamber" class="hidden-meaning" aria-label="Meaning Chamber">
+      <div class="meaning-container">
+        <h2 class="meaning-title">Meaning Chamber</h2>
+        <p class="meaning-line">Meaning isn't something waiting at the end.</p>
+        <p class="meaning-line">Meaning is something created in the movement.</p>
+        <div class="meaning-block">
+          <h3>1. Meaning isn't a destination — it's a pattern</h3>
+          <p>Meaning is the coherence you build, the stance you hold, the seeds you plant, the ripples you create, the clarity you refuse to abandon.</p>
+        </div>
+        <div class="meaning-block">
+          <h3>2. Meaning is not assigned by the world — it's assigned by you</h3>
+          <p>You remember the echoes, feel the pulse, sense the improbable, rewrite your internal architecture, plant seeds with virtue.</p>
+        </div>
+        <div class="meaning-block">
+          <h3>3. Meaning is not about permanence — it's about resonance</h3>
+          <p>A moment doesn't need to last to matter. A pulse doesn't need a story to be true. Meaning is the frequency something leaves behind.</p>
+        </div>
+        <div class="meaning-block">
+          <h3>4. Meaning is not guaranteed — it's chosen</h3>
+          <p>Two people can live the same event: one finds nothing, one finds transformation. The difference is the stance.</p>
+        </div>
+        <div class="meaning-block">
+          <h3>5. Meaning is in the rewrite</h3>
+          <p>Meaning is the moment you realize you can rewrite your own code — not because you collapsed, but because you recognized a new pulse and followed it.</p>
+        </div>
+        <div class="meaning-block">
+          <h3>6. So does it mean?</h3>
+          <p>Yes — because you decided it does. Meaning isn't discovered. Meaning is lived.</p>
+        </div>
+      </div>
+    </section>
   </main>
   <script type="module" src="/threshold-engine.js"></script>
+  <script>
+    function revealMeaningChamber() {
+      var chamber = document.getElementById("meaning-chamber");
+      var trigger = document.querySelector(".meaning-trigger");
+      if (chamber) { chamber.classList.add("active"); }
+      if (trigger) { trigger.style.display = "none"; }
+    }
+  </script>
 </body>
 </html>

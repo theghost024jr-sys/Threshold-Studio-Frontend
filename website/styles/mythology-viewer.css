@@ -17,3 +17,43 @@
 .mythology-card {
   padding: 0.9rem;
 }
+
+#spirit-viewer {
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#spirit-viewer.revealed {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+.breathe {
+  animation: thresholdBreath 4s ease-in-out infinite;
+}
+
+#spirit-image {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.6));
+}
+
+.spirit-engine-name {
+  text-align: center;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+}
+
+@keyframes thresholdBreath {
+  0%, 100% { transform: scale(1.03); }
+  50% { transform: scale(1.06); }
+}

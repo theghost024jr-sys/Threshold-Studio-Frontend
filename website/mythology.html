@@ -934,41 +934,46 @@
     </section>
 
     <section class="grid" aria-label="Elemental archetypes">
-      <article class="chamber mythology-entry" data-fade-section data-archetype="fire" data-spirit="cindervox" data-element="Fire" aria-expanded="false">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="fire" data-spirit="cindervox" data-element="Fire" aria-expanded="false" onclick="activateSpiritEngine('cindervox')">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Fire Â· Cindervox">
           <h3><span class="glyph-mark">âœ¶</span>Fire Â· Cindervox</h3>
           <p>Fire Â· Ignition Â· Clarifying Rupture</p>
         </div>
         <img class="mythology-image" alt="Cindervox" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="water" data-spirit="porpoise" data-element="Water" aria-expanded="false">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="water" data-spirit="porpoise" data-element="Water" aria-expanded="false" onclick="activateSpiritEngine('porpoise')">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Water Â· Porpoise">
           <h3><span class="glyph-mark">â—Œ</span>Water Â· Porpoise</h3>
           <p>Water Â· Flow Â· Emotional Conductivity</p>
         </div>
         <img class="mythology-image" alt="Porpoise" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="air" data-spirit="whisperhawk" data-element="Air" aria-expanded="false">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="air" data-spirit="whisperhawk" data-element="Air" aria-expanded="false" onclick="activateSpiritEngine('whisperhawk')">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Air Â· Whisperhawk">
           <h3><span class="glyph-mark">âœ§</span>Air Â· Whisperhawk</h3>
           <p>Air Â· Perspective Â· Pattern Lift</p>
         </div>
         <img class="mythology-image" alt="Whisperhawk" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="earth" data-spirit="stonecat" data-element="Earth" aria-expanded="false">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="earth" data-spirit="stonecat" data-element="Earth" aria-expanded="false" onclick="activateSpiritEngine('stonecat')">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Earth Â· Stonecat">
           <h3><span class="glyph-mark">â—</span>Earth Â· Stonecat</h3>
           <p>Earth Â· Grounding Â· Structural Truth</p>
         </div>
         <img class="mythology-image" alt="Stonecat" loading="lazy" />
       </article>
-      <article class="chamber mythology-entry" data-fade-section data-archetype="light" data-spirit="lumenstag" data-element="Light" aria-expanded="false">
+      <article class="chamber mythology-entry" data-fade-section data-archetype="light" data-spirit="lumenstag" data-element="Light" aria-expanded="false" onclick="activateSpiritEngine('lumenstag')">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Light Â· Lumenstag">
           <h3><span class="glyph-mark">âœ¦</span>Light Â· Lumenstag</h3>
           <p>Light Â· Alignment Â· Signal Illumination</p>
         </div>
         <img class="mythology-image" alt="Lumenstag" loading="lazy" />
       </article>
+    </section>
+
+    <section id="spirit-viewer" aria-label="Spirit Engine">
+      <h3 id="spirit-name" class="spirit-engine-name"></h3>
+      <img id="spirit-image" alt="Active spirit" />
     </section>
 
     <section id="myth-viewer" class="myth-viewer is-hidden" aria-hidden="true" role="dialog" aria-label="Spirit image viewer">
@@ -1672,6 +1677,17 @@ async function loadMythology() {
         if (e.key === "ArrowRight") openViewer(currentIndex + 1);
       });
     })();
+  </script>
+  <script>
+    function activateSpiritEngine(spirit) {
+      var viewer = document.getElementById("spirit-viewer");
+      var img = document.getElementById("spirit-image");
+      var name = document.getElementById("spirit-name");
+
+      viewer.classList.add("revealed", "breathe");
+      img.src = "../vault/spirits/" + spirit + ".png";
+      name.innerText = spirit.toUpperCase();
+    }
   </script>
 </body>
 </html>

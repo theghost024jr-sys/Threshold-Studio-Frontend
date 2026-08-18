@@ -1,5 +1,6 @@
 const BIOME_PATH = Object.freeze(["house", "garden", "forest", "deepforest", "root", "stone", "shadow"]);
 const ADJACENCY_CAPACITY = 8;
+export const GARDEN_RUNTIME_SMOOTHING_WINDOW = 0.15;
 
 function clamp(value, minimum = 0, maximum = 1) {
   return Math.min(Math.max(Number.isFinite(value) ? value : minimum, minimum), maximum);
@@ -20,6 +21,76 @@ function pressureLevel(intensity) {
 
 function appendUnique(values = [], value) {
   return value && !values.includes(value) ? [...values, value] : [...values];
+}
+
+function lerp(previous, target, alpha) {
+  return previous + (target - previous) * alpha;
+}
+
+function updateNumericDomain(previous, incoming, valueKey, alpha) {
+  const source = incoming && typeof incoming === "object" ? incoming : { [valueKey]: incoming };
+  const target = source[valueKey];
+  const next = { ...previous, ...source };
+  if (Number.isFinite(target)) next[valueKey] = lerp(clamp(previous?.[valueKey]), clamp(target), alpha);
+  return next;
+}
+
+function updateBiomeShift(previous, incoming) {
+  if (incoming && typeof incoming === "object") return { ...previous, ...incoming };
+  if (typeof incoming !== "string" || incoming === previous?.to) return { ...previous };
+  return { ...previous, from: previous?.to || previous?.from, to: incoming, progress: 0 };
+}
+
+function updateEnvironmentSignals(previous, incoming) {
+  if (incoming && typeof incoming === "object") return { ...previous, ...incoming };
+  if (typeof incoming !== "string") return { ...previous };
+  return { ...previous, active: incoming === "quiet" ? [] : [incoming] };
+}
+
+function recordChange(changes, key, previous, next) {
+  if (JSON.stringify(previous) !== JSON.stringify(next)) changes[key] = { old: previous, new: next };
+}
+
+export function updateGardenRuntime(gardenState, world, {
+  smoothingWindow = GARDEN_RUNTIME_SMOOTHING_WINDOW
+} = {}) {
+  const environment = world?.environment;
+  if (!environment || typeof environment !== "object") {
+    throw new TypeError("Garden runtime requires world.environment");
+  }
+
+  const alpha = clamp(smoothingWindow);
+  const state = structuredClone(gardenState);
+  const changes = {};
+  const domains = {
+    growth: updateNumericDomain(state.growth, environment.growth, "rate", alpha),
+    adjacency: updateNumericDomain(state.adjacency, environment.adjacency, "density", alpha),
+    driftCapture: updateNumericDomain(state.driftCapture, environment.driftCapture, "rate", alpha),
+    pressureSpread: updateNumericDomain(state.pressureSpread, environment.pressureSpread, "intensity", alpha),
+    biomeShift: updateBiomeShift(state.biomeShift, environment.biomeShift),
+    environmentSignals: updateEnvironmentSignals(state.environmentSignals, environment.signals)
+  };
+
+  for (const [key, next] of Object.entries(domains)) {
+    recordChange(changes, key, state[key], next);
+    state[key] = next;
+  }
+  state.runtimeTick = (state.runtimeTick || 0) + 1;
+
+  return {
+    state,
+    delta: {
+      id: "garden-runtime-delta",
+      source: "garden-runtime-state.json",
+      mode: "environment-tick",
+      changes,
+      diagnostics: {
+        deltaApplied: Object.keys(changes).length > 0,
+        noChangesDetected: Object.keys(changes).length === 0,
+        status: "coherent"
+      }
+    }
+  };
 }
 
 export function advanceGardenRuntime(gardenState, { tickSeconds = 12 } = {}) {

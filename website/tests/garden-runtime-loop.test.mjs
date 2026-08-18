@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { advanceGardenRuntime } from "../scripts/garden-runtime.js";
+import {
+  advanceGardenRuntime,
+  updateGardenRuntime
+} from "../scripts/garden-runtime.js";
 
 const state = {
   timestamp: "2026-08-17T03:00:00-04:00",
@@ -33,4 +36,35 @@ test("does not mutate the source Garden state", () => {
   const before = structuredClone(state);
   advanceGardenRuntime(state);
   assert.deepEqual(state, before);
+});
+
+test("ingests and smooths structured world environment feeds", () => {
+  const before = structuredClone(state);
+  const { state: next, delta } = updateGardenRuntime(state, {
+    environment: {
+      growth: 1,
+      adjacency: { density: 0.5, chambers: ["hub", "garden"] },
+      driftCapture: 0.8,
+      pressureSpread: { intensity: 0.9, direction: "outward" },
+      biomeShift: "forest",
+      signals: "burst"
+    }
+  });
+
+  assert.equal(next.growth.rate, 0.87165);
+  assert.equal(next.adjacency.density, 0.18125);
+  assert.equal(next.driftCapture.rate, 0.62575);
+  assert.ok(Math.abs(next.pressureSpread.intensity - 0.7215) < Number.EPSILON);
+  assert.deepEqual(next.adjacency.chambers, ["hub", "garden"]);
+  assert.deepEqual(next.biomeShift, { ...state.biomeShift, from: "garden", to: "forest", progress: 0 });
+  assert.deepEqual(next.environmentSignals.active, ["burst"]);
+  assert.equal(next.runtimeTick, 1);
+  assert.deepEqual(delta.changes.growth.old, state.growth);
+  assert.deepEqual(delta.changes.growth.new, next.growth);
+  assert.equal(delta.diagnostics.deltaApplied, true);
+  assert.deepEqual(state, before);
+});
+
+test("rejects worlds without an environment feed", () => {
+  assert.throws(() => updateGardenRuntime(state, {}), /world\.environment/);
 });

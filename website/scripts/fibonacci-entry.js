@@ -26,6 +26,8 @@ const hubReactor = document.querySelector("[data-hub-reactor]");
 const primeLogo = document.querySelector("[data-prime-logo]");
 const primeDoor = document.querySelector("[data-prime-door]");
 const revealBox = document.querySelector("[data-reveal-box]");
+const hubEntryReveal = document.querySelector("[data-hub-entry-reveal]");
+const hubEntryLink = document.querySelector("[data-hub-entry-link]");
 const categoryLinks = Array.from(document.querySelectorAll(".entry-actions a"));
 
 const descentRings = { 13: 8, 8: 5, 5: 3, 3: 1 };
@@ -624,6 +626,21 @@ function initializeHubReactor() {
     link.addEventListener("focus", () => setCategory(link));
     link.addEventListener("blur", () => clearCategory(link));
     link.addEventListener("click", (event) => beginReveal(event, link, event.pointerType === "touch" ? "tap" : "click"));
+  });
+  function revealHubEntry() {
+    if (!hubEntryReveal || !hubEntryLink) return;
+    hubEntryReveal.dataset.revealed = "true";
+    hubEntryReveal.setAttribute("aria-hidden", "false");
+    hubEntryLink.removeAttribute("tabindex");
+    hubWheel.setAttribute("aria-expanded", "true");
+    setPrimeState("resonant");
+    hubEntryLink.focus({ preventScroll: true });
+  }
+  hubWheel.addEventListener("dblclick", revealHubEntry);
+  hubWheel.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    revealHubEntry();
   });
   if (primeDoor) {
     primeDoor.addEventListener("focus", () => {

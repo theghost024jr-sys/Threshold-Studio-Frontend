@@ -463,6 +463,36 @@
       box-shadow: 0 0 12px rgba(243, 190, 99, 0.68);
     }
 
+    .entry-hub-reveal {
+      min-height: 2.2rem;
+      margin-top: 0.35rem;
+      opacity: 0;
+      visibility: hidden;
+      translate: 0 6px;
+      transition: opacity 480ms ease, translate 480ms ease, visibility 480ms;
+    }
+
+    .entry-hub-reveal[data-revealed="true"] {
+      opacity: 1;
+      visibility: visible;
+      translate: 0 0;
+    }
+
+    .entry-hub-link {
+      color: rgba(241, 206, 146, 0.96);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration-color: rgba(241, 206, 146, 0.48);
+      text-underline-offset: 0.3rem;
+    }
+
+    .entry-hub-link:focus-visible {
+      outline: 1px solid rgba(139, 228, 213, 0.88);
+      outline-offset: 0.35rem;
+    }
+
     .entry-orbit.is-descending {
       --wheel-scale: 0.96;
       --core-scale: 1.08;
@@ -691,6 +721,7 @@
       .entry-spoke,
       .entry-receptor,
       .entry-orbit.is-descending,
+      .entry-hub-reveal,
       .entry-actions a,
       .entry-engine {
         transition: none !important;
@@ -748,7 +779,7 @@
             <span class="entry-spoke entry-spoke-b"></span>
             <span class="entry-spoke entry-spoke-c"></span>
           </div>
-          <div class="entry-orbit" data-hub-wheel data-prime-atom role="img" aria-label="Prime Atom, the living threshold between the Hub and Engine">
+          <div class="entry-orbit" data-hub-wheel data-prime-atom role="button" tabindex="0" aria-expanded="false" aria-controls="hub-entry-reveal" aria-label="Reveal the Threshold Hub entrance">
             <img class="prime-atom-logo-field" src="assets/logo/threshold-logo.svg" alt="" aria-hidden="true" />
             <span class="entry-signal-ring"></span>
             <div class="entry-rotor">
@@ -761,6 +792,9 @@
             <span class="prime-reveal-box" data-reveal-box aria-hidden="true"></span>
           </div>
           <span class="entry-receptor" data-hub-receptor></span>
+        </div>
+        <div class="entry-hub-reveal" id="hub-entry-reveal" data-hub-entry-reveal data-revealed="false" aria-hidden="true">
+          <a class="entry-hub-link" data-hub-entry-link href="/hub" tabindex="-1">Enter Threshold Hub</a>
         </div>
         <div class="entry-engine-core" data-engine-core data-engine-state="latent" aria-hidden="true"></div>
       </div>

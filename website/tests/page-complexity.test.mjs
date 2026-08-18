@@ -45,6 +45,8 @@ test("binds the Prime Atom to the logo, Engine, reveal, and hidden door contract
   assert.match(html, /hub-heartbeat-spokes/);
   assert.match(html, /data-field-frame/);
   assert.match(html, /data-reveal-box/);
+  assert.match(html, /data-hub-entry-link href="\/hub"/);
+  assert.match(html, /data-prime-atom role="button" tabindex="0"/);
   assert.equal((html.match(/entry-ring entry-ring-/g) || []).length, 2);
   assert.match(script, /threshold:hub-signal/);
   assert.match(script, /threshold:prime-atom-signal/);
@@ -59,6 +61,8 @@ test("binds the Prime Atom to the logo, Engine, reveal, and hidden door contract
   assert.match(script, /advanceHeartbeatClock/);
   assert.match(script, /ring-descent/);
   assert.match(script, /setPrimeState\("descending"\)/);
+  assert.match(script, /hubWheel\.addEventListener\("dblclick", revealHubEntry\)/);
+  assert.match(script, /event\.key !== "Enter" && event\.key !== " "/);
   assert.doesNotMatch(html, /(?:engine-core-heartbeat|receptor-heartbeat|reactor-breathe|reactor-flicker)\s+\d+s/);
 });
 

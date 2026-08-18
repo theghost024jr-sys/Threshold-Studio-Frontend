@@ -22,13 +22,17 @@
     <a class="vault-law-structural" href="ledger.html">Ledger</a>
     <a class="vault-law-structural" href="dialogues.html">Dialogues</a>
     <a class="vault-law-structural" href="mythology.html">Mythology</a>
-    <a class="vault-law-structural" href="housegarden.html">House &amp; Garden</a>
-    <a class="vault-law-structural" href="chamber-palette-map.html">Chamber Map</a>
-    <a class="vault-law-structural" href="invitation.html">Invitation</a>
-    <a class="vault-law-structural" href="contact.html">Contact</a>
   </nav>
 
   <main id="flower-container" aria-label="House and Garden flower page">
+    <div class="pollen-field" data-pollen-field aria-label="Drifting pollen">
+      <button class="pollen clickable pollen--one" type="button" aria-label="Pollen mote 1 of 5"></button>
+      <button class="pollen clickable pollen--two" type="button" aria-label="Pollen mote 2 of 5"></button>
+      <button class="pollen clickable pollen--three" type="button" aria-label="Pollen mote 3 of 5"></button>
+      <button class="pollen clickable pollen--four" type="button" aria-label="Pollen mote 4 of 5"></button>
+      <button class="pollen clickable pollen--five" type="button" aria-label="Pollen mote 5 of 5"></button>
+      <span class="pollen-progress" data-pollen-progress aria-live="polite"></span>
+    </div>
     <div id="flower-glyph" aria-hidden="true">✿</div>
 
     <div id="flower-description">
@@ -58,6 +62,9 @@
         <button type="button" id="nav-camp">Camp</button>
       </nav>
     </section>
+    <div id="garden-portal" class="garden-portal" data-garden-portal data-revealed="false" aria-hidden="true">
+      <a href="/garden" tabindex="-1">Enter Garden Organ</a>
+    </div>
   </main>
 
   <section class="garden-scene" aria-labelledby="garden-scene-title">

@@ -1,0 +1,10 @@
+{
+  "cindervox": {
+    "default": "/vault/assets/cindervox.png",
+    "passive": "/vault/assets/cindervoxpassive.png",
+    "signal": "/vault/assets/cindervoxx.png"
+  },
+  "porpoise": {
+    "default": "/vault/assets/porpoise.png"
+  }
+}

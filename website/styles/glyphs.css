@@ -170,6 +170,27 @@
 .archive-chamber { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, .6fr); gap: 26px; padding: 28px; border-left: 2px solid var(--archive-gold); background: rgba(21, 28, 34, 0.9); animation: chamberReveal 500ms ease both; }
 .archive-chamber h2 { margin: 0 0 12px; color: var(--archive-gold); font: 500 clamp(1.5rem, 3vw, 2.4rem)/1.1 "Cinzel", serif; }
 .archive-chamber p { margin: 0; color: var(--archive-muted); line-height: 1.65; }
+.glyph-asset { display: block; width: 100%; max-height: 320px; aspect-ratio: 4 / 3; border: 1px solid rgba(119, 211, 196, 0.25); background: #05070b; object-fit: contain; }
+.glyph-text { align-self: center; }
+.glyph-copy { display: grid; align-content: center; gap: 14px; }
+.glyph-effect { color: var(--archive-teal) !important; font-size: 0.76rem; text-transform: uppercase; }
+.glyph-activate {
+  width: fit-content;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid var(--archive-gold);
+  border-radius: 0;
+  color: #120e07;
+  background: var(--archive-gold);
+  font: 600 0.68rem/1 "Manrope", sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.glyph-activate:hover,
+.glyph-activate:focus-visible { color: var(--archive-ink); background: transparent; outline: 1px solid var(--archive-teal); }
+.glyph-activate:disabled { opacity: 0.58; cursor: default; }
+.glyph-chamber[data-state="visible"] { border-left-color: var(--archive-teal); }
+.glyph-chamber[data-state="activated"] { border-left-color: var(--archive-gold); }
 .chamber-glyphs { display: grid; gap: 8px; align-content: start; }
 .chamber-glyph { padding: 10px 12px; border: 1px solid rgba(119, 211, 196, 0.25); color: var(--archive-ink); font-size: 0.76rem; }
 .glyph-footer { min-height: 100px; border-top: 1px solid rgba(232, 184, 93, 0.2); color: var(--archive-muted); font-size: 0.7rem; text-transform: uppercase; }

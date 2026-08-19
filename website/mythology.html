@@ -993,9 +993,10 @@
         </div>
 
         <div class="viewer-controls">
-          <button type="button" id="viewer-prev" class="viewer-btn">Prev</button>
-          <span id="viewer-index" class="viewer-index">0 / 0</span>
-          <button type="button" id="viewer-next" class="viewer-btn">Next</button>
+          <button type="button" class="viewer-btn" data-species-intent="default" aria-pressed="false">Default</button>
+          <button type="button" class="viewer-btn" data-species-intent="passive" aria-pressed="false">Passive</button>
+          <button type="button" class="viewer-btn" data-species-intent="signal" aria-pressed="false">Signal</button>
+          <span id="viewer-index" class="viewer-index">default</span>
         </div>
       </article>
     </section>
@@ -1393,23 +1394,50 @@
       }
 
       function hydrateArchiveBanner(route, title) {
-        fetch("data/vault-archive.json", { cache: "no-store" })
+        fetch("data/threshold-vault.json", { cache: "no-store" })
           .then(function (response) {
             if (!response.ok) {
-              throw new Error("vault archive fetch failed");
+              throw new Error("canonical vault fetch failed");
             }
             return response.json();
           })
           .then(function (payload) {
-            const routeMeta = payload && payload.archive && payload.archive.routes ? payload.archive.routes[route] : null;
+            const documents = payload && Array.isArray(payload.documents) ? payload.documents : [];
+            const routeKey = String(route || "").toLowerCase();
+            const routeTerms = routeKey.split(/[^a-z0-9]+/).filter(Boolean);
+            const selectedNote = documents
+              .map(function (document) {
+                const values = [document.id, document.title, document.chamber, document.category, document.relativePath]
+                  .filter(Boolean)
+                  .map(function (value) { return String(value).toLowerCase(); });
+                let score = document.kind === "chamber" ? 1 : 0;
+                if (Array.isArray(document.assets) && document.assets.length > 0) {
+                  score += 2;
+                }
+                values.forEach(function (value) {
+                  if (value === routeKey) {
+                    score += 100;
+                  } else if (routeKey && value.includes(routeKey)) {
+                    score += 50;
+                  }
+                  routeTerms.forEach(function (term) {
+                    if (value.includes(term)) {
+                      score += 10;
+                    }
+                  });
+                });
+                return { document: document, score: score };
+              })
+              .sort(function (left, right) { return right.score - left.score; })[0];
             const banner = document.getElementById("archiveRouteBanner");
-            if (!routeMeta || !banner) {
+            if (!selectedNote || !banner) {
               return;
             }
-            const selectedNote = selectRouteNote(routeMeta, "mythology:" + route);
-            const lore = selectedNote && selectedNote.excerpt ? selectedNote.excerpt : (routeMeta.lore || "Storm mirrored itself into an archetypal chamber.");
+            const document = selectedNote.document;
+            const sourceLore = document.body || document.description || "Storm mirrored itself into an archetypal chamber.";
+            const lore = sourceLore.replace(/^#.*$/m, "").trim().replace(/\s+/g, " ").slice(0, 420);
             banner.textContent = title + " Â· " + lore;
-            const image = selectedNote && Array.isArray(selectedNote.assets) && selectedNote.assets[0] ? selectedNote.assets[0].webPath : "";
+            const image = Array.isArray(document.assets) && document.assets[0] ? document.assets[0].webPath : "";
             const panel = document.createElement("div");
             panel.style.maxWidth = "760px";
             panel.style.margin = "0.9rem auto 0";
@@ -1434,51 +1462,6 @@
           .catch(function () {
             // Keep fallback banner text.
           });
-      }
-
-      function selectRouteNote(routeMeta, key) {
-        if (!routeMeta) {
-          return null;
-        }
-
-        if (Array.isArray(routeMeta.notePool) && routeMeta.notePool.length > 0) {
-          return rotateNotePool(routeMeta.notePool, key, routeMeta.note || null);
-        }
-
-        return routeMeta.note || null;
-      }
-
-      function rotateNotePool(pool, key, fallback) {
-        const entries = Array.isArray(pool) ? pool.filter(function (entry) {
-          return entry && typeof entry === "object";
-        }) : [];
-        if (entries.length === 0) {
-          return fallback || null;
-        }
-
-        const storageKey = "threshold.route.notePoolRotation.v1";
-        let map = {};
-        try {
-          const raw = localStorage.getItem(storageKey);
-          map = raw ? JSON.parse(raw) : {};
-          if (!map || typeof map !== "object") {
-            map = {};
-          }
-        } catch (error) {
-          map = {};
-        }
-
-        const current = Number(map[key] || 0);
-        const index = Math.abs(current) % entries.length;
-        map[key] = current + 1;
-
-        try {
-          localStorage.setItem(storageKey, JSON.stringify(map));
-        } catch (error) {
-          // Ignore storage restrictions.
-        }
-
-        return entries[index] || fallback || null;
       }
 
       function writeArchiveReturnSignal(pageKey, route, weather) {
@@ -1545,22 +1528,46 @@
   </script>
   <script>
 async function loadMythology() {
-  const response = await fetch('data/vault.json');
+  const response = await fetch('data/threshold-vault.json', { cache: 'no-store' });
+  if (!response.ok) {
+    throw new Error('canonical vault fetch failed');
+  }
   const vault = await response.json();
 
-  const myth = vault.mythology.chambers;
+  const chambers = Array.isArray(vault.chambers)
+    ? vault.chambers.filter(function (chamber) {
+        const values = [chamber.chamber, chamber.category]
+          .concat(Array.isArray(chamber.tags) ? chamber.tags : [])
+          .filter(Boolean)
+          .map(function (value) { return String(value).toLowerCase(); });
+        return values.includes('mythology');
+      })
+    : [];
   const container = document.getElementById('myth-spirits');
+  if (!container) {
+    return;
+  }
 
-  Object.keys(myth).forEach(key => {
+  chambers.forEach(chamber => {
     const block = document.createElement('div');
-    block.innerHTML = `
-      <h3>${key.toUpperCase()}</h3>
-      <p>Spirit Form: ${myth[key].spirit}</p>
-      <p>Orientation: ${myth[key].orientation}</p>
-    `;
+    const heading = document.createElement('h3');
+    const description = document.createElement('p');
+    heading.textContent = chamber.title || chamber.chamber || chamber.id;
+    description.textContent = chamber.body || chamber.description || 'No chamber lore available.';
+    block.append(heading, description);
+    if (Array.isArray(chamber.assets) && chamber.assets[0]) {
+      const image = document.createElement('img');
+      image.src = chamber.assets[0].webPath;
+      image.alt = chamber.title || chamber.chamber || 'Vault chamber';
+      block.appendChild(image);
+    }
     container.appendChild(block);
   });
 }
+
+loadMythology().catch(function () {
+  // Keep the static mythology experience available when data cannot load.
+});
 
   </script>
   <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
@@ -1590,6 +1597,8 @@ async function loadMythology() {
   </style>
   <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
+  <script src="scripts/emotional-engine.js"></script>
+  <script src="scripts/species-signals.js"></script>
   <script type="module" src="scripts/destination-page.js?v=reveal-3"></script>
 </body>
 </html>

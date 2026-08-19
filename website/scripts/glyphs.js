@@ -7,62 +7,95 @@
 
   if (!archive || !status || !trail || !chamber || paths.length === 0) return;
 
-  const chambers = {
-    collapse: {
-      title: "Storm Chamber",
-      description: "Collapse is pressure given a room. The passage contracts until fracture becomes legible architecture.",
-      glyphs: ["The Pendant That Refused to Collapse", "The Storm That Kept Its Lantern", "The Clasp That Refused to Break"]
-    },
-    expand: {
-      title: "Shimmer Chamber",
-      description: "Expansion widens the signal without abandoning its form. Light moves outward and the cave answers.",
-      glyphs: ["The Mobius Strip with Three Loops", "The Shimmer That Refused to Sell", "The Guest Who Became Gravity"]
-    },
-    fog: {
-      title: "Fog Chamber",
-      description: "Fog slows the body enough for subtle signal to emerge. Partial sight becomes a way forward.",
-      glyphs: ["The Listening Tree", "The Fog That Carried a Door", "The Echo That Needed No Attribution"]
-    },
-    soil: {
-      title: "Soil Chamber",
-      description: "Soil takes memory inward and returns it as structure. Buried fragments become nourishment rather than loss.",
-      glyphs: ["The Root That Remembered Rain", "The Center That Remembered Its Edges", "The Compost Crown"]
-    }
+  let glyphs = {};
+  let depth = 0;
+  const emotionByGlyph = {
+    collapse: { fear: 1 },
+    expand: { relief: 1 },
+    fog: { confusion: 1 },
+    soil: { reflection: 1 }
   };
 
-  let depth = 0;
-
-  function render(choice) {
-    const selected = chambers[choice];
-    if (!selected) return;
+  function activateGlyph(choice, section, button, effectText) {
+    const result = window.ThresholdEmotions.activateGlyph(choice);
+    if (!result) return;
 
     depth += 1;
     archive.dataset.weather = choice;
+    archive.dataset.chamberState = result.status;
     paths.forEach((path) => path.setAttribute("aria-pressed", String(path.dataset.choice === choice)));
-    status.textContent = `${selected.title} opened. The Archive has reacted to your movement.`;
+    status.textContent = `${glyphs[choice].name} activated.`;
     trail.textContent = `Maze depth ${depth}`;
+    section.dataset.state = "activated";
+    effectText.textContent = `Chamber ${result.status}: ${result.effects.join(", ")}.`;
+    button.disabled = true;
+    button.textContent = "Activated";
+  }
+
+  function revealGlyph(choice) {
+    const selected = glyphs[choice];
+    if (!selected) return;
 
     const section = document.createElement("section");
     const copy = document.createElement("div");
     const title = document.createElement("h2");
-    const description = document.createElement("p");
-    const glyphs = document.createElement("div");
+    const text = document.createElement("p");
+    const effectText = document.createElement("p");
+    const activate = document.createElement("button");
+    const image = document.createElement("img");
 
-    section.className = "archive-chamber";
-    title.textContent = selected.title;
-    description.textContent = selected.description;
-    glyphs.className = "chamber-glyphs";
-    glyphs.setAttribute("aria-label", `${selected.title} glyphs`);
-    selected.glyphs.forEach((name) => {
-      const glyph = document.createElement("span");
-      glyph.className = "chamber-glyph";
-      glyph.textContent = name;
-      glyphs.appendChild(glyph);
+    section.className = "archive-chamber glyph-chamber";
+    section.dataset.state = "visible";
+    copy.className = "glyph-copy";
+    title.textContent = selected.name;
+    text.className = "glyph-text";
+    text.textContent = selected.text;
+    effectText.className = "glyph-effect";
+    effectText.textContent = "The glyph is visible but dormant.";
+    activate.className = "glyph-activate";
+    activate.type = "button";
+    activate.textContent = `Activate ${selected.name}`;
+    activate.addEventListener("click", function () {
+      activateGlyph(choice, section, activate, effectText);
     });
-    copy.append(title, description);
-    section.append(copy, glyphs);
+    image.className = "glyph-asset";
+    image.src = selected.asset;
+    image.alt = `${selected.name} glyph`;
+    copy.append(title, text, effectText, activate);
+    section.append(image, copy);
     chamber.replaceChildren(section);
+    status.textContent = `${selected.name} appears. Activate it to change the chamber.`;
   }
 
-  paths.forEach((path) => path.addEventListener("click", () => render(path.dataset.choice)));
+  function enterPath(choice) {
+    const emotions = window.ThresholdEmotions;
+    if (!emotions || !emotionByGlyph[choice]) return;
+    emotions.transitionChamber({ id: `glyph-archive-${choice}`, force: choice });
+    emotions.choose({ id: choice, emotion: emotionByGlyph[choice] });
+    const appearance = emotions.checkGlyphAppearance();
+    if (appearance) revealGlyph(appearance);
+  }
+
+  function bindPaths() {
+    paths.forEach(function (path) {
+      path.disabled = false;
+      path.addEventListener("click", function () {
+        enterPath(path.dataset.choice);
+      });
+    });
+  }
+
+  paths.forEach(function (path) { path.disabled = true; });
+  fetch("config/glyphs.json", { cache: "no-store" })
+    .then(function (response) {
+      if (!response.ok) throw new Error("glyph index fetch failed");
+      return response.json();
+    })
+    .then(function (data) {
+      glyphs = data && data.glyphs ? data.glyphs : {};
+      bindPaths();
+    })
+    .catch(function () {
+      status.textContent = "The glyph index could not be opened.";
+    });
 })();

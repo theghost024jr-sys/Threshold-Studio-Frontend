@@ -1,0 +1,173 @@
+{
+  "timestamp": "20260807_031255",
+  "target": "C:\\Threshold\\website",
+  "scanned_files": 22,
+  "missing_count": 33,
+  "missing": [
+    {
+      "source": "chamber-palette-map.html",
+      "reference": "scripts/chamber-map.js",
+      "expected": "scripts/chamber-map.js"
+    },
+    {
+      "source": "chamber-palette-map.html",
+      "reference": "scripts/weather-engine.js",
+      "expected": "scripts/weather-engine.js"
+    },
+    {
+      "source": "chamber-palette-map.html",
+      "reference": "scripts/learning-wheel.js",
+      "expected": "scripts/learning-wheel.js"
+    },
+    {
+      "source": "chamber-palette-map.html",
+      "reference": "scripts/chamber-loader.js",
+      "expected": "scripts/chamber-loader.js"
+    },
+    {
+      "source": "chamber-palette-map.html",
+      "reference": "scripts/mythology-viewer.js",
+      "expected": "scripts/mythology-viewer.js"
+    },
+    {
+      "source": "contact.html",
+      "reference": "/vault/vault.css",
+      "expected": "vault/vault.css"
+    },
+    {
+      "source": "contact.html",
+      "reference": "learningwheel.html",
+      "expected": "learningwheel.html"
+    },
+    {
+      "source": "contact.html",
+      "reference": "ledger.html",
+      "expected": "ledger.html"
+    },
+    {
+      "source": "contact.html",
+      "reference": "/vault/vault.js",
+      "expected": "vault/vault.js"
+    },
+    {
+      "source": "contact.html",
+      "reference": "scripts/harmony-law.js",
+      "expected": "scripts/harmony-law.js"
+    },
+    {
+      "source": "dialogues.html",
+      "reference": "scripts/chamber-loader.js",
+      "expected": "scripts/chamber-loader.js"
+    },
+    {
+      "source": "dialogues.html",
+      "reference": "scripts/dialogues.js",
+      "expected": "scripts/dialogues.js"
+    },
+    {
+      "source": "dialogues.html",
+      "reference": "dialogues.js",
+      "expected": "dialogues.js"
+    },
+    {
+      "source": "dialogues.html",
+      "reference": "scripts/humanoid-triad.js",
+      "expected": "scripts/humanoid-triad.js"
+    },
+    {
+      "source": "dialogues.html",
+      "reference": "scripts/weather-engine.js",
+      "expected": "scripts/weather-engine.js"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "/vault/vault.css",
+      "expected": "vault/vault.css"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "learningwheel.html",
+      "expected": "learningwheel.html"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "ledger.html",
+      "expected": "ledger.html"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "/vault/vault.js",
+      "expected": "vault/vault.js"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "scripts/harmony-law.js",
+      "expected": "scripts/harmony-law.js"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "scripts/threshold-engine.js",
+      "expected": "scripts/threshold-engine.js"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "scripts/chamber-loader.js",
+      "expected": "scripts/chamber-loader.js"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "scripts/housegarden.js",
+      "expected": "scripts/housegarden.js"
+    },
+    {
+      "source": "housegarden.html",
+      "reference": "scripts/Garden.js",
+      "expected": "scripts/Garden.js"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "/vault/vault.css",
+      "expected": "vault/vault.css"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "learningwheel.html",
+      "expected": "learningwheel.html"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "ledger.html",
+      "expected": "ledger.html"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "/vault/vault.js",
+      "expected": "vault/vault.js"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "scripts/harmony-law.js",
+      "expected": "scripts/harmony-law.js"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "scripts/threshold-engine.js",
+      "expected": "scripts/threshold-engine.js"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "scripts/mythology-viewer.js",
+      "expected": "scripts/mythology-viewer.js"
+    },
+    {
+      "source": "mythology.html",
+      "reference": "scripts/weather-engine.js",
+      "expected": "scripts/weather-engine.js"
+    },
+    {
+      "source": "porpoise.html",
+      "reference": "scripts/spirit-chamber.js",
+      "expected": "scripts/spirit-chamber.js"
+    }
+  ]
+}

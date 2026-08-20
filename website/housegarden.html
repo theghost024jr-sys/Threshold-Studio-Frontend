@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="styles/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/housegarden.css" />
+  <link rel="stylesheet" href="styles/pulse.css" />
   <link rel="stylesheet" href="styles/complexity-layers.css" />
 </head>
 <body class="housegarden-page vault-frame" data-vault-room="housegarden" data-threshold-spoke="house-garden" data-complexity="foundation atmosphere topology interaction simulation" data-motion="bounded">
-  <link rel="stylesheet" href="styles/spoke-tabs.css" />
-  <a id='return-home' href='index.html'>Return to Home Hub</a>
   <canvas id="gardenCanvas"></canvas>
   <canvas id="garden-growth"></canvas>
   <nav class="vault-chamber-surface vault-chamber-border">
@@ -26,11 +25,11 @@
 
   <main id="flower-container" aria-label="House and Garden flower page">
     <div class="pollen-field" data-pollen-field aria-label="Drifting pollen">
-      <button class="pollen clickable pollen--one" type="button" aria-label="Pollen mote 1 of 5"></button>
-      <button class="pollen clickable pollen--two" type="button" aria-label="Pollen mote 2 of 5"></button>
-      <button class="pollen clickable pollen--three" type="button" aria-label="Pollen mote 3 of 5"></button>
-      <button class="pollen clickable pollen--four" type="button" aria-label="Pollen mote 4 of 5"></button>
-      <button class="pollen clickable pollen--five" type="button" aria-label="Pollen mote 5 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--one" type="button" aria-label="Pollen mote 1 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--two" type="button" aria-label="Pollen mote 2 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--three" type="button" aria-label="Pollen mote 3 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--four" type="button" aria-label="Pollen mote 4 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--five" type="button" aria-label="Pollen mote 5 of 5"></button>
       <span class="pollen-progress" data-pollen-progress aria-live="polite"></span>
     </div>
     <div id="flower-glyph" aria-hidden="true">✿</div>
@@ -284,33 +283,7 @@
       }
     });
   </script>
-  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
-  <style>
-    .engine-architecture-link {
-      position: fixed;
-      right: 12px;
-      bottom: 12px;
-      z-index: 10000;
-      padding: 0.36rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(210, 228, 255, 0.5);
-      background: rgba(10, 16, 30, 0.78);
-      color: rgba(232, 242, 255, 0.96);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.64rem;
-      backdrop-filter: blur(4px);
-    }
-    .engine-architecture-link:hover,
-    .engine-architecture-link:focus-visible {
-      background: rgba(216, 233, 255, 0.95);
-      color: #101524;
-      outline: none;
-    }
-  </style>
   <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
-  <script src="scripts/spoke-tabs.js"></script>
   <script type="module" src="scripts/destination-page.js?v=reveal-3"></script>
 </body>
 </html>

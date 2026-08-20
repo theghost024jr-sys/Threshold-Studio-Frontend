@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Studio - Chamber Map</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="styles/chamber-map.css" />
+  <link rel="stylesheet" href="styles/weather-engine.css" />
+</head>
+<body class="chamber-map-page" data-vault-room="home">
+  <a id="return-home" href="index.html">Return to Home Hub</a>
+  <main class="map-shell">
+    <header class="map-header">
+      <p class="map-kicker">Threshold Navigation Spine</p>
+      <h1>Chamber Map</h1>
+      <p>A drifting constellation of chambers. Choose a node to enter a chamber route.</p>
+    </header>
+
+    <section class="map-cosmos" aria-label="Threshold chamber constellation">
+      <canvas id="chamber-map-canvas" class="ambient-layer" aria-hidden="true"></canvas>
+      <div class="starfield" aria-hidden="true"></div>
+      <div class="starfield starfield-far" aria-hidden="true"></div>
+      <div class="cosmic-haze haze-a" aria-hidden="true"></div>
+      <div class="cosmic-haze haze-b" aria-hidden="true"></div>
+      <div class="breath-glow" aria-hidden="true"></div>
+      <div class="quadrant-layer" aria-hidden="true">
+        <span class="quadrant q-nw">VOICE</span>
+        <span class="quadrant q-ne">MYTH</span>
+        <span class="quadrant q-sw">ARCHIVE</span>
+        <span class="quadrant q-se">HABITAT</span>
+      </div>
+      <div id="anchor-layer" class="anchor-layer" aria-hidden="true"></div>
+      <svg id="connection-layer" class="connection-layer" aria-hidden="true"></svg>
+      <div id="node-layer" class="node-layer" aria-live="polite"></div>
+
+      <aside id="meta-panel" class="meta-panel" aria-live="polite" aria-label="Chamber metadata panel">
+        <h2 id="meta-name">Hover a chamber node</h2>
+        <p id="meta-description" class="meta-description">Orientation details and vault linkage appear here.</p>
+        <dl class="meta-grid">
+          <div>
+            <dt>Orientation</dt>
+            <dd id="meta-orientation">--</dd>
+          </div>
+          <div>
+            <dt>Pulse</dt>
+            <dd id="meta-pulse">--</dd>
+          </div>
+          <div>
+            <dt>Element</dt>
+            <dd id="meta-element">--</dd>
+          </div>
+          <div>
+            <dt>Vault Status</dt>
+            <dd id="meta-vault-status">--</dd>
+          </div>
+          <div class="meta-path-row">
+            <dt>Vault Path</dt>
+            <dd id="meta-vault-path">--</dd>
+          </div>
+          <div>
+            <dt>Related Notes</dt>
+            <dd id="meta-related">--</dd>
+          </div>
+        </dl>
+        <div class="meta-actions">
+          <a id="meta-enter" class="meta-button" href="index.html">Enter Chamber</a>
+          <a id="meta-vault" class="meta-button secondary" href="#" target="_blank" rel="noreferrer">Open Vault Note</a>
+        </div>
+      </aside>
+    </section>
+
+    <p class="map-footnote">Layers A-F active: node layout, pulse design, connections, cosmic background drift, vault linking, and metadata panel initialized.</p>
+  </main>
+  <script src="scripts/chamber-map.js"></script>
+  <script src="scripts/weather-engine.js"></script>
+  <script src="scripts/learning-wheel.js"></script>
+  <script src="scripts/chamber-loader.js"></script>
+  <script src="scripts/mythology-viewer.js"></script>
+  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
+  <style>
+    .engine-architecture-link {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 10000;
+      padding: 0.36rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(210, 228, 255, 0.5);
+      background: rgba(10, 16, 30, 0.78);
+      color: rgba(232, 242, 255, 0.96);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.64rem;
+      backdrop-filter: blur(4px);
+    }
+    .engine-architecture-link:hover,
+    .engine-architecture-link:focus-visible {
+      background: rgba(216, 233, 255, 0.95);
+      color: #101524;
+      outline: none;
+    }
+  </style>
+</body>
+</html>
+
+
+
+
+

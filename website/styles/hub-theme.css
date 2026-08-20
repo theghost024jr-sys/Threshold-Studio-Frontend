@@ -1,0 +1,130 @@
+/* Threshold Hub dynamic theme: biome, cycle, engine, and signal state. */
+
+.hub-container {
+	transition: background 0.6s ease, border-color 0.6s ease, filter 0.6s ease;
+}
+
+.hub-container.biome-house {
+	background: radial-gradient(circle, #f4d03f22 0%, #0d0d0d 70%);
+	border-color: #f4d03f;
+}
+
+.hub-container.biome-garden {
+	background: radial-gradient(circle, #e67e2222 0%, #0d0d0d 70%);
+	border-color: #e67e22;
+}
+
+.hub-container.biome-forest {
+	background: radial-gradient(circle, #a67c5222 0%, #0d0d0d 70%);
+	border-color: #a67c52;
+}
+
+.hub-container.biome-deepforest {
+	background: radial-gradient(circle, #556b2f22 0%, #0d0d0d 70%);
+	border-color: #556b2f;
+}
+
+.hub-container.biome-root {
+	background: radial-gradient(circle, #c0392b22 0%, #0d0d0d 70%);
+	border-color: #c0392b;
+}
+
+.hub-container.biome-stone {
+	background: radial-gradient(circle, #5d403722 0%, #0d0d0d 70%);
+	border-color: #5d4037;
+}
+
+.hub-container.biome-shadow {
+	background: radial-gradient(circle, #000 0%, #0d0d0d 70%);
+	border-color: #000;
+}
+
+.hub-container.cycle-early {
+	box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+.hub-container.cycle-mid {
+	box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.1);
+}
+
+.hub-container.cycle-late {
+	box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.15);
+}
+
+.hub-container.drift-low {
+	filter: brightness(1);
+}
+
+.hub-container.drift-medium {
+	filter: brightness(0.95) saturate(1.1);
+}
+
+.hub-container.drift-high {
+	filter: brightness(0.9) saturate(1.2);
+}
+
+.hub-container.pressure-low {
+	border-block-width: 2px;
+}
+
+.hub-container.pressure-medium {
+	border-block-width: 4px;
+}
+
+.hub-container.pressure-high {
+	border-block-width: 6px;
+}
+
+.hub-visual.pulse-cycle-synced {
+	animation: hub-pulse 4s ease-in-out infinite;
+}
+
+.hub-container.cycle-early .hub-visual.pulse-cycle-synced {
+	animation-duration: 6s;
+}
+
+.hub-container.cycle-mid .hub-visual.pulse-cycle-synced {
+	animation-duration: 4s;
+}
+
+.hub-container.cycle-late .hub-visual.pulse-cycle-synced {
+	animation-duration: 2s;
+}
+
+@keyframes hub-pulse {
+	0%,
+	100% {
+		transform: scale(1);
+		opacity: 0.9;
+	}
+
+	50% {
+		transform: scale(1.03);
+		opacity: 1;
+	}
+}
+
+.hub-container.signal-warning {
+	outline: 2px solid #c0392b;
+	animation: hub-warning-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes hub-warning-pulse {
+	0%,
+	100% {
+		outline-color: rgba(192, 57, 43, 0.4);
+	}
+
+	50% {
+		outline-color: #c0392b;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hub-container,
+	.hub-container.signal-warning,
+	.hub-visual.pulse-cycle-synced {
+		animation: none;
+		transition: none;
+	}
+}

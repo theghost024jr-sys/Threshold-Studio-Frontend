@@ -293,14 +293,15 @@ function setupGrowthCanvas() {
   window.addEventListener("resize", resize);
 
   const petals = [];
-  for (let i = 0; i < 200; i++) {
+  const petalCount = Math.min(42, Math.max(18, Math.round((canvas.width * canvas.height) / 30000)));
+  for (let i = 0; i < petalCount; i++) {
     petals.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: Math.random() * 2 + 1,
+      r: Math.random() * 1.2 + 0.6,
       vx: (Math.random() - 0.5) * 0.2,
       vy: (Math.random() - 0.5) * 0.2,
-      grow: Math.random() * 0.02 + 0.01
+      grow: Math.random() * 0.003 + 0.001
     });
   }
 
@@ -309,8 +310,8 @@ function setupGrowthCanvas() {
 
     petals.forEach((petal) => {
       petal.r += petal.grow;
-      if (petal.r > 12) {
-        petal.r = Math.random() * 2 + 1;
+      if (petal.r > 3) {
+        petal.r = Math.random() * 1.2 + 0.6;
       }
 
       petal.x += petal.vx;
@@ -330,7 +331,7 @@ function setupGrowthCanvas() {
       }
 
       ctx.beginPath();
-      ctx.fillStyle = `rgba(255, 200, 150, ${0.3 + petal.r / 12})`;
+      ctx.fillStyle = `rgba(255, 200, 150, ${0.08 + petal.r / 30})`;
       ctx.arc(petal.x, petal.y, petal.r, 0, Math.PI * 2);
       ctx.fill();
     });

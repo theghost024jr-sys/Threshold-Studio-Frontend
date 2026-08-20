@@ -16,7 +16,7 @@ test("ships and activates the five-layer Hub vector blueprint", async () => {
     readFile(new URL("assets/hub/hub.svg", websiteDirectory), "utf8"),
     readFile(new URL("assets/hub/animated-hub.svg", websiteDirectory), "utf8"),
     readFile(new URL("runtime/hub/hub-runtime-state.json", websiteDirectory), "utf8"),
-    readFile(new URL("hub-theme.css", websiteDirectory), "utf8")
+    readFile(new URL("styles/hub-theme.css", websiteDirectory), "utf8")
   ]);
   const state = JSON.parse(stateText);
 

@@ -10863,8 +10863,215 @@
     "path": "11 - Engine",
     "children": [
       {
+        "name": "01 - Forces",
+        "path": "11 - Engine\\01 - Forces",
+        "children": [
+          {
+            "name": "Collapse",
+            "path": "11 - Engine\\01 - Forces\\Collapse.html",
+            "leaf": true
+          },
+          {
+            "name": "Drift",
+            "path": "11 - Engine\\01 - Forces\\Drift.html",
+            "leaf": true
+          },
+          {
+            "name": "Navigation",
+            "path": "11 - Engine\\01 - Forces\\Navigation.html",
+            "leaf": true
+          },
+          {
+            "name": "Pressure",
+            "path": "11 - Engine\\01 - Forces\\Pressure.html",
+            "leaf": true
+          },
+          {
+            "name": "Resonance",
+            "path": "11 - Engine\\01 - Forces\\Resonance.html",
+            "leaf": true
+          },
+          {
+            "name": "Role Gravity",
+            "path": "11 - Engine\\01 - Forces\\Role Gravity.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
+        "name": "02 - Profiles",
+        "path": "11 - Engine\\02 - Profiles",
+        "children": [
+          {
+            "name": "Collapse Thresholds",
+            "path": "11 - Engine\\02 - Profiles\\Collapse Thresholds.html",
+            "leaf": true
+          },
+          {
+            "name": "Navigation Maps",
+            "path": "11 - Engine\\02 - Profiles\\Navigation Maps.html",
+            "leaf": true
+          },
+          {
+            "name": "Pressure Profiles",
+            "path": "11 - Engine\\02 - Profiles\\Pressure Profiles.html",
+            "leaf": true
+          },
+          {
+            "name": "Resonance Profiles",
+            "path": "11 - Engine\\02 - Profiles\\Resonance Profiles.html",
+            "leaf": true
+          },
+          {
+            "name": "Role Gravity Vectors",
+            "path": "11 - Engine\\02 - Profiles\\Role Gravity Vectors.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
+        "name": "03 - Systems",
+        "path": "11 - Engine\\03 - Systems",
+        "children": [
+          {
+            "name": "Collapse System",
+            "path": "11 - Engine\\03 - Systems\\Collapse System.html",
+            "leaf": true
+          },
+          {
+            "name": "Drift System",
+            "path": "11 - Engine\\03 - Systems\\Drift System.html",
+            "leaf": true
+          },
+          {
+            "name": "Navigation System",
+            "path": "11 - Engine\\03 - Systems\\Navigation System.html",
+            "leaf": true
+          },
+          {
+            "name": "Pressure System",
+            "path": "11 - Engine\\03 - Systems\\Pressure System.html",
+            "leaf": true
+          },
+          {
+            "name": "Resonance System",
+            "path": "11 - Engine\\03 - Systems\\Resonance System.html",
+            "leaf": true
+          },
+          {
+            "name": "Role Gravity System",
+            "path": "11 - Engine\\03 - Systems\\Role Gravity System.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
+        "name": "04 - Chambers",
+        "path": "11 - Engine\\04 - Chambers",
+        "children": [
+          {
+            "name": "Collapse Chamber",
+            "path": "11 - Engine\\04 - Chambers\\Collapse Chamber.html",
+            "leaf": true
+          },
+          {
+            "name": "Drift Chamber",
+            "path": "11 - Engine\\04 - Chambers\\Drift Chamber.html",
+            "leaf": true
+          },
+          {
+            "name": "Navigation Chamber",
+            "path": "11 - Engine\\04 - Chambers\\Navigation Chamber.html",
+            "leaf": true
+          },
+          {
+            "name": "Pressure Chamber",
+            "path": "11 - Engine\\04 - Chambers\\Pressure Chamber.html",
+            "leaf": true
+          },
+          {
+            "name": "Resonance Chamber",
+            "path": "11 - Engine\\04 - Chambers\\Resonance Chamber.html",
+            "leaf": true
+          },
+          {
+            "name": "Role Gravity Chamber",
+            "path": "11 - Engine\\04 - Chambers\\Role Gravity Chamber.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
+        "name": "05 - Blueprints",
+        "path": "11 - Engine\\05 - Blueprints",
+        "children": [
+          {
+            "name": "Engine Blueprint Inventory",
+            "path": "11 - Engine\\05 - Blueprints\\README.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
+        "name": "06 - Maps",
+        "path": "11 - Engine\\06 - Maps",
+        "children": [
+          {
+            "name": "Engine Map Inventory",
+            "path": "11 - Engine\\06 - Maps\\README.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
+        "name": "07 - Docs",
+        "path": "11 - Engine\\07 - Docs",
+        "children": [
+          {
+            "name": "Engine ChangeLog",
+            "path": "11 - Engine\\07 - Docs\\ChangeLog.html",
+            "leaf": true
+          },
+          {
+            "name": "Engine Anatomy",
+            "path": "11 - Engine\\07 - Docs\\Engine Anatomy.html",
+            "leaf": true
+          },
+          {
+            "name": "Engine Glossary",
+            "path": "11 - Engine\\07 - Docs\\Engine Glossary.html",
+            "leaf": true
+          },
+          {
+            "name": "Engine Overview",
+            "path": "11 - Engine\\07 - Docs\\Engine Overview.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
         "name": "Compost Engine",
         "path": "11 - Engine\\Compost Engine.html",
+        "leaf": true
+      },
+      {
+        "name": "Engine Anatomy",
+        "path": "11 - Engine\\Engine Anatomy.html",
+        "leaf": true
+      },
+      {
+        "name": "Engine Glossary",
+        "path": "11 - Engine\\Engine Glossary.html",
+        "leaf": true
+      },
+      {
+        "name": "Engine Overview",
+        "path": "11 - Engine\\Engine Overview.html",
+        "leaf": true
+      },
+      {
+        "name": "Engine Rules",
+        "path": "11 - Engine\\EngineRules.html",
         "leaf": true
       }
     ]

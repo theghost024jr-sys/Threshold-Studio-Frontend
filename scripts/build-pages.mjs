@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { pathToFileURL } from "url";
 import matter from "gray-matter";
 import { marked } from "marked";
 
@@ -9,6 +10,13 @@ const TEMPLATE = path.join(process.cwd(), "website", "templates", "page.html");
 const NAV_PATH = path.join(process.cwd(), "website", "navigation.json");
 
 const IGNORE = new Set(["_archive", "_inbox", "_private", "_templates", "dist"]);
+const ENTITY_KEYWORDS = [
+  "Snail", "Hermit Snail", "Spiral Snail", "Drift Snail",
+  "Deer", "Owl", "Seal", "Iceform", "Treeform",
+  "Collapse", "Drift", "Beyond",
+  "Circulatory", "Nervous", "Respiratory",
+  "Brinicle", "Humanoid", "Species"
+];
 
 function isMarkdown(file) {
   return file.toLowerCase().endsWith(".md");
@@ -22,6 +30,28 @@ function findMatchingPng(fullPath) {
   return fs.existsSync(pngPath) ? pngPath : null;
 }
 
+export function extractReferencedEntities(mdText) {
+  const found = new Set();
+
+  for (const keyword of ENTITY_KEYWORDS) {
+    const regex = new RegExp(`\\b${keyword}\\b`, "i");
+    if (regex.test(mdText)) {
+      found.add(keyword);
+    }
+  }
+
+  return Array.from(found);
+}
+
+export function normalizeEntityName(name) {
+  return name.replace(/\s+/g, "");
+}
+
+function findEntityPng(dir, entityName) {
+  const pngPath = path.join(dir, `${normalizeEntityName(entityName)}.png`);
+  return fs.existsSync(pngPath) ? pngPath : null;
+}
+
 function encodeUrlPath(filePath) {
   return filePath
     .split(path.sep)
@@ -29,7 +59,7 @@ function encodeUrlPath(filePath) {
     .join("/");
 }
 
-function copyPageImage(relPath, pngPath) {
+function copyImage(relPath, pngPath) {
   const relativePngPath = path.join(path.dirname(relPath), path.basename(pngPath));
   const assetFile = path.join(process.cwd(), "website", "assets", relativePngPath);
 
@@ -37,6 +67,16 @@ function copyPageImage(relPath, pngPath) {
   fs.copyFileSync(pngPath, assetFile);
 
   return `/assets/${encodeUrlPath(relativePngPath)}`;
+}
+
+export function buildGalleryHtml(images) {
+  if (images.length < 2) return "";
+
+  const imageHtml = images
+    .map(({ url, name }) => `  <img src="${url}" class="gallery-image" alt="${escapeHtml(name)}">`)
+    .join("\n");
+
+  return `<div class="gallery">\n${imageHtml}\n</div>\n`;
 }
 
 function escapeHtml(value) {
@@ -101,9 +141,14 @@ function walkVault(dir, rel = "") {
       const html = marked(content);
       const pngPath = findMatchingPng(full);
       const imageHtml = pngPath
-        ? `<img src="${copyPageImage(relative, pngPath)}" class="page-image" alt="${escapeHtml(data.title || path.basename(full, path.extname(full)))}">\n`
+        ? `<img src="${copyImage(relative, pngPath)}" class="page-image" alt="${escapeHtml(data.title || path.basename(full, path.extname(full)))}">\n`
         : "";
-      const finalHtml = applyTemplate(html, data, relative, imageHtml);
+      const galleryImages = extractReferencedEntities(raw)
+        .map(name => ({ name, pngPath: findEntityPng(path.dirname(full), name) }))
+        .filter(image => image.pngPath)
+        .map(image => ({ name: image.name, url: copyImage(relative, image.pngPath) }));
+      const galleryHtml = buildGalleryHtml(galleryImages);
+      const finalHtml = applyTemplate(html, data, relative, imageHtml + galleryHtml);
 
       const outDir = path.join(OUTPUT, rel);
       ensureDir(outDir);
@@ -131,4 +176,6 @@ function main() {
   console.log("Page generation complete.");
 }
 
-main();
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}

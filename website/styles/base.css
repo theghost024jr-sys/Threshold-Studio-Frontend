@@ -43,6 +43,21 @@ svg {
   border-radius: 8px;
 }
 
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.gallery-image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
 pre,
 blockquote {
   padding: 1rem;

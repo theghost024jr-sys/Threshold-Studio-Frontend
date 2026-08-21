@@ -36,6 +36,13 @@ svg {
   height: auto;
 }
 
+.page-image {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto 2rem;
+  border-radius: 8px;
+}
+
 pre,
 blockquote {
   padding: 1rem;

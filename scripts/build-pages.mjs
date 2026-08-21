@@ -14,6 +14,40 @@ function isMarkdown(file) {
   return file.toLowerCase().endsWith(".md");
 }
 
+function findMatchingPng(fullPath) {
+  const dir = path.dirname(fullPath);
+  const base = path.basename(fullPath, path.extname(fullPath));
+  const pngPath = path.join(dir, `${base}.png`);
+
+  return fs.existsSync(pngPath) ? pngPath : null;
+}
+
+function encodeUrlPath(filePath) {
+  return filePath
+    .split(path.sep)
+    .map(segment => encodeURIComponent(segment))
+    .join("/");
+}
+
+function copyPageImage(relPath, pngPath) {
+  const relativePngPath = path.join(path.dirname(relPath), path.basename(pngPath));
+  const assetFile = path.join(process.cwd(), "website", "assets", relativePngPath);
+
+  ensureDir(path.dirname(assetFile));
+  fs.copyFileSync(pngPath, assetFile);
+
+  return `/assets/${encodeUrlPath(relativePngPath)}`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function getSectionName(relPath) {
   const parts = relPath.split(path.sep);
   return parts.length > 0 ? parts[0] : null;
@@ -29,7 +63,7 @@ function buildStylesBlock(section) {
   return links.join("\n  ");
 }
 
-function applyTemplate(html, meta, relPath) {
+function applyTemplate(html, meta, relPath, imageHtml = "") {
   const isVaultPage = relPath.includes(path.sep);
   const section = isVaultPage ? getSectionName(relPath) : null;
   const styles = isVaultPage ? buildStylesBlock(section) : "";
@@ -37,7 +71,7 @@ function applyTemplate(html, meta, relPath) {
 
   return template
     .replace("{{title}}", meta.title || "Untitled")
-    .replace("{{content}}", html)
+    .replace("{{content}}", imageHtml + html)
     .replace("{{tags}}", (meta.tags || []).join(", "))
     .replace("{{styles}}", styles);
 }
@@ -65,7 +99,11 @@ function walkVault(dir, rel = "") {
       const raw = fs.readFileSync(full, "utf8");
       const { data, content } = matter(raw);
       const html = marked(content);
-      const finalHtml = applyTemplate(html, data, relative);
+      const pngPath = findMatchingPng(full);
+      const imageHtml = pngPath
+        ? `<img src="${copyPageImage(relative, pngPath)}" class="page-image" alt="${escapeHtml(data.title || path.basename(full, path.extname(full)))}">\n`
+        : "";
+      const finalHtml = applyTemplate(html, data, relative, imageHtml);
 
       const outDir = path.join(OUTPUT, rel);
       ensureDir(outDir);

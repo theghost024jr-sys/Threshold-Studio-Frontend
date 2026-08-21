@@ -52,12 +52,16 @@ function renderIndex(title, items) {
   const template = fs.readFileSync(TEMPLATE, "utf8");
   const safeTitle = escapeHtml(title);
   const content = `<h1>${safeTitle}</h1><ul>${renderItems(items)}</ul>`;
+  const bodyAttributes = title === "11 - Engine"
+    ? ' class="engine-section engine-blueprint-bg"'
+    : "";
 
   return template
     .replace("{{title}}", safeTitle)
     .replace("{{content}}", content)
     .replace("{{tags}}", "")
-    .replace("{{styles}}", buildStylesBlock(title));
+    .replace("{{styles}}", buildStylesBlock(title))
+    .replace("{{bodyAttributes}}", bodyAttributes);
 }
 
 function buildIndexForSection(section) {

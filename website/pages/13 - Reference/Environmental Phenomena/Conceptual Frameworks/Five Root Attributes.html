@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Five Root Attributes</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/13%20-%20Reference.css">
+</head>
+<body>
+  <main>
+    <p>Perfect — I’ve got the thread now.<br>You want to <strong>take the original 5×5 idea</strong> (five cards × five attributes) and <strong>expand it into something bigger</strong>, like:</p>
+<ul>
+<li>ten player cards</li>
+<li>unlockable cards</li>
+<li>attribute‑gated abilities</li>
+<li>a beta‑beta Obsidian game loop</li>
+</ul>
+<p>Let’s rebuild the foundation cleanly so you can scale it.</p>
+<p>Below is the <strong>canonical reconstruction</strong> of what you were aiming for — but rewritten in a way that’s actually usable, expandable, and clean.</p>
+<p><strong>THE 5×5 ROOT SYSTEM (the foundation)</strong></p>
+<p>This is the core physics:</p>
+<ul>
+<li><strong>Five root attributes</strong></li>
+<li><strong>Five root cards</strong></li>
+<li>Each card has <strong>five permissions</strong> (one per attribute)</li>
+<li>Everything is tied to what a player can <em>click</em> or <em>modify</em> in Obsidian</li>
+</ul>
+<p>This is the proto‑proto layer.</p>
+<p><strong>THE FIVE ROOT ATTRIBUTES (clean, abstract, universal)</strong></p>
+<p>These are not stats — they are <em>permissions</em>.</p>
+<p><strong>1. Click Target</strong></p>
+<p>What the player is allowed to click on.</p>
+<p><strong>2. Action</strong></p>
+<p>What happens when they click.</p>
+<p><strong>3. Creation</strong></p>
+<p>What they are allowed to create.</p>
+<p><strong>4. Linking</strong></p>
+<p>What they are allowed to connect.</p>
+<p><strong>5. Limiter</strong></p>
+<p>What they are <em>not</em> allowed to do.</p>
+<p>This is the cleanest possible structure.<br>Every card is a variation on these five.</p>
+<p><strong>THE FIVE ROOT CARDS (proto‑proto identities)</strong></p>
+<p>These are the original ones you were circling around:</p>
+<p><strong>1. Yellow Operator</strong></p>
+<ul>
+<li>Click Target: Yellow PNG</li>
+<li>Action: Open paired <code>.md</code></li>
+<li>Creation: None</li>
+<li>Linking: <code>.md → one layer</code></li>
+<li>Limiter: Only yellow PNGs</li>
+</ul>
+<p><strong>2. Blank Filler</strong></p>
+<ul>
+<li>Click Target: Blank <code>.md</code></li>
+<li>Action: Add one sentence</li>
+<li>Creation: None</li>
+<li>Linking: None</li>
+<li>Limiter: Only empty files</li>
+</ul>
+<p><strong>3. Biome Spawner</strong></p>
+<ul>
+<li>Click Target: Any image PNG</li>
+<li>Action: Spawn biome node</li>
+<li>Creation: One biome</li>
+<li>Linking: Biome → clicked PNG</li>
+<li>Limiter: Biome gets no other links</li>
+</ul>
+<p><strong>4. Layer Binder</strong></p>
+<ul>
+<li>Click Target: Any layer node</li>
+<li>Action: Select existing <code>.md</code></li>
+<li>Creation: None</li>
+<li>Linking: <code>.md → layer</code></li>
+<li>Limiter: Cannot edit <code>.md</code></li>
+</ul>
+<p><strong>5. Connector</strong></p>
+<ul>
+<li>Click Target: Any two <code>.md</code> files</li>
+<li>Action: Create one link</li>
+<li>Creation: None</li>
+<li>Linking: <code>.md ↔ .md</code></li>
+<li>Limiter: Cannot touch images or layers</li>
+</ul>
+<p>This is the <strong>5×5 grid</strong> you were referencing.</p>
+<p><strong>NOW — HOW TO EXPAND THIS TO TEN CARDS</strong></p>
+<p>Here’s the clean move:</p>
+<p>**Keep the five attributes.</p>
+<p>Double the number of cards.**</p>
+<p>The new five cards should be <strong>mutations</strong> of the original five — not new physics.</p>
+<p>Think of them as:</p>
+<ul>
+<li>corrupted versions</li>
+<li>inverted versions</li>
+<li>hybrid versions</li>
+<li>specialized versions</li>
+<li>rare variants</li>
+</ul>
+<p>This keeps the system elegant.</p>
+<p><strong>FIVE NEW CARDS (draft concepts)</strong></p>
+<p>Here are five clean expansions that fit the original physics:</p>
+<p><strong>6. The Echoer</strong></p>
+<ul>
+<li>Click Target: Any <code>.md</code> with &gt;1 link</li>
+<li>Action: Duplicate the last action performed on that page</li>
+<li>Creation: Echo pages</li>
+<li>Linking: Echo → source</li>
+<li>Limiter: Cannot act on blank pages</li>
+</ul>
+<p><strong>7. The Diver</strong></p>
+<ul>
+<li>Click Target: Any deeply nested folder</li>
+<li>Action: Surface one hidden <code>.md</code></li>
+<li>Creation: None</li>
+<li>Linking: Hidden → surfaced</li>
+<li>Limiter: Cannot act on top‑level files</li>
+</ul>
+<p><strong>8. The Fragmenter</strong></p>
+<ul>
+<li>Click Target: Any <code>.md</code> over 200 words</li>
+<li>Action: Split into two pages</li>
+<li>Creation: Two fragments</li>
+<li>Linking: Fragment A ↔ Fragment B</li>
+<li>Limiter: Cannot merge pages</li>
+</ul>
+<p><strong>9. The Weaver</strong></p>
+<ul>
+<li>Click Target: Any three <code>.md</code> files</li>
+<li>Action: Create a tri‑link</li>
+<li>Creation: None</li>
+<li>Linking: A ↔ B ↔ C</li>
+<li>Limiter: Cannot unlink anything</li>
+</ul>
+<p><strong>10. The Archivist</strong></p>
+<ul>
+<li>Click Target: Any <code>.md</code> older than X days</li>
+<li>Action: Annotate with a memory tag</li>
+<li>Creation: Memory nodes</li>
+<li>Linking: Memory → page</li>
+<li>Limiter: Cannot act on new pages</li>
+</ul>
+<p>These five expand the system without breaking the symmetry.</p>
+<p><strong>UNLOCKABLE CARDS (the progression layer)</strong></p>
+<p>These are <strong>not</strong> player identities.<br>They are <strong>tools</strong> players earn.</p>
+<p>Examples:</p>
+<ul>
+<li><strong>Key of Drift</strong> — lets you jump to any unlinked page</li>
+<li><strong>Lens of Clarity</strong> — reveals hidden structure</li>
+<li><strong>Thread of Alignment</strong> — lets you connect two unrelated notes</li>
+<li><strong>Echo Shard</strong> — duplicate a page’s effect once</li>
+<li><strong>Anchor Token</strong> — freeze a page so it can’t be modified</li>
+</ul>
+<p>Unlock conditions can be:</p>
+<ul>
+<li>contribute X pages</li>
+<li>create Y links</li>
+<li>visit Z biomes</li>
+<li>solve a puzzle</li>
+<li>find a hidden page</li>
+</ul>
+<p>This gives you a clean progression loop.</p>
+<p><strong>WHERE WE CAN GO NEXT</strong></p>
+<p>You tell me the direction and I’ll build the next layer:</p>
+<p><strong>A. Build the full 10‑card grid</strong></p>
+<p>All ten cards × five attributes each.</p>
+<p><strong>B. Build the unlockable card deck</strong></p>
+<p>10–20 cards, each with a simple rule.</p>
+<p><strong>C. Build the beta‑beta rulebook</strong></p>
+<p>One page, minimal, elegant.</p>
+<p><strong>D. Build the first playable “Hub”</strong></p>
+<p>A starting page with 3–5 exits.</p>
+<p><strong>E. Build the first biome</strong></p>
+<p>A small cluster of pages with effects.</p>
+<p><strong>F. Build the attribute system</strong></p>
+<p>How players gain/lose attributes.</p>
+<p>Just tell me which direction you want to expand and I’ll build it cleanly.</p>
+
+  </main>
+</body>
+</html>
+

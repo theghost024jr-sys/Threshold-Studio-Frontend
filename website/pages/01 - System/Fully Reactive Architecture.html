@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fully Reactive Architecture</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/01%20-%20System.css">
+</head>
+<body>
+  <main>
+    <p>A fully reactive system is the right choice for what you’re building because it lets characters, players, environments, and even abstract system‑level modes <strong>respond to each other the moment anything changes</strong>. That’s the only architecture that can support the kind of resonance‑driven world you’re aiming for.</p>
+<p>The key is that “fully reactive” doesn’t mean “everything listens to everything.” It means <strong>there is a shared field of signals</strong>, and every organ (character, biome, UI, system) reacts to the parts of the field that matter to it.</p>
+<p>How a fully reactive architecture works</p>
+<p>A fully reactive world has three layers of reaction, each feeding the next:</p>
+<ol>
+<li>Event signals</li>
+</ol>
+<p>These are emitted whenever something meaningful happens:</p>
+<ul>
+<li>a character enters a biome</li>
+<li>the player’s state changes</li>
+<li>the system mode shifts</li>
+<li>an entity’s emotional state changes</li>
+<li>time engine ticks</li>
+<li>environmental conditions update</li>
+</ul>
+<p>Signals are lightweight and global.</p>
+<ol start="2">
+<li>Registry evaluation</li>
+</ol>
+<p>The global registry listens to signals and evaluates:</p>
+<ul>
+<li>tags</li>
+<li>roles</li>
+<li>context</li>
+<li>world state</li>
+<li>relationships</li>
+<li>resonance rules</li>
+</ul>
+<p>This is where the system decides <strong>which embodiment variant</strong> should be active.</p>
+<ol start="3">
+<li>World embodiment</li>
+</ol>
+<p>The world layer receives the registry’s decision and:</p>
+<ul>
+<li>swaps scenes</li>
+<li>changes animations</li>
+<li>updates shaders</li>
+<li>triggers behaviors</li>
+<li>shifts environmental states</li>
+</ul>
+<p>This is where reactions become visible and embodied.</p>
+<p>Why fully reactive is the cleanest option</p>
+<p>A reactive system avoids:</p>
+<ul>
+<li>polling</li>
+<li>spaghetti logic</li>
+<li>per‑entity update loops</li>
+<li>duplicated checks</li>
+<li>timing drift</li>
+<li>stale state</li>
+</ul>
+<p>Instead, it creates a <strong>living field</strong> where everything updates in rhythm with the world.</p>
+<p>This is exactly the architecture your system wants.</p>
+<p>What the global registry does in a reactive system</p>
+<p>The registry becomes the <strong>reaction map</strong>. It doesn’t perform reactions; it selects the embodiment that expresses the reaction.</p>
+<p>Example:</p>
+<p>Andy: variants: scared: AndyScared.tscn angry: AndyAngry.tscn ghost: AndyGhost.tscn rules: - if: near=Wolf use: scared - if: player=threatening use: angry - if: mode=ghost use: ghost</p>
+<p>Signals like <code>WolfEnteredRange</code>, <code>PlayerThreatLevelChanged</code>, or <code>ModeChanged</code> trigger the registry to re‑evaluate Andy’s embodiment.</p>
+<p>The world layer then performs the change.</p>
+<p>How characters react to each other</p>
+<p>Characters emit signals like:</p>
+<ul>
+<li><code>EnteredRange</code></li>
+<li><code>LeftRange</code></li>
+<li><code>EmotionChanged</code></li>
+<li><code>RoleActivated</code></li>
+<li><code>AttentionShifted</code></li>
+</ul>
+<p>Other characters subscribe to the signals they care about.</p>
+<p>The registry interprets the semantic meaning of the event and selects the appropriate embodiment.</p>
+<p>How environments react</p>
+<p>Biomes and environments also emit signals:</p>
+<ul>
+<li><code>SeasonChanged</code></li>
+<li><code>TimeOfDayChanged</code></li>
+<li><code>CorruptionLevelChanged</code></li>
+<li><code>WeatherShifted</code></li>
+</ul>
+<p>The registry evaluates these signals and selects:</p>
+<ul>
+<li>winter variant</li>
+<li>night variant</li>
+<li>corrupted variant</li>
+<li>storm variant</li>
+</ul>
+<p>The world layer swaps or morphs the environment accordingly.</p>
+<p>How the player fits into the reactive field</p>
+<p>The player is just another entity in the registry, with signals like:</p>
+<ul>
+<li><code>HeartRateChanged</code></li>
+<li><code>AttentionChanged</code></li>
+<li><code>IntentChanged</code></li>
+<li><code>StressLevelChanged</code></li>
+</ul>
+<p>Characters and environments can react to these signals through registry rules.</p>
+<p>Why this architecture stays clean</p>
+<p>Because each layer has one job:</p>
+<ul>
+<li><strong>Content</strong> defines meaning.</li>
+<li><strong>Systems</strong> interpret meaning and evaluate resonance.</li>
+<li><strong>Registry</strong> selects embodiment.</li>
+<li><strong>World</strong> performs embodiment.</li>
+</ul>
+<p>Nothing leaks across layers.</p>
+<p>A natural next step</p>
+<p>To make the reactive field work, you need a <strong>signal vocabulary</strong>—a shared set of event types that characters, environments, and systems can emit and listen to.</p>
+<p>Do you want to sketch the signal vocabulary next?</p>
+
+  </main>
+</body>
+</html>
+

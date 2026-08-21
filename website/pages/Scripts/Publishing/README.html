@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/Scripts.css">
+</head>
+<body>
+  <main>
+    <h1>Threshold publishing tools</h1>
+<p>Open <code>Threshold Vault.code-workspace</code> from the parent <code>ThresholdVault</code> folder.</p>
+<p>Use <strong>Terminal &gt; Run Task</strong> in VS Code:</p>
+<ul>
+<li><strong>Vault: Check metadata</strong> previews the number of notes that normalization would change.</li>
+<li><strong>Vault: Normalize metadata</strong> writes normalized YAML across vault Markdown files. It skips <code>.obsidian</code>, <code>.trash</code>, and <code>Scripts</code>.</li>
+<li><strong>Vault: Validate publish surface</strong> checks <code>_publish</code> only. This is the default build task (<code>Ctrl+Shift+B</code>).</li>
+</ul>
+<p>Use <code>npm.cmd run publish:audit --prefix Scripts/Publishing</code> for a read-only
+coverage summary. Use <code>npm.cmd run publish:audit-write --prefix Scripts/Publishing</code> to rebuild <code>_publish_candidates/</code> as a separate review
+surface. The audit ignores body-empty notes, excludes content already represented
+in <code>_publish</code>, collapses exact copies, and combines numbered or otherwise
+normalized filename variants into source-attributed drafts.</p>
+<p>Use <code>npm.cmd run vault:anchor-check --prefix Scripts/Publishing</code> to verify that
+the tools are running from
+<code>C:\Users\James Romeo\Threshold\ThresholdVault\theghost</code> and inventory the
+canonical vault without writing or copying files.</p>
+<p>Normalization enforces the publishing spine:</p>
+<ul>
+<li>Notes in <code>_publish</code> receive <code>publish: true</code> and <code>draft: false</code>.</li>
+<li>Notes outside <code>_publish</code> receive <code>publish: false</code> and <code>draft: true</code>.</li>
+<li>Missing <code>title</code>, <code>id</code>, <code>date</code>, <code>category</code>, <code>tags</code>, and <code>description</code> fields are added.</li>
+<li>Malformed YAML is reported and left untouched.</li>
+</ul>
+<p>Run <code>npm.cmd run metadata:check --prefix Scripts/Publishing -- --verbose</code> from the vault root when you need the full list of proposed changes.</p>
+
+  </main>
+</body>
+</html>
+

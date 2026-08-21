@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>**EchoSystem State Table (Flower / Cluster)**</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h1><strong>EchoSystem State Table (Flower / Cluster)</strong></h1>
+<h3><strong>Table 2 — System State Machine (EchoSystem)</strong></h3>
+<p>Code</p>
+<pre><code>| State              | Input / Condition                          | Output / Action                     | Next State            | Notes |
+|--------------------|---------------------------------------------|--------------------------------------|-----------------------|-------|
+| Disjoint           | SignalsDetected                             | evaluate_cluster_resonance()         | LocalResonance        | Nodes begin interacting |
+| LocalResonance     | CPM &lt; threshold                             | stabilize_clusters()                 | Harmony               | Low pressure |
+| LocalResonance     | CPM &gt;= threshold                            | propagate_pressure()                 | DistributedPressure   | Pressure spreading |
+| DistributedPressure| SDV == 0                                    | stabilize_topology()                 | Harmony               | Drift resolved |
+| DistributedPressure| SDV != 0                                    | compute_system_DV()                  | GlobalDrift           | Drift propagates |
+| GlobalDrift        | anchors_align()                             | lock_anchors()                       | Harmony               | Coherence achieved |
+| GlobalDrift        | anchors_conflict()                          | mark_fragmentation()                 | Fragmented            | System split |
+| Harmony            | major_topology_change                       | propagate_pressure()                 | DistributedPressure   | Harmony disrupted |
+| Fragmented         | reintegration_success                       | propagate_pressure()                 | DistributedPressure   | Attempt recovery |
+| Fragmented         | reintegration_fail                          | maintain_fragmentation()             | Fragmented            | Stuck until external force |
+</code></pre>
+<h1><strong>EchoSystem (Flower / Cluster) — Mermaid State Diagram</strong></h1>
+<p>mermaid</p>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; Disjoint
+
+    Disjoint --&gt; LocalResonance: SignalsDetected
+
+    LocalResonance --&gt; Harmony: CPM &lt; threshold
+    LocalResonance --&gt; DistributedPressure: CPM &gt;= threshold
+
+    DistributedPressure --&gt; Harmony: SDV == 0
+    DistributedPressure --&gt; GlobalDrift: SDV != 0
+
+    GlobalDrift --&gt; Harmony: anchors_align()
+    GlobalDrift --&gt; Fragmented: anchors_conflict()
+
+    Harmony --&gt; DistributedPressure: major_topology_change
+
+    Fragmented --&gt; DistributedPressure: reintegration_success
+    Fragmented --&gt; Fragmented: reintegration_fail
+</code></pre>
+
+  </main>
+</body>
+</html>
+

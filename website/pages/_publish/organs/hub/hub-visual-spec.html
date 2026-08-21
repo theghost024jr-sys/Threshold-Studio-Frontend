@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish.css">
+</head>
+<body>
+  <main>
+    <h1>Threshold Hub — Visual Specification (hub.png)</h1>
+<p>Version: 1.0<br>Source: hub-synthesis.json, hub-layout-map.json<br>Status: Canonical Glyph Specification<br>Asset: hub.png (missing)</p>
+<hr>
+<h2>1. Identity</h2>
+<p>The Hub glyph represents the <strong>central organ</strong> of Threshold — the world’s mouth, index, and navigation brain.<br>It must visually express:</p>
+<ul>
+<li>centrality  </li>
+<li>orbit  </li>
+<li>cycle  </li>
+<li>drift  </li>
+<li>pressure  </li>
+<li>adjacency  </li>
+<li>world-state</li>
+</ul>
+<p>The glyph is not decorative.<br>It is a <strong>functional symbol</strong>.</p>
+<hr>
+<h2>2. Geometry Overview</h2>
+<p>The Hub glyph consists of <strong>five concentric rings</strong>, each representing a core system:</p>
+<ol>
+<li><strong>Inner Core (Engine)</strong></li>
+<li><strong>Cycle Ring</strong></li>
+<li><strong>Biome Ring</strong></li>
+<li><strong>Chamber Ring</strong></li>
+<li><strong>Signal Halo</strong></li>
+</ol>
+<p>All rings must be:</p>
+<ul>
+<li>circular  </li>
+<li>centered  </li>
+<li>evenly spaced  </li>
+<li>radially aligned</li>
+</ul>
+<p>The glyph must be readable at:</p>
+<ul>
+<li>64px  </li>
+<li>128px  </li>
+<li>240px  </li>
+<li>512px</li>
+</ul>
+<hr>
+<h2>3. Ring Specifications</h2>
+<h3>3.1 Inner Core — Engine</h3>
+<ul>
+<li>Shape: Solid circle  </li>
+<li>Color: Neutral gray (#222)  </li>
+<li>Behavior: Pulses with cycle  </li>
+<li>Symbol: Minimal, no iconography  </li>
+<li>Meaning: Drift, pressure, world-state</li>
+</ul>
+<h3>3.2 Cycle Ring</h3>
+<ul>
+<li>Shape: Thin ring  </li>
+<li>Segments: 3 (early, mid, late)  </li>
+<li>Colors:<ul>
+<li>Early: #AAAAAA  </li>
+<li>Mid: #DDDDDD  </li>
+<li>Late: #FFFFFF</li>
+</ul>
+</li>
+<li>Behavior: Rotates slowly  </li>
+<li>Meaning: Temporal position</li>
+</ul>
+<h3>3.3 Biome Ring</h3>
+<ul>
+<li>Shape: Medium ring  </li>
+<li>Segments: 7 (house, garden, forest, deepforest, root, stone, shadow)  </li>
+<li>Colors:<ul>
+<li>House: #F4D03F  </li>
+<li>Garden: #E67E22  </li>
+<li>Forest: #A67C52  </li>
+<li>Deepforest: #556B2F  </li>
+<li>Root: #C0392B  </li>
+<li>Stone: #5D4037  </li>
+<li>Shadow: #000000</li>
+</ul>
+</li>
+<li>Behavior: Color shifts based on current biome  </li>
+<li>Meaning: Environmental context</li>
+</ul>
+<h3>3.4 Chamber Ring</h3>
+<ul>
+<li>Shape: Thick ring  </li>
+<li>Segments: Dynamic (adjacent chambers)  </li>
+<li>Colors: Neutral (#444)  </li>
+<li>Behavior: Expands/contracts based on adjacency  </li>
+<li>Meaning: Spatial proximity</li>
+</ul>
+<h3>3.5 Signal Halo</h3>
+<ul>
+<li>Shape: Outer glow  </li>
+<li>Color: White (#FFFFFF) at 10% opacity  </li>
+<li>Behavior: Flickers on signal warnings  </li>
+<li>Meaning: Distortions, environmental signals</li>
+</ul>
+<hr>
+<h2>4. Motion &amp; Behavior</h2>
+<h3>4.1 Pulse</h3>
+<p>The entire glyph must breathe subtly:</p>
+<ul>
+<li>Scale: 1 → 1.03 → 1  </li>
+<li>Duration: 4s  </li>
+<li>Curve: ease-in-out</li>
+</ul>
+<h3>4.2 Cycle Rotation</h3>
+<p>Cycle ring rotates:</p>
+<ul>
+<li>Early: 0.5°/s  </li>
+<li>Mid: 1°/s  </li>
+<li>Late: 2°/s</li>
+</ul>
+<h3>4.3 Signal Flicker</h3>
+<p>Halo flickers when:</p>
+<ul>
+<li>warnings  </li>
+<li>distortions  </li>
+<li>environmental signals</li>
+</ul>
+<p>Opacity: 10% → 40% → 10%</p>
+<hr>
+<h2>5. Composition Rules</h2>
+<h3>5.1 Centered</h3>
+<p>All rings must share the same center.</p>
+<h3>5.2 Even Spacing</h3>
+<p>Ring spacing must be consistent:</p>
+<ul>
+<li>Core → Cycle: 8px  </li>
+<li>Cycle → Biome: 12px  </li>
+<li>Biome → Chamber: 16px  </li>
+<li>Chamber → Halo: 20px</li>
+</ul>
+<h3>5.3 No Text</h3>
+<p>The glyph must contain <strong>no letters</strong>, <strong>no numbers</strong>, <strong>no icons</strong>.</p>
+<h3>5.4 No Gradients (except halo)</h3>
+<p>All rings use flat color.</p>
+<hr>
+<h2>6. File Requirements</h2>
+<h3>6.1 Format</h3>
+<ul>
+<li>PNG  </li>
+<li>Transparent background  </li>
+<li>Square canvas</li>
+</ul>
+<h3>6.2 Sizes</h3>
+<p>Must export cleanly at:</p>
+<ul>
+<li>128×128  </li>
+<li>240×240  </li>
+<li>512×512</li>
+</ul>
+<h3>6.3 Color Profile</h3>
+<p>sRGB</p>
+<hr>
+<h2>7. Acceptance Criteria</h2>
+<p>hub.png is considered <strong>valid</strong> when:</p>
+<ol>
+<li>All five rings exist  </li>
+<li>Colors match biome palette  </li>
+<li>Cycle ring has three segments  </li>
+<li>Chamber ring supports dynamic segmentation  </li>
+<li>Halo flicker is visually distinct  </li>
+<li>Glyph remains readable at 64px  </li>
+<li>No text or icons appear  </li>
+<li>Transparency is correct  </li>
+<li>Center alignment is perfect  </li>
+<li>No gradients except halo</li>
+</ol>
+<hr>
+<h2>8. Summary</h2>
+<p>The Hub glyph is a <strong>five-ring solar wheel</strong> representing:</p>
+<ul>
+<li>engine  </li>
+<li>cycle  </li>
+<li>biome  </li>
+<li>chamber adjacency  </li>
+<li>signal activity</li>
+</ul>
+<p>It must be:</p>
+<ul>
+<li>centered  </li>
+<li>circular  </li>
+<li>segmented  </li>
+<li>flat-colored  </li>
+<li>haloed  </li>
+<li>pulsing  </li>
+<li>rotating  </li>
+<li>flickering</li>
+</ul>
+<p>This is the canonical visual identity of the Threshold Hub.</p>
+
+  </main>
+</body>
+</html>
+

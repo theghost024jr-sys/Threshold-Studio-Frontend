@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Architecture - Mermaid Diagram ( Canonical)</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <p>flowchart TD</p>
+<p>%% ROOT
+A[System Architecture]</p>
+<p>%% INDEX ROW
+A --&gt; I1[Meta Systems Index]
+A --&gt; I2[Physics Cluster Index]
+A --&gt; I3[Signal Cluster Index]
+A --&gt; I4[Identity Cluster Index]</p>
+<p>%% SEVEN SYSTEMS (HORIZONTAL BAND)
+I1 --&gt; S1[01 Meta Systems]
+I2 --&gt; S2[02 Layers]
+I3 --&gt; S3[03 Signals]
+I4 --&gt; S5[05 Roles]</p>
+<p>%% Direct index-to-system mappings
+I3 --&gt; S3
+I4 --&gt; S4[04 Species]</p>
+<p>%% SYSTEM DEPENDENCIES
+S1 --&gt; S2
+S2 --&gt; S3
+S3 --&gt; S4
+S3 --&gt; S5
+S2 --&gt; S5
+S2 --&gt; S6[06 Map]
+S3 --&gt; S6
+S6 --&gt; S7[07 Myth]
+S2 --&gt; S7</p>
+<p>%% OPTIONAL SIDE NODES
+subgraph LeftSide[ ]
+    FS[Folder Structure\n00 System Architecture\n01 Meta Systems\n02 Layers\n03 Signals\n04 Species\n05 Roles\n06 Map\n07 Myth]
+end</p>
+<p>subgraph RightSide[ ]
+    ER[Expansion Rules\nrules → Meta Systems\nphysics → Layers\nbehavior → Signals\nembodiment → Species\narchetype → Roles\nspace → Map\nstory → Myth]
+end</p>
+<p>FS --- A
+ER --- A</p>
+
+  </main>
+</body>
+</html>
+

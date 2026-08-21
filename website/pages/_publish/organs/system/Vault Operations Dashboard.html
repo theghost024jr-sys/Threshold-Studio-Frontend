@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vault Operations Dashboard</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish.css">
+</head>
+<body>
+  <main>
+    <h1>Vault Operations Dashboard</h1>
+<p>These queries monitor numbered architecture folders, <code>Notes</code>, and each domain under <code>Threshold</code>.</p>
+<h2>Note Count Per Category Folder</h2>
+<pre><code class="language-dataview">TABLE WITHOUT ID
+  Folder,
+  length(rows) AS &quot;Count&quot;
+FROM &quot;&quot;
+FLATTEN split(file.folder, &quot;/&quot;)[0] AS Root
+FLATTEN choice(Root = &quot;Threshold&quot; AND length(split(file.folder, &quot;/&quot;)) &gt; 1, &quot;Threshold/&quot; + split(file.folder, &quot;/&quot;)[1], Root) AS Folder
+WHERE regextest(&quot;^[0-9]&quot;, Root) OR Root = &quot;Notes&quot; OR Root = &quot;Threshold&quot;
+GROUP BY Folder
+SORT Folder ASC
+</code></pre>
+<h2>Notes Missing a Category Field</h2>
+<pre><code class="language-dataview">TABLE
+  file.folder AS &quot;Folder&quot;,
+  file.mtime AS &quot;Last Modified&quot;
+FROM &quot;&quot;
+WHERE (regextest(&quot;^[0-9]&quot;, file.folder) OR startswith(file.folder, &quot;Notes&quot;) OR startswith(file.folder, &quot;Threshold/&quot;))
+  AND typeof(category) = &quot;null&quot;
+SORT file.mtime DESC
+</code></pre>
+<h2>Recently Modified Notes</h2>
+<pre><code class="language-dataview">TABLE
+  file.mtime AS &quot;Last Modified&quot;,
+  file.folder AS &quot;Folder&quot;
+FROM &quot;&quot;
+WHERE (regextest(&quot;^[0-9]&quot;, file.folder) OR startswith(file.folder, &quot;Notes&quot;) OR startswith(file.folder, &quot;Threshold/&quot;))
+  AND file.mtime &gt;= date(today) - dur(7 days)
+SORT file.mtime DESC
+</code></pre>
+<h2>Notes With No Outgoing Links</h2>
+<pre><code class="language-dataview">TABLE
+  file.folder AS &quot;Folder&quot;,
+  file.mtime AS &quot;Last Modified&quot;
+FROM &quot;&quot;
+WHERE (regextest(&quot;^[0-9]&quot;, file.folder) OR startswith(file.folder, &quot;Notes&quot;) OR startswith(file.folder, &quot;Threshold/&quot;))
+  AND length(file.outlinks) = 0
+SORT file.folder ASC
+</code></pre>
+<h2>Full Vault Summary</h2>
+<pre><code class="language-dataview">TABLE WITHOUT ID
+  Folder,
+  length(rows) AS &quot;Total Notes&quot;,
+  length(filter(rows, (row) =&gt; typeof(row.category) = &quot;null&quot;)) AS &quot;Missing Category&quot;,
+  max(map(rows, (row) =&gt; row.file.mtime)) AS &quot;Latest Modified&quot;
+FROM &quot;&quot;
+FLATTEN split(file.folder, &quot;/&quot;)[0] AS Root
+FLATTEN choice(Root = &quot;Threshold&quot; AND length(split(file.folder, &quot;/&quot;)) &gt; 1, &quot;Threshold/&quot; + split(file.folder, &quot;/&quot;)[1], Root) AS Folder
+WHERE regextest(&quot;^[0-9]&quot;, Root) OR Root = &quot;Notes&quot; OR Root = &quot;Threshold&quot;
+GROUP BY Folder
+SORT Folder ASC
+</code></pre>
+<h2>Threshold Contract Gaps</h2>
+<pre><code class="language-dataview">TABLE
+  category AS &quot;Category&quot;,
+  cluster AS &quot;Cluster&quot;,
+  confidence AS &quot;Confidence&quot;,
+  review AS &quot;Review&quot;,
+  file.folder AS &quot;Folder&quot;
+FROM &quot;&quot;
+WHERE !startswith(file.path, &quot;Scripts/&quot;)
+  AND !startswith(file.path, &quot;Assets/&quot;)
+  AND !startswith(file.path, &quot;Engine/&quot;)
+  AND !startswith(file.path, &quot;_publish/&quot;)
+  AND (typeof(category) = &quot;null&quot;
+    OR typeof(tags) = &quot;null&quot;
+    OR typeof(links) = &quot;null&quot;
+    OR typeof(cluster) = &quot;null&quot;
+    OR typeof(confidence) = &quot;null&quot;
+    OR typeof(review) = &quot;null&quot;)
+SORT file.folder ASC, file.name ASC
+</code></pre>
+<h2>Invalid Category Values</h2>
+<pre><code class="language-dataview">TABLE category AS &quot;Invalid Category&quot;, file.folder AS &quot;Folder&quot;
+FROM &quot;&quot;
+WHERE category
+  AND !contains([&quot;Cycles&quot;, &quot;Phases&quot;, &quot;Flowers&quot;, &quot;Roles&quot;, &quot;Ecologies&quot;, &quot;Weather&quot;], category)
+SORT category ASC, file.name ASC
+</code></pre>
+<h2>Folder / Category Mismatches</h2>
+<pre><code class="language-dataview">TABLE category AS &quot;Category&quot;, file.folder AS &quot;Current Folder&quot;
+FROM &quot;Threshold&quot;
+WHERE contains([&quot;Cycles&quot;, &quot;Phases&quot;, &quot;Flowers&quot;, &quot;Roles&quot;, &quot;Ecologies&quot;, &quot;Weather&quot;], category)
+  AND file.folder != &quot;Threshold/&quot; + category
+SORT category ASC, file.name ASC
+</code></pre>
+<h2>Review Lane</h2>
+<pre><code class="language-dataview">TABLE category, cluster, confidence, file.mtime AS &quot;Modified&quot;
+FROM &quot;Threshold/Review&quot;
+SORT confidence ASC, file.mtime DESC
+</code></pre>
+<h2>Scope</h2>
+<ul>
+<li>Included: numbered top-level folders, <code>Notes</code>, and the six <code>Threshold</code> ontology folders.</li>
+<li>Excluded: operational roots such as <code>Assets</code>, <code>Engine</code>, <code>Scripts</code>, <code>_publish</code>, and hidden folders.</li>
+<li>Change the regular expression in each query if the category naming convention changes.</li>
+</ul>
+
+  </main>
+</body>
+</html>
+

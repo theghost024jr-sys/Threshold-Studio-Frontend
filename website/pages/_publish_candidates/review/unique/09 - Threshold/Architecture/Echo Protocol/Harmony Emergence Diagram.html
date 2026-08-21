@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>**Harmony Emergence Diagram (Mermaid)**</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h1><strong>Harmony Emergence Diagram (Mermaid)</strong></h1>
+<p>markdown</p>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; LocalResonance
+
+    LocalResonance --&gt; Harmony: CPM &lt; threshold
+    LocalResonance --&gt; DistributedPressure: CPM &gt;= threshold
+
+    DistributedPressure --&gt; Harmony: SDV == 0
+    DistributedPressure --&gt; GlobalDrift: SDV != 0
+
+    GlobalDrift --&gt; Harmony: anchors_align()
+    GlobalDrift --&gt; Fragmented: anchors_conflict()
+
+    Fragmented --&gt; DistributedPressure: reintegration_success
+    Fragmented --&gt; Fragmented: reintegration_fail
+
+    Harmony --&gt; DistributedPressure: major_topology_change
+</code></pre>
+<pre><code>
+## **What this diagram represents (quick recap)**
+
+**Harmony emerges** when:
+
+- **Cluster Pressure Metric (CPM)** is below threshold
+    
+- **System Drift Vector (SDV)** resolves to zero
+    
+- **Anchors align** during global drift
+    
+
+And **Harmony collapses** when:
+
+- topology changes
+    
+- pressure spikes
+    
+- anchors conflict
+    
+- reintegration fails
+    
+
+This diagram shows the **exact pathways** into and out of Harmony — the “stable orbit” state of a Flower or cluster.
+</code></pre>
+
+  </main>
+</body>
+</html>
+

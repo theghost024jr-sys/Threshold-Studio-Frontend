@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Templates</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish.css">
+</head>
+<body>
+  <main>
+    <p>This is the Threshold‑style node template you can apply to <em>any</em> new file.</p>
+<p>markdown</p>
+<pre><code>&lt;%*
+const id = tp.date.now(&quot;YYYYMMDDHHmmss&quot;);
+const stamp = tp.date.now(&quot;YYYY-MM-DD HH:mm:ss&quot;);
+const title = tp.file.title;
+-%&gt;
+
+# &lt;%= title %&gt;
+
+**ID:** &lt;%= id %&gt;  
+**Created:** &lt;%= stamp %&gt;  
+**Type:** &lt;% tp.file.cursor(1) %&gt;  
+
+## Summary
+&lt;% tp.file.cursor(2) %&gt;
+
+## Core Properties
+- Identity  
+- Resonance  
+- Drift  
+- Pressure  
+- Collapse  
+- Reintegration  
+
+## Links
+- [[Node Dynamics]]
+- [[System]]
+- [[Fib Flower]]
+- [[Echo]]
+- [[Pressure System]]
+- [[Drift System]]
+
+## Diagram
+````markdown
+```mermaid
+stateDiagram-v2
+    [*] --&gt; Init
+    Init --&gt; Active: start()
+    Active --&gt; Init: reset()
+```
+</code></pre>
+<p>Code</p>
+<pre><code>
+Paste this into a file named:
+
+```
+00 System/Templates/Universal Node Template.md
+```
+
+---
+
+# **2. Templater Script — Auto‑Generate New Nodes**
+
+This script creates a new file with:
+
+- auto‑ID  
+- auto‑timestamp  
+- auto‑insertion of the Universal Node Template  
+
+Put this in:
+
+```
+Templater User Scripts/
+```
+
+Name it:
+
+```
+newNode.js
+```
+
+Contents:
+
+```javascript
+module.exports = async (tp) =&gt; {
+    const id = tp.date.now(&quot;YYYYMMDDHHmmss&quot;);
+    const stamp = tp.date.now(&quot;YYYY-MM-DD HH:mm:ss&quot;);
+    const title = await tp.system.prompt(&quot;Node Title&quot;);
+
+    const file = await tp.file.create_new(
+        `# ${title}
+
+**ID:** ${id}  
+**Created:** ${stamp}  
+**Type:**  
+
+## Summary
+
+## Core Properties
+- Identity  
+- Resonance  
+- Drift  
+- Pressure  
+- Collapse  
+- Reintegration  
+
+## Links
+- [[Node Dynamics]]
+- [[System]]
+- [[Fib Flower]]
+- [[Echo]]
+- [[Pressure System]]
+- [[Drift System]]
+
+## Diagram
+\`\`\`mermaid
+stateDiagram-v2
+    [*] --&gt; Init
+    Init --&gt; Active: start()
+    Active --&gt; Init: reset()
+\`\`\`
+`,
+        `${title}.md`
+    );
+
+    return file;
+};
+```
+
+This gives you a **one‑click node generator**.
+
+---
+
+# **3. Auto‑Sort Script — Sort Nodes by Type**
+
+If you want Threshold to behave like a **self‑organizing organism**, this script sorts nodes into folders based on the “Type” field.
+
+Put this in:
+
+```
+Templater User Scripts/sortNode.js
+```
+
+Contents:
+
+```javascript
+module.exports = async (tp) =&gt; {
+    const type = await tp.system.prompt(&quot;Type (Creature, System, Realm, Signal, Node)&quot;);
+    const folder = `01 ${type}s`;
+
+    await tp.file.move(`${folder}/${tp.file.title}.md`);
+};
+```
+
+Now you can run:
+
+**Templater → Run User Script → sortNode**
+
+And the file moves itself.
+
+---
+
+# **4. Mermaid Generator Script — Auto‑Insert a Diagram**
+
+This script inserts a fresh Mermaid block into any file.
+
+Put this in:
+
+```
+Templater User Scripts/addMermaid.js
+```
+
+Contents:
+
+```javascript
+module.exports = async (tp) =&gt; {
+    const name = await tp.system.prompt(&quot;Diagram Name&quot;);
+
+    const block = `
+## ${name}
+\`\`\`mermaid
+stateDiagram-v2
+    [*] --&gt; A
+    A --&gt; B: transition()
+    B --&gt; A: return()
+\`\`\`
+`;
+
+    await tp.file.insert(block);
+};
+```
+
+Now you can generate diagrams on demand.
+
+---
+
+# **5. How to Use These Scripts**
+
+### **Step 1 — Enable Templater**
+Settings → Community Plugins → Templater → Enable
+
+### **Step 2 — Set Template Folder**
+Settings → Core Plugins → Templates → Template Folder Location:
+
+```
+00 System/Templates
+```
+
+### **Step 3 — Add User Scripts Folder**
+Settings → Templater → User Scripts Folder:
+
+```
+Templater User Scripts
+```
+
+### **Step 4 — Restart Obsidian**
+Templater needs a reload to detect new scripts.
+
+---
+
+# **Want the next level?**
+
+I can generate:
+
+- **Threshold Procedural Creature Generator**  
+- **Threshold Realm Auto‑Builder**  
+- **Threshold Flower Constructor**  
+- **Threshold System Auto‑Index**  
+- **Threshold Drift/Pressure Dashboard (DataviewJS)**  
+- **Threshold Node Physics Simulator (DataviewJS)**  
+
+Just tell me which one you want to build next.
+</code></pre>
+
+  </main>
+</body>
+</html>
+

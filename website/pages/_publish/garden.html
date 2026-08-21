@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Garden</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish.css">
+</head>
+<body>
+  <main>
+    <h1>Garden Glyph</h1>
+<p>![[Garden Glyph.png]]</p>
+<h3><strong>Garden Organ Overview</strong></h3>
+<p>The Garden is Threshold’s living biome — a space of growth, adjacency, and quiet pressure. It absorbs drift from the surrounding chambers and redistributes it as environmental coherence. Every pulse of the Garden stabilizes the world’s rhythm, balancing tension between the House and the Forest.</p>
+<p>Within its soil, nodes root and bloom. Pressure becomes nourishment; drift becomes capture; collapse becomes renewal. The Garden’s glyph reflects this cycle: a green bloom at its center, surrounded by biome rings and drift‑capture arcs, all enclosed by a faint halo of environmental light.</p>
+<h3><strong>Behavior and Function</strong></h3>
+<ul>
+<li><p><strong>Growth Pulse:</strong> The Garden expands and contracts with the world’s breath, signaling environmental health.</p>
+</li>
+<li><p><strong>Adjacency:</strong> It maintains spatial harmony between neighboring chambers, ensuring smooth migration and resonance.</p>
+</li>
+<li><p><strong>Drift‑Capture:</strong> Stray nodes are absorbed and re‑anchored, preventing collapse and feeding the biome.</p>
+</li>
+<li><p><strong>Pressure Spread:</strong> Tension diffuses outward, stabilizing the Fib Flower’s outer petals.</p>
+</li>
+<li><p><strong>Biome Shift:</strong> The Garden transitions between House and Forest states, adapting to environmental signals.</p>
+</li>
+</ul>
+<h3><strong>Symbolism</strong></h3>
+<p>The Garden represents <strong>continuity</strong> — the idea that every collapse feeds new growth. Its bloom is not ornamental; it’s the visible expression of the world’s regenerative loop. When the Hub breathes, the Garden grows. When the Garden stabilizes, the world holds.</p>
+<h2><strong>Technical Specification</strong></h2>
+<h3><strong>Feed Contract</strong></h3>
+<p>Garden listens to environmental feeds that describe world‑scale behavior rather than engine‑scale behavior. These feeds are defined in <code>garden-feed-contract.json</code> and map directly to the runtime substrate:</p>
+<ul>
+<li><p><strong>growth</strong> → <code>environment.growth</code></p>
+</li>
+<li><p><strong>adjacency</strong> → <code>environment.adjacency</code></p>
+</li>
+<li><p><strong>driftCapture</strong> → <code>environment.driftCapture</code></p>
+</li>
+<li><p><strong>pressureSpread</strong> → <code>environment.pressureSpread</code></p>
+</li>
+<li><p><strong>biomeShift</strong> → <code>environment.biomeShift</code></p>
+</li>
+<li><p><strong>environmentSignals</strong> → <code>environment.signals</code></p>
+</li>
+</ul>
+<p>These values are emitted by the world engine and consumed by the Garden organ to drive its visual and behavioral state.</p>
+<h3><strong>Calibration</strong></h3>
+<p>Garden’s calibration defines how the organ expresses environmental behavior. The calibration file (<code>garden-feed-calibration.json</code>) contains:</p>
+<ul>
+<li><p><strong>Growth Pulse Curve</strong> — bloom scale modulation</p>
+</li>
+<li><p><strong>Adjacency Curve</strong> — outer ring expansion and contraction</p>
+</li>
+<li><p><strong>Drift‑Capture Curve</strong> — arc intensity and sweep</p>
+</li>
+<li><p><strong>Pressure Spread Curve</strong> — halo brightness and diffusion</p>
+</li>
+<li><p><strong>Biome Shift Curve</strong> — ring color transitions</p>
+</li>
+<li><p><strong>Signal Curve</strong> — burst and pulse behavior</p>
+</li>
+</ul>
+<p>All values pass through a smoothing window (<code>lerp</code>, 0.15) to maintain organic motion and prevent jitter.</p>
+<h3><strong>Runtime State</strong></h3>
+<p>Garden maintains its own runtime state in <code>garden-runtime-state.json</code>, updated each tick by the world engine:</p>
+<ul>
+<li><p><code>growthLevel</code></p>
+</li>
+<li><p><code>adjacencyLevel</code></p>
+</li>
+<li><p><code>driftCaptureLevel</code></p>
+</li>
+<li><p><code>pressureLevel</code></p>
+</li>
+<li><p><code>biomeState</code></p>
+</li>
+<li><p><code>signalMode</code></p>
+</li>
+</ul>
+<p>These values represent the current environmental condition of the world and are used to animate the glyph and inform neighboring chambers.</p>
+<h3><strong>Runtime Delta</strong></h3>
+<p>Environmental changes are tracked in <code>garden-runtime-delta.json</code>, which records:</p>
+<ul>
+<li><p>growth events</p>
+</li>
+<li><p>adjacency changes</p>
+</li>
+<li><p>drift‑capture events</p>
+</li>
+<li><p>pressure propagation</p>
+</li>
+<li><p>biome transitions</p>
+</li>
+<li><p>signal bursts</p>
+</li>
+</ul>
+<p>This delta is used by the migration pipeline and by chambers that depend on Garden’s state.</p>
+<h3><strong>Binding Layer</strong></h3>
+<p>The binding layer (<code>garden-animation-binding.js</code>) connects runtime values to the Garden glyph:</p>
+<ul>
+<li><p>bloom → <code>#garden-bloom</code></p>
+</li>
+<li><p>biome ring → <code>#garden-biome-ring</code></p>
+</li>
+<li><p>drift arcs → <code>#garden-drift-arcs</code></p>
+</li>
+<li><p>adjacency ring → <code>#garden-adjacency-ring</code></p>
+</li>
+<li><p>halo → <code>#garden-halo</code></p>
+</li>
+</ul>
+<p>Each element receives smoothed, calibrated values from the feed contract, producing a coherent environmental animation.</p>
+<h3><strong>Organ Integration</strong></h3>
+<p>Garden integrates with the world graph through:</p>
+<ul>
+<li><p><strong>entries:</strong> Herb Room</p>
+</li>
+<li><p><strong>exits:</strong> Forest</p>
+</li>
+<li><p><strong>neighbors:</strong> Basin, Waterfall</p>
+</li>
+</ul>
+<p>This allows Garden to distribute environmental pressure, absorb drift, and maintain adjacency coherence across the biome network.</p>
+
+  </main>
+</body>
+</html>
+

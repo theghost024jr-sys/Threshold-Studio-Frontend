@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Card Folder</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/10%20-%20Game.css">
+</head>
+<body>
+  <main>
+    <p>Absolutely — let’s build this out cleanly, James.<br>You already have the <strong>10 Player Cards</strong> (the roots).<br>Now we’re building the <strong>Card Folder</strong>, which is the <em>ecosystem</em> of cards players draw from during play.</p>
+<p>This is where the game actually becomes alive, modular, and expandable.</p>
+<p>I’ll lay this out in a way that’s clear, structured, and easy to extend.</p>
+<p>⭐ <strong>THE CARD FOLDER (Core Categories)</strong></p>
+<p>Right now, based on everything we’ve built, the game naturally wants <strong>four</strong> major card types:</p>
+<ol>
+<li><strong>Helper Cards</strong></li>
+<li><strong>Attribute Addition Cards</strong></li>
+<li><strong>One‑Time Creation Cards</strong></li>
+<li><strong>Permission / Meta‑System Cards</strong></li>
+</ol>
+<p>These four categories cover every kind of move a player might need.</p>
+<p>Let’s define each one cleanly.</p>
+<p>⭐ 1. <strong>HELPER CARDS</strong></p>
+<p>These are the “ask for clarity, guidance, or execution help” cards.</p>
+<p>They do NOT give new abilities.<br>They help you use the abilities you already have.</p>
+<p>Examples:</p>
+<ul>
+<li><strong>ASK theghost</strong><br>  Use this when you have an ability but don’t know how to perform it.<br>  After use, shuffle back into the deck.</li>
+<li><strong>Show Me the Move</strong><br>  Demonstrates a single example of how your ability works.</li>
+<li><strong>Translate This</strong><br>  Converts a confusing Obsidian action into a simple step‑by‑step.</li>
+</ul>
+<p>These cards keep the game flowing and prevent ability‑lock.</p>
+<p>⭐ 2. <strong>ATTRIBUTE ADDITION CARDS</strong></p>
+<p>These are the “level up” cards.</p>
+<p>They add new abilities to your Player Card.</p>
+<p>Examples:</p>
+<ul>
+<li><strong>Gain 1 Attribute</strong><br>  Draw from the Attribute Deck and add it to your Player.</li>
+<li><strong>Upgrade an Existing Attribute</strong><br>  Turns a basic ability into an advanced one.</li>
+<li><strong>Swap an Attribute</strong><br>  Replace one ability with another.</li>
+</ul>
+<p>These cards are the progression engine.</p>
+<p>⭐ 3. <strong>ONE‑TIME CREATION CARDS</strong></p>
+<p>These let you create something <strong>once</strong>, and then the card is discarded.</p>
+<p>They’re powerful but temporary.</p>
+<p>Examples:</p>
+<ul>
+<li><strong>Create a New Note</strong><br>  Make a new Obsidian note as part of the game world.</li>
+<li><strong>Spawn a Path</strong><br>  Create a new path in the grid or canvas.</li>
+<li><strong>Generate a Token</strong><br>  Add a temporary object, marker, or rule.</li>
+<li><strong>Manifest an Artifact</strong><br>  Create a one‑off object with a special effect.</li>
+</ul>
+<p>These cards shape the world.</p>
+<p>⭐ 4. <strong>PERMISSION / META‑SYSTEM CARDS</strong></p>
+<p>These modify the rules of the game itself.</p>
+<p>They don’t give abilities.<br>They give <strong>permissions</strong>.</p>
+<p>Examples:</p>
+<ul>
+<li><strong>You May Place an .md in a Folder</strong><br>  Allows file‑level organization.</li>
+<li><strong>You May Rearrange the Grid</strong><br>  Lets you restructure the play area.</li>
+<li><strong>You May Ask Another Player for Their Card</strong><br>  Social permission.</li>
+<li><strong>You May Break One Rule (Once)</strong><br>  Controlled chaos.</li>
+</ul>
+<p>These cards are the “physics” of the game.</p>
+<p>⭐ <strong>Putting It All Together: The Folder Structure</strong></p>
+<p>Here’s how your Obsidian vault should look:</p>
+<p>/Cards /Players Player1.md Player2.md ... Player10.md /Helpers AskTheGhost.md ShowMeTheMove.md TranslateThis.md /Attributes LinkPath.md ColorCode.md SpawnNode.md ... (20+ attribute cards) /OneTime CreateNote.md SpawnPath.md ManifestArtifact.md /Permissions PlaceMDinFolder.md RearrangeGrid.md BreakOneRule.md</p>
+<p>This is clean, modular, and expandable.</p>
+<p>⭐ <strong>If you want, we can now:</strong></p>
+<ul>
+<li>Build <strong>the full Helper Deck</strong></li>
+<li>Build <strong>the full Attribute Deck</strong></li>
+<li>Build <strong>the One‑Time Deck</strong></li>
+<li>Build <strong>the Permission Deck</strong></li>
+<li>Create <strong>draw rules</strong></li>
+<li>Create <strong>turn structure</strong></li>
+<li>Create <strong>card templates</strong></li>
+<li>Create <strong>starter decks</strong></li>
+<li>Create <strong>expansion packs</strong></li>
+<li>Create <strong>beta‑beta rulebook v0.2</strong></li>
+</ul>
+<p>Just tell me which direction you want to expand next.</p>
+
+  </main>
+</body>
+</html>
+

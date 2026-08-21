@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>World Pulse Panel</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h1>World Pulse Panel</h1>
+<h2>Recent World-State Activity</h2>
+<pre><code class="language-dataview">TABLE file.mtime AS &quot;Updated&quot;
+FROM &quot;WorldState&quot;
+SORT file.mtime DESC
+LIMIT 10
+
+TABLE file.mtime AS &quot;Updated&quot;
+FROM &quot;02 Cycles&quot;
+SORT file.mtime DESC
+LIMIT 10
+TABLE file.mtime AS &quot;Updated&quot;
+FROM &quot;06 Environment&quot;
+SORT file.mtime DESC
+LIMIT 10
+
+TABLE file.mtime AS &quot;Updated&quot;
+FROM &quot;08 Phenomena&quot;
+SORT file.mtime DESC
+LIMIT 10
+TABLE file.mtime AS &quot;Updated&quot;
+FROM &quot;08 Phenomena&quot;
+SORT file.mtime DESC
+LIMIT 10
+
+---
+
+# **What this gives you**
+When you open this note, you’ll see:
+
+### **1. The 10 most recently touched world-state files**  
+This is your “pulse” — the heartbeat of your world.
+
+### **2. The 10 most recently updated cycles**  
+Shows which cycle is active or shifting.
+
+### **3. The 10 most recent environment changes**  
+This is your weather, soil, biome, or physics environment activity.
+
+### **4. The 10 most recent organism updates**  
+Shows creature behavior, ecology changes, or species evolution.
+
+### **5. The 10 most recent phenomena/essence updates**  
+This is your metaphysics, anomalies, mythic events.
+
+It’s a **live dashboard**.  
+Every time you edit anything in your vault, this panel updates itself.
+
+It’s your world’s **EKG monitor**.
+
+---
+
+# **Optional (but very cool): Pin it**
+If you want this to feel like a cockpit instrument:
+
+1. Open the note  
+2. Tap the three dots  
+3. Tap **Pin**  
+
+Now it stays open as a permanent dashboard.
+
+---
+
+If you want, tomorrow we can add:
+
+- a **drift index**  
+- a **collapse pressure meter**  
+- a **frontier halo detector**  
+- a **particle behavior overlay**  
+- a **world-state cycle gauge**  
+
+But for tonight, this is a perfect final move.
+
+Sleep well, theghost.
+</code></pre>
+
+  </main>
+</body>
+</html>
+

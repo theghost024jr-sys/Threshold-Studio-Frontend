@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Global Registry</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <p>A <strong>global registry</strong> is the strongest choice because it becomes the <em>single organ</em> that holds the entire world’s embodiment logic in one place. That centralization is what allows resonance to operate across the whole system instead of being trapped inside individual files or scattered across scenes.</p>
+<p>To make this concrete, here’s what a global registry actually gives you, how it behaves, and how it stays clean even as the world grows.</p>
+<p>🌐 What a global registry actually is</p>
+<p>It’s a <strong>single data file</strong> (JSON, YAML, <code>.tres</code>, or <code>.md</code> frontmatter) that contains:</p>
+<ul>
+<li>every entity’s canonical embodiment</li>
+<li>fallback embodiments</li>
+<li>variant embodiments</li>
+<li>resonance rules</li>
+<li>tags and roles</li>
+<li>context‑based overrides</li>
+<li>world‑state overrides</li>
+</ul>
+<p>It becomes the <strong>world’s embodiment map</strong>.</p>
+<p>The parser reads definitions.<br>The registry maps definitions to bodies.<br>The world layer instantiates the chosen body.</p>
+<p>This keeps the architecture layered and clean.</p>
+<p>🧱 Why global is cleaner than per‑entity files</p>
+<p>A global registry avoids:</p>
+<ul>
+<li>duplicated logic</li>
+<li>scattered override rules</li>
+<li>inconsistent formats</li>
+<li>per‑entity drift</li>
+<li>“where does this rule live?” confusion</li>
+<li>circular dependencies</li>
+</ul>
+<p>Instead, you get:</p>
+<ul>
+<li>one place to inspect the entire world’s embodiment logic</li>
+<li>one place to add new resonance rules</li>
+<li>one place to override scenes</li>
+<li>one place to debug embodiment mismatches</li>
+<li>one place to evolve the system</li>
+</ul>
+<p>This is the <strong>cleanest possible expression</strong> of your “Obsidian is the source of truth” architecture.</p>
+<p>🧬 The global registry sketch (expanded)</p>
+<p>Here’s a more complete sketch of how the global registry might look in practice:</p>
+<p>entities: Andy: scene: res://scenes/characters/andy/Andy.tscn fallback: res://scenes/generic/GenericCharacter.tscn tags: [character, sentient, protagonist] variants: ghost: res://scenes/characters/andy/AndyGhost.tscn memory: res://scenes/characters/andy/AndyMemory.tscn child: res://scenes/characters/andy/AndyChild.tscn rules: - if: mode=ghost use: ghost - if: context=memory use: memory - if: timeline=early use: child ForestBiome: scene: res://scenes/biomes/forest/Forest.tscn fallback: res://scenes/generic/GenericBiome.tscn tags: [biome, natural] variants: winter: res://scenes/biomes/forest/ForestWinter.tscn night: res://scenes/biomes/forest/ForestNight.tscn rules: - if: season=winter use: winter - if: time=night use: night</p>
+<p>This is the <strong>entire world’s embodiment logic</strong> in one place.</p>
+<p>🔮 Why global is the best choice for resonance</p>
+<p>Resonance is not local.<br>It’s not per‑entity.<br>It’s not per‑scene.</p>
+<p>Resonance is <strong>contextual</strong>, <strong>systemic</strong>, and <strong>world‑state‑dependent</strong>.</p>
+<p>A global registry allows resonance to:</p>
+<ul>
+<li>override embodiments based on global mode</li>
+<li>shift variants based on world state</li>
+<li>select forms based on timeline</li>
+<li>choose embodiments based on relationships</li>
+<li>react to environmental conditions</li>
+<li>respond to player state</li>
+<li>respond to system mode</li>
+</ul>
+<p>A per‑entity registry cannot do this cleanly.<br>A global registry can.</p>
+<p>🧠 Why this stays clean even as the world grows</p>
+<p>The global registry is not a dumping ground.<br>It’s a <strong>semantic index</strong> of embodiment.</p>
+<p>It stays clean because:</p>
+<ul>
+<li>the parser never touches it</li>
+<li>scenes never touch it</li>
+<li>UI never touches it</li>
+<li>only the system layer reads it</li>
+<li>only the world layer receives its decisions</li>
+</ul>
+<p>It becomes the <strong>single source of embodiment truth</strong>, just as Obsidian becomes the <strong>single source of semantic truth</strong>.</p>
+<p>This is the cleanest possible architecture for a data‑driven world engine.</p>
+<p>🧭 A natural next step</p>
+<p>Do you want the global registry to support <strong>inheritance</strong> (e.g., “all characters share these defaults unless overridden”), or should each entity be fully explicit?</p>
+
+  </main>
+</body>
+</html>
+

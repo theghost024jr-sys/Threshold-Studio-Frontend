@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>**EchoNode State Table**</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h1><strong>EchoNode State Table</strong></h1>
+<h3><strong>Table 1 — Node State Machine (EchoNode)</strong></h3>
+<p>Code</p>
+<pre><code class="language-mermaid">| State           | Input / Condition                     | Output / Action                     | Next State        | Notes |
+|-----------------|----------------------------------------|--------------------------------------|-------------------|-------|
+| Idle            | SignalIn                               | evaluate_resonance()                 | SignalReceived    | Node wakes on signal |
+| SignalReceived  | RS == 1.0                              | process_signal()                     | Resonating        | Perfect match |
+| SignalReceived  | 0 &lt; RS &lt; 1.0                           | compute_PM_DV()                      | UnderPressure     | Partial match |
+| SignalReceived  | RS == 0.0                              | discard_signal()                     | Idle              | No resonance |
+| Resonating      | SignalComplete                          | finalize_processing()                | Anchored          | Stable integration |
+| Resonating      | RS_drop &amp;&amp; PM &gt; 0                      | compute_PM_DV()                      | UnderPressure     | Resonance destabilized |
+| UnderPressure   | PM &lt; CT                                | apply_drift(DV)                      | Drifting          | Drift begins |
+| UnderPressure   | PM &gt;= CT                               | reset_state()                        | Collapsing        | Collapse triggered |
+| Drifting        | PM → 0                                 | set_anchor_state()                   | Anchored          | Drift resolves |
+| Drifting        | PM &gt;= CT                               | reset_state()                        | Collapsing        | Collapse mid‑drift |
+| Collapsing      | ReconfigComplete                       | set_anchor_state()                   | Anchored          | Successful reconfig |
+| Collapsing      | Failure                                | inert_state()                        | Inert             | Node becomes inert |
+| Anchored        | SignalIn                               | evaluate_resonance()                 | SignalReceived    | New cycle |
+| Inert           | —                                      | —                                    | Inert             | Terminal |
+</code></pre>
+<h1><strong>EchoNode — Mermaid State Diagram</strong></h1>
+<p>mermaid</p>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; Idle
+
+    Idle --&gt; SignalReceived: SignalIn
+
+    SignalReceived --&gt; Resonating: RS == 1.0
+    SignalReceived --&gt; UnderPressure: 0 &lt; RS &lt; 1.0
+    SignalReceived --&gt; Idle: RS == 0.0
+
+    Resonating --&gt; Anchored: SignalComplete
+    Resonating --&gt; UnderPressure: RS_drop &amp;&amp; PM &gt; 0
+
+    UnderPressure --&gt; Drifting: PM &lt; CT
+    UnderPressure --&gt; Collapsing: PM &gt;= CT
+
+    Drifting --&gt; Anchored: PM → 0
+    Drifting --&gt; Collapsing: PM &gt;= CT
+
+    Collapsing --&gt; Anchored: ReconfigComplete
+    Collapsing --&gt; Inert: Failure
+
+    Anchored --&gt; SignalReceived: SignalIn
+
+    Inert --&gt; Inert
+</code></pre>
+
+  </main>
+</body>
+</html>
+

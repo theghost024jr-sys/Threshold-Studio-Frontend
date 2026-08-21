@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moment Canvas Flow</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <pre><code>                ┌────────────── LOOP ───────────────┐
+                │                                    │
+                │   Signal → Frame → Stance → Choice │
+                │                                    │
+                └───────────┐             ┌──────────┘
+                            ▼             ▼
+                    [ PLAYER HINGE ]   [ WORLD HINGE ]
+                            │             │
+                            │             │
+                            ▼             ▼
+                       Collapse        Collapse
+                           │             │
+                           └──────┬──────┘
+                                  ▼
+                                Drift
+                                  │
+                                  ▼
+                                Anchor
+
+                    ┌────────────── LOOP ───────────────┐
+                │                                    │
+                │   Signal → Frame → Stance → Choice │
+                │                                    │
+                └───────────┐             ┌──────────┘
+                            ▼             ▼
+                    [ PLAYER HINGE ]   [ WORLD HINGE ]
+                            │             │
+                            │             │
+                            └──────\   /──┘
+                                    \ /
+                                     X   &lt;— SHEAR (misalignment)
+                                    / \
+                           Collapse /   \ Collapse
+                                  /     \
+                                 ▼       ▼
+                               Drift   Drift
+                                  \     /
+                                   \   /
+                                    ▼ ▼
+                                   Anchor
+
+             ╔══════════════════════════════════════╗
+             ║              TOP LOOP                ║
+             ║ Signal → Frame → Stance → Choice     ║
+             ╚══════════════════════════════════════╝
+
+                     ╔══════════════╗   ╔══════════════╗
+                     ║ PLAYER HINGE ║   ║ WORLD HINGE  ║
+                     ╚══════╦═══════╝   ╚══════╦═══════╝
+                            ║                ║
+                            ║                ║
+                            ║     SHEAR      ║
+                            ╚═══════╦════════╝
+                                    ║
+                                    ▼
+                                  Drift
+                                    ▼
+                                  Anchor
+</code></pre>
+
+  </main>
+</body>
+</html>
+

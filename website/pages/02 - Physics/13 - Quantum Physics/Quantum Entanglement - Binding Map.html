@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quantum Entanglement - Binding Map</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/02%20-%20Physics.css">
+</head>
+<body>
+  <main>
+    <ol>
+<li>Schema
+Each binding entry follows this pattern:</li>
+</ol>
+<p>entanglement_id: QE-XXX
+elements:</p>
+<ul>
+<li>node: <Node or subsystem>
+parameter: <what is entangled></li>
+<li>node: <Node or subsystem>
+parameter: <what is entangled>
+binding_law: <relational rule>
+collapse_mapping:</li>
+</ul>
+<p>  &lt;element 1 node&gt;: <pathology>
+  &lt;element 2 node&gt;: <pathology>
+recovery_mapping:
+  &lt;element 1 node&gt;: <recovery protocol>
+  &lt;element 2 node&gt;: <recovery protocol>
+notes: &lt;design intent / cautions&gt;</p>
+<ol start="2">
+<li>Core bindings
+QE-001 — Depth–Momentum Counterweight</li>
+</ol>
+<p>entanglement_id: QE-001
+elements:</p>
+<ul>
+<li>node: Quiet Grove
+parameter: temporal_depth</li>
+<li>node: Plains
+parameter: temporal_momentum
+binding_law: depth * momentum = constant
+collapse_mapping:
+  Quiet Grove: Quiet Lock
+  Plains: Drift Runaway
+recovery_mapping:
+  Quiet Grove: Absorption Reset
+  Plains: Flow Reinstatement
+notes: &quot;Prevents the system from freezing in depth or skimming in momentum; one deepens as the other lightens.&quot;</li>
+</ul>
+<p>QE-002 — Freeze–Thaw Coupling</p>
+<p>entanglement_id: QE-002
+elements:</p>
+<ul>
+<li>node: Deep Ice
+parameter: freeze_index</li>
+<li>node: Warm Pockets
+parameter: thaw_capacity
+binding_law: freeze_index + thaw_capacity = constant
+collapse_mapping:
+  Deep Ice: Freeze-Twist Lock
+  Warm Pockets: Cold Resonance Spike (overcompensation)
+recovery_mapping:
+  Deep Ice: Thaw-Flow Recovery
+  Warm Pockets: Flex Recalibration
+notes: &quot;As Deep Ice approaches lock, Warm Pockets are forced to spin up; designed as an automatic thaw reserve.&quot;</li>
+</ul>
+<p>QE-003 — Fracture–Containment Mirror</p>
+<p>entanglement_id: QE-003
+elements:</p>
+<ul>
+<li>node: Shatter Zone
+parameter: fracture_intensity</li>
+<li>node: Stone Basin
+parameter: containment_capacity
+binding_law: fracture_intensity ≤ containment_capacity
+collapse_mapping:
+  Shatter Zone: Fracture Bloom
+  Stone Basin: Pressure Cascade (overload)
+recovery_mapping:
+  Shatter Zone: Fracture Containment
+  Stone Basin: Pressure Diffusion
+notes: &quot;Stone Basin is hard-wired as the fracture sink; if it saturates, both sides risk systemic fragmentation.&quot;</li>
+</ul>
+<p>QE-004 — Loop–Exit Entanglement</p>
+<p>entanglement_id: QE-004
+elements:</p>
+<ul>
+<li>node: Recursive Hollow
+parameter: recursion_depth</li>
+<li>node: Grove
+parameter: stillness_anchor
+binding_law: recursion_depth ↔ stillness_anchor (phase-locked)
+collapse_mapping:
+  Recursive Hollow: Recursive Collapse
+  Grove: Quiet Lock (if anchor overloaded)
+recovery_mapping:
+  Recursive Hollow: Recursive Recovery (Loop Unwinding)
+  Grove: Absorption Reset
+notes: &quot;As recursion tightens, Grove is forced to deepen; if Grove holds, it becomes the exit vector.&quot;</li>
+</ul>
+<p>QE-005 — Drift–Shear Corridor Pair</p>
+<p>entanglement_id: QE-005
+elements:</p>
+<ul>
+<li>node: High Branch
+parameter: drift_velocity</li>
+<li>node: Wind Channel
+parameter: vector_stability
+binding_law: drift_velocity ≤ k * vector_stability
+collapse_mapping:
+  High Branch: Drift Runaway
+  Wind Channel: Vector Shear
+recovery_mapping:
+  High Branch: Drift Recapture
+  Wind Channel: Motion-Release Healing
+notes: &quot;Prevents corridors from becoming pure runaway channels; when drift spikes, Wind Channel is forced to stabilize or shear.&quot;</li>
+</ul>
+<ol start="3">
+<li>Time Organ entanglements
+QE-101 — Momentum–Corridor Binding</li>
+</ol>
+<p>entanglement_id: QE-101
+elements:</p>
+<ul>
+<li>node: Momentum Chamber
+parameter: pulse_strength</li>
+<li>node: Plains
+parameter: corridor_capacity
+binding_law: pulse_strength ≤ corridor_capacity
+collapse_mapping:
+  Momentum Chamber: Linear Collapse
+  Plains: Drift Runaway
+recovery_mapping:
+  Momentum Chamber: Flow Reinstatement
+  Plains: Linear Recovery
+notes: &quot;Prevents the Time Organ from overdriving the grid; if the heart beats too hard, corridors tear.&quot;</li>
+</ul>
+<p>QE-102 — Depth–Basin Binding</p>
+<p>entanglement_id: QE-102
+elements:</p>
+<ul>
+<li>node: Depth Chamber
+parameter: absorption_load</li>
+<li>node: Stone Basin
+parameter: weight_tolerance
+binding_law: absorption_load ≤ weight_tolerance
+collapse_mapping:
+  Depth Chamber: Recursive Collapse
+  Stone Basin: Pressure Cascade
+recovery_mapping:
+  Depth Chamber: Absorption Reset
+  Stone Basin: Cascading Recovery
+notes: &quot;Stone Basin is the hard floor for the Depth Chamber; when depth over-absorbs, weight must go somewhere.&quot;</li>
+</ul>
+<p>QE-103 — Elasticity–Freeze Binding</p>
+<p>entanglement_id: QE-103
+elements:</p>
+<ul>
+<li>node: Elasticity Chamber
+parameter: flex_index</li>
+<li>node: Deep Ice
+parameter: rigidity_index
+binding_law: flex_index + rigidity_index = constant
+collapse_mapping:
+  Elasticity Chamber: Frozen Collapse (if flex_index → 0)
+  Deep Ice: Freeze-Twist Lock
+recovery_mapping:
+  Elasticity Chamber: Flex Recalibration
+  Deep Ice: Thaw-Flow Recovery
+notes: &quot;Hard-couples the organ’s flexibility to the coldest region; as one stiffens, the other is forced to soften.&quot;</li>
+</ul>
+
+  </main>
+</body>
+</html>
+

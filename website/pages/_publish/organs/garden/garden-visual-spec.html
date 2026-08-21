@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Garden Visual Specification</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish.css">
+</head>
+<body>
+  <main>
+    <h1>Garden Visual Specification</h1>
+<p>Garden is a world-state renderer, not a decorative mark. Its six animated layers map one-to-one to the canonical Garden feeds.</p>
+<h2>Layers</h2>
+<ul>
+<li><code>#garden-growth-core</code> breathes with growth and chamber seeding.</li>
+<li><code>#garden-adjacency-ring</code> rotates according to environmental adjacency density.</li>
+<li><code>#garden-drift-arcs</code> accelerate and brighten as drifting nodes are captured.</li>
+<li><code>#garden-pressure-ring</code> thickens and intensifies as pressure spreads across biomes.</li>
+<li><code>#garden-biome-petals</code> contains the Fib Flower&#39;s 13 outer petals and carries biome transition color.</li>
+<li><code>#garden-signal-halo</code> pulses or bursts when the environment communicates state changes.</li>
+</ul>
+<h2>Geometry</h2>
+<p>The glyph uses a centered 512 by 512 field. Thirteen petals form the outer Fib Flower ring. The center remains rooted while the environmental rings can rotate, breathe, tighten, and change state independently.</p>
+<h2>Motion</h2>
+<p>All motion is looped, bounded, and frame-smoothed by <code>garden-feed-calibration.json</code>. Reduced-motion clients receive a stable rendered state with animation disabled.</p>
+
+  </main>
+</body>
+</html>
+

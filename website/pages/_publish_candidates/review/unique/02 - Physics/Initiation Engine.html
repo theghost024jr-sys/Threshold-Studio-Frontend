@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>**Initiation Engine.md**</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h1><strong>Initiation Engine.md</strong></h1>
+<h2><strong>Initiation Engine — The Ignition Protocol of Threshold</strong></h2>
+<p>The <strong>Initiation Engine</strong> is the protocol that governs how any entity in Threshold transitions from:</p>
+<ul>
+<li><p><strong>Dormant → Active</strong></p>
+</li>
+<li><p><strong>Undefined → Defined</strong></p>
+</li>
+<li><p><strong>Potential → Behavior</strong></p>
+</li>
+</ul>
+<p>It is the <strong>first mechanical layer</strong> of every node, Flower, cluster, and system. The Initiation Engine ensures that activation is <strong>structured</strong>, <strong>predictable</strong>, and <strong>aligned</strong> with the system’s resonance and pressure profile.</p>
+<h2><strong>Core Components</strong></h2>
+<h3><strong>1. Pre‑Ignition Scan</strong></h3>
+<p>The system evaluates:</p>
+<ul>
+<li><p>local resonance</p>
+</li>
+<li><p>pressure load</p>
+</li>
+<li><p>drift vectors</p>
+</li>
+<li><p>polarity (Crown/Seam)</p>
+</li>
+<li><p>environmental cues</p>
+</li>
+</ul>
+<p>Links: [[Node Dynamics]] • [[Pressure System]] • [[Drift System]]</p>
+<h3><strong>2. Identity Lock</strong></h3>
+<p>The entity’s identity signature is locked into place.</p>
+<p>Links: [[01 - System/Scaffolding/01 - Roles/Archetypal Roles/Echo]] • [[EchoNode State Machine]]</p>
+<h3><strong>3. Resonance Alignment</strong></h3>
+<p>The entity aligns with its immediate environment.</p>
+<p>Links: [[Harmony Emergence]] • [[Echo Protocol]]</p>
+<h3><strong>4. Activation Pulse</strong></h3>
+<p>A short, high‑intensity pulse that transitions the entity into active state.</p>
+<p>Links: [[Core Pulse]] • [[02 - Physics/Signal Types]]</p>
+<h3><strong>5. Drift Stabilization</strong></h3>
+<p>Initial drift vectors are dampened or redirected.</p>
+<p>Links: [[Drift System]] • [[Cross-Flower Migration]]</p>
+<h2><strong>Initiation Engine State Machine</strong></h2>
+<p>markdown</p>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; PreIgnition
+
+    PreIgnition --&gt; IdentityLock: scan_complete()
+    PreIgnition --&gt; Abort: instability_detected()
+
+    IdentityLock --&gt; ResonanceAlign: identity_fixed()
+    IdentityLock --&gt; Abort: signature_conflict()
+
+    ResonanceAlign --&gt; ActivationPulse: alignment_success()
+    ResonanceAlign --&gt; Abort: alignment_fail()
+
+    ActivationPulse --&gt; DriftStabilize: pulse_emitted()
+    ActivationPulse --&gt; Abort: pulse_failure()
+
+    DriftStabilize --&gt; Active: drift_resolved()
+    DriftStabilize --&gt; Abort: drift_unstable()
+
+    Abort --&gt; PreIgnition: retry_possible()
+    Abort --&gt; [*]: failure_terminal()
+</code></pre>
+<pre><code>
+## **Initiation Flow Map**
+
+markdown
+</code></pre>
+<pre><code class="language-mermaid">flowchart TD
+    PreIgnition[&quot;Pre‑Ignition Scan&quot;]
+    IdentityLock[&quot;Identity Lock&quot;]
+    ResonanceAlign[&quot;Resonance Alignment&quot;]
+    ActivationPulse[&quot;Activation Pulse&quot;]
+    DriftStabilize[&quot;Drift Stabilization&quot;]
+    Active[&quot;Active State&quot;]
+
+    PreIgnition --&gt; IdentityLock
+    IdentityLock --&gt; ResonanceAlign
+    ResonanceAlign --&gt; ActivationPulse
+    ActivationPulse --&gt; DriftStabilize
+    DriftStabilize --&gt; Active
+</code></pre>
+<pre><code>
+## **Recommended Backlinks**
+
+Add these inside Initiation Engine.md:
+
+- [[Node Dynamics]]
+    
+- [[Echo]]
+    
+- [[EchoNode State Machine]]
+    
+- [[Echo System State Machine]]
+    
+- [[Pressure System]]
+    
+- [[Drift System]]
+    
+- [[Harmony Emergence]]
+    
+- [[Core Pulse]]
+    
+- [[Crown Structure]]
+    
+- [[Seam Structure]]
+    
+- [[Environmental Cues]]
+    
+- [[System]]
+</code></pre>
+
+  </main>
+</body>
+</html>
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compound Conditions</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <p>Compound conditions fit naturally into a free‑form, fully reactive world because they let the registry respond to <strong>patterns</strong> in the signal field rather than single events. This is where the system stops being a set of triggers and starts behaving like a <em>resonance network</em>.</p>
+<p>🧩 What compound conditions actually enable</p>
+<p>Compound conditions let the registry express reactions like:</p>
+<ul>
+<li>“Andy is scared <strong>only if</strong> the Wolf is near <strong>and</strong> the player is stressed.”</li>
+<li>“The forest becomes corrupted <strong>only if</strong> corruption is high <strong>and</strong> it’s night <strong>and</strong> the player is inside.”</li>
+<li>“A memory projection appears <strong>only if</strong> the mode is memory <strong>and</strong> Andy’s emotional state is unstable <strong>and</strong> the timeline is early.”</li>
+</ul>
+<p>This is how you get emergent behavior instead of scripted behavior.</p>
+<p>🔗 How compound conditions look in a free‑form registry</p>
+<p>Because signals are free‑form, conditions are also free‑form. A rule can match <strong>any combination</strong> of keys and values that appear in the signal field.</p>
+<p>Example:</p>
+<ul>
+<li>if: near: Wolf player.stress: &quot;&gt;0.8&quot; time: night use: terrified</li>
+</ul>
+<p>Or:</p>
+<ul>
+<li>if: biome: Forest corruption: &quot;&gt;0.7&quot; player.inside: true use: corrupted</li>
+</ul>
+<p>Or:</p>
+<ul>
+<li>if: mode: memory Andy.emotion: unstable timeline: early use: memory_projection</li>
+</ul>
+<p>The registry simply checks whether all conditions match the current reactive field.</p>
+<p>🌐 How the reactive field supports compound conditions</p>
+<p>A fully reactive system maintains a <strong>shared world-state map</strong> that updates whenever any signal arrives. This map is not rigid; it’s a loose, semantic structure that grows as needed.</p>
+<p>It might look like:</p>
+<p>world_state = { &quot;Andy&quot;: { &quot;emotion&quot;: &quot;fear&quot;, &quot;near&quot;: [&quot;Wolf&quot;], &quot;timeline&quot;: &quot;early&quot; }, &quot;Player&quot;: { &quot;stress&quot;: 0.92, &quot;intent&quot;: &quot;confront&quot; }, &quot;Environment&quot;: { &quot;time&quot;: &quot;night&quot;, &quot;season&quot;: &quot;winter&quot;, &quot;corruption&quot;: 0.81 }, &quot;Mode&quot;: &quot;memory&quot; }</p>
+<p>The registry evaluates rules against this shared state.</p>
+<p>No schema.<br>No rigid types.<br>Just meaning.</p>
+<p>🧠 Why compound conditions are essential for resonance</p>
+<p>Resonance is not a single cause → single effect.<br>Resonance is <strong>multiple influences converging</strong>.</p>
+<p>Compound conditions let the system express:</p>
+<ul>
+<li>emotional resonance</li>
+<li>environmental resonance</li>
+<li>relational resonance</li>
+<li>contextual resonance</li>
+<li>narrative resonance</li>
+</ul>
+<p>This is how the world feels alive instead of mechanical.</p>
+<p>🌳 Example: a character reacting to multiple influences</p>
+<p>Andy becomes terrified only when:</p>
+<ul>
+<li>Wolf is near</li>
+<li>Player is stressed</li>
+<li>It’s night</li>
+<li>Andy’s emotion is already unstable</li>
+</ul>
+<p>Rule:</p>
+<ul>
+<li>if: near: Wolf player.stress: &quot;&gt;0.8&quot; time: night Andy.emotion: unstable use: terrified</li>
+</ul>
+<p>This is not scripting.<br>This is <strong>emergent embodiment</strong>.</p>
+<p>🌫️ Example: an environment reacting to layered conditions</p>
+<p>The forest becomes corrupted only when:</p>
+<ul>
+<li>corruption &gt; 0.7</li>
+<li>it’s night</li>
+<li>the player is inside</li>
+<li>the mode is memory</li>
+</ul>
+<p>Rule:</p>
+<ul>
+<li>if: corruption: &quot;&gt;0.7&quot; time: night player.inside: true mode: memory use: corrupted</li>
+</ul>
+<p>This is how environments feel like living organs.</p>
+<p>🎮 Example: the player influencing the world</p>
+<p>The player’s aura changes only when:</p>
+<ul>
+<li>stress &gt; 0.8</li>
+<li>intent = confront</li>
+<li>attention = Andy</li>
+</ul>
+<p>Rule:</p>
+<ul>
+<li>if: player.stress: &quot;&gt;0.8&quot; player.intent: confront player.attention: Andy use: stressed</li>
+</ul>
+<p>This is how the player becomes part of the resonance field.</p>
+<p>🧬 Why this stays clean instead of chaotic</p>
+<p>Because the system has:</p>
+<ul>
+<li>free‑form signals</li>
+<li>a shared world-state map</li>
+<li>a global registry</li>
+<li>layered responsibilities</li>
+</ul>
+<p>The registry doesn’t need schemas.<br>It only needs <strong>meaningful keys</strong>.</p>
+<p>Compound conditions are the moment your world stops being reactive and starts being <em>alive</em>. How complex do you want these conditions to get—simple AND chains, or full boolean logic (AND/OR/NOT) with nested groups?</p>
+
+  </main>
+</body>
+</html>
+

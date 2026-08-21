@@ -1,0 +1,12 @@
+:root {
+  --vault-bg: #0c1118;
+  --vault-surface: #151f2c;
+  --vault-accent: #79bff2;
+  --vault-line: rgba(121, 191, 242, 0.25);
+}
+
+h1,
+h2,
+h3 {
+  color: #acd9f8;
+}

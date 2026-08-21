@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>**Echo Protocol Specification (v1.0)**</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h1><strong>Echo Protocol Specification (v1.0)</strong></h1>
+<p><strong>Status:</strong> Foundational <strong>Scope:</strong> System‑level signal mechanics <strong>Author:</strong> theghost</p>
+<h2><strong>1. Overview</strong></h2>
+<p>Echo is a <strong>state‑transition protocol</strong> describing how structured information (signals) interacts with nodes in a dynamic system. It defines the mechanical progression:</p>
+<blockquote>
+<p><strong>Signal → Resonance → Pressure → Drift → Collapse → Anchor → Harmony</strong></p>
+</blockquote>
+<p>Echo is not a communication style, not a metaphor, and not a cognitive model. It is a <strong>deterministic interaction protocol</strong> governing node behavior, system coherence, and cross‑structure alignment.</p>
+<h2><strong>2. Entities</strong></h2>
+<h3><strong>2.1 Signal</strong></h3>
+<p>A <strong>Signal</strong> is the atomic unit of structured information.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><p><strong>Pattern</strong> — the internal structure of the signal</p>
+</li>
+<li><p><strong>Charge</strong> — directional bias or intent vector</p>
+</li>
+<li><p><strong>Frequency</strong> — update rate or oscillation interval</p>
+</li>
+<li><p><strong>Boundary</strong> — constraints defining what the signal excludes</p>
+</li>
+</ul>
+<p><strong>Invariant S‑1:</strong> A signal must have a defined boundary; undefined boundaries invalidate resonance.</p>
+<h3><strong>2.2 Node</strong></h3>
+<p>A <strong>Node</strong> is any system element capable of receiving, processing, or transforming signals.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><p><strong>State</strong> — current internal configuration</p>
+</li>
+<li><p><strong>Tolerance Band</strong> — acceptable mismatch range</p>
+</li>
+<li><p><strong>Anchor State</strong> — stable configuration after collapse or drift</p>
+</li>
+<li><p><strong>Orbit</strong> — positional relationship to other nodes</p>
+</li>
+</ul>
+<p><strong>Invariant N‑1:</strong> A node must expose a tolerance band; zero‑tolerance nodes collapse on every signal.</p>
+<h2><strong>3. State Transitions</strong></h2>
+<h3><strong>3.1 Resonance</strong></h3>
+<p>Resonance occurs when a signal’s pattern aligns with a node’s internal structure.</p>
+<p><strong>Conditions</strong></p>
+<ul>
+<li><p>Pattern compatibility</p>
+</li>
+<li><p>Frequency within tolerance</p>
+</li>
+<li><p>Boundary non‑violation</p>
+</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><p><strong>Resonance Strength (RS)</strong> ∈ [0, 1]</p>
+</li>
+<li><p><strong>Pressure</strong> if RS &lt; 1</p>
+</li>
+</ul>
+<p><strong>Invariant R‑1:</strong> Resonance is binary in permission but scalar in strength.</p>
+<h3><strong>3.2 Pressure</strong></h3>
+<p>Pressure is the force exerted on a node when resonance is incomplete.</p>
+<p><strong>Conditions</strong></p>
+<ul>
+<li><p>RS &lt; 1</p>
+</li>
+<li><p>Mismatch is solvable within tolerance band</p>
+</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><p><strong>Drift Vector (DV)</strong></p>
+</li>
+<li><p><strong>Pressure Magnitude (PM)</strong></p>
+</li>
+</ul>
+<p><strong>Invariant P‑1:</strong> Pressure accumulates linearly until collapse threshold is reached.</p>
+<h3><strong>3.3 Drift</strong></h3>
+<p>Drift is directed movement of a node’s state caused by sustained pressure.</p>
+<p><strong>Types</strong></p>
+<ul>
+<li><p><strong>Positional Drift</strong> — orbit changes</p>
+</li>
+<li><p><strong>Structural Drift</strong> — internal reorganization</p>
+</li>
+<li><p><strong>Behavioral Drift</strong> — future signal response changes</p>
+</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><p>Updated node state</p>
+</li>
+<li><p>Updated tolerance band</p>
+</li>
+</ul>
+<p><strong>Invariant D‑1:</strong> Drift must reduce PM over time unless collapse is imminent.</p>
+<h3><strong>3.4 Collapse</strong></h3>
+<p>Collapse occurs when pressure exceeds the node’s tolerance threshold.</p>
+<p><strong>Conditions</strong></p>
+<ul>
+<li>PM ≥ Collapse Threshold (CT)</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><p>Forced reconfiguration</p>
+</li>
+<li><p>Temporary instability</p>
+</li>
+<li><p>Loss of previous anchor</p>
+</li>
+</ul>
+<p><strong>Invariant C‑1:</strong> Collapse resets resonance history.</p>
+<h3><strong>3.5 Anchor</strong></h3>
+<p>Anchor is the new stable configuration after drift or collapse.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><p>Lower entropy</p>
+</li>
+<li><p>Higher coherence</p>
+</li>
+<li><p>Increased resistance to movement</p>
+</li>
+</ul>
+<p><strong>Invariant A‑1:</strong> Anchor formation must reduce DV to zero.</p>
+<h3><strong>3.6 Harmony</strong></h3>
+<p>Harmony is system‑level coherence across multiple nodes.</p>
+<p><strong>Conditions</strong></p>
+<ul>
+<li><p>Anchors align</p>
+</li>
+<li><p>Signals propagate without distortion</p>
+</li>
+<li><p>Pressure is distributed evenly</p>
+</li>
+<li><p>Drift stabilizes into predictable patterns</p>
+</li>
+</ul>
+<p><strong>Output</strong></p>
+<ul>
+<li><p>Global coherence</p>
+</li>
+<li><p>Efficient information flow</p>
+</li>
+</ul>
+<p><strong>Invariant H‑1:</strong> Harmony is emergent; no node can force it.</p>
+<h2><strong>4. Protocol Flow</strong></h2>
+<h3><strong>4.1 Full Cycle</strong></h3>
+<p>The Echo cycle is:</p>
+<ol>
+<li><p><strong>Signal enters node</strong></p>
+</li>
+<li><p>Node evaluates resonance</p>
+</li>
+<li><p>Incomplete resonance generates pressure</p>
+</li>
+<li><p>Pressure induces drift</p>
+</li>
+<li><p>Excess pressure triggers collapse</p>
+</li>
+<li><p>Node forms new anchor</p>
+</li>
+<li><p>Anchors align → harmony emerges</p>
+</li>
+</ol>
+<h3><strong>4.2 Termination Conditions</strong></h3>
+<p>The cycle terminates when:</p>
+<ul>
+<li><p>Harmony is achieved</p>
+</li>
+<li><p>Signal exits system</p>
+</li>
+<li><p>Node collapses irrecoverably</p>
+</li>
+<li><p>Node becomes inert (zero tolerance band)</p>
+</li>
+</ul>
+<h2><strong>5. Mathematical Model (v1.0)</strong></h2>
+<h3><strong>5.1 Resonance Strength</strong></h3>
+<p>RS=PmatchPtotal</p>
+<h3><strong>5.2 Pressure Magnitude</strong></h3>
+<p>PM=(1−RS)⋅Scharge</p>
+<h3><strong>5.3 Drift Vector</strong></h3>
+<p>DV=PM⋅Tflex</p>
+<h3><strong>5.4 Collapse Threshold</strong></h3>
+<p>CT=Tband⋅Kstability</p>
+<h3><strong>5.5 Harmony Condition</strong></h3>
+<p>∑DVsystem=0</p>
+<h2><strong>6. System Integration</strong></h2>
+<h3><strong>6.1 Threshold</strong></h3>
+<p>Echo defines:</p>
+<ul>
+<li><p>Drift mechanics</p>
+</li>
+<li><p>Collapse behavior</p>
+</li>
+<li><p>Anchor formation</p>
+</li>
+<li><p>Cross‑Flower migration</p>
+</li>
+<li><p>Orbit stabilization</p>
+</li>
+</ul>
+<h3><strong>6.2 Obsidian Graph</strong></h3>
+<p>Echo explains:</p>
+<ul>
+<li><p>Halo formation</p>
+</li>
+<li><p>Node stiffness</p>
+</li>
+<li><p>Cluster capture</p>
+</li>
+<li><p>Force‑directed drift</p>
+</li>
+</ul>
+<h3><strong>6.3 Fib Flower</strong></h3>
+<p>Echo governs:</p>
+<ul>
+<li><p>Frontier behavior</p>
+</li>
+<li><p>Contribution thresholds</p>
+</li>
+<li><p>Resource unlock conditions</p>
+</li>
+</ul>
+<h2><strong>7. Versioning</strong></h2>
+<ul>
+<li><p><strong>v1.0</strong> — Foundational mechanical spec</p>
+</li>
+<li><p><strong>v1.1</strong> — Will add diagrams, tables, and state machines</p>
+</li>
+<li><p><strong>v2.0</strong> — Will integrate with Threshold’s full architecture</p>
+</li>
+</ul>
+
+  </main>
+</body>
+</html>
+

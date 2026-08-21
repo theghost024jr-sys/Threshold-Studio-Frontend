@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Batch Rename Protocol</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/01%20-%20System.css">
+</head>
+<body>
+  <main>
+    <p><strong>Input Format</strong></p>
+<p>You give me a list in <em>any</em> of these forms:</p>
+<ul>
+<li>Raw names</li>
+<li>Bulleted list</li>
+<li>One per line</li>
+<li>Messy, partial, inconsistent — doesn’t matter</li>
+</ul>
+<p>Example:
+Glassweaver
+Hollow Step
+Ash Spiral
+Variant 12
+Echoform</p>
+<p>Glassweaver Hollow Step Ash Spiral Variant 12 Echoform</p>
+<p><strong>Output Format</strong></p>
+<p>For each entry, I return:</p>
+<p><strong>1. Canonical Variant Name</strong></p>
+<p><code>[Curvature Prefix][Epithet]</code></p>
+<p><strong>2. Curvature Assignment</strong></p>
+<p>If you don’t specify curvature, I infer it from the behavior implied by the name.<br>If you <em>do</em> specify curvature, I lock it in.</p>
+<p><strong>3. Notes (optional)</strong></p>
+<p>Only when needed — e.g., if a name is ambiguous or needs refinement.</p>
+<p><strong>Example Batch Rename (Demonstration)</strong></p>
+<p>If you gave me:
+Glassweaver
+Hollow Step
+Ash Spiral</p>
+<p>Glassweaver Hollow Step Ash Spiral</p>
+<p>I would return:</p>
+<p>RE‑Glassweaver SD‑Hollow Step CL‑Ash Spiral</p>
+<p>Clean. Sorted. Canonical.</p>
+
+  </main>
+</body>
+</html>
+

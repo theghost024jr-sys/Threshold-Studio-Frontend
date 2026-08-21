@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><% tp.file.title %></title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish.css">
+</head>
+<body>
+  <main>
+    <h1>&lt;% tp.file.title %&gt;</h1>
+<blockquote>
+<p>[!info] 📍 Ghost System Node
+<strong>Created:</strong> &lt;% tp.file.creation_date(&quot;dddd, MMMM Do YYYY [at] h:mm A&quot;) %&gt;
+<strong>Author:</strong> James Romeo
+<strong>Vault:</strong> [[Ghost System Index]] · [[Ghost System - Phase Clasp Index]]
+<strong>Status:</strong> 🌱 Seedling → 🌿 Growing → 🌳 Mature → 🔮 Crystallized</p>
+</blockquote>
+<hr>
+<h2>🗺️ Node Map</h2>
+<pre><code class="language-mermaid">graph TD
+    GS[&quot;🕵️ Ghost System&quot;]:::vault
+    THIS[&quot;📄 &lt;% tp.file.title %&gt;&quot;]:::current
+    IDX[&quot;📑 Ghost System Index&quot;]:::hub
+    PHASE[&quot;🔗 Phase Clasp Index&quot;]:::hub
+    BODY[&quot;⚙️ Full Body State Machine&quot;]:::hub
+    HANNAH[&quot;👤 Hannah&quot;]:::collab
+
+    GS --&gt; IDX
+    GS --&gt; PHASE
+    GS --&gt; BODY
+    IDX --&gt; THIS
+    THIS -.-&gt;|collaborating| HANNAH
+
+    classDef vault fill:#1a1a2e,stroke:#e94560,color:#eee
+    classDef current fill:#16213e,stroke:#e94560,color:#e94560,stroke-width:3px
+    classDef hub fill:#0f3460,stroke:#533483,color:#eee
+    classDef collab fill:#533483,stroke:#e94560,color:#eee
+</code></pre>
+<hr>
+<h2>📝 Content</h2>
+<p><em>Start writing here...</em></p>
+<hr>
+<h2>🔗 Linked Notes</h2>
+<ul>
+<li>[[Ghost System Index]]</li>
+<li>[[Ghost System - Phase Clasp Index]]</li>
+<li>[[Ghost System - Full Body State Machine]]</li>
+<li>[[Open Door]]</li>
+<li>[[]]</li>
+</ul>
+<hr>
+<h2>💡 Ideas &amp; Sparks</h2>
+<blockquote>
+<p>[!tip] 💡 Spark
+<em>Drop a quick idea here before it vanishes...</em></p>
+</blockquote>
+<blockquote>
+<p>[!example] 🧪 Experiment
+<em>What are you testing or exploring in this note?</em></p>
+</blockquote>
+<hr>
+<h2>⚠️ Blockers &amp; Watch-Outs</h2>
+<blockquote>
+<p>[!warning] 🚧 Blocker
+<em>Anything slowing this node down?</em></p>
+</blockquote>
+<hr>
+<h2>🧭 Next Actions</h2>
+<ul>
+<li>[ ] </li>
+<li>[ ] </li>
+<li>[ ]</li>
+</ul>
+<hr>
+<h2>📊 Note Vitals</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Created</td>
+<td>&lt;% tp.file.creation_date(&quot;YYYY-MM-DD&quot;) %&gt;</td>
+</tr>
+<tr>
+<td>Author</td>
+<td>James Romeo</td>
+</tr>
+<tr>
+<td>Vault</td>
+<td>Ghost System</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>🌱 Seedling</td>
+</tr>
+<tr>
+<td>Collaborator</td>
+<td>Hannah</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Note</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p>[!abstract] 🔮 Ghost Signature
+<em>This note is part of the <strong>Ghost System</strong> — a living vault shared between James &amp; Hannah.</em>
+<em>Every link is a thread. Every node is a thought. The vault breathes.</em>
+<code>&lt;% tp.file.creation_date(&quot;YYYY-MM-DD HH:mm&quot;) %&gt;</code> · Ghost System v1
+&#39;&#39;&#39;</p>
+</blockquote>
+
+  </main>
+</body>
+</html>
+

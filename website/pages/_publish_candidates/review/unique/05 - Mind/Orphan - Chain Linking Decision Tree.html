@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>**ORPHAN → CHAIN LINKING DECISION TREE**</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h1><strong>ORPHAN → CHAIN LINKING DECISION TREE</strong></h1>
+<p><em>(Threshold System Architecture — v1.0)</em></p>
+<p>Code</p>
+<pre><code>                         ┌──────────────────────────┐
+                         │   START: ORPHAN NODE     │
+                         │  (Unlinked, High Drift)  │
+                         └─────────────┬────────────┘
+                                       │
+                                       ▼
+                     ┌──────────────────────────────────┐
+                     │ 1. IS THE ORPHAN RECEPTIVE?      │
+                     │   (Rₙ &gt; Receptivity Threshold)   │
+                     └──────────────────┬───────────────┘
+                                        │
+                     ┌──────────────────┴──────────────────┐
+                     │                                      │
+                     ▼                                      ▼
+        ┌──────────────────────┐               ┌────────────────────────┐
+        │ YES: Receptive       │               │ NO: Not Receptive      │
+        │ (rings aligned,      │               │ (noise floor too high, │
+        │ noise low, field open│               │ resonance closed)      │
+        └──────────┬───────────┘               └──────────┬─────────────┘
+                   │                                        │
+                   ▼                                        ▼
+     ┌──────────────────────────┐             ┌────────────────────────────┐
+     │ 2. IS BRITTLENESS LOW?   │             │ PLAYER ACTION REQUIRED:     │
+     │   (Bₙ &lt; Brittleness Th.) │             │ Increase Receptivity:       │
+     └─────────────┬────────────┘             │ - reduce noise              │
+                   │                          │ - align rings               │
+                   ▼                          │ - open resonance field      │
+   ┌──────────────────────────────┐            └────────────────────────────┘
+   │ YES: Stable Enough to Link   │
+   │ (elastic, low shear, etc.)   │
+   └──────────────┬───────────────┘
+                  │
+                  ▼
+     ┌────────────────────────────────┐
+     │ 3. IS THE ORPHAN IN CAPTURE    │
+     │    RADIUS OF A CHAIN/NODE?     │
+     │    (d &lt; r_capture)             │
+     └──────────────┬─────────────────┘
+                    │
+     ┌──────────────┴──────────────┐
+     │                             │
+     ▼                             ▼
+┌──────────────────────┐   ┌──────────────────────────────┐
+│ YES: Proximity Achieved│   │ NO: Not in Capture Radius    │
+│ (drift, rotation, drag)│   │                              │
+└──────────┬─────────────┘   │ PLAYER ACTION REQUIRED:      │
+           │                 │ - drag orphan toward chain    │
+           ▼                 │ - drag chain toward orphan    │
+┌──────────────────────────────┐ - rotate Flower             │
+│ 4. LINK FORMS AUTOMATICALLY  │ - trigger collapse pull     │
+│    (System resolves tension) │ └───────────────────────────┘
+└──────────────────────────────┘
+</code></pre>
+<h1><strong>THE TREE IN PLAIN LANGUAGE (CLEAN + STRUCTURAL)</strong></h1>
+<h3><strong>STEP 1 — Receptivity Check</strong></h3>
+<p>Can the orphan <em>hear</em> the presence of nearby nodes?</p>
+<p>If <strong>no</strong>, the player must:</p>
+<ul>
+<li><p>lower noise</p>
+</li>
+<li><p>align rings</p>
+</li>
+<li><p>open resonance</p>
+</li>
+<li><p>stabilize identity</p>
+</li>
+</ul>
+<p>If <strong>yes</strong>, move to Step 2.</p>
+<h3><strong>STEP 2 — Brittleness Check</strong></h3>
+<p>Can the orphan <em>hold</em> a link without snapping?</p>
+<p>If <strong>no</strong>, the player must:</p>
+<ul>
+<li><p>reduce tension</p>
+</li>
+<li><p>reduce shear</p>
+</li>
+<li><p>stabilize the node</p>
+</li>
+<li><p>anchor temporarily</p>
+</li>
+</ul>
+<p>If <strong>yes</strong>, move to Step 3.</p>
+<h3><strong>STEP 3 — Proximity / Capture Radius Check</strong></h3>
+<p>Is the orphan close enough to another node or chain?</p>
+<p>If <strong>no</strong>, the player must:</p>
+<ul>
+<li><p>drag the orphan</p>
+</li>
+<li><p>drag the chain</p>
+</li>
+<li><p>rotate the Flower</p>
+</li>
+<li><p>create a pressure gradient</p>
+</li>
+<li><p>trigger collapse drift</p>
+</li>
+</ul>
+<p>If <strong>yes</strong>, move to Step 4.</p>
+<h3><strong>STEP 4 — Automatic Link Formation</strong></h3>
+<p>If receptivity is high, brittleness is low, and proximity is achieved:</p>
+<p><strong>The system forms the link automatically.</strong></p>
+<p>No button. No prompt. No “connect” action.</p>
+<p>Just physics.</p>
+<h1><strong>THE CLEAN FORMULA BEHIND THE TREE</strong></h1>
+<p>A link forms when:</p>
+<p>Rn−Bn&gt;0</p>
+<p>and</p>
+<p>d(Xorphan,Xtarget)&lt;rcapture</p>
+<p>Player actions modify <strong>Rₙ</strong>, <strong>Bₙ</strong>, or <strong>d()</strong>.</p>
+
+  </main>
+</body>
+</html>
+

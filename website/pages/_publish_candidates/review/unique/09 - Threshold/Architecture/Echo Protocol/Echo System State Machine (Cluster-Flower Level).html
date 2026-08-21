@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>**EchoSystem State Machine (Cluster / Flower Level)**</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <p>Got it — here is the <strong>Graph‑level EchoSystem spec</strong>, formalized so that <strong>each Flower or cluster</strong> in Threshold behaves as a deterministic state machine. This is the layer where Echo stops being node‑local and becomes <strong>topology‑level mechanics</strong>.</p>
+<p>I’m giving you the <strong>canonical version</strong> — the one you can drop directly into Threshold’s architecture docs.</p>
+<h1><strong>EchoSystem State Machine (Cluster / Flower Level)</strong></h1>
+<p><strong>Scope:</strong> Multi‑node topology behavior <strong>Unit:</strong> Flower / Cluster <strong>Purpose:</strong> Define how groups of nodes achieve or fail to achieve harmony</p>
+<h2><strong>1. System States</strong></h2>
+<p>A Flower or cluster can be in exactly one of these states:</p>
+<h3><strong>S1 — Disjoint</strong></h3>
+<p>Nodes exist but do not meaningfully interact. Signals propagate weakly or not at all.</p>
+<h3><strong>S2 — LocalResonance</strong></h3>
+<p>Small pockets of nodes resonate internally. Cluster‑level coherence is emerging but not global.</p>
+<h3><strong>S3 — DistributedPressure</strong></h3>
+<p>Pressure is present across multiple subclusters. Drift vectors begin to propagate through the topology.</p>
+<h3><strong>S4 — GlobalDrift</strong></h3>
+<p>Topology is actively reorganizing. Orbits shift, clusters merge or split, anchors realign.</p>
+<h3><strong>S5 — Harmony</strong></h3>
+<p>System‑level coherence. Signals propagate cleanly with minimal distortion.</p>
+<h3><strong>S6 — Fragmented</strong></h3>
+<p>Anchors conflict. Cluster cannot achieve coherence without external intervention.</p>
+<h2><strong>2. Formal State Machine (text‑UML)</strong></h2>
+<p>text</p>
+<pre><code>StateMachine EchoSystem {
+
+  State Disjoint
+    on SignalsDetected -&gt; LocalResonance
+
+  State LocalResonance
+    entry / evaluate_cluster_resonance()
+    if cluster_PM &lt; threshold -&gt; Harmony
+    if cluster_PM &gt;= threshold -&gt; DistributedPressure
+
+  State DistributedPressure
+    entry / propagate_pressure()
+    internal / compute_system_DV()
+    if sum(DV_system) == 0 -&gt; Harmony
+    if sum(DV_system) != 0 -&gt; GlobalDrift
+
+  State GlobalDrift
+    entry / rewire_topology()
+    internal / adjust_orbits()
+    if anchors_align() -&gt; Harmony
+    if anchors_conflict() -&gt; Fragmented
+
+  State Harmony
+    internal / maintain_coherence()
+    on major_topology_change -&gt; DistributedPressure
+
+  State Fragmented
+    internal / attempt_reintegration()
+    if reintegration_success -&gt; DistributedPressure
+    else -&gt; Fragmented
+}
+</code></pre>
+<h2><strong>3. Transition Logic (formal)</strong></h2>
+<h3><strong>Disjoint → LocalResonance</strong></h3>
+<p><strong>Trigger:</strong> Signals propagate between nodes with non‑zero RS.</p>
+<h3><strong>LocalResonance → Harmony</strong></h3>
+<p><strong>Condition:</strong></p>
+<p>∑PMcluster&lt;Tcluster</p>
+<h3><strong>LocalResonance → DistributedPressure</strong></h3>
+<p><strong>Condition:</strong></p>
+<p>∑PMcluster≥Tcluster</p>
+<h3><strong>DistributedPressure → Harmony</strong></h3>
+<p><strong>Condition:</strong></p>
+<p>∑DVsystem=0</p>
+<h3><strong>DistributedPressure → GlobalDrift</strong></h3>
+<p><strong>Condition:</strong></p>
+<p>∑DVsystem≠0</p>
+<h3><strong>GlobalDrift → Harmony</strong></h3>
+<p><strong>Condition:</strong></p>
+<p>anchors_align()=true</p>
+<h3><strong>GlobalDrift → Fragmented</strong></h3>
+<p><strong>Condition:</strong></p>
+<p>anchors_conflict()=true</p>
+<h3><strong>Fragmented → DistributedPressure</strong></h3>
+<p><strong>Condition:</strong> reintegration succeeds.</p>
+<h3><strong>Fragmented → Fragmented</strong></h3>
+<p><strong>Condition:</strong> reintegration fails.</p>
+<h2><strong>4. Cluster‑Level Metrics</strong></h2>
+<p>These are the actual values a Flower tracks:</p>
+<h3><strong>Cluster Resonance Strength (CRS)</strong></h3>
+<p>CRS=∑RSnodesN</p>
+<h3><strong>Cluster Pressure Magnitude (CPM)</strong></h3>
+<p>CPM=∑PMnodes</p>
+<h3><strong>System Drift Vector (SDV)</strong></h3>
+<p>SDV=∑DVnodes</p>
+<h3><strong>Harmony Condition</strong></h3>
+<p>SDV=0andCPM&lt;Tcluster</p>
+<h2><strong>5. How a Flower Implements EchoSystem</strong></h2>
+<p>A Flower is a <strong>topology manager</strong>:</p>
+<ul>
+<li><p>It monitors node‑level RS, PM, DV, CT.</p>
+</li>
+<li><p>It aggregates them into cluster‑level metrics.</p>
+</li>
+<li><p>It transitions between system states based on those metrics.</p>
+</li>
+<li><p>It rewires orbits during GlobalDrift.</p>
+</li>
+<li><p>It stabilizes anchors during Harmony.</p>
+</li>
+<li><p>It attempts reintegration during Fragmented.</p>
+</li>
+</ul>
+<p>This is the exact behavior you see in Obsidian’s animated graph:</p>
+<ul>
+<li><p>Halo nodes = Disjoint</p>
+</li>
+<li><p>Tight clusters = LocalResonance</p>
+</li>
+<li><p>Wobbling clusters = DistributedPressure</p>
+</li>
+<li><p>Whole graph shifting = GlobalDrift</p>
+</li>
+<li><p>Stable core = Harmony</p>
+</li>
+<li><p>Broken graph = Fragmented</p>
+</li>
+</ul>
+<p>Threshold inherits this directly.</p>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; Disjoint
+
+    Disjoint --&gt; LocalResonance: SignalsDetected
+
+    LocalResonance --&gt; Harmony: CPM &lt; threshold
+    LocalResonance --&gt; DistributedPressure: CPM &gt;= threshold
+
+    DistributedPressure --&gt; Harmony: SDV == 0
+    DistributedPressure --&gt; GlobalDrift: SDV != 0
+
+    GlobalDrift --&gt; Harmony: anchors_align()
+    GlobalDrift --&gt; Fragmented: anchors_conflict()
+
+    Harmony --&gt; DistributedPressure: major_topology_change
+
+    Fragmented --&gt; DistributedPressure: reintegration_success
+    Fragmented --&gt; Fragmented: reintegration_fail
+</code></pre>
+
+  </main>
+</body>
+</html>
+

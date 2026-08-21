@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Echo protocol State Machine Overview</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <h3>Echo protocol: state machine overview</h3>
+<p>We’ll define a <strong>single node’s lifecycle</strong> as a state machine, then a <strong>system‑level machine</strong> for harmony.</p>
+<h4>Node states</h4>
+<ul>
+<li><p><strong>SignalReceived</strong></p>
+</li>
+<li><p><strong>Resonating</strong></p>
+</li>
+<li><p><strong>UnderPressure</strong></p>
+</li>
+<li><p><strong>Drifting</strong></p>
+</li>
+<li><p><strong>Collapsing</strong></p>
+</li>
+<li><p><strong>Anchored</strong></p>
+</li>
+<li><p><strong>Inert</strong> (optional terminal)</p>
+</li>
+</ul>
+<h3>1. Node state machine (text‑UML)</h3>
+<p>text</p>
+<pre><code>StateMachine EchoNode {
+
+  State Idle
+    on SignalIn -&gt; SignalReceived
+
+  State SignalReceived
+    entry / evaluate_resonance()
+    if RS == 1.0 -&gt; Resonating
+    if 0 &lt; RS &lt; 1.0 -&gt; UnderPressure
+    if RS == 0.0 -&gt; Idle  // rejected
+
+  State Resonating
+    internal / process_signal()
+    on SignalComplete -&gt; Anchored
+    on RS_drop &amp;&amp; PM &gt; 0 -&gt; UnderPressure
+
+  State UnderPressure
+    entry / compute_PM_DV()
+    if PM &lt; CT -&gt; Drifting
+    if PM &gt;= CT -&gt; Collapsing
+
+  State Drifting
+    internal / apply_drift(DV)
+    if PM -&gt; 0 -&gt; Anchored
+    if PM &gt;= CT -&gt; Collapsing
+
+  State Collapsing
+    entry / reset_state()
+    internal / reconfigure()
+    on ReconfigComplete -&gt; Anchored
+    on Failure -&gt; Inert
+
+  State Anchored
+    entry / set_anchor_state()
+    on SignalIn -&gt; SignalReceived
+
+  State Inert
+    // terminal: no further transitions
+}
+</code></pre>
+<h3>2. Transition diagram (described)</h3>
+<h4>Primary flow</h4>
+<ul>
+<li><p><strong>Idle → SignalReceived</strong> <strong>Trigger:</strong> incoming signal.</p>
+</li>
+<li><p><strong>SignalReceived → Resonating</strong> <strong>Condition:</strong> RS=1.0.</p>
+</li>
+<li><p><strong>SignalReceived → UnderPressure</strong> <strong>Condition:</strong> 0&lt;RS&lt;1.0.</p>
+</li>
+<li><p><strong>SignalReceived → Idle</strong> <strong>Condition:</strong> RS=0.0.</p>
+</li>
+<li><p><strong>Resonating → Anchored</strong> <strong>Condition:</strong> signal fully processed, no residual pressure.</p>
+</li>
+<li><p><strong>Resonating → UnderPressure</strong> <strong>Condition:</strong> RS drops during processing, mismatch appears.</p>
+</li>
+<li><p><strong>UnderPressure → Drifting</strong> <strong>Condition:</strong> PM&lt;CT.</p>
+</li>
+<li><p><strong>UnderPressure → Collapsing</strong> <strong>Condition:</strong> PM≥CT.</p>
+</li>
+<li><p><strong>Drifting → Anchored</strong> <strong>Condition:</strong> PM→0, DV resolved.</p>
+</li>
+<li><p><strong>Drifting → Collapsing</strong> <strong>Condition:</strong> PM≥CT during drift.</p>
+</li>
+<li><p><strong>Collapsing → Anchored</strong> <strong>Condition:</strong> reconfiguration succeeds.</p>
+</li>
+<li><p><strong>Collapsing → Inert</strong> <strong>Condition:</strong> reconfiguration fails.</p>
+</li>
+<li><p><strong>Anchored → SignalReceived</strong> <strong>Trigger:</strong> new signal.</p>
+</li>
+</ul>
+<h3>3. System‑level harmony machine</h3>
+<p>Here we treat the <strong>whole graph</strong> as a state machine.</p>
+<h4>System states</h4>
+<ul>
+<li><p><strong>Disjoint</strong> — nodes not interacting meaningfully.</p>
+</li>
+<li><p><strong>LocalResonance</strong> — small clusters resonating.</p>
+</li>
+<li><p><strong>DistributedPressure</strong> — system under load, many nodes drifting.</p>
+</li>
+<li><p><strong>GlobalDrift</strong> — topology changing.</p>
+</li>
+<li><p><strong>Harmony</strong> — coherence achieved.</p>
+</li>
+<li><p><strong>Fragmented</strong> — collapsed into incompatible anchors.</p>
+</li>
+</ul>
+<p>text</p>
+<pre><code class="language-mermaid">StateMachine EchoSystem {
+
+  State Disjoint
+    on SignalsPropagating -&gt; LocalResonance
+
+  State LocalResonance
+    if sum(PM_cluster) &lt; threshold -&gt; Harmony
+    if sum(PM_cluster) &gt;= threshold -&gt; DistributedPressure
+
+  State DistributedPressure
+    internal / propagate_drift()
+    if sum(DV_system) != 0 -&gt; GlobalDrift
+    if sum(DV_system) == 0 -&gt; Harmony
+
+  State GlobalDrift
+    internal / rewire_topology()
+    if stable_anchors_align() -&gt; Harmony
+    if anchors_conflict() -&gt; Fragmented
+
+  State Harmony
+    internal / maintain_flow()
+    on major_topology_change -&gt; DistributedPressure
+
+  State Fragmented
+    internal / attempt_reintegration()
+    if reintegration_success -&gt; DistributedPressure
+    else -&gt; Fragmented  // stuck until external intervention
+}
+</code></pre>
+<h3>4. How this plugs into Threshold</h3>
+<ul>
+<li><p><strong>Node spec:</strong> each Threshold node implements <code>EchoNode</code> state machine.</p>
+</li>
+<li><p><strong>Graph spec:</strong> each Flower / cluster implements <code>EchoSystem</code>.</p>
+</li>
+<li><p><strong>Metrics:</strong> RS, PM, DV, CT become live telemetry for cockpit/visualization.</p>
+</li>
+</ul>
+
+  </main>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shared Signal Vocabulary</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <p>A fully reactive world needs a <strong>shared signal vocabulary</strong> so every organ—characters, environments, the player, the system—can emit and respond to the same kinds of events. This vocabulary becomes the <em>language of the world</em>, the medium through which resonance flows. The registry listens to these signals, evaluates rules, and selects embodiments; the world layer performs the reactions.</p>
+<p>🌱 Core world-state signals</p>
+<p>These describe the global conditions that everything can react to.</p>
+<ul>
+<li><strong>TimeOfDayChanged</strong> — morning, noon, dusk, night; drives biome and character variants.</li>
+<li><strong>SeasonChanged</strong> — winter, spring, summer, fall; affects biomes and environmental forms.</li>
+<li><strong>WeatherChanged</strong> — rain, storm, fog, clear; influences mood and visibility.</li>
+<li><strong>CorruptionLevelChanged</strong> — a scalar that can trigger corrupted variants.</li>
+<li><strong>ModeChanged</strong> — ghost mode, memory mode, combat mode; affects characters and UI.</li>
+<li><strong>TimelineShifted</strong> — early, middle, late; supports age or form changes.</li>
+</ul>
+<p>These signals define the <em>ambient field</em> the world reacts to.</p>
+<p>🧍 Character-to-character signals</p>
+<p>These allow characters to react to each other’s presence, state, and intent.</p>
+<ul>
+<li><strong>EnteredRange(entity)</strong> — someone came close enough to matter.</li>
+<li><strong>LeftRange(entity)</strong> — someone moved out of influence.</li>
+<li><strong>AttentionShifted(target)</strong> — a character’s focus changed.</li>
+<li><strong>EmotionChanged(new_emotion)</strong> — fear, anger, joy, confusion.</li>
+<li><strong>RoleActivated(role)</strong> — healer, guardian, predator, guide.</li>
+<li><strong>ThreatLevelChanged(level)</strong> — used for fear/anger variants.</li>
+<li><strong>AffinityChanged(entity, value)</strong> — relationship shifts.</li>
+</ul>
+<p>These signals let characters behave as if they <em>feel</em> each other.</p>
+<p>🎮 Player-state signals</p>
+<p>The player is just another entity in the reactive field.</p>
+<ul>
+<li><strong>PlayerIntentChanged(intent)</strong> — explore, flee, confront, observe.</li>
+<li><strong>PlayerAttentionChanged(target)</strong> — what the player is focusing on.</li>
+<li><strong>PlayerStressChanged(level)</strong> — used for aura or environment reactions.</li>
+<li><strong>PlayerActionPerformed(action)</strong> — interact, attack, speak, examine.</li>
+<li><strong>PlayerEnteredBiome(biome)</strong> — triggers biome reactions.</li>
+</ul>
+<p>These signals let the world respond to the player’s internal and external state.</p>
+<p>🌳 Environment and biome signals</p>
+<p>Biomes and environments emit signals that characters and systems can react to.</p>
+<ul>
+<li><strong>BiomeEntered(entity)</strong> — someone entered a biome.</li>
+<li><strong>BiomeLeft(entity)</strong> — someone left a biome.</li>
+<li><strong>EnvironmentalHazardChanged(type, level)</strong> — heat, cold, toxicity.</li>
+<li><strong>LightLevelChanged(level)</strong> — dark, dim, bright.</li>
+<li><strong>SoundscapeChanged(type)</strong> — quiet, tense, chaotic.</li>
+</ul>
+<p>These signals let the environment behave as a living organ.</p>
+<p>⚙️ System-level signals</p>
+<p>These are emitted by the engine itself.</p>
+<ul>
+<li><strong>Tick(delta)</strong> — the time engine’s heartbeat.</li>
+<li><strong>ContextChanged(context)</strong> — memory, dream, real, echo.</li>
+<li><strong>NarrativeBeatReached(beat)</strong> — story rhythm.</li>
+<li><strong>RegistryUpdated</strong> — new rules or mappings loaded.</li>
+</ul>
+<p>These signals keep the system coherent and synchronized.</p>
+<p>🔗 How the registry uses these signals</p>
+<p>The registry listens to signals and evaluates rules like:</p>
+<ul>
+<li>if: near=Wolf use: scared - if: player=threatening use: angry - if: season=winter use: winter - if: corruption&gt;0.7 use: corrupted - if: mode=ghost use: ghost</li>
+</ul>
+<p>Signals trigger rule evaluation.<br>Rules select embodiments.<br>The world layer performs the change.</p>
+<p>This is the <strong>resonance engine</strong> in motion.</p>
+<p>🧭 A question to refine the system</p>
+<p>Do you want these signals to be <strong>typed</strong> (strict schema, known fields) or <strong>open</strong> (free-form payloads that the registry interprets dynamically)?</p>
+
+  </main>
+</body>
+</html>
+

@@ -11,7 +11,8 @@ test("reveals the Garden organ after five unique pollen activations", async () =
     readFile(new URL("scripts/housegarden.js", root), "utf8")
   ]);
 
-  assert.equal((html.match(/class="pollen clickable/g) || []).length, 5);
+  const pollenButtons = html.match(/<button[^>]*class="[^"]*\bpollen\b[^"]*\bclickable\b[^"]*"[^>]*>/g) || [];
+  assert.equal(pollenButtons.length, 5);
   assert.match(html, /data-garden-portal[^>]*data-revealed="false"[^>]*aria-hidden="true"/);
   assert.match(html, /href="\/garden" tabindex="-1">Enter Garden Organ/);
   assert.match(css, /\.garden-portal\[data-revealed="true"\]/);

@@ -186,7 +186,7 @@ export class ThresholdHubElement extends HTMLElementBase {
     this.#visualLoading = true;
 
     try {
-      const response = await fetch(`/assets/${asset}`, { cache: "no-store" });
+      const response = await fetch(`/website/assets/${asset}`, { cache: "no-store" });
       if (!response.ok) throw new Error(`Hub visual unavailable (${response.status})`);
       const parsed = new DOMParser().parseFromString(await response.text(), "image/svg+xml");
       const svg = parsed.documentElement;
@@ -247,7 +247,7 @@ export class ThresholdHubElement extends HTMLElementBase {
         visualNode.append(svg);
       } else {
         const image = element("img");
-        image.src = `/assets/${visual.asset}`;
+        image.src = `/website/assets/${visual.asset}`;
         image.alt = "Animated Hub Glyph";
         visualNode.append(image);
       }

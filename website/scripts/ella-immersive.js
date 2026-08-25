@@ -1,9 +1,9 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js";
+import { glyphSystem } from "./glyph-system.js";
 
 const stage = document.querySelector("[data-ella-stage]");
 const canvas = document.querySelector("#ella-world");
-const signalCanvas = document.querySelector("#ella-signal");
-const signalStatus = document.querySelector("#signal-status");
+const signalHost = document.querySelector("#ella-signal");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (stage && canvas) {
@@ -25,6 +25,65 @@ if (stage && canvas) {
 
   const world = new THREE.Group();
   scene.add(world);
+
+  const portraitDepth = -3.8;
+  const portrait = new THREE.Mesh(
+    new THREE.PlaneGeometry(2 / 3, 1),
+    new THREE.MeshBasicMaterial({ color: 0xffffff, fog: true, transparent: true, opacity: 0 }),
+  );
+  portrait.position.z = portraitDepth;
+  portrait.renderOrder = -2;
+  scene.add(portrait);
+
+  new THREE.TextureLoader().load(
+    "/assets/beyond/Ella.png",
+    (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      portrait.material.map = texture;
+      portrait.material.opacity = 1;
+      portrait.material.needsUpdate = true;
+      document.body.classList.add("is-25d-ready");
+    },
+    undefined,
+    () => {
+      scene.remove(portrait);
+    },
+  );
+
+  let randomSeed = 48271;
+  function seededRandom() {
+    randomSeed = (randomSeed * 16807) % 2147483647;
+    return (randomSeed - 1) / 2147483646;
+  }
+
+  function createSnowLayer({ count, depth, size, opacity, spread }) {
+    const positions = new Float32Array(count * 3);
+    for (let index = 0; index < count; index += 1) {
+      positions[index * 3] = (seededRandom() - 0.5) * spread;
+      positions[index * 3 + 1] = (seededRandom() - 0.5) * spread;
+      positions[index * 3 + 2] = depth + (seededRandom() - 0.5) * 0.8;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+      color: 0xf4f1e8,
+      size,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity,
+      depthWrite: false,
+    });
+    const layer = new THREE.Points(geometry, material);
+    scene.add(layer);
+    return layer;
+  }
+
+  const snowLayers = [
+    { object: createSnowLayer({ count: 110, depth: -2.4, size: 0.025, opacity: 0.28, spread: 17 }), factor: 0.08 },
+    { object: createSnowLayer({ count: 80, depth: 0.8, size: 0.045, opacity: 0.5, spread: 15 }), factor: 0.2 },
+    { object: createSnowLayer({ count: 42, depth: 3.6, size: 0.085, opacity: 0.68, spread: 13 }), factor: 0.42 },
+  ];
 
   const flowerPoints = [];
   const nodeCount = 144;
@@ -91,73 +150,23 @@ if (stage && canvas) {
     anchored: true,
   };
 
-  let riveInstance = null;
-  let riveInputs = {};
-  let fallbackFrame = 0;
+  const signalGlyph = signalHost
+    ? glyphSystem.mount(signalHost, {
+        glyphId: "field-signal",
+        flowerId: "ella-field",
+        identityVectorId: "ella",
+        signals,
+      })
+    : null;
+  let animationFrame = 0;
   const pointer = new THREE.Vector2();
   const targetPointer = new THREE.Vector2();
   const clock = new THREE.Clock();
 
   function setSignal(name, value) {
     signals[name] = value;
-    const input = riveInputs[name];
-    if (input) input.value = value;
+    signalGlyph?.update(signals);
     stage.style.setProperty(`--${name}`, typeof value === "number" ? value : Number(value));
-  }
-
-  async function mountRive() {
-    const source = signalCanvas?.dataset.riveSrc;
-    const stateMachine = signalCanvas?.dataset.riveStateMachine || "Threshold Signals";
-
-    if (!signalCanvas || !source) {
-      signalStatus.textContent = "Live field";
-      return;
-    }
-
-    try {
-      const { Rive, Layout, Fit, Alignment } = await import(
-        "https://cdn.jsdelivr.net/npm/@rive-app/canvas@2.31.5/+esm"
-      );
-      riveInstance = new Rive({
-        src: source,
-        canvas: signalCanvas,
-        stateMachines: stateMachine,
-        autoplay: true,
-        layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
-        onLoad: () => {
-          const inputs = riveInstance.stateMachineInputs(stateMachine);
-          riveInputs = Object.fromEntries(inputs.map((input) => [input.name, input]));
-          Object.entries(signals).forEach(([name, value]) => setSignal(name, value));
-          riveInstance.resizeDrawingSurfaceToCanvas();
-          signalStatus.textContent = "Rive linked";
-        },
-      });
-    } catch (error) {
-      console.warn("Ella signal layer could not load Rive.", error);
-      signalStatus.textContent = "Field fallback";
-    }
-  }
-
-  function drawFallbackSignal(time) {
-    if (!signalCanvas || riveInstance) return;
-    const context = signalCanvas.getContext("2d");
-    const size = signalCanvas.width;
-    const center = size / 2;
-    context.clearRect(0, 0, size, size);
-    context.strokeStyle = "rgba(213, 227, 194, 0.72)";
-    context.lineWidth = 1.5;
-
-    for (let ring = 0; ring < 3; ring += 1) {
-      const pulse = reduceMotion.matches ? 0 : Math.sin(time * 0.0015 + ring) * 3;
-      context.beginPath();
-      context.arc(center, center, 18 + ring * 13 + pulse, 0, Math.PI * 2);
-      context.stroke();
-    }
-
-    context.fillStyle = "#f0c98b";
-    context.beginPath();
-    context.arc(center, center, 5 + signals.resonance * 3, 0, Math.PI * 2);
-    context.fill();
   }
 
   function resize() {
@@ -166,18 +175,24 @@ if (stage && canvas) {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    riveInstance?.resizeDrawingSurfaceToCanvas();
+
+    const portraitDistance = camera.position.z - portraitDepth;
+    const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * portraitDistance;
+    const visibleWidth = visibleHeight * camera.aspect;
+    portrait.scale.setScalar(visibleHeight * 1.02);
+    portrait.userData.baseX = camera.aspect > 0.9 ? visibleWidth * 0.17 : 0;
+    portrait.position.x = portrait.userData.baseX;
   }
 
   function updatePointer(event) {
     targetPointer.x = (event.clientX / window.innerWidth) * 2 - 1;
     targetPointer.y = (event.clientY / window.innerHeight) * 2 - 1;
     setSignal("resonance", Math.min(1, 0.35 + Math.abs(targetPointer.x) * 0.5));
-    setSignal("drift", Math.min(1, Math.hypot(targetPointer.x, targetPointer.y) * 0.45));
+    setSignal("drift", Math.min(1, Math.hypot(targetPointer.x, targetPointer.y) * 0.55));
   }
 
-  function render(time = 0) {
-    fallbackFrame = window.requestAnimationFrame(render);
+  function render() {
+    animationFrame = window.requestAnimationFrame(render);
     const elapsed = clock.getElapsedTime();
     pointer.lerp(targetPointer, 0.035);
 
@@ -185,6 +200,12 @@ if (stage && canvas) {
       world.rotation.z = elapsed * 0.025;
       world.rotation.x = -0.08 + pointer.y * 0.08;
       world.rotation.y = pointer.x * 0.12;
+      portrait.position.x = portrait.userData.baseX + pointer.x * 0.16;
+      portrait.position.y = pointer.y * 0.09;
+      snowLayers.forEach(({ object, factor }, index) => {
+        object.position.x = pointer.x * factor;
+        object.position.y = pointer.y * factor * 0.55 - (elapsed * (0.018 + index * 0.012)) % 1.4;
+      });
     }
 
     anchors.forEach((anchor, index) => {
@@ -200,14 +221,13 @@ if (stage && canvas) {
 
     flowerMaterial.opacity = 0.62 + signals.resonance * 0.28;
     renderer.render(scene, camera);
-    drawFallbackSignal(time);
   }
 
   window.addEventListener("resize", resize);
   window.addEventListener("pointermove", updatePointer, { passive: true });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      window.cancelAnimationFrame(fallbackFrame);
+      window.cancelAnimationFrame(animationFrame);
     } else {
       clock.getDelta();
       render();
@@ -218,6 +238,5 @@ if (stage && canvas) {
   setSignal("resonance", signals.resonance);
   setSignal("drift", signals.drift);
   setSignal("anchored", signals.anchored);
-  mountRive();
   render();
 }

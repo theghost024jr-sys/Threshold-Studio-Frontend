@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sketch of the Registry concept</title>
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/_publish_candidates.css">
+</head>
+<body>
+  <main>
+    <p>A registry that supports resonance needs to be <strong>simple enough to read</strong>, <strong>expressive enough to grow</strong>, and <strong>layered enough</strong> that it never contaminates the parser or the world layer. The sketch below shows the <em>shape</em> of that organ — not a final format, but the structural rhythm it needs to hold.</p>
+<p>🧩 Purpose of the registry</p>
+<p>The registry is the <strong>bridge</strong> between:</p>
+<ul>
+<li>semantic definitions (from Obsidian)</li>
+<li>embodiment options (scenes, variants, fallbacks)</li>
+<li>resonance rules (context, mode, world state)</li>
+</ul>
+<p>It does not interpret <code>.md</code> files.<br>It does not instantiate scenes.<br>It simply <strong>maps identity → embodiment options</strong>, and provides a place for resonance to choose.</p>
+<p>📘 Sketch of the registry (conceptual form)</p>
+<p>This is a <strong>data‑driven</strong> structure, expressed in YAML‑like pseudocode for clarity. It could live as JSON, YAML, <code>.md</code> frontmatter, or a Godot Resource.</p>
+<p>entities: Andy: scene: res://scenes/characters/andy/Andy.tscn fallback: res://scenes/generic/GenericCharacter.tscn tags: [character, sentient, protagonist] variants: ghost: res://scenes/characters/andy/AndyGhost.tscn memory: res://scenes/characters/andy/AndyMemory.tscn child: res://scenes/characters/andy/AndyChild.tscn rules: - if: mode=ghost use: ghost - if: context=memory use: memory - if: timeline=early use: child ForestBiome: scene: res://scenes/biomes/forest/Forest.tscn fallback: res://scenes/generic/GenericBiome.tscn tags: [biome, natural] variants: winter: res://scenes/biomes/forest/ForestWinter.tscn night: res://scenes/biomes/forest/ForestNight.tscn rules: - if: season=winter use: winter - if: time=night use: night</p>
+<p>This sketch shows the <strong>four essential organs</strong>:</p>
+<ol>
+<li><strong>scene</strong></li>
+</ol>
+<p>The canonical embodiment.</p>
+<ol start="2">
+<li><strong>fallback</strong></li>
+</ol>
+<p>Used when no scene exists or resonance rejects the canonical one.</p>
+<ol start="3">
+<li><strong>variants</strong></li>
+</ol>
+<p>Alternative embodiments that can be selected dynamically.</p>
+<ol start="4">
+<li><strong>rules</strong></li>
+</ol>
+<p>Resonance‑based selection logic:</p>
+<ul>
+<li>mode</li>
+<li>context</li>
+<li>timeline</li>
+<li>world state</li>
+<li>tags</li>
+<li>relationships</li>
+</ul>
+<p>This is where the “both, depending on resonance” logic lives.</p>
+<p>🧠 Why this structure works</p>
+<p>It keeps the three layers clean:</p>
+<p>Content layer</p>
+<p>Obsidian <code>.md</code> files define:</p>
+<ul>
+<li>identity</li>
+<li>roles</li>
+<li>relationships</li>
+<li>metadata</li>
+</ul>
+<p>System layer</p>
+<p>Parser + index produce:</p>
+<ul>
+<li>semantic objects</li>
+<li>tags</li>
+<li>roles</li>
+<li>context</li>
+</ul>
+<p>Registry</p>
+<p>Maps semantic identity → embodiment options.</p>
+<p>World layer</p>
+<p>Instantiates the chosen scene.</p>
+<p>No layer knows too much.<br>No layer leaks into another.<br>Resonance flows through the registry, not the parser.</p>
+<p>🔄 How the system uses the registry at runtime</p>
+<ol>
+<li>Parser reads <code>Andy.md</code> → produces semantic object.</li>
+<li>Registry receives semantic object → checks:</li>
+</ol>
+<ul>
+<li>tags</li>
+<li>mode</li>
+<li>context</li>
+<li>world state</li>
+</ul>
+<ol start="4">
+<li>Registry selects:</li>
+</ol>
+<ul>
+<li>canonical scene</li>
+<li>variant scene</li>
+<li>fallback scene</li>
+<li>or data‑driven instantiation</li>
+</ul>
+<ol start="6">
+<li>World layer instantiates the chosen embodiment.</li>
+</ol>
+<p>This is the <strong>resonance engine</strong> in action.</p>
+<p>🧬 Why this sketch is enough to start building</p>
+<p>You don’t need to finalize the format.<br>You only need the <strong>shape</strong>:</p>
+<ul>
+<li>identity</li>
+<li>canonical embodiment</li>
+<li>fallback</li>
+<li>variants</li>
+<li>resonance rules</li>
+</ul>
+<p>As long as the registry holds these organs, the system can grow without collapsing.</p>
+<p>The next question is whether you want the registry to live as <strong>one file</strong> (global registry) or <strong>many small files</strong> (one registry entry per entity).</p>
+
+  </main>
+</body>
+</html>
+

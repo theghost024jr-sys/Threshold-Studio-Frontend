@@ -7200,409 +7200,6 @@
         ]
       },
       {
-        "name": "06 Species",
-        "path": "04 - Organism\\06 Species",
-        "children": [
-          {
-            "name": "Species-Linked Artifacts",
-            "path": "04 - Organism\\06 Species\\Species-Linked Artifacts",
-            "children": [
-              {
-                "name": "A Delicate Ocean",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\A Delicate Ocean.html",
-                "leaf": true
-              },
-              {
-                "name": "A Promise",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\A Promise.html",
-                "leaf": true
-              },
-              {
-                "name": "A Thread",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\A Thread.html",
-                "leaf": true
-              },
-              {
-                "name": "Bracelet of The Forest",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Bracelet of The Forest.html",
-                "leaf": true
-              },
-              {
-                "name": "Bracellete",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Bracellete.html",
-                "leaf": true
-              },
-              {
-                "name": "Chain And",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Chain And.html",
-                "leaf": true
-              },
-              {
-                "name": "Chains",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Chains.html",
-                "leaf": true
-              },
-              {
-                "name": "Cosmic",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Cosmic.html",
-                "leaf": true
-              },
-              {
-                "name": "Double Helix",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Double Helix.html",
-                "leaf": true
-              },
-              {
-                "name": "Examples",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Examples.html",
-                "leaf": true
-              },
-              {
-                "name": "Fiber",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Fiber.html",
-                "leaf": true
-              },
-              {
-                "name": "Fiddlehead",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Fiddlehead.html",
-                "leaf": true
-              },
-              {
-                "name": "Fire Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Fire Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Fire Piece",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Fire Piece.html",
-                "leaf": true
-              },
-              {
-                "name": "Fire ring",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Fire ring.html",
-                "leaf": true
-              },
-              {
-                "name": "Fish Moon",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Fish Moon.html",
-                "leaf": true
-              },
-              {
-                "name": "Gyroscope",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Gyroscope.html",
-                "leaf": true
-              },
-              {
-                "name": "Helix Chain",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Helix Chain.html",
-                "leaf": true
-              },
-              {
-                "name": "Hum Chain",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Hum Chain.html",
-                "leaf": true
-              },
-              {
-                "name": "Hybrid Jewelry",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Hybrid Jewelry.html",
-                "leaf": true
-              },
-              {
-                "name": "I Belong",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\I Belong.html",
-                "leaf": true
-              },
-              {
-                "name": "Imbalance",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Imbalance.html",
-                "leaf": true
-              },
-              {
-                "name": "It Breathes",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\It Breathes.html",
-                "leaf": true
-              },
-              {
-                "name": "Lace",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Lace.html",
-                "leaf": true
-              },
-              {
-                "name": "Leather",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Leather.html",
-                "leaf": true
-              },
-              {
-                "name": "Longing",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Longing.html",
-                "leaf": true
-              },
-              {
-                "name": "Mandelbrot",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mandelbrot.html",
-                "leaf": true
-              },
-              {
-                "name": "Mari Violin",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mari Violin.html",
-                "leaf": true
-              },
-              {
-                "name": "Mobius Design",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Design.html",
-                "leaf": true
-              },
-              {
-                "name": "Mobius Necklace Designs",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Necklace Designs",
-                "children": [
-                  {
-                    "name": "Alternate 2",
-                    "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Necklace Designs\\Alternate 2.html",
-                    "leaf": true
-                  },
-                  {
-                    "name": "Alternate",
-                    "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Necklace Designs\\Alternate.html",
-                    "leaf": true
-                  },
-                  {
-                    "name": "Begin Again",
-                    "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Necklace Designs\\Begin Again.html",
-                    "leaf": true
-                  },
-                  {
-                    "name": "Moonstone Centered Mobius",
-                    "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Necklace Designs\\Moonstone Centered Mobius.html",
-                    "leaf": true
-                  },
-                  {
-                    "name": "Moonstone Mobius",
-                    "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Necklace Designs\\Moonstone Mobius.html",
-                    "leaf": true
-                  }
-                ]
-              },
-              {
-                "name": "Mobius Strip Four Folds",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mobius Strip Four Folds.html",
-                "leaf": true
-              },
-              {
-                "name": "Moonstone Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Moonstone Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Moonstone",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Moonstone.html",
-                "leaf": true
-              },
-              {
-                "name": "Mycelium",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mycelium.html",
-                "leaf": true
-              },
-              {
-                "name": "Myrtle",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Myrtle.html",
-                "leaf": true
-              },
-              {
-                "name": "Mystical Spiral",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Mystical Spiral.html",
-                "leaf": true
-              },
-              {
-                "name": "Nature Box",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Nature Box.html",
-                "leaf": true
-              },
-              {
-                "name": "Nostalgia",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Nostalgia.html",
-                "leaf": true
-              },
-              {
-                "name": "Obisidian",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Obisidian.html",
-                "leaf": true
-              },
-              {
-                "name": "Ocean",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Ocean.html",
-                "leaf": true
-              },
-              {
-                "name": "Pause Earings",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Pause Earings.html",
-                "leaf": true
-              },
-              {
-                "name": "Rah",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Rah.html",
-                "leaf": true
-              },
-              {
-                "name": "Rebuild",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Rebuild.html",
-                "leaf": true
-              },
-              {
-                "name": "Reflection",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Reflection.html",
-                "leaf": true
-              },
-              {
-                "name": "Residue of Stars",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Residue of Stars.html",
-                "leaf": true
-              },
-              {
-                "name": "Ring Of",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Ring Of.html",
-                "leaf": true
-              },
-              {
-                "name": "Ritual Ring",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Ritual Ring.html",
-                "leaf": true
-              },
-              {
-                "name": "Saphire Helix",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Saphire Helix.html",
-                "leaf": true
-              },
-              {
-                "name": "Signal Mark Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Signal Mark Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Silent Key",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Silent Key.html",
-                "leaf": true
-              },
-              {
-                "name": "Snake",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Snake.html",
-                "leaf": true
-              },
-              {
-                "name": "Soft Wood",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Soft Wood.html",
-                "leaf": true
-              },
-              {
-                "name": "Some",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Some.html",
-                "leaf": true
-              },
-              {
-                "name": "Stars",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stars.html",
-                "leaf": true
-              },
-              {
-                "name": "Stings",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stings.html",
-                "leaf": true
-              },
-              {
-                "name": "Stylized Bracelet",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stylized Bracelet.html",
-                "leaf": true
-              },
-              {
-                "name": "Stylized Brooch",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stylized Brooch.html",
-                "leaf": true
-              },
-              {
-                "name": "Stylized Mobius",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stylized Mobius.html",
-                "leaf": true
-              },
-              {
-                "name": "Stylized Necklace",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stylized Necklace.html",
-                "leaf": true
-              },
-              {
-                "name": "Stylized Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stylized Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Stylized Talisman",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stylized Talisman.html",
-                "leaf": true
-              },
-              {
-                "name": "Stylized Tree Call",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Stylized Tree Call.html",
-                "leaf": true
-              },
-              {
-                "name": "Surreal Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Surreal Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Surreal Sketch",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Surreal Sketch.html",
-                "leaf": true
-              },
-              {
-                "name": "The Returning",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\The Retuning.html",
-                "leaf": true
-              },
-              {
-                "name": "The Returning",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\The Returning.html",
-                "leaf": true
-              },
-              {
-                "name": "**Artifact: Interlocking Rings Pendant**",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Three Fold Gift Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Three Part Set",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Three Part Set.html",
-                "leaf": true
-              },
-              {
-                "name": "Turtle Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Turtle Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Weird",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Weird.html",
-                "leaf": true
-              },
-              {
-                "name": "Wood Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Wood Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Wooden Pendant",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Wooden Pendant.html",
-                "leaf": true
-              },
-              {
-                "name": "Yearning",
-                "path": "04 - Organism\\06 Species\\Species-Linked Artifacts\\Yearning.html",
-                "leaf": true
-              }
-            ]
-          }
-        ]
-      },
-      {
         "name": "13 Collapse",
         "path": "04 - Organism\\13 Collapse",
         "children": [
@@ -9074,6 +8671,11 @@
           {
             "name": "Crow Species",
             "path": "06 - Actors\\Characters\\Crow Species.html",
+            "leaf": true
+          },
+          {
+            "name": "Ella — The Shepherd of Animals",
+            "path": "06 - Actors\\Characters\\Ella - The Shepherd of Animals.html",
             "leaf": true
           },
           {
@@ -11887,11 +11489,6 @@
             "leaf": true
           },
           {
-            "name": "Ella",
-            "path": "13 - Reference\\Characters\\Ella.html",
-            "leaf": true
-          },
-          {
             "name": "Ella.png",
             "path": "13 - Reference\\Characters\\Ella.png.html",
             "leaf": true
@@ -11983,6 +11580,11 @@
                 "leaf": true
               }
             ]
+          },
+          {
+            "name": "Ella",
+            "path": "13 - Reference\\Characters\\When the system reaches threshold.html",
+            "leaf": true
           },
           {
             "name": "Worms",
@@ -14119,6 +13721,403 @@
     ]
   },
   {
+    "name": "Species-Linked Artifacts",
+    "path": "Species-Linked Artifacts",
+    "children": [
+      {
+        "name": "A Delicate Ocean",
+        "path": "Species-Linked Artifacts\\A Delicate Ocean.html",
+        "leaf": true
+      },
+      {
+        "name": "A Promise",
+        "path": "Species-Linked Artifacts\\A Promise.html",
+        "leaf": true
+      },
+      {
+        "name": "A Thread",
+        "path": "Species-Linked Artifacts\\A Thread.html",
+        "leaf": true
+      },
+      {
+        "name": "Bracelet of The Forest",
+        "path": "Species-Linked Artifacts\\Bracelet of The Forest.html",
+        "leaf": true
+      },
+      {
+        "name": "Bracellete",
+        "path": "Species-Linked Artifacts\\Bracellete.html",
+        "leaf": true
+      },
+      {
+        "name": "Chain And",
+        "path": "Species-Linked Artifacts\\Chain And.html",
+        "leaf": true
+      },
+      {
+        "name": "Chains",
+        "path": "Species-Linked Artifacts\\Chains.html",
+        "leaf": true
+      },
+      {
+        "name": "Cosmic",
+        "path": "Species-Linked Artifacts\\Cosmic.html",
+        "leaf": true
+      },
+      {
+        "name": "Double Helix",
+        "path": "Species-Linked Artifacts\\Double Helix.html",
+        "leaf": true
+      },
+      {
+        "name": "Examples",
+        "path": "Species-Linked Artifacts\\Examples.html",
+        "leaf": true
+      },
+      {
+        "name": "Fiber",
+        "path": "Species-Linked Artifacts\\Fiber.html",
+        "leaf": true
+      },
+      {
+        "name": "Fiddlehead",
+        "path": "Species-Linked Artifacts\\Fiddlehead.html",
+        "leaf": true
+      },
+      {
+        "name": "Fire Pendant",
+        "path": "Species-Linked Artifacts\\Fire Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Fire Piece",
+        "path": "Species-Linked Artifacts\\Fire Piece.html",
+        "leaf": true
+      },
+      {
+        "name": "Fire ring",
+        "path": "Species-Linked Artifacts\\Fire ring.html",
+        "leaf": true
+      },
+      {
+        "name": "Fish Moon",
+        "path": "Species-Linked Artifacts\\Fish Moon.html",
+        "leaf": true
+      },
+      {
+        "name": "Gyroscope",
+        "path": "Species-Linked Artifacts\\Gyroscope.html",
+        "leaf": true
+      },
+      {
+        "name": "Helix Chain",
+        "path": "Species-Linked Artifacts\\Helix Chain.html",
+        "leaf": true
+      },
+      {
+        "name": "Hum Chain",
+        "path": "Species-Linked Artifacts\\Hum Chain.html",
+        "leaf": true
+      },
+      {
+        "name": "Hybrid Jewelry",
+        "path": "Species-Linked Artifacts\\Hybrid Jewelry.html",
+        "leaf": true
+      },
+      {
+        "name": "I Belong",
+        "path": "Species-Linked Artifacts\\I Belong.html",
+        "leaf": true
+      },
+      {
+        "name": "Imbalance",
+        "path": "Species-Linked Artifacts\\Imbalance.html",
+        "leaf": true
+      },
+      {
+        "name": "It Breathes",
+        "path": "Species-Linked Artifacts\\It Breathes.html",
+        "leaf": true
+      },
+      {
+        "name": "Lace",
+        "path": "Species-Linked Artifacts\\Lace.html",
+        "leaf": true
+      },
+      {
+        "name": "Leather",
+        "path": "Species-Linked Artifacts\\Leather.html",
+        "leaf": true
+      },
+      {
+        "name": "Longing",
+        "path": "Species-Linked Artifacts\\Longing.html",
+        "leaf": true
+      },
+      {
+        "name": "Mandelbrot",
+        "path": "Species-Linked Artifacts\\Mandelbrot.html",
+        "leaf": true
+      },
+      {
+        "name": "Mari Violin",
+        "path": "Species-Linked Artifacts\\Mari Violin.html",
+        "leaf": true
+      },
+      {
+        "name": "Mobius Design",
+        "path": "Species-Linked Artifacts\\Mobius Design.html",
+        "leaf": true
+      },
+      {
+        "name": "Mobius Necklace Designs",
+        "path": "Species-Linked Artifacts\\Mobius Necklace Designs",
+        "children": [
+          {
+            "name": "Alternate 2",
+            "path": "Species-Linked Artifacts\\Mobius Necklace Designs\\Alternate 2.html",
+            "leaf": true
+          },
+          {
+            "name": "Alternate",
+            "path": "Species-Linked Artifacts\\Mobius Necklace Designs\\Alternate.html",
+            "leaf": true
+          },
+          {
+            "name": "Begin Again",
+            "path": "Species-Linked Artifacts\\Mobius Necklace Designs\\Begin Again.html",
+            "leaf": true
+          },
+          {
+            "name": "Moonstone Centered Mobius",
+            "path": "Species-Linked Artifacts\\Mobius Necklace Designs\\Moonstone Centered Mobius.html",
+            "leaf": true
+          },
+          {
+            "name": "Moonstone Mobius",
+            "path": "Species-Linked Artifacts\\Mobius Necklace Designs\\Moonstone Mobius.html",
+            "leaf": true
+          }
+        ]
+      },
+      {
+        "name": "Mobius Strip Four Folds",
+        "path": "Species-Linked Artifacts\\Mobius Strip Four Folds.html",
+        "leaf": true
+      },
+      {
+        "name": "Moonstone Pendant",
+        "path": "Species-Linked Artifacts\\Moonstone Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Moonstone",
+        "path": "Species-Linked Artifacts\\Moonstone.html",
+        "leaf": true
+      },
+      {
+        "name": "Mycelium",
+        "path": "Species-Linked Artifacts\\Mycelium.html",
+        "leaf": true
+      },
+      {
+        "name": "Myrtle",
+        "path": "Species-Linked Artifacts\\Myrtle.html",
+        "leaf": true
+      },
+      {
+        "name": "Mystical Spiral",
+        "path": "Species-Linked Artifacts\\Mystical Spiral.html",
+        "leaf": true
+      },
+      {
+        "name": "Nature Box",
+        "path": "Species-Linked Artifacts\\Nature Box.html",
+        "leaf": true
+      },
+      {
+        "name": "Nostalgia",
+        "path": "Species-Linked Artifacts\\Nostalgia.html",
+        "leaf": true
+      },
+      {
+        "name": "Obisidian",
+        "path": "Species-Linked Artifacts\\Obisidian.html",
+        "leaf": true
+      },
+      {
+        "name": "Ocean",
+        "path": "Species-Linked Artifacts\\Ocean.html",
+        "leaf": true
+      },
+      {
+        "name": "Pause Earings",
+        "path": "Species-Linked Artifacts\\Pause Earings.html",
+        "leaf": true
+      },
+      {
+        "name": "Rah",
+        "path": "Species-Linked Artifacts\\Rah.html",
+        "leaf": true
+      },
+      {
+        "name": "Rebuild",
+        "path": "Species-Linked Artifacts\\Rebuild.html",
+        "leaf": true
+      },
+      {
+        "name": "Reflection",
+        "path": "Species-Linked Artifacts\\Reflection.html",
+        "leaf": true
+      },
+      {
+        "name": "Residue of Stars",
+        "path": "Species-Linked Artifacts\\Residue of Stars.html",
+        "leaf": true
+      },
+      {
+        "name": "Ring Of",
+        "path": "Species-Linked Artifacts\\Ring Of.html",
+        "leaf": true
+      },
+      {
+        "name": "Ritual Ring",
+        "path": "Species-Linked Artifacts\\Ritual Ring.html",
+        "leaf": true
+      },
+      {
+        "name": "Saphire Helix",
+        "path": "Species-Linked Artifacts\\Saphire Helix.html",
+        "leaf": true
+      },
+      {
+        "name": "Signal Mark Pendant",
+        "path": "Species-Linked Artifacts\\Signal Mark Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Silent Key",
+        "path": "Species-Linked Artifacts\\Silent Key.html",
+        "leaf": true
+      },
+      {
+        "name": "Snake",
+        "path": "Species-Linked Artifacts\\Snake.html",
+        "leaf": true
+      },
+      {
+        "name": "Soft Wood",
+        "path": "Species-Linked Artifacts\\Soft Wood.html",
+        "leaf": true
+      },
+      {
+        "name": "Some",
+        "path": "Species-Linked Artifacts\\Some.html",
+        "leaf": true
+      },
+      {
+        "name": "Stars",
+        "path": "Species-Linked Artifacts\\Stars.html",
+        "leaf": true
+      },
+      {
+        "name": "Stings",
+        "path": "Species-Linked Artifacts\\Stings.html",
+        "leaf": true
+      },
+      {
+        "name": "Stylized Bracelet",
+        "path": "Species-Linked Artifacts\\Stylized Bracelet.html",
+        "leaf": true
+      },
+      {
+        "name": "Stylized Brooch",
+        "path": "Species-Linked Artifacts\\Stylized Brooch.html",
+        "leaf": true
+      },
+      {
+        "name": "Stylized Mobius",
+        "path": "Species-Linked Artifacts\\Stylized Mobius.html",
+        "leaf": true
+      },
+      {
+        "name": "Stylized Necklace",
+        "path": "Species-Linked Artifacts\\Stylized Necklace.html",
+        "leaf": true
+      },
+      {
+        "name": "Stylized Pendant",
+        "path": "Species-Linked Artifacts\\Stylized Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Stylized Talisman",
+        "path": "Species-Linked Artifacts\\Stylized Talisman.html",
+        "leaf": true
+      },
+      {
+        "name": "Stylized Tree Call",
+        "path": "Species-Linked Artifacts\\Stylized Tree Call.html",
+        "leaf": true
+      },
+      {
+        "name": "Surreal Pendant",
+        "path": "Species-Linked Artifacts\\Surreal Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Surreal Sketch",
+        "path": "Species-Linked Artifacts\\Surreal Sketch.html",
+        "leaf": true
+      },
+      {
+        "name": "The Returning",
+        "path": "Species-Linked Artifacts\\The Retuning.html",
+        "leaf": true
+      },
+      {
+        "name": "The Returning",
+        "path": "Species-Linked Artifacts\\The Returning.html",
+        "leaf": true
+      },
+      {
+        "name": "**Artifact: Interlocking Rings Pendant**",
+        "path": "Species-Linked Artifacts\\Three Fold Gift Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Three Part Set",
+        "path": "Species-Linked Artifacts\\Three Part Set.html",
+        "leaf": true
+      },
+      {
+        "name": "Turtle Pendant",
+        "path": "Species-Linked Artifacts\\Turtle Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Weird",
+        "path": "Species-Linked Artifacts\\Weird.html",
+        "leaf": true
+      },
+      {
+        "name": "Wood Pendant",
+        "path": "Species-Linked Artifacts\\Wood Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Wooden Pendant",
+        "path": "Species-Linked Artifacts\\Wooden Pendant.html",
+        "leaf": true
+      },
+      {
+        "name": "Yearning",
+        "path": "Species-Linked Artifacts\\Yearning.html",
+        "leaf": true
+      }
+    ]
+  },
+  {
     "name": "_publish",
     "path": "_publish",
     "children": [
@@ -14813,11 +14812,6 @@
               {
                 "name": "**Field**",
                 "path": "_publish\\organs\\system\\Field.html",
-                "leaf": true
-              },
-              {
-                "name": "Fully Reactive Architecture",
-                "path": "_publish\\organs\\system\\Fully Reactive Architecture.html",
                 "leaf": true
               },
               {

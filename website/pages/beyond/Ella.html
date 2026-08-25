@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;family=Newsreader:opsz,wght@6..72,300;6..72,500&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles/glyph-system.css" />
   <link rel="stylesheet" href="../../styles/ella-immersive.css" />
 </head>
 
@@ -36,16 +37,15 @@
       </div>
 
       <aside class="signal-readout" aria-label="Ella field signal">
-        <canvas
+        <div
           id="ella-signal"
-          width="128"
-          height="128"
-          data-rive-src=""
-          data-rive-state-machine="Threshold Signals"
-        ></canvas>
+          class="threshold-glyph-host"
+          data-glyph-id="field-signal"
+          aria-hidden="true"
+        ></div>
         <div>
           <span>Resonance</span>
-          <strong id="signal-status">Initializing</strong>
+          <strong id="signal-status">Live glyph</strong>
         </div>
       </aside>
     </section>

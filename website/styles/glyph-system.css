@@ -1,0 +1,80 @@
+.threshold-glyph-host {
+  --glyph-resonance: 0;
+  --glyph-drift: 0;
+  --glyph-anchored: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: currentColor;
+}
+
+.threshold-glyph {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.glyph-ring,
+.glyph-axis {
+  fill: none;
+  stroke: currentColor;
+  vector-effect: non-scaling-stroke;
+}
+
+.glyph-ring {
+  opacity: calc(0.3 + var(--glyph-resonance) * 0.58);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.glyph-ring--middle {
+  stroke-dasharray: 5 6;
+}
+
+.glyph-ring--inner {
+  stroke-dasharray: 2 5;
+}
+
+.glyph-axis {
+  opacity: calc(0.12 + var(--glyph-anchored) * 0.36);
+  stroke-width: 1;
+}
+
+.glyph-core {
+  fill: #f0c98b;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(calc(0.72 + var(--glyph-resonance) * 0.5));
+}
+
+[data-glyph-state="drifting"] .glyph-ring--outer {
+  stroke-dasharray: 7 4;
+}
+
+[data-glyph-state="anchored"] .glyph-axis {
+  stroke: #f0c98b;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .glyph-ring--outer {
+    animation: threshold-glyph-turn 18s linear infinite;
+  }
+
+  .glyph-ring--middle {
+    animation: threshold-glyph-turn 12s linear infinite reverse;
+  }
+
+  [data-glyph-state="resonant"] .glyph-core {
+    animation: threshold-glyph-breathe 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes threshold-glyph-turn {
+  to { rotate: 1turn; }
+}
+
+@keyframes threshold-glyph-breathe {
+  50% { scale: 1.18; }
+}

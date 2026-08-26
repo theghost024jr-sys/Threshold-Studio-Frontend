@@ -59,7 +59,7 @@
       activateGlyph(choice, section, activate, effectText);
     });
     image.className = "glyph-asset";
-    image.src = selected.asset;
+    image.src = `/website/${selected.asset}`;
     image.alt = `${selected.name} glyph`;
     copy.append(title, text, effectText, activate);
     section.append(image, copy);
@@ -86,7 +86,7 @@
   }
 
   paths.forEach(function (path) { path.disabled = true; });
-  fetch("config/glyphs.json", { cache: "no-store" })
+  fetch("/website/config/glyphs.json", { cache: "no-store" })
     .then(function (response) {
       if (!response.ok) throw new Error("glyph index fetch failed");
       return response.json();

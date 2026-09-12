@@ -8,7 +8,37 @@
 }
 
 .invitation-open .envelope-front {
-  transform: translateY(18%);
+  transform: translateY(92%);
+}
+
+.letter {
+  overflow: hidden;
+}
+
+.envelope {
+  height: min(46rem, 82vh);
+}
+
+.invitation-open .letter {
+  transform: translateY(-5%);
+}
+
+@media (max-width: 760px) {
+  .envelope {
+    height: 76vh;
+  }
+
+  .letter > p:not(.salutation):not(.signature) {
+    font-size: 0.96rem;
+  }
+}
+
+.invitation-open .envelope-flap,
+.invitation-open .wax-seal,
+.invitation-open .seal-note {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

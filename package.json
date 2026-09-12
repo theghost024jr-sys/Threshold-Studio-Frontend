@@ -9,6 +9,7 @@
   "scripts": {
     "build:data": "python tools/build_vault_data.py && python tools/build_node_bundles.py",
     "build": "npm run build:data && node scripts/build-pages.mjs",
+    "build:ci": "node scripts/build-pages.mjs",
     "test": "node --test website/tests/*.test.mjs"
   }
 }

@@ -1,22 +1,43 @@
-name: Validate Frontend
+name: Validate & Deploy Frontend
 
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
+  deployments: write
+
+concurrency:
+  group: frontend-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
+  build-test-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate Cloudflare Pages build
-        run: npm run build
-      - name: Test frontend routing and complexity
+
+      - name: Validate frontend build
+        run: npm run build:ci
+
+      - name: Run tests
         run: npm test
+
+      - name: Publish to Cloudflare Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy website --project-name=threshold-studio-frontend --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

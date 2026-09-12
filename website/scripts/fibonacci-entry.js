@@ -1154,7 +1154,7 @@ function initializeHubReactor() {
 
     voidState.waves = voidState.waves.filter((wave) => now - wave.bornAt < 3600);
     voidState.waves.forEach((wave) => {
-      const progress = (now - wave.bornAt) / 3600;
+      const progress = clamp((now - wave.bornAt) / 3600, 0, 1);
       const radius = 24 + progress * Math.max(width, height) * 0.62;
       const color = wave.signature?.color || [214, 168, 75];
       context.save();

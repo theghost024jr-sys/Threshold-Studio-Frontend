@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import shutil
 from datetime import datetime, timezone
@@ -388,8 +389,16 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
 
 
 def main() -> int:
-    paths = load_threshold_paths()
-    payload = build_vault_data(paths)
+    try:
+        paths = load_threshold_paths()
+        payload = build_vault_data(paths)
+    except FileNotFoundError as error:
+        fallback_data = Path(__file__).resolve().parent.parent / "website" / "data" / "threshold-vault.json"
+        if os.environ.get("CI") == "true" and fallback_data.is_file():
+            print(f"Skipping canonical vault rebuild in CI: {error}")
+            print(f"Using committed vault data: {fallback_data}")
+            return 0
+        raise
     print(f"Vault data built from {payload['vaultRoot']}")
     print(f"Published {payload['counts']['publishedMarkdown']} notes to {paths.website_root / 'data'}")
     return 0

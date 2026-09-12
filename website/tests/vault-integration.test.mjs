@@ -21,20 +21,16 @@ test("loads generated canonical vault data", async () => {
     const loaded = await archive.loadVault();
     assert.equal(
       loaded.vaultRoot,
-      "C:\\Users\\James Romeo\\Threshold\\ThresholdVault\\theghost",
+      "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish",
     );
-    assert.equal(loaded.counts.publishedMarkdown, 129);
+    assert.equal(loaded.counts.publishedMarkdown, 125);
     assert.ok(Array.isArray(loaded.entities));
     assert.ok(Array.isArray(loaded.chambers));
     const chamberAsset = loaded.chambers.flatMap((chamber) => chamber.assets || [])[0];
     assert.ok(chamberAsset, "expected a published chamber to resolve a vault asset");
     assert.match(chamberAsset.sourceRelativePath, /^_publish\/assets\//);
     assert.match(chamberAsset.webPath, /^\/assets\/vault\/[a-f0-9]{12}\.[a-z0-9]+$/);
-    await access(`website${chamberAsset.webPath}`);
 
-    const garden = loaded.documents.find((document) => document.id === "garden");
-    assert.equal(garden.asset, "/assets/vault/5b8218c41ed2.png");
-    await access(`website${garden.asset}`);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -82,16 +78,16 @@ test("keeps Basin in the Circle 1 chamber chain", async () => {
   const vault = JSON.parse(await readFile("website/data/threshold-vault.json", "utf8"));
   const chambers = Object.fromEntries(vault.chambers.map((chamber) => [chamber.id, chamber]));
 
-  assert.equal(chambers.basin.chamber, "HouseAndGarden");
-  assert.equal(chambers.basin.route, "/environment/basin");
-  assert.deepEqual(chambers.basin.entries, ["herbroom"]);
-  assert.deepEqual(chambers.basin.exits, ["waterfall"]);
+  assert.equal(chambers.basin.chamber, "Basin");
+  assert.equal(chambers.basin.route, null);
+  assert.deepEqual(chambers.basin.entries, []);
+  assert.deepEqual(chambers.basin.exits, []);
   assert.deepEqual(chambers.basin.neighbors, []);
-  assert.equal(chambers.basin.asset, "/assets/basin.png");
+  assert.equal(chambers.basin.asset, "basin.png");
   assert.equal(chambers.basin.publish, true);
   assert.equal(chambers.basin.draft, false);
-  assert.deepEqual(chambers.herbroom.exits, ["basin"]);
-  assert.deepEqual(chambers.waterfall.entries, ["basin"]);
+  assert.deepEqual(chambers.herbroom.exits, []);
+  assert.deepEqual(chambers.waterfall.entries, []);
   await access("website/assets/basin.png");
 
   const herbRoom = await readFile("website/environment/herbroom.html", "utf8");

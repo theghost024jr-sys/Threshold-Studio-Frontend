@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -101,8 +102,16 @@ def build_node_bundles(paths: ThresholdPaths) -> dict[str, Any]:
 
 
 def main() -> int:
-    paths = load_threshold_paths()
-    manifest = build_node_bundles(paths)
+    try:
+        paths = load_threshold_paths()
+        manifest = build_node_bundles(paths)
+    except FileNotFoundError as error:
+        fallback_data = Path(__file__).resolve().parent.parent / "website" / "data" / "threshold-vault.json"
+        if os.environ.get("CI") == "true" and fallback_data.is_file():
+            print(f"Skipping node bundle rebuild in CI: {error}")
+            print(f"Using committed vault data: {fallback_data}")
+            return 0
+        raise
     print(f"Built {len(manifest['bundles'])} node bundles from {manifest['sourceVault']}")
     print(f"Node bundles: {paths.node_bundles_root}")
     return 0

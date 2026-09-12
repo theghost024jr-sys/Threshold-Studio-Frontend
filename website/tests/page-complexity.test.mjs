@@ -39,6 +39,8 @@ test("binds the Prime Atom to the logo, Engine, reveal, and hidden door contract
 
   assert.match(html, /data-prime-atom/);
   assert.match(html, /data-prime-logo/);
+  assert.equal((html.match(/src="\/assets\/entry\/threshold-logo\.svg"/g) || []).length, 3);
+  await readFile(new URL("assets/entry/threshold-logo.svg", root), "utf8");
   assert.match(html, /data-prime-door data-door-state="sealed"/);
   assert.match(html, /data-entry-chamber/);
   assert.match(html, /data-hub-reactor/);
@@ -68,4 +70,24 @@ test("keeps the Hub Entry welcome human-facing", async () => {
   assert.match(html, /You’ve come to Threshold — where beginnings gather, paths take shape,/);
   assert.match(html, /Begin at the Hub\. Follow what draws you inward\./);
   assert.doesNotMatch(html, /tune matrix waves|hub energy|field mechanics/i);
+});
+
+test("uses the ship-wheel sigil on brand and engine surfaces", async () => {
+  const pages = [
+    "index.html",
+    "hub.html",
+    "garden.html",
+    "dialogues.html",
+    "learningwheel.html",
+    "deep-system/engine.html"
+  ];
+
+  for (const page of pages) {
+    const html = await readFile(new URL(page, root), "utf8");
+    assert.match(html, /src="\/assets\/entry\/threshold-logo\.svg"/, `${page} uses the canonical sigil`);
+    assert.doesNotMatch(html, /assets\/logo\/threshold-logo\.svg/, `${page} avoids the duplicate logo path`);
+  }
+
+  const engine = await readFile(new URL("threshold-engine.js", root), "utf8");
+  assert.match(engine, /img\.src = "\/assets\/entry\/threshold-logo\.svg"/);
 });

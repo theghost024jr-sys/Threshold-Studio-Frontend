@@ -354,7 +354,7 @@ class ThresholdEngine {
     anchor.setAttribute("data-threshold-logo-trigger", "1");
 
     const img = document.createElement("img");
-    img.src = "assets/entry/threshold-logo.svg";
+    img.src = "/assets/entry/threshold-logo.svg";
     img.alt = "Threshold Root Sigil";
     img.className = "threshold-nav-logo-img";
     anchor.appendChild(img);

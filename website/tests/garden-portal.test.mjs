@@ -15,7 +15,7 @@ test("reveals garden.html after five unique pollen activations", async () => {
   assert.equal((html.match(/pollen clickable/g) || []).length, 5);
   assert.match(html, /data-garden-portal[^>]*data-revealed="false"[^>]*aria-hidden="true"/);
   assert.match(html, /href="garden\.html" tabindex="-1">Enter Garden Organ/);
-  assert.match(garden, /src="assets\/entry\/threshold-logo\.svg"/);
+  assert.match(garden, /src="\/assets\/entry\/threshold-logo\.svg"/);
   assert.doesNotMatch(garden, /src="website\/assets\//);
   assert.match(css, /\.garden-portal\[data-revealed="true"\]/);
   assert.match(css, /rgba\(209, 231, 145/);

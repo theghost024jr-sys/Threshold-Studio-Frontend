@@ -5,8 +5,9 @@ import test from "node:test";
 const root = new URL("../", import.meta.url);
 
 test("reveals garden.html after five unique pollen activations", async () => {
-  const [html, css, script] = await Promise.all([
+  const [html, garden, css, script] = await Promise.all([
     readFile(new URL("housegarden.html", root), "utf8"),
+    readFile(new URL("garden.html", root), "utf8"),
     readFile(new URL("styles/housegarden.css", root), "utf8"),
     readFile(new URL("scripts/housegarden.js", root), "utf8")
   ]);
@@ -14,6 +15,8 @@ test("reveals garden.html after five unique pollen activations", async () => {
   assert.equal((html.match(/pollen clickable/g) || []).length, 5);
   assert.match(html, /data-garden-portal[^>]*data-revealed="false"[^>]*aria-hidden="true"/);
   assert.match(html, /href="garden\.html" tabindex="-1">Enter Garden Organ/);
+  assert.match(garden, /src="assets\/entry\/threshold-logo\.svg"/);
+  assert.doesNotMatch(garden, /src="website\/assets\//);
   assert.match(css, /\.garden-portal\[data-revealed="true"\]/);
   assert.match(css, /rgba\(209, 231, 145/);
   assert.match(css, /@keyframes pollen-drift/);

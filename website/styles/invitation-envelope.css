@@ -1,0 +1,18 @@
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  clip-path: polygon(0 42%, 50% 78%, 100% 42%, 100% 100%, 0 100%);
+  background: #c9b98f;
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.invitation-open .envelope-front {
+  transform: translateY(18%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope-front {
+    transition-duration: 0.01ms;
+  }
+}

@@ -1,113 +1,58 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invitation Â· Threshold Studio</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="styles/complexity-layers.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Source+Code+Pro&display=swap" rel="stylesheet">
-  <style>
-    .invitation-section {
-      max-width: 800px;
-      margin: 4rem auto;
-      padding: 0 2rem;
-      font-size: 1.1rem;
-      color: #6e5c4f;
-      text-align: center;
-    }
-    .invitation-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #d6cfc2;
-      padding-bottom: 0.5rem;
-    }
-    .invitation-section p {
-      margin-bottom: 2rem;
-    }
-    .ritual-button {
-      font-family: 'Source Code Pro', monospace;
-      background: #2e2a26;
-      color: #f5f1eb;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .ritual-button:hover {
-      background: #4b3f36;
-    }
-  </style>
+  <title>Invitation · Threshold Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/invitation-letter.css" />
+  <link rel="stylesheet" href="styles/invitation-envelope.css" />
 </head>
 <body data-threshold-spoke="invitation" data-complexity="foundation editorial ritual" data-motion="bounded">
-  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+  <a class="back-mark" href="index.html" aria-label="Return to the Hub">THR / RETURN</a>
 
-  <header>
-    <h1>Invitation</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="ethos.html">Ethos</a>
-      <a href="glyphs.html">Glyphs</a>
-    </nav>
-  </header>
+  <main class="invitation-room">
+    <figure class="found-image">
+      <img src="assets/vault/humanoids/invitationlisteningroom-001-listening-room.png" alt="A dark listening room at Threshold" />
+      <figcaption>Listening Room. Photographer and coordinates withheld.</figcaption>
+    </figure>
 
-  <section class="invitation-section">
-    <h2>Press Your Glyph</h2>
-    <p>Threshold is a house with no locks. If youâ€™ve felt the shimmer, the ache, the breath betweenâ€”this is your invitation. Press your glyph. Leave a trace. Stay in the hush.</p>
+    <section class="envelope" aria-labelledby="invitation-title">
+      <div class="envelope-back" aria-hidden="true"></div>
+      <article class="letter">
+        <header class="letter-head">
+          <span>Threshold Studio</span>
+          <span>Private correspondence · 1 of 1</span>
+        </header>
+        <p class="salutation">To the one who kept looking,</p>
+        <h1 id="invitation-title">You found it.</h1>
+        <p>That matters.</p>
+        <p>This place is for unfinished work, strange questions, and people who would rather make something real than make themselves legible.</p>
+        <p>You do not need a pitch. You do not need permission. Bring one thing you care enough about to change.</p>
+        <p class="signature">The door is yours,<br><strong>Threshold</strong></p>
+        <div class="letter-foot">
+          <span>NO AUDIENCE · NO PERFORMANCE</span>
+          <a href="hub.html">Come inside →</a>
+        </div>
+      </article>
+      <div class="envelope-front" aria-hidden="true"></div>
+      <div class="envelope-flap" aria-hidden="true"><span>FOR THE FINDER</span></div>
+      <button id="accept" class="wax-seal" type="button" data-threshold-accept aria-label="Break the seal and open your invitation">
+        <span aria-hidden="true">T</span>
+      </button>
+      <p class="seal-note">Break the seal</p>
+    </section>
 
-    <p>We welcome the rare, the bent, the edge-of-the-map souls. Your presence is the ritual. Your glyph is the shimmer. Your staying is the myth.</p>
+    <aside class="margin-note" aria-hidden="true">
+      <span>It was never hidden.</span>
+      <span>It was waiting to be noticed.</span>
+    </aside>
+  </main>
 
-    <button id="accept" class="ritual-button" type="button" data-threshold-accept>Accept the Invitation</button>
-  </section>
-
-  <footer>
-    &copy; 2025 Threshold Studio Â· Invitation pressed with breath and shimmer
-  </footer>
-
-  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
-  <style>
-    .engine-architecture-link {
-      position: fixed;
-      right: 12px;
-      bottom: 12px;
-      z-index: 10000;
-      padding: 0.36rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(210, 228, 255, 0.5);
-      background: rgba(10, 16, 30, 0.78);
-      color: rgba(232, 242, 255, 0.96);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.64rem;
-      backdrop-filter: blur(4px);
-    }
-    .engine-architecture-link:hover,
-    .engine-architecture-link:focus-visible {
-      background: rgba(216, 233, 255, 0.95);
-      color: #101524;
-      outline: none;
-    }
-  </style>
   <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
-  <script src="scripts/spoke-tabs.js"></script>
-  <script type="module" src="scripts/destination-page.js?v=reveal-3"></script>
+  <script src="scripts/invitation.js"></script>
+  <script type="module" src="scripts/destination-page.js?v=reveal-5"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

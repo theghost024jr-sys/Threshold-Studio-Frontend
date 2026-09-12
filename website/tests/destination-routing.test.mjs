@@ -24,6 +24,14 @@ test("routes Hub cards to owned destination pages", async () => {
   assert.doesNotMatch(hub, /href=["']spoke\.html/);
 });
 
+test("boots the world Hub from a real activation control", async () => {
+  const hub = await readFile(new URL("../hub.html", import.meta.url), "utf8");
+
+  assert.match(hub, /<button id="hubA"[^>]*>Wake the hub<\/button>/);
+  assert.match(hub, /src="\/threshold-engine\.js"/);
+  assert.doesNotMatch(hub, /src="\/scripts\/fibonacci-entry\.js"/);
+});
+
 test("ships the Fib 13 Hub reactor interaction contract", async () => {
   const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
   const reactor = await readFile(

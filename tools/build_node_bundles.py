@@ -44,6 +44,7 @@ def build_node_bundles(paths: ThresholdPaths) -> dict[str, Any]:
         raise FileNotFoundError(f"Build vault data first: {source_path}")
 
     source = json.loads(source_path.read_text(encoding="utf-8"))
+    source_vault = str(source.get("vaultRoot", paths.vault_root))
     documents = source["documents"]
     generated_at = datetime.now(timezone.utc).isoformat()
     records = []
@@ -52,7 +53,7 @@ def build_node_bundles(paths: ThresholdPaths) -> dict[str, Any]:
         records.append(write_bundle(paths.node_bundles_root, name, {
             "version": 1,
             "generatedAt": generated_at,
-            "sourceVault": str(paths.vault_root),
+            "sourceVault": source_vault,
             "name": name,
             "count": len(selected),
             "documents": selected,
@@ -61,13 +62,13 @@ def build_node_bundles(paths: ThresholdPaths) -> dict[str, Any]:
     records.append(write_bundle(paths.node_bundles_root, "workspace", {
         "version": 1,
         "generatedAt": generated_at,
-        "sourceVault": str(paths.vault_root),
+        "sourceVault": source_vault,
         "counts": source["counts"],
     }))
     records.append(write_bundle(paths.node_bundles_root, "graph", {
         "version": 1,
         "generatedAt": generated_at,
-        "sourceVault": str(paths.vault_root),
+        "sourceVault": source_vault,
         "nodes": [
             {
                 "id": document["id"],
@@ -81,7 +82,7 @@ def build_node_bundles(paths: ThresholdPaths) -> dict[str, Any]:
     records.append(write_bundle(paths.node_bundles_root, "node-metadata", {
         "version": 1,
         "generatedAt": generated_at,
-        "sourceVault": str(paths.vault_root),
+        "sourceVault": source_vault,
         "nodes": [
             {key: value for key, value in document.items() if key != "body"}
             for document in documents
@@ -90,7 +91,7 @@ def build_node_bundles(paths: ThresholdPaths) -> dict[str, Any]:
     manifest = {
         "version": 1,
         "generatedAt": generated_at,
-        "sourceVault": str(paths.vault_root),
+        "sourceVault": source_vault,
         "bundles": records,
     }
     paths.node_bundles_root.mkdir(parents=True, exist_ok=True)
@@ -102,16 +103,36 @@ def build_node_bundles(paths: ThresholdPaths) -> dict[str, Any]:
 
 
 def main() -> int:
+    ci = os.environ.get("CI", "").strip().lower() not in {"", "0", "false", "no"}
+    root = Path(__file__).resolve().parent.parent
+    fallback_data = root / "website" / "data" / "threshold-vault.json"
+    fallback_notice: str | None = None
     try:
         paths = load_threshold_paths()
         manifest = build_node_bundles(paths)
     except FileNotFoundError as error:
-        fallback_data = Path(__file__).resolve().parent.parent / "website" / "data" / "threshold-vault.json"
-        if os.environ.get("CI") == "true" and fallback_data.is_file():
-            print(f"Skipping node bundle rebuild in CI: {error}")
-            print(f"Using committed vault data: {fallback_data}")
-            return 0
-        raise
+        if ci and fallback_data.is_file():
+            snapshot = json.loads(fallback_data.read_text(encoding="utf-8"))
+            if not isinstance(snapshot, dict) or not isinstance(snapshot.get("documents"), list):
+                raise ValueError(f"Committed vault snapshot is invalid: {fallback_data}")
+            paths = ThresholdPaths(
+                vault_root=root,
+                glyph_root=root / "vault" / "glyphs",
+                system_root=root,
+                website_root=root / "website",
+                html_inventory_root=root / "html-inventory",
+                world_root=root / "world",
+                threshold_root=root,
+                node_bundles_root=root / "node-bundles",
+                scripts_root=root / "scripts",
+                tools_root=root / "tools",
+            )
+            manifest = build_node_bundles(paths)
+            fallback_notice = f"Rebuilt node bundles from committed vault snapshot in CI: {error}"
+        else:
+            raise
+    if fallback_notice:
+        print(fallback_notice)
     print(f"Built {len(manifest['bundles'])} node bundles from {manifest['sourceVault']}")
     print(f"Node bundles: {paths.node_bundles_root}")
     return 0

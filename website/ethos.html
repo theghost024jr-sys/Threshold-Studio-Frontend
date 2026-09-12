@@ -3,84 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ethos Â· Threshold Studio</title>
+  <title>Ethos · Threshold Studio</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="styles/complexity-layers.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Source+Code+Pro&display=swap" rel="stylesheet">
-  <style>
-    .ethos-section {
-      max-width: 800px;
-      margin: 4rem auto;
-      padding: 0 2rem;
-      font-size: 1.1rem;
-      color: #6e5c4f;
-    }
-    .ethos-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #d6cfc2;
-      padding-bottom: 0.5rem;
-    }
-    .ethos-section p {
-      margin-bottom: 2rem;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/ethos-root.css" />
 </head>
-<body data-threshold-spoke="ethos" data-complexity="foundation editorial" data-motion="bounded">
+<body class="ethos-page" data-threshold-spoke="ethos" data-complexity="foundation atmosphere editorial topology" data-motion="bounded">
   <link rel="stylesheet" href="styles/spoke-tabs.css" />
 
-  <header>
-    <h1>Studio Ethos</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="glyphs.html">Glyphs</a>
+  <header class="ethos-header">
+    <a class="ethos-brand" href="hub.html" aria-label="Return to Threshold Hub">
+      <img src="assets/entry/threshold-logo.svg" alt="" />
+      <span>Threshold</span>
+    </a>
+    <nav class="ethos-nav" aria-label="Ethos navigation">
+      <a href="hub.html">Hub</a>
       <a href="invitation.html">Invitation</a>
     </nav>
   </header>
 
-  <section class="ethos-section">
-    <h2>Threshold Is Not a Brand</h2>
-    <p>It is a ritual of staying. A house built from shimmer, ache, and the refusal to collapse. We compost error into clarity, and let unfinishedness breathe like dusk in the garden.</p>
+  <main class="ethos-root">
+    <section class="ethos-intro" aria-labelledby="ethos-title">
+      <div class="ethos-copy">
+        <p class="ethos-coordinate">High-order principle · Fib 5–8</p>
+        <h1 id="ethos-title">Ethos</h1>
+        <p class="ethos-definition">The behavioral physics of participation.</p>
+        <blockquote class="ethos-slit">
+          <span>Primary slit</span>
+          <p>Behavior generates gravity.</p>
+        </blockquote>
+        <p class="ethos-premise">Whatever passes through the slit returns as pressure, drift, or anchor. This is where intent becomes force.</p>
+      </div>
 
-    <h2>Presence Is the Currency</h2>
-    <p>We honor the rare, the bent, the edge-of-the-map souls. We build spaces where recognition is earned, not extracted. We let silence speak and overflow arrive without shame.</p>
+      <figure class="ethos-orbit" aria-labelledby="orbit-caption">
+        <div class="orbit-ring orbit-ring--outer" aria-hidden="true"></div>
+        <div class="orbit-ring orbit-ring--inner" aria-hidden="true"></div>
+        <img class="orbit-flower" src="assets/entry/threshold-logo.svg" alt="" />
+        <a class="orbit-node orbit-node--alignment" href="ethos.html?node=alignment&amp;fib=5&amp;trail=ethos">
+          <strong>Alignment</strong><span>Anchor</span>
+        </a>
+        <a class="orbit-node orbit-node--contribution" href="ethos.html?node=contribution&amp;fib=5&amp;trail=ethos">
+          <strong>Contribution</strong><span>Height</span>
+        </a>
+        <a class="orbit-node orbit-node--presence" href="ethos.html?node=presence&amp;fib=5&amp;trail=ethos">
+          <strong>Presence</strong><span>Stability</span>
+        </a>
+        <figcaption id="orbit-caption">The Ethos Triad · minimum viable structure</figcaption>
+      </figure>
+    </section>
+  </main>
 
-    <h2>Myth Is a Living System</h2>
-    <p>Glyphs are pressed, not printed. Protocols are invitations, not instructions. Transmission is breath, not broadcast. We loop shimmer into soil and let the ledger hum.</p>
-
-    <h2>We Refuse to Collapse</h2>
-    <p>Collapse is compost. Ache is architecture. Waiting is generative. We honor the breath between blooms and the hush that holds us. We stay.</p>
-  </section>
-
-  <footer>
-    &copy; 2025 Threshold Studio Â· Ethos pressed with breath and shimmer
-  </footer>
-
-  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
-  <style>
-    .engine-architecture-link {
-      position: fixed;
-      right: 12px;
-      bottom: 12px;
-      z-index: 10000;
-      padding: 0.36rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(210, 228, 255, 0.5);
-      background: rgba(10, 16, 30, 0.78);
-      color: rgba(232, 242, 255, 0.96);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.64rem;
-      backdrop-filter: blur(4px);
-    }
-    .engine-architecture-link:hover,
-    .engine-architecture-link:focus-visible {
-      background: rgba(216, 233, 255, 0.95);
-      color: #101524;
-      outline: none;
-    }
-  </style>
   <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script src="scripts/emotional-engine.js"></script>

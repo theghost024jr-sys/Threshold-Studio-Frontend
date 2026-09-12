@@ -1,0 +1,358 @@
+:root {
+  --ethos-ink: #f3eddf;
+  --ethos-muted: #a8afa2;
+  --ethos-moss: #6f9b73;
+  --ethos-leaf: #b8d39f;
+  --ethos-gold: #d6ab63;
+  --ethos-rust: #b45f43;
+  --ethos-night: #080b0b;
+  --ethos-ground: #111713;
+}
+
+.ethos-page {
+  min-height: 100svh;
+  color: var(--ethos-ink);
+  background:
+    linear-gradient(rgba(184, 211, 159, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 211, 159, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 72% 34%, rgba(111, 155, 115, 0.13), transparent 26rem),
+    linear-gradient(145deg, var(--ethos-night), var(--ethos-ground) 58%, #17130f);
+  background-size: 56px 56px, 56px 56px, auto, auto;
+  font-family: "DM Mono", monospace;
+}
+
+.ethos-header {
+  position: relative;
+  z-index: 20;
+  min-height: 72px;
+  padding: 0 clamp(1.25rem, 5vw, 5rem);
+  border-bottom: 1px solid rgba(184, 211, 159, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: rgba(8, 11, 11, 0.82);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.ethos-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--ethos-ink);
+  font-size: 0.72rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ethos-brand img {
+  width: 34px;
+  height: 34px;
+}
+
+.ethos-nav {
+  display: flex;
+  gap: 1.4rem;
+}
+
+.ethos-nav a {
+  color: var(--ethos-muted);
+  font-size: 0.68rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.ethos-nav a:hover,
+.ethos-nav a:focus-visible {
+  color: var(--ethos-leaf);
+}
+
+.ethos-root {
+  width: min(1180px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vh, 7rem) 0 8rem;
+}
+
+.ethos-intro {
+  min-height: min(720px, calc(100svh - 72px));
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(420px, 1.12fr);
+  align-items: center;
+  gap: clamp(2rem, 7vw, 7rem);
+}
+
+.ethos-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.ethos-coordinate {
+  margin: 0 0 1.25rem;
+  color: var(--ethos-leaf);
+  font-size: 0.67rem;
+  text-transform: uppercase;
+}
+
+.ethos-copy h1 {
+  max-width: none;
+  margin: 0;
+  color: var(--ethos-ink);
+  font-family: "Newsreader", serif;
+  font-size: clamp(5rem, 11vw, 10rem);
+  font-weight: 400;
+  line-height: 0.76;
+}
+
+.ethos-definition {
+  max-width: 28ch;
+  margin: 1.5rem 0 0;
+  color: var(--ethos-muted);
+  font-family: "Newsreader", serif;
+  font-size: clamp(1.4rem, 2.4vw, 2.25rem);
+  line-height: 1.12;
+}
+
+.ethos-slit {
+  margin: clamp(2.5rem, 7vh, 5rem) 0 0;
+  padding: 1.15rem 0 1.15rem 1.35rem;
+  border-left: 2px solid var(--ethos-rust);
+}
+
+.ethos-slit span {
+  color: var(--ethos-rust);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.ethos-slit p {
+  margin: 0.42rem 0 0;
+  color: var(--ethos-ink);
+  font-family: "Newsreader", serif;
+  font-size: clamp(1.55rem, 3vw, 2.7rem);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.ethos-premise {
+  max-width: 54ch;
+  margin: 1.4rem 0 0;
+  color: var(--ethos-muted);
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+
+.ethos-orbit {
+  position: relative;
+  width: min(100%, 590px);
+  aspect-ratio: 1;
+  margin: 0;
+  justify-self: end;
+}
+
+.orbit-ring {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border: 1px solid rgba(184, 211, 159, 0.26);
+  border-radius: 50%;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+.orbit-ring--outer {
+  width: 88%;
+  aspect-ratio: 1;
+  border-style: dashed;
+  animation: ethos-orbit 52s linear infinite;
+}
+
+.orbit-ring--inner {
+  width: 51%;
+  aspect-ratio: 1;
+  border-color: rgba(214, 171, 99, 0.42);
+}
+
+.orbit-flower {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  filter: sepia(0.25) saturate(0.75) drop-shadow(0 0 30px rgba(214, 171, 99, 0.28));
+}
+
+.orbit-node {
+  position: absolute;
+  min-width: 9rem;
+  padding: 0.72rem 0.85rem;
+  border-left: 2px solid var(--node-color);
+  color: var(--ethos-ink);
+  background: rgba(8, 11, 11, 0.88);
+  text-decoration: none;
+  transition: background 180ms ease, translate 180ms ease;
+}
+
+.orbit-node strong,
+.orbit-node span {
+  display: block;
+}
+
+.orbit-node strong {
+  font-family: "Newsreader", serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+.orbit-node span {
+  margin-top: 0.24rem;
+  color: var(--node-color);
+  font-size: 0.57rem;
+  text-transform: uppercase;
+}
+
+.orbit-node:hover,
+.orbit-node:focus-visible {
+  background: rgba(24, 31, 25, 0.98);
+  translate: 0 -3px;
+}
+
+.orbit-node--alignment {
+  --node-color: var(--ethos-leaf);
+  top: 8%;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.orbit-node--alignment:hover,
+.orbit-node--alignment:focus-visible {
+  translate: -50% -3px;
+}
+
+.orbit-node--contribution {
+  --node-color: var(--ethos-gold);
+  right: 0;
+  bottom: 22%;
+}
+
+.orbit-node--presence {
+  --node-color: var(--ethos-rust);
+  bottom: 22%;
+  left: 0;
+}
+
+.ethos-orbit figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 2%;
+  left: 0;
+  color: var(--ethos-muted);
+  font-size: 0.59rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ethos-page .threshold-destination-layer {
+  width: 100%;
+  margin: clamp(2rem, 7vh, 6rem) 0 0;
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 4vw, 4rem);
+  border-color: rgba(184, 211, 159, 0.28);
+  background: rgba(8, 11, 11, 0.58);
+}
+
+.ethos-page .threshold-destination-kicker,
+.ethos-page .threshold-destination-status,
+.ethos-page .threshold-destination-content a,
+.ethos-page .threshold-destination-parent-link {
+  color: var(--ethos-leaf);
+}
+
+.ethos-page .threshold-destination-content {
+  max-width: 76ch;
+}
+
+.ethos-page .threshold-destination-content h3 {
+  margin-top: 2.5rem;
+  color: var(--ethos-gold);
+  font-family: "Newsreader", serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 400;
+  text-transform: none;
+}
+
+.ethos-page .threshold-destination-content blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--ethos-rust);
+  font-family: "Newsreader", serif;
+  font-size: 1.35rem;
+}
+
+.ethos-page .threshold-destination-child {
+  border-color: rgba(214, 171, 99, 0.46);
+  background: rgba(17, 23, 19, 0.88);
+}
+
+@keyframes ethos-orbit {
+  to { rotate: 360deg; }
+}
+
+@media (max-width: 860px) {
+  .ethos-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .ethos-orbit {
+    width: min(100%, 560px);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .ethos-header {
+    min-height: 64px;
+    padding: 0 1rem;
+  }
+
+  .ethos-brand span {
+    display: none;
+  }
+
+  .ethos-root {
+    width: min(100% - 2rem, 1180px);
+    padding-top: 3rem;
+  }
+
+  .ethos-copy h1 {
+    font-size: clamp(4.5rem, 27vw, 7rem);
+  }
+
+  .ethos-orbit {
+    width: calc(100% + 1rem);
+    margin-left: -0.5rem;
+  }
+
+  .orbit-node {
+    min-width: 7.6rem;
+    padding: 0.6rem 0.65rem;
+  }
+
+  .orbit-node strong {
+    font-size: 0.95rem;
+  }
+
+  .ethos-page .threshold-destination-layer {
+    padding-inline: 0;
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring--outer {
+    animation: none;
+  }
+
+  .orbit-node {
+    transition: none;
+  }
+}

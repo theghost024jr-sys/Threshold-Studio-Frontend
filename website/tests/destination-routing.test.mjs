@@ -194,6 +194,7 @@ test("roots Ethos in its declaration and mandatory seed triad", async () => {
     new URL("../config/page-topology.json", import.meta.url),
     "utf8"
   ));
+  const page = await readFile(new URL("../ethos.html", import.meta.url), "utf8");
   const loader = await readFile(
     new URL("../scripts/destination-page.js", import.meta.url),
     "utf8"
@@ -210,6 +211,9 @@ test("roots Ethos in its declaration and mandatory seed triad", async () => {
   assert.match(ethos.content.body, /Node Physics/);
   assert.match(ethos.content.body, /Ready for Attachment/);
   assert.match(loader, /content: root\.content/);
+  assert.match(page, /Behavior generates gravity/);
+  assert.match(page, /class="ethos-orbit"/);
+  assert.doesNotMatch(page, /Threshold Is Not a Brand/);
 
   for (const id of ["alignment", "contribution", "presence"]) {
     assert.equal(topology.nodes[id].fib, 5);

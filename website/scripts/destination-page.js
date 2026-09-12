@@ -85,18 +85,86 @@ function createLayer() {
   return { layer, kicker, title, content, parent, children, status };
 }
 
-function summarize(node) {
-  if (Array.isArray(node.components) && node.components.length) {
-    return node.components.map((component) => {
-      const value = component.content && (component.content.note || component.content);
-      const text = value && (value.excerpt || value.body || value.title) || "";
-      return `${String(component.type || "node").replace(/-/g, " ").toUpperCase()}\n${text}`;
-    }).join("\n\n");
-  }
-  const value = node.content && (node.content.note || node.content);
+const ALLOWED_CONTENT_TAGS = new Set([
+  "A", "BLOCKQUOTE", "BR", "CODE", "EM", "H3", "H4", "LI", "OL", "P", "PRE", "STRONG", "UL"
+]);
+
+function contentText(content) {
+  const value = content && (content.note || content);
   return typeof value === "string"
     ? value
-    : value && (value.excerpt || value.body || value.title) || "";
+    : value && (value.body || value.excerpt || value.title) || "";
+}
+
+function appendSafeHtml(target, source) {
+  const template = document.createElement("template");
+  template.innerHTML = source;
+  template.content.querySelectorAll("*").forEach((element) => {
+    if (!ALLOWED_CONTENT_TAGS.has(element.tagName)) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    [...element.attributes].forEach((attribute) => {
+      const keepHref = element.tagName === "A"
+        && attribute.name === "href"
+        && /^(\/|\.|#|https?:)/i.test(attribute.value);
+      if (!keepHref) element.removeAttribute(attribute.name);
+    });
+    if (element.tagName === "A" && /^https?:/i.test(element.getAttribute("href") || "")) {
+      element.rel = "noreferrer";
+    }
+  });
+  target.appendChild(template.content);
+}
+
+function appendMarkdown(target, source) {
+  const blocks = String(source).trim().split(/\n\s*\n/).filter(Boolean);
+  blocks.forEach((block) => {
+    const heading = block.match(/^(#{1,2})\s+([^\n]+)/);
+    const list = block.split("\n").filter(Boolean);
+    if (heading) {
+      const title = document.createElement(heading[1].length === 1 ? "h3" : "h4");
+      title.textContent = heading[2].trim();
+      target.appendChild(title);
+    } else if (list.every((line) => /^[-*]\s+/.test(line))) {
+      const items = document.createElement("ul");
+      list.forEach((line) => {
+        const item = document.createElement("li");
+        item.textContent = line.replace(/^[-*]\s+/, "");
+        items.appendChild(item);
+      });
+      target.appendChild(items);
+    } else {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = block.replace(/\n/g, " ");
+      target.appendChild(paragraph);
+    }
+  });
+}
+
+function appendRichContent(target, source) {
+  if (/<\/?[a-z][^>]*>/i.test(source)) {
+    appendSafeHtml(target, source);
+  } else {
+    appendMarkdown(target, source);
+  }
+}
+
+function renderDestinationContent(target, node) {
+  target.replaceChildren();
+  if (Array.isArray(node.components) && node.components.length) {
+    node.components.forEach((component) => {
+      const section = document.createElement("section");
+      const heading = document.createElement("h3");
+      heading.textContent = String(component.type || "node").replace(/-/g, " ");
+      section.className = "threshold-destination-component";
+      section.appendChild(heading);
+      appendRichContent(section, contentText(component.content));
+      target.appendChild(section);
+    });
+    return;
+  }
+  appendRichContent(target, contentText(node.content));
 }
 
 function readTransition() {
@@ -288,7 +356,7 @@ async function loadDestination() {
     view.layer.dataset.complexity = topology.complexity[String(fib)] || "grounded";
     view.kicker.textContent = `Fib ${fib} · ${spoke.label}`;
     view.title.textContent = node.title || node.label || String(node.id || spoke.label).replace(/-/g, " ");
-    view.content.textContent = summarize(node);
+    renderDestinationContent(view.content, node);
     renderParent(view, topology, spoke, node);
     renderChildren(view, node, fib, version);
     if (activationError) {

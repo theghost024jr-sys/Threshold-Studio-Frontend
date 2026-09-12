@@ -139,6 +139,10 @@ test("destination loader reconstructs and renders node children", async () => {
   assert.match(loader, /Authored links remain available/);
   assert.match(loader, /prefers-reduced-motion: reduce/);
   assert.match(loader, /threshold-reveal-arrival-layer/);
+  assert.match(loader, /renderDestinationContent\(view\.content, node\)/);
+  assert.match(loader, /ALLOWED_CONTENT_TAGS/);
+  assert.match(loader, /template\.content\.querySelectorAll/);
+  assert.doesNotMatch(loader, /view\.content\.textContent\s*=/);
   assert.doesNotMatch(loader, /node\.choices/);
   assert.doesNotMatch(loader, /location\.assign\(["']spoke\.html/);
 });

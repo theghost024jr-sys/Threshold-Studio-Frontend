@@ -24,7 +24,32 @@
 .threshold-destination-content {
   max-width: 72ch;
   line-height: 1.55;
-  white-space: pre-wrap;
+}
+
+.threshold-destination-content > :first-child,
+.threshold-destination-component > :first-child {
+  margin-top: 0;
+}
+
+.threshold-destination-content a {
+  color: #8be4d5;
+  text-underline-offset: 0.2rem;
+}
+
+.threshold-destination-content li + li {
+  margin-top: 0.35rem;
+}
+
+.threshold-destination-component + .threshold-destination-component {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(139, 228, 213, 0.18);
+}
+
+.threshold-destination-component h3 {
+  color: #e0b866;
+  font-size: 0.76rem;
+  text-transform: uppercase;
 }
 
 .threshold-destination-children {

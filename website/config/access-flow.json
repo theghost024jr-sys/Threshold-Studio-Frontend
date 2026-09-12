@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "storageKey": "threshold.access.flow.v1",
+  "projects": [
+    { "id": "house-garden", "label": "House and Garden", "route": "/housegarden.html" },
+    { "id": "ethos", "label": "Ethos", "route": "/ethos.html" },
+    { "id": "learning-wheel", "label": "Learning Wheel", "route": "/learningwheel.html" },
+    { "id": "discover", "label": "Discover", "route": "/discover.html" },
+    { "id": "invitation", "label": "Invitation", "route": "/invitation.html" },
+    { "id": "mythology", "label": "Mythology", "route": "/mythology.html" },
+    { "id": "glyphs", "label": "Glyphs", "route": "/glyphs.html" },
+    { "id": "dialogues", "label": "Dialogues", "route": "/dialogues.html" },
+    { "id": "contact", "label": "Contact", "route": "/contact.html" }
+  ],
+  "stages": [
+    { "id": "discovery", "label": "Discovery", "route": "/discover.html", "requires": [], "completion": "visit" },
+    { "id": "dialogue", "label": "Dialogue", "route": "/dialogues.html", "requires": [], "completion": "visit" },
+    { "id": "hub", "label": "Hub Entry", "route": "/index.html", "requires": [], "completion": "visit" },
+    { "id": "invitation", "label": "Invitation", "route": "/invitation.html", "requires": ["discovery", "dialogue", "hub"], "completion": "visit" },
+    { "id": "accept", "label": "Accept", "route": "/invitation.html#accept", "requires": ["invitation"], "completion": "action" },
+    { "id": "engine", "label": "Enter Engine", "route": "/deep-system/engine.html", "requires": ["accept"], "completion": "visit" },
+    { "id": "trunk", "label": "Trunk Assembly", "route": "/mythology.html#trunk-assembly", "requires": ["engine"], "completion": "visit" },
+    { "id": "contact", "label": "Contact", "route": "/contact.html", "requires": ["trunk"], "completion": "visit" }
+  ]
+}

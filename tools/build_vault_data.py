@@ -206,18 +206,20 @@ def build_species_signals(
     return signals
 
 
-def build_glyph_index(vault_root: Path, website_root: Path) -> dict[str, dict[str, dict[str, str]]]:
-    source_root = vault_root / "glyphs"
+def build_glyph_index(glyph_root: Path, website_root: Path) -> dict[str, dict[str, dict[str, str]]]:
     output_root = website_root / "vault" / "glyphs"
     glyphs: dict[str, dict[str, str]] = {}
 
     for glyph_id, definition in GLYPH_DEFINITIONS.items():
-        source = source_root / f"{glyph_id}.png"
-        if not source.is_file():
-            raise FileNotFoundError(f"Missing canonical glyph asset: {source}")
+        source = glyph_root / f"{glyph_id}.png"
         destination = output_root / source.name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
+        if source.is_file():
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+        elif not destination.is_file():
+            raise FileNotFoundError(
+                f"Missing glyph asset in source and compatibility output: {source}"
+            )
         glyphs[glyph_id] = {
             "id": glyph_id,
             "name": definition["name"],
@@ -314,7 +316,7 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
     asset_output_root = paths.website_root / "assets" / "vault"
     assets_by_name = media_index(paths.vault_root)
     build_species_signals(paths.vault_root, assets_by_name, paths.website_root)
-    build_glyph_index(paths.vault_root, paths.website_root)
+    build_glyph_index(paths.glyph_root, paths.website_root)
     published = [
         public_document(paths.vault_root, path, assets_by_name, asset_output_root)
         for path in markdown_files(publish_root)

@@ -1,70 +1,31 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-19T05:26:32.964793+00:00",
-  "vaultRoot": "C:\\Users\\James Romeo\\Threshold\\ThresholdVault\\theghost",
-  "publishRoot": "C:\\Users\\James Romeo\\Threshold\\ThresholdVault\\theghost\\_publish",
+  "generatedAt": "2026-09-12T07:05:18.940422+00:00",
+  "vaultRoot": "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish",
+  "publishRoot": "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish\\_publish",
   "counts": {
-    "markdown": 4039,
-    "publishedMarkdown": 129,
+    "markdown": 4036,
+    "publishedMarkdown": 125,
     "entities": 15,
-    "chambers": 4,
+    "chambers": 3,
     "translations": 0
   },
   "documents": [
-    {
-      "id": "jerome-image",
-      "title": "Jerome.png",
-      "relativePath": "_publish/assets/Jerome.png.md",
-      "kind": "note",
-      "category": "Ecologies",
-      "chamber": null,
-      "route": null,
-      "entries": [],
-      "exits": [],
-      "neighbors": [],
-      "asset": null,
-      "publish": true,
-      "draft": false,
-      "tags": [],
-      "description": "",
-      "links": [
-        "03 - World/00 - Index/Environment Layer",
-        "Environmental Pressure Field",
-        "jerome.png",
-        "Threshold Map 1"
-      ],
-      "assets": [
-        {
-          "name": "jerome.png",
-          "sourceRelativePath": "13 - Reference/16 reference/jerome.png",
-          "webPath": "/assets/vault/4b477eb8d215.png"
-        }
-      ],
-      "body": "[[jerome.png]]\n[[03 - World/00 - Index/Environment Layer]]\n[[Environmental Pressure Field]]\n[[Threshold Map 1]]"
-    },
     {
       "id": "basin",
       "title": "Basin",
       "relativePath": "_publish/basin.md",
       "kind": "chamber",
       "category": "chamber",
-      "chamber": "HouseAndGarden",
-      "route": "/environment/basin",
-      "entries": [
-        "herbroom"
-      ],
-      "exits": [
-        "waterfall"
-      ],
+      "chamber": "Basin",
+      "route": null,
+      "entries": [],
+      "exits": [],
       "neighbors": [],
-      "asset": "/assets/basin.png",
+      "asset": "basin.png",
       "publish": true,
       "draft": false,
-      "tags": [
-        "chamber",
-        "basin",
-        "environment"
-      ],
+      "tags": [],
       "description": ">",
       "links": [
         "basin.png"
@@ -79,87 +40,16 @@
       "body": "# Basin\n\n![[basin.png]]\n\nThe Basin is a quiet, reflective pool fed by underground channels..."
     },
     {
-      "id": "snail-band-clearing",
-      "title": "Snail Band Clearing",
-      "relativePath": "_publish/chambers/snail-band-clearing/snail-band-clearing.md",
-      "kind": "chamber",
-      "category": "chamber",
-      "chamber": "Snail Band Clearing",
-      "route": "/environment/snail-band-clearing",
-      "entries": [
-        "waterfall"
-      ],
-      "exits": [
-        "old-forest"
-      ],
-      "neighbors": [
-        "waterfall"
-      ],
-      "asset": "snail-band-clearing/waterfall.png",
-      "publish": true,
-      "draft": false,
-      "tags": [],
-      "description": "|",
-      "links": [
-        "Beetle on Percussion",
-        "Doug",
-        "Doug keeps ending up at the edges of major events",
-        "Frog is the Bass",
-        "Snail Band Cycle",
-        "snail-band-clearing/beetle-on-percussion.png",
-        "snail-band-clearing/doug.png",
-        "snail-band-clearing/green-frog.png",
-        "snail-band-clearing/waterfall.png",
-        "snail-band-clearing/wise-frog.png",
-        "The Snail",
-        "The snails Party"
-      ],
-      "assets": [
-        {
-          "name": "beetle-on-percussion.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/beetle-on-percussion.png",
-          "webPath": "/assets/vault/7ce3be50d7d0.png"
-        },
-        {
-          "name": "doug.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/doug.png",
-          "webPath": "/assets/vault/f8bd9daef27f.png"
-        },
-        {
-          "name": "green-frog.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/green-frog.png",
-          "webPath": "/assets/vault/df04e61fcd8a.png"
-        },
-        {
-          "name": "waterfall.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/waterfall.png",
-          "webPath": "/assets/vault/b90ebd624188.png"
-        },
-        {
-          "name": "wise-frog.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/wise-frog.png",
-          "webPath": "/assets/vault/9b8b76d125d0.png"
-        }
-      ],
-      "body": "# Snail Band Clearing\n\nFollow the stone stair south of the Waterfall until the falling water becomes\na pulse in the roots. A small porch waits where mist meets the Old Forest.\n\nAt dusk, the Snail drops his debris bag, sits down, and picks the first notes\non a banjo tuned to the Forest's hum. The Beetle waits, then taps a precise\nrhythm on wood and shell. The frogs listen for the groove before laying down\na slow root-bass and answering chorus.\n\nThe clearing is not a stage and the gathering is not a concert. Roots pulse,\nbranches sway, spores turn in warm spirals, and passing travelers stop only\nas long as they need. The band is the Forest speaking to itself.\n\n## Sinker Sound\n\nA traveler may sit at the porch and answer with one heavy, grounded beat. On\nalignment, the bass deepens, the Beetle locks to the pulse, and an old path\nopens farther south into the Old Forest. Missing the beat causes no harm; the\nband continues until the traveler is ready to listen again.\n\n## Random System Check\n\nOn some nights, a low-priority monitoring task routes Doug through the\nclearing. He arrives with a clipboard to verify an unassigned pressure log,\nchecks the porch pulse against the Waterfall's drift delta, and records the\nband as stable. He does not interrupt the music or interpret it. He closes the\nticket, follows the path back north, and the clearing's collapse probability\nquietly drops by 0.7 percent.\n\n## Scene Assets\n\n![[snail-band-clearing/waterfall.png]]\n![[snail-band-clearing/beetle-on-percussion.png]]\n![[snail-band-clearing/wise-frog.png]]\n![[snail-band-clearing/green-frog.png]]\n![[snail-band-clearing/doug.png]]\n\n## Source Notes\n\n- [[The snails Party]]\n- [[The Snail]]\n- [[Frog is the Bass]]\n- [[Snail Band Cycle]]\n- [[Beetle on Percussion]]\n- [[Doug keeps ending up at the edges of major events]]\n- [[Doug]]"
-    },
-    {
       "id": "waterfall",
       "title": "Waterfall",
       "relativePath": "_publish/chambers/waterfall/waterfall.md",
       "kind": "chamber",
       "category": "chamber",
       "chamber": "Waterfall",
-      "route": "/environment/waterfall",
-      "entries": [
-        "basin"
-      ],
-      "exits": [
-        "snail-band-clearing"
-      ],
-      "neighbors": [
-        "snail-band-clearing"
-      ],
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
       "asset": "waterfall.png",
       "publish": true,
       "draft": false,
@@ -168,41 +58,6 @@
       "links": [],
       "assets": [],
       "body": "# Waterfall\n\nA tall Drift‑infused waterfall descends into a mist‑laden basin, where the\nfirst signs of the Forest begin to appear. Roots push through stone, the\nair grows humid, and uneven shelves of rock form the earliest suggestions\nof the Stairs. The path south leads directly into the Forest biome."
-    },
-    {
-      "id": "garden",
-      "title": "Garden",
-      "relativePath": "_publish/garden.md",
-      "kind": "note",
-      "category": null,
-      "chamber": "HouseAndGarden",
-      "route": "/environment/garden",
-      "entries": [
-        "herbroom"
-      ],
-      "exits": [
-        "forest"
-      ],
-      "neighbors": [
-        "basin",
-        "waterfall"
-      ],
-      "asset": "/assets/vault/5b8218c41ed2.png",
-      "publish": true,
-      "draft": false,
-      "tags": [],
-      "description": ">",
-      "links": [
-        "Garden Glyph.png"
-      ],
-      "assets": [
-        {
-          "name": "Garden Glyph.png",
-          "sourceRelativePath": "_publish/assets/Garden Glyph.png",
-          "webPath": "/assets/vault/5b8218c41ed2.png"
-        }
-      ],
-      "body": "# Garden Glyph\n\n![[Garden Glyph.png]]\n\n\n### **Garden Organ Overview**\n\nThe Garden is Threshold’s living biome — a space of growth, adjacency, and quiet pressure. It absorbs drift from the surrounding chambers and redistributes it as environmental coherence. Every pulse of the Garden stabilizes the world’s rhythm, balancing tension between the House and the Forest.\n\nWithin its soil, nodes root and bloom. Pressure becomes nourishment; drift becomes capture; collapse becomes renewal. The Garden’s glyph reflects this cycle: a green bloom at its center, surrounded by biome rings and drift‑capture arcs, all enclosed by a faint halo of environmental light.\n\n### **Behavior and Function**\n\n- **Growth Pulse:** The Garden expands and contracts with the world’s breath, signaling environmental health.\n    \n- **Adjacency:** It maintains spatial harmony between neighboring chambers, ensuring smooth migration and resonance.\n    \n- **Drift‑Capture:** Stray nodes are absorbed and re‑anchored, preventing collapse and feeding the biome.\n    \n- **Pressure Spread:** Tension diffuses outward, stabilizing the Fib Flower’s outer petals.\n    \n- **Biome Shift:** The Garden transitions between House and Forest states, adapting to environmental signals.\n    \n\n### **Symbolism**\n\nThe Garden represents **continuity** — the idea that every collapse feeds new growth. Its bloom is not ornamental; it’s the visible expression of the world’s regenerative loop. When the Hub breathes, the Garden grows. When the Garden stabilizes, the world holds.\n\n## **Technical Specification**\n\n### **Feed Contract**\n\nGarden listens to environmental feeds that describe world‑scale behavior rather than engine‑scale behavior. These feeds are defined in `garden-feed-contract.json` and map directly to the runtime substrate:\n\n- **growth** → `environment.growth`\n    \n- **adjacency** → `environment.adjacency`\n    \n- **driftCapture** → `environment.driftCapture`\n    \n- **pressureSpread** → `environment.pressureSpread`\n    \n- **biomeShift** → `environment.biomeShift`\n    \n- **environmentSignals** → `environment.signals`\n    \n\nThese values are emitted by the world engine and consumed by the Garden organ to drive its visual and behavioral state.\n\n### **Calibration**\n\nGarden’s calibration defines how the organ expresses environmental behavior. The calibration file (`garden-feed-calibration.json`) contains:\n\n- **Growth Pulse Curve** — bloom scale modulation\n    \n- **Adjacency Curve** — outer ring expansion and contraction\n    \n- **Drift‑Capture Curve** — arc intensity and sweep\n    \n- **Pressure Spread Curve** — halo brightness and diffusion\n    \n- **Biome Shift Curve** — ring color transitions\n    \n- **Signal Curve** — burst and pulse behavior\n    \n\nAll values pass through a smoothing window (`lerp`, 0.15) to maintain organic motion and prevent jitter.\n\n### **Runtime State**\n\nGarden maintains its own runtime state in `garden-runtime-state.json`, updated each tick by the world engine:\n\n- `growthLevel`\n    \n- `adjacencyLevel`\n    \n- `driftCaptureLevel`\n    \n- `pressureLevel`\n    \n- `biomeState`\n    \n- `signalMode`\n    \n\nThese values represent the current environmental condition of the world and are used to animate the glyph and inform neighboring chambers.\n\n### **Runtime Delta**\n\nEnvironmental changes are tracked in `garden-runtime-delta.json`, which records:\n\n- growth events\n    \n- adjacency changes\n    \n- drift‑capture events\n    \n- pressure propagation\n    \n- biome transitions\n    \n- signal bursts\n    \n\nThis delta is used by the migration pipeline and by chambers that depend on Garden’s state.\n\n### **Binding Layer**\n\nThe binding layer (`garden-animation-binding.js`) connects runtime values to the Garden glyph:\n\n- bloom → `#garden-bloom`\n    \n- biome ring → `#garden-biome-ring`\n    \n- drift arcs → `#garden-drift-arcs`\n    \n- adjacency ring → `#garden-adjacency-ring`\n    \n- halo → `#garden-halo`\n    \n\nEach element receives smoothed, calibrated values from the feed contract, producing a coherent environmental animation.\n\n### **Organ Integration**\n\nGarden integrates with the world graph through:\n\n- **entries:** Herb Room\n    \n- **exits:** Forest\n    \n- **neighbors:** Basin, Waterfall\n    \n\nThis allows Garden to distribute environmental pressure, absorb drift, and maintain adjacency coherence across the biome network."
     },
     {
       "id": "herbroom-threshold-east",
@@ -239,11 +94,9 @@
       "kind": "chamber",
       "category": "chamber",
       "chamber": "HerbRoom",
-      "route": "/environment/herbroom",
+      "route": null,
       "entries": [],
-      "exits": [
-        "basin"
-      ],
+      "exits": [],
       "neighbors": [],
       "asset": "herbroom.png",
       "publish": true,
@@ -970,31 +823,6 @@
       "links": [],
       "assets": [],
       "body": "Overview\nThe Shadow Cycle is the inverted story of the Master Cycle — the tale of how movement collapses, how meaning distorts, and how continuity becomes paralysis.\nIt is not the opposite of the Master Cycle, but its negative image: the same structure, seen through fracture.\nThis arc describes the emotional and structural logic of collapse.\n\n1. False Gate — The Misdirected Beginning\nA threshold appears, but it is the wrong one.\nThe pull feels urgent, intoxicating, almost fated — but it leads nowhere.\nYou step forward without orientation, driven by compulsion rather than clarity.\nThe story begins in the wrong place, with the wrong momentum, under the wrong premise.\nThis is the chapter where the journey is lost before it starts.\n\n2. Noise Spiral — The Collapse of Meaning\nPatterns refuse to form.\nSignals contradict each other.\nEvery interpretation generates more confusion.\nYou chase clarity, but the harder you look, the more the world fractures into static.\nMeaning dissolves into noise, and the noise accelerates the collapse.\nThis is the chapter where the story becomes incoherent.\n\n3. Destructive Rupture — The Break That Breaks Too Much\nPressure spikes.\nThe system snaps — not cleanly, not necessarily, but violently.\nThe rupture destroys more than it reveals.\nIt shatters what was still functional, still salvageable.\nThe break becomes a cascade.\nThis is the chapter where the story tears itself apart.\n\n4. Dissociation — The Vanishing\nAfter the break, the world does not soften — it disappears.\nOrientation evaporates.\nContact dissolves.\nYou drift not into depth, but into absence.\nThis is the chapter where the story forgets it ever existed.\n\n5. Rigidity — The Hardening\nInstead of grounding, the system locks.\nInstead of stability, it becomes immovable.\nYou brace, tighten, freeze.\nThe world becomes narrow, brittle, unyielding.\nNothing can move without breaking further.\nThis is the chapter where the story becomes a cage.\n\n6. Failed Re‑Entry — The Broken Return\nYou try to come back.\nYou try to reassemble meaning.\nYou try to step into coherence.\nBut the pieces don’t fit.\nThe return collapses under its own weight.\nYou fall back into rupture or drift.\nThis is the chapter where the story tries to end but cannot.\n\n7. Immobilizing Weight — The Gravity That Stops Everything\nWhat remains is not continuity, but inertia.\nThe burden becomes too heavy to carry, too heavy to set down.\nYou freeze under the accumulated weight — memory, consequence, responsibility, regret.\nThe cycle cannot restart.\nThe story cannot move.\nThis is the chapter where the story becomes a stone.\n\nThe Shadow Arc in One Breath\nA false beginning.\nA collapse of meaning.\nA break that destroys.\nA disappearance.\nA hardening.\nA failed return.\nA weight that stops movement.\nThis is the Shadow Cycle — the orbit of collapse."
-    },
-    {
-      "id": "garden-visual-spec",
-      "title": "Garden Visual Specification",
-      "relativePath": "_publish/organs/garden/garden-visual-spec.md",
-      "kind": "note",
-      "category": "organ-spec",
-      "chamber": null,
-      "route": null,
-      "entries": [],
-      "exits": [],
-      "neighbors": [],
-      "asset": null,
-      "publish": true,
-      "draft": false,
-      "tags": [
-        "garden",
-        "organ",
-        "glyph",
-        "environment"
-      ],
-      "description": "Canonical geometry and feed-to-layer behavior for the Threshold Garden world-state renderer.",
-      "links": [],
-      "assets": [],
-      "body": "# Garden Visual Specification\n\nGarden is a world-state renderer, not a decorative mark. Its six animated layers map one-to-one to the canonical Garden feeds.\n\n## Layers\n\n- `#garden-growth-core` breathes with growth and chamber seeding.\n- `#garden-adjacency-ring` rotates according to environmental adjacency density.\n- `#garden-drift-arcs` accelerate and brighten as drifting nodes are captured.\n- `#garden-pressure-ring` thickens and intensifies as pressure spreads across biomes.\n- `#garden-biome-petals` contains the Fib Flower's 13 outer petals and carries biome transition color.\n- `#garden-signal-halo` pulses or bursts when the environment communicates state changes.\n\n## Geometry\n\nThe glyph uses a centered 512 by 512 field. Thirteen petals form the outer Fib Flower ring. The center remains rooted while the environmental rings can rotate, breathe, tighten, and change state independently.\n\n## Motion\n\nAll motion is looped, bounded, and frame-smoothed by `garden-feed-calibration.json`. Reduced-motion clients receive a stable rendered state with animation disabled."
     },
     {
       "id": "ac915603883b",
@@ -2483,13 +2311,13 @@
         },
         {
           "name": "cindervox.png",
-          "sourceRelativePath": "_publish_candidates/required/assets/04 - Organism/Species/04 - Species Families/cindervox.png",
-          "webPath": "/assets/vault/28b42742032e.png"
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/cindervox.png",
+          "webPath": "/assets/vault/aa44b6f5b7ba.png"
         },
         {
           "name": "cindervoxx.png",
-          "sourceRelativePath": "_publish_candidates/required/assets/04 - Organism/Species/04 - Species Families/cindervoxx.png",
-          "webPath": "/assets/vault/38bdc9fcf232.png"
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/cindervoxx.png",
+          "webPath": "/assets/vault/79f135ca2293.png"
         },
         {
           "name": "flutterfly 1.png",
@@ -3556,23 +3384,15 @@
       "relativePath": "_publish/basin.md",
       "kind": "chamber",
       "category": "chamber",
-      "chamber": "HouseAndGarden",
-      "route": "/environment/basin",
-      "entries": [
-        "herbroom"
-      ],
-      "exits": [
-        "waterfall"
-      ],
+      "chamber": "Basin",
+      "route": null,
+      "entries": [],
+      "exits": [],
       "neighbors": [],
-      "asset": "/assets/basin.png",
+      "asset": "basin.png",
       "publish": true,
       "draft": false,
-      "tags": [
-        "chamber",
-        "basin",
-        "environment"
-      ],
+      "tags": [],
       "description": ">",
       "links": [
         "basin.png"
@@ -3587,87 +3407,16 @@
       "body": "# Basin\n\n![[basin.png]]\n\nThe Basin is a quiet, reflective pool fed by underground channels..."
     },
     {
-      "id": "snail-band-clearing",
-      "title": "Snail Band Clearing",
-      "relativePath": "_publish/chambers/snail-band-clearing/snail-band-clearing.md",
-      "kind": "chamber",
-      "category": "chamber",
-      "chamber": "Snail Band Clearing",
-      "route": "/environment/snail-band-clearing",
-      "entries": [
-        "waterfall"
-      ],
-      "exits": [
-        "old-forest"
-      ],
-      "neighbors": [
-        "waterfall"
-      ],
-      "asset": "snail-band-clearing/waterfall.png",
-      "publish": true,
-      "draft": false,
-      "tags": [],
-      "description": "|",
-      "links": [
-        "Beetle on Percussion",
-        "Doug",
-        "Doug keeps ending up at the edges of major events",
-        "Frog is the Bass",
-        "Snail Band Cycle",
-        "snail-band-clearing/beetle-on-percussion.png",
-        "snail-band-clearing/doug.png",
-        "snail-band-clearing/green-frog.png",
-        "snail-band-clearing/waterfall.png",
-        "snail-band-clearing/wise-frog.png",
-        "The Snail",
-        "The snails Party"
-      ],
-      "assets": [
-        {
-          "name": "beetle-on-percussion.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/beetle-on-percussion.png",
-          "webPath": "/assets/vault/7ce3be50d7d0.png"
-        },
-        {
-          "name": "doug.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/doug.png",
-          "webPath": "/assets/vault/f8bd9daef27f.png"
-        },
-        {
-          "name": "green-frog.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/green-frog.png",
-          "webPath": "/assets/vault/df04e61fcd8a.png"
-        },
-        {
-          "name": "waterfall.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/waterfall.png",
-          "webPath": "/assets/vault/b90ebd624188.png"
-        },
-        {
-          "name": "wise-frog.png",
-          "sourceRelativePath": "_publish/chambers/snail-band-clearing/wise-frog.png",
-          "webPath": "/assets/vault/9b8b76d125d0.png"
-        }
-      ],
-      "body": "# Snail Band Clearing\n\nFollow the stone stair south of the Waterfall until the falling water becomes\na pulse in the roots. A small porch waits where mist meets the Old Forest.\n\nAt dusk, the Snail drops his debris bag, sits down, and picks the first notes\non a banjo tuned to the Forest's hum. The Beetle waits, then taps a precise\nrhythm on wood and shell. The frogs listen for the groove before laying down\na slow root-bass and answering chorus.\n\nThe clearing is not a stage and the gathering is not a concert. Roots pulse,\nbranches sway, spores turn in warm spirals, and passing travelers stop only\nas long as they need. The band is the Forest speaking to itself.\n\n## Sinker Sound\n\nA traveler may sit at the porch and answer with one heavy, grounded beat. On\nalignment, the bass deepens, the Beetle locks to the pulse, and an old path\nopens farther south into the Old Forest. Missing the beat causes no harm; the\nband continues until the traveler is ready to listen again.\n\n## Random System Check\n\nOn some nights, a low-priority monitoring task routes Doug through the\nclearing. He arrives with a clipboard to verify an unassigned pressure log,\nchecks the porch pulse against the Waterfall's drift delta, and records the\nband as stable. He does not interrupt the music or interpret it. He closes the\nticket, follows the path back north, and the clearing's collapse probability\nquietly drops by 0.7 percent.\n\n## Scene Assets\n\n![[snail-band-clearing/waterfall.png]]\n![[snail-band-clearing/beetle-on-percussion.png]]\n![[snail-band-clearing/wise-frog.png]]\n![[snail-band-clearing/green-frog.png]]\n![[snail-band-clearing/doug.png]]\n\n## Source Notes\n\n- [[The snails Party]]\n- [[The Snail]]\n- [[Frog is the Bass]]\n- [[Snail Band Cycle]]\n- [[Beetle on Percussion]]\n- [[Doug keeps ending up at the edges of major events]]\n- [[Doug]]"
-    },
-    {
       "id": "waterfall",
       "title": "Waterfall",
       "relativePath": "_publish/chambers/waterfall/waterfall.md",
       "kind": "chamber",
       "category": "chamber",
       "chamber": "Waterfall",
-      "route": "/environment/waterfall",
-      "entries": [
-        "basin"
-      ],
-      "exits": [
-        "snail-band-clearing"
-      ],
-      "neighbors": [
-        "snail-band-clearing"
-      ],
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
       "asset": "waterfall.png",
       "publish": true,
       "draft": false,
@@ -3684,11 +3433,9 @@
       "kind": "chamber",
       "category": "chamber",
       "chamber": "HerbRoom",
-      "route": "/environment/herbroom",
+      "route": null,
       "entries": [],
-      "exits": [
-        "basin"
-      ],
+      "exits": [],
       "neighbors": [],
       "asset": "herbroom.png",
       "publish": true,

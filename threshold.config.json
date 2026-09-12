@@ -1,5 +1,6 @@
 {
-  "vaultRoot": "C:\\Users\\James Romeo\\Threshold\\ThresholdVault\\theghost",
+  "vaultRoot": "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish",
+  "glyphRoot": "C:\\Threshold\\vault\\glyphs",
   "systemRoot": "C:\\Threshold",
   "websiteRoot": "C:\\Threshold\\website",
   "htmlInventoryRoot": "C:\\Threshold\\html-inventory",

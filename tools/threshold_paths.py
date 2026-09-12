@@ -11,6 +11,7 @@ CONFIG_PATH = Path(__file__).resolve().parent.parent / "threshold.config.json"
 @dataclass(frozen=True)
 class ThresholdPaths:
     vault_root: Path
+    glyph_root: Path
     system_root: Path
     website_root: Path
     html_inventory_root: Path
@@ -23,6 +24,7 @@ class ThresholdPaths:
     def require_sources(self) -> None:
         for label, path in (
             ("vaultRoot", self.vault_root),
+            ("glyphRoot", self.glyph_root),
             ("systemRoot", self.system_root),
             ("websiteRoot", self.website_root),
             ("htmlInventoryRoot", self.html_inventory_root),
@@ -39,6 +41,7 @@ def load_threshold_paths(config_path: Path = CONFIG_PATH) -> ThresholdPaths:
     data = json.loads(config_path.read_text(encoding="utf-8"))
     paths = ThresholdPaths(
         vault_root=Path(data["vaultRoot"]),
+        glyph_root=Path(data["glyphRoot"]),
         system_root=Path(data["systemRoot"]),
         website_root=Path(data["websiteRoot"]),
         html_inventory_root=Path(data["htmlInventoryRoot"]),

@@ -95,3 +95,9 @@ export function heartbeatEnvelope(event, now) {
   if (progress < 0 || progress > 1) return 0;
   return Math.sin(progress * Math.PI);
 }
+
+export function isHeartbeatEventCurrent(event, now) {
+  return Boolean(event)
+    && now >= event.occurredAt
+    && now <= event.occurredAt + event.durationMs;
+}

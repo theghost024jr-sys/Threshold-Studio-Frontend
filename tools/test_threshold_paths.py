@@ -10,8 +10,9 @@ class ThresholdPathTests(unittest.TestCase):
 
         self.assertEqual(
             paths.vault_root,
-            Path(r"C:\Users\James Romeo\Threshold\ThresholdVault\theghost"),
+            Path(r"C:\Users\James Romeo\Threshold\Threshold-Studio-Content\publish"),
         )
+        self.assertEqual(paths.glyph_root, Path(r"C:\Threshold\vault\glyphs"))
         self.assertEqual(paths.system_root, Path(r"C:\Threshold"))
         self.assertEqual(paths.website_root, Path(r"C:\Threshold\website"))
         self.assertEqual(paths.html_inventory_root, Path(r"C:\Threshold\html-inventory"))

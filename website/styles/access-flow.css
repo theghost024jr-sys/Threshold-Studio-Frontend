@@ -1,0 +1,71 @@
+.threshold-access-flow {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9000;
+  width: min(560px, calc(100vw - 32px));
+  padding: 10px;
+  border: 1px solid rgb(226 202 150 / 42%);
+  border-radius: 6px;
+  background: rgb(7 10 16 / 94%);
+  color: rgb(248 242 228 / 96%);
+  box-shadow: 0 16px 44px rgb(0 0 0 / 34%);
+  font: 600 11px/1.3 "Manrope", sans-serif;
+  backdrop-filter: blur(14px);
+}
+
+.threshold-access-flow__heading,
+.threshold-access-flow__steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.threshold-access-flow__heading {
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.threshold-access-flow__heading span { color: rgb(217 226 235 / 68%); }
+.threshold-access-flow__steps { margin: 0; padding: 0; overflow-x: auto; list-style: none; }
+.threshold-access-flow__steps li { flex: 0 0 auto; }
+
+.threshold-access-flow__steps a,
+.threshold-access-flow__steps span,
+.threshold-access-flow__continue {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 5px 8px;
+  border: 1px solid rgb(226 202 150 / 28%);
+  border-radius: 3px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.threshold-access-flow__steps [data-state="complete"] { border-color: rgb(139 228 213 / 62%); color: #8be4d5; }
+.threshold-access-flow__steps [data-state="available"]:hover,
+.threshold-access-flow__steps [data-state="available"]:focus-visible { border-color: #f3be63; outline: none; }
+.threshold-access-flow__steps [data-state="locked"] { opacity: 0.38; }
+
+.threshold-access-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(2 4 8 / 88%);
+  color: #f8f2e4;
+  backdrop-filter: blur(16px);
+}
+
+.threshold-access-gate__panel { width: min(520px, 100%); border-top: 1px solid #f3be63; padding: 24px 0; }
+.threshold-access-gate__panel > p:first-child { color: #8be4d5; text-transform: uppercase; letter-spacing: 0.12em; }
+.threshold-access-gate__panel h1 { margin: 8px 0; font-family: "Cinzel", Georgia, serif; }
+.threshold-access-gate__panel a,
+.threshold-access-flow__continue { margin-top: 12px; background: #f3be63; color: #080b12; }
+
+@media (max-width: 640px) {
+  .threshold-access-flow { right: 8px; bottom: 8px; width: calc(100vw - 16px); }
+}

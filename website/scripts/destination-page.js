@@ -4,6 +4,7 @@ import {
   crownLevel,
   navigateSettlingZone
 } from "./fibonacci-routing.js";
+import "./access-flow.js";
 
 const spokeId = document.body.dataset.thresholdSpoke || "";
 const params = new URLSearchParams(location.search);

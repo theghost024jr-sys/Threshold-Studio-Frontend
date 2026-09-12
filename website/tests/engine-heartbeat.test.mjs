@@ -7,7 +7,8 @@ import {
   FLICKER_MAX_MS,
   FLICKER_MIN_MS,
   HEARTBEAT_PHASES,
-  heartbeatEnvelope
+  heartbeatEnvelope,
+  isHeartbeatEventCurrent
 } from "../scripts/engine-heartbeat.js";
 
 test("emits micro-pulses every three seconds and a primary heartbeat every twelve", () => {
@@ -49,4 +50,12 @@ test("produces a bounded event envelope", () => {
   assert.equal(heartbeatEnvelope(event, 100), 0);
   assert.equal(heartbeatEnvelope(event, 600), 1);
   assert.equal(heartbeatEnvelope(event, 1101), 0);
+});
+
+test("rejects stale heartbeat events after a delayed frame", () => {
+  const event = { occurredAt: 100, durationMs: 1000 };
+  assert.equal(isHeartbeatEventCurrent(event, 99), false);
+  assert.equal(isHeartbeatEventCurrent(event, 100), true);
+  assert.equal(isHeartbeatEventCurrent(event, 1100), true);
+  assert.equal(isHeartbeatEventCurrent(event, 1101), false);
 });

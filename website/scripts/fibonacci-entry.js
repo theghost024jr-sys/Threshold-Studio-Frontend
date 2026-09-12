@@ -2,7 +2,8 @@ import { buildFibonacciUrl, resolveFibonacciRoute } from "./fibonacci-routing.js
 import {
   advanceHeartbeatClock,
   createHeartbeatClock,
-  heartbeatEnvelope
+  heartbeatEnvelope,
+  isHeartbeatEventCurrent,
 } from "./engine-heartbeat.js";
 import {
   advanceHubActivation,
@@ -1259,7 +1260,9 @@ function initializeHubReactor() {
     state.lastFrameAt = now;
     const metrics = wheelMetrics();
     clearHeartbeatFieldEvent(now);
-    advanceHeartbeatClock(heartbeatClock, now).forEach(dispatchHeartbeatFieldEvent);
+    advanceHeartbeatClock(heartbeatClock, now)
+      .filter((event) => isHeartbeatEventCurrent(event, now))
+      .forEach(dispatchHeartbeatFieldEvent);
     const distance = updateZone(now, metrics);
     updateHubActivation(now);
     if (engineState.reveal) {

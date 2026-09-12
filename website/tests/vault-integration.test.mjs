@@ -31,6 +31,10 @@ test("loads generated canonical vault data", async () => {
     assert.match(chamberAsset.sourceRelativePath, /^_publish\/assets\//);
     assert.match(chamberAsset.webPath, /^\/assets\/vault\/[a-f0-9]{12}\.[a-z0-9]+$/);
     await access(`website${chamberAsset.webPath}`);
+
+    const garden = loaded.documents.find((document) => document.id === "garden");
+    assert.equal(garden.asset, "/assets/vault/5b8218c41ed2.png");
+    await access(`website${garden.asset}`);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -110,7 +114,7 @@ test("publishes and renders the four-path glyph archive", async () => {
   const engine = await readFile("website/scripts/glyphs.js", "utf8");
   const page = await readFile("website/glyphs.html", "utf8");
   assert.match(page, /scripts\/emotional-engine\.js/);
-  assert.match(engine, /fetch\("config\/glyphs\.json"/);
+  assert.match(engine, /fetch\("\/config\/glyphs\.json"/);
   assert.match(engine, /depth \+= 1/);
   assert.match(engine, /archive\.dataset\.weather = choice/);
   assert.match(engine, /emotions\.checkGlyphAppearance/);

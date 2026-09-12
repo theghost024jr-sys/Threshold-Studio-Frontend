@@ -222,9 +222,9 @@ class ThresholdEngine {
       weather: () => import("./weather.js"),
       branches: () => import("./branches.js"),
       mythic: () => import("./mythic.js"),
-      housegarden: () => import("./housegarden.js"),
+      housegarden: () => import("./scripts/housegarden.js"),
       dialogues: () => import("./dialogues.js"),
-      glyphs: () => import("./glyphs.js")
+      glyphs: () => import("./scripts/glyphs.js")
     };
   }
 

@@ -10,14 +10,20 @@
   }
 
   try {
-    const archive = await fetch("/data/vault-archive.json", { cache: "no-store" }).then(function (response) {
-      return response.ok ? response.json() : null;
-    });
-    const index = await fetch("/data/vault-index.json", { cache: "no-store" }).then(function (response) {
+    const vault = await fetch("/data/threshold-vault.json", { cache: "no-store" }).then(function (response) {
       return response.ok ? response.json() : null;
     });
 
-    const identity = (archive && archive[chamber]) || (index && index[chamber]);
+    const identity = vault && Array.isArray(vault.chambers)
+      ? vault.chambers.find(function (candidate) {
+          const values = [candidate.id, candidate.title, candidate.chamber, candidate.relativePath]
+            .filter(Boolean)
+            .map(function (value) { return String(value).toLowerCase(); });
+          return values.some(function (value) {
+            return value === chamber.toLowerCase() || value.includes("/" + chamber.toLowerCase());
+          });
+        })
+      : null;
     if (!identity) {
       return;
     }
@@ -34,10 +40,10 @@
       title.textContent = identity.name || chamber;
     }
     if (lore) {
-      lore.textContent = identity.lore || "No lore available.";
+      lore.textContent = identity.body || identity.description || "No lore available.";
     }
     if (pulse) {
-      pulse.textContent = identity.pulse || "—";
+      pulse.textContent = identity.category || "vault";
     }
   } catch (err) {
     // Ignore loader failures silently so pages remain usable.

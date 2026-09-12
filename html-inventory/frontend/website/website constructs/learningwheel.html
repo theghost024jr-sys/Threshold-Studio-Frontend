@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Concentric Learning Wheel</title>
+<style>
+  :root {
+    --bg: #0f1320;
+    --text: #e9eefc;
+    --green: #32CD32;
+    --ring-1: rgba(255, 255, 255, 0.08);
+    --ring-2: rgba(255, 255, 255, 0.10);
+    --ring-3: rgba(255, 255, 255, 0.12);
+    --ring-4: rgba(255, 255, 255, 0.14);
+    --label-bg: rgba(18, 22, 35, 0.85);
+    --label-border: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Page */
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(1200px circle at 50% 15%, #12162a 0%, #0b0e18 40%, var(--bg) 100%);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Wheel container */
+  .wheel {
+    position: relative;
+    width: 520px;
+    height: 520px;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.35));
+  }
+
+  /* Rings (Flow, Sync, Color, Orbit) from outer to inner */
+  .ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid var(--ring-1);
+    box-shadow:
+      inset 0 0 30px rgba(255,255,255,0.05),
+      0 0 60px rgba(255,255,255,0.04);
+  }
+
+  .ring.flow   { width: 520px; height: 520px; border-color: var(--ring-1); }
+  .ring.sync   { width: 420px; height: 420px; border-color: var(--ring-2); }
+  .ring.color  { width: 320px; height: 320px; border-color: var(--ring-3); }
+  .ring.orbit  { width: 220px; height: 220px; border-color: var(--ring-4); }
+
+  /* Center hub (Pulse) */
+  .hub {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow:
+      0 0 20px 6px rgba(50,205,50,0.5),
+      inset 0 0 10px rgba(255,255,255,0.35);
+    animation: pulse 8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px 6px rgba(50,205,50,0.55), inset 0 0 10px rgba(255,255,255,0.35); transform: translate(-50%, -50%) scale(1); }
+    50%      { box-shadow: 0 0 40px 18px rgba(50,205,50,0.35), inset 0 0 6px rgba(255,255,255,0.25); transform: translate(-50%, -50%) scale(1.06); }
+  }
+
+  /* Orbiting glyph demo (gentle drift) */
+  .orbit {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 220px; height: 220px; /* matches .ring.orbit */
+    margin: -110px 0 0 -110px;   /* center by half size */
+    border-radius: 50%;
+    animation: drift 28s linear infinite;
+  }
+
+  @keyframes drift {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .glyph {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(100px, -50%); /* place on orbit radius */
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    color: white; text-decoration: none;
+    font-size: 20px; font-weight: 600;
+    box-shadow: 0 0 12px rgba(0,0,0,0.35);
+  }
+
+  .glyph.gold      { background: #FFD700; }
+  .glyph.turquoise { background: #00CED1; }
+  .glyph.slate     { background: #6A5ACD; }
+  .glyph.crimson   { background: #DC143C; }
+  .glyph.lime      { background: #32CD32; }
+
+  /* Labels */
+  .label {
+    position: absolute;
+    padding: 6px 10px;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    background: var(--label-bg);
+    border: 1px solid var(--label-border);
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+    user-select: none;
+  }
+
+  .label.flow   { top: 8px;  left: 50%; transform: translateX(-50%); }
+  .label.sync   { top: 60px; left: 50%; transform: translateX(-50%); }
+  .label.color  { top: 110px; left: 50%; transform: translateX(-50%); }
+  .label.orbit  { top: 160px; left: 50%; transform: translateX(-50%); }
+  .label.pulse  { top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 600; }
+
+  /* Optional: slow shimmer for labels */
+  .label.flow, .label.sync, .label.color, .label.orbit {
+    animation: labelGlow 12s ease-in-out infinite;
+  }
+  @keyframes labelGlow {
+    0%, 100% { box-shadow: 0 6px 18px rgba(255,255,255,0.06); opacity: 0.85; }
+    50%      { box-shadow: 0 10px 24px rgba(255,255,255,0.10); opacity: 1; }
+  }
+
+  /* Accessibility: prefers-reduced-motion -> stop animations */
+  @media (prefers-reduced-motion: reduce) {
+    .hub, .orbit, .label.flow, .label.sync, .label.color, .label.orbit { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wheel">
+    <!-- Rings -->
+    <div class="ring flow"></div>
+    <div class="ring sync"></div>
+    <div class="ring color"></div>
+    <div class="ring orbit"></div>
+
+    <!-- Hub (Pulse) -->
+    <div class="hub" aria-label="Pulse (Hub)"></div>
+
+    <!-- Labels -->
+    <div class="label flow">Flow</div>
+    <div class="label sync">Sync</div>
+    <div class="label color">Color</div>
+    <div class="label orbit">Orbit</div>
+    <div class="label pulse">Pulse</div>
+
+    <!-- Orbiting glyphs (demo; gentle rotation) -->
+    <div class="orbit" aria-hidden="true">
+      <a class="glyph gold"      href="#" aria-label="Gold glyph">✦</a>
+      <a class="glyph turquoise" href="#" aria-label="Turquoise glyph" style="transform: translate(-100px, -50%);">✦</a>
+      <a class="glyph slate"     href="#" aria-label="Slate glyph"     style="transform: translate(-50%, -100px);">✦</a>
+      <a class="glyph crimson"   href="#" aria-label="Crimson glyph"   style="transform: translate(-50%, 100px);">✦</a>
+      <a class="glyph lime"      href="#" aria-label="Lime glyph"      style="transform: translate(50%, -50%);">✦</a>
+    </div>
+  </div>
+
+</body>
+</html>

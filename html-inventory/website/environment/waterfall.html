@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Waterfall</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: #101b1a;
+      color: #f2eee0;
+      font-family: Georgia, serif;
+    }
+
+    .terrain,
+    .tributary,
+    .fall,
+    .gorge,
+    .bridge,
+    .velin {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .terrain {
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 18% 12%, #496d47 0 18%, transparent 19%),
+        radial-gradient(ellipse at 84% 13%, #264f43 0 20%, transparent 21%),
+        linear-gradient(180deg, #789580 0 27%, #334b3f 28% 62%, #111a19 63% 100%);
+    }
+
+    .tributary {
+      top: 9%;
+      width: 48%;
+      height: 42%;
+      clip-path: polygon(0 8%, 100% 52%, 100% 100%, 0 48%);
+    }
+
+    .tributary--cold {
+      left: 0;
+      background:
+        repeating-linear-gradient(168deg, rgba(231, 242, 242, 0.32) 0 2px, transparent 2px 21px),
+        linear-gradient(135deg, #779397, #b7cac4);
+    }
+
+    .tributary--warm {
+      right: 0;
+      background:
+        repeating-linear-gradient(192deg, rgba(245, 238, 196, 0.3) 0 2px, transparent 2px 23px),
+        linear-gradient(225deg, #9da67e, #b9b78e);
+      clip-path: polygon(0 52%, 100% 8%, 100% 48%, 0 100%);
+    }
+
+    .fall {
+      top: 31%;
+      bottom: 12%;
+      left: 50%;
+      width: clamp(170px, 22vw, 390px);
+      background:
+        linear-gradient(90deg, rgba(248, 252, 245, 0.94), rgba(164, 199, 198, 0.78) 16%, rgba(105, 157, 163, 0.62) 50%, rgba(181, 211, 207, 0.82) 84%, rgba(250, 252, 245, 0.96)),
+        repeating-linear-gradient(96deg, transparent 0 18px, rgba(255, 255, 255, 0.32) 19px 22px);
+      box-shadow: -22px 0 40px rgba(232, 246, 237, 0.12), 22px 0 40px rgba(232, 246, 237, 0.12);
+      clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+      transform: translateX(-50%);
+    }
+
+    .gorge {
+      inset: 74% 0 0;
+      background:
+        linear-gradient(104deg, #16221f 0 40%, transparent 41%),
+        linear-gradient(256deg, #111e1d 0 40%, transparent 41%),
+        linear-gradient(180deg, #213735, #070c0c);
+      clip-path: polygon(0 0, 40% 0, 47% 100%, 53% 100%, 60% 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .bridge {
+      z-index: 2;
+      right: -6%;
+      bottom: 13%;
+      left: -6%;
+      height: clamp(80px, 13vh, 140px);
+      border-top: 7px solid #34291f;
+      border-bottom: 9px solid #211a15;
+      background: repeating-linear-gradient(90deg, #5c4935 0 8%, #372b20 8.4% 9%);
+      box-shadow: 0 24px 40px rgba(0, 0, 0, 0.48);
+      transform: perspective(600px) rotateX(58deg);
+      transform-origin: bottom;
+    }
+
+    .velin {
+      right: clamp(1rem, 5vw, 6rem);
+      bottom: 17%;
+      z-index: 1;
+      width: clamp(150px, 18vw, 290px);
+      height: min(72vh, 700px);
+      margin: 0;
+      overflow: hidden;
+      opacity: 0.9;
+      filter: grayscale(0.7) sepia(0.08) contrast(1.2) drop-shadow(0 0 12px rgba(151, 221, 255, 0.9)) drop-shadow(0 0 34px rgba(103, 194, 239, 0.72));
+      mask-image: radial-gradient(ellipse at 52% 46%, #000 24%, rgba(0, 0, 0, 0.96) 48%, transparent 78%);
+    }
+
+    .velin img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 100% 34%;
+      mix-blend-mode: screen;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .fall {
+        animation: waterfall-resonance 4.8s ease-in-out infinite;
+      }
+
+      .velin {
+        animation: velin-resonance 4.8s ease-in-out infinite;
+      }
+    }
+
+    @keyframes waterfall-resonance {
+      0%,
+      100% {
+        filter: brightness(0.94);
+      }
+
+      50% {
+        filter: brightness(1.16) drop-shadow(0 0 18px rgba(164, 224, 255, 0.42));
+      }
+    }
+
+    @keyframes velin-resonance {
+      0%,
+      100% {
+        filter: grayscale(0.7) sepia(0.08) contrast(1.2) drop-shadow(0 0 10px rgba(151, 221, 255, 0.72)) drop-shadow(0 0 28px rgba(103, 194, 239, 0.54));
+      }
+
+      50% {
+        filter: grayscale(0.5) sepia(0.02) contrast(1.28) brightness(1.1) drop-shadow(0 0 18px rgba(190, 237, 255, 1)) drop-shadow(0 0 52px rgba(103, 194, 239, 0.9));
+      }
+    }
+
+    header {
+      position: absolute;
+      top: clamp(1.2rem, 5vh, 3.5rem);
+      left: 50%;
+      z-index: 3;
+      text-align: center;
+      text-shadow: 0 2px 20px rgba(5, 12, 11, 0.9);
+      transform: translateX(-50%);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.6rem);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .return-north {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 4;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(242, 238, 224, 0.64);
+      background: rgba(8, 14, 13, 0.72);
+      color: inherit;
+      font: 600 0.85rem/1 sans-serif;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .velin {
+        right: 0;
+        width: 42vw;
+        height: 58vh;
+        opacity: 0.68;
+      }
+
+      .return-north {
+        top: auto;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="terrain"></div>
+  <div class="tributary tributary--cold" aria-hidden="true"></div>
+  <div class="tributary tributary--warm" aria-hidden="true"></div>
+  <div class="fall" aria-hidden="true"></div>
+  <div class="gorge" aria-hidden="true"></div>
+  <figure class="velin" aria-label="Velin witnesses the convergence">
+    <img src="/assets/vault/humanoids/dialoguesvelin-001-velin.png" alt="Velin" />
+  </figure>
+  <div class="bridge" aria-hidden="true"></div>
+  <header>
+    <h1>The Waterfall</h1>
+  </header>
+  <a class="return-north" href="/environment/herbroom.html">Return North</a>
+</body>
+</html>

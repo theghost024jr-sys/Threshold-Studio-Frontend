@@ -44,7 +44,7 @@ try {
 } catch {
   sessionStorage.removeItem("threshold:reveal-event");
 }
-const topologyPromise = fetch("config/page-topology.json", { cache: "no-store" }).then((response) => {
+const topologyPromise = fetch("/config/page-topology.json", { cache: "no-store" }).then((response) => {
   if (!response.ok) {
     throw new Error(`Page topology unavailable (${response.status})`);
   }

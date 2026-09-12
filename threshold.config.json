@@ -1,0 +1,11 @@
+{
+  "vaultRoot": "C:\\Users\\James Romeo\\Threshold\\ThresholdVault\\theghost",
+  "systemRoot": "C:\\Threshold",
+  "websiteRoot": "C:\\Threshold\\website",
+  "htmlInventoryRoot": "C:\\Threshold\\html-inventory",
+  "worldRoot": "C:\\Threshold\\world",
+  "thresholdRoot": "C:\\Threshold\\threshold",
+  "nodeBundlesRoot": "C:\\Threshold\\node-bundles",
+  "scriptsRoot": "C:\\Threshold\\scripts",
+  "toolsRoot": "C:\\Threshold\\tools"
+}

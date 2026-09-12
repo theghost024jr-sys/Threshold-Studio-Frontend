@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Studio - Porpoise</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; color: #eef6ff; font-family: "Manrope", sans-serif; overflow-x: hidden; }
+    .return-home { position: fixed; left: 1rem; bottom: 1rem; padding: 0.65rem 0.9rem; border: 1px solid rgba(223, 239, 255, 0.18); border-radius: 8px; background: rgba(10, 16, 28, 0.42); text-decoration: none; backdrop-filter: blur(8px); }
+    main { width: min(1040px, calc(100vw - 2rem)); border: 1px solid rgba(238, 246, 255, 0.24); border-radius: 22px; padding: 1.4rem; display: grid; gap: 1.2rem; background: rgba(10, 16, 28, 0.58); }
+    .spirit-stage { display: grid; gap: 1.2rem; grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: center; }
+    .spirit-frame { position: relative; min-height: 360px; border-radius: 18px; overflow: hidden; border: 1px solid rgba(225, 244, 255, 0.12); background: radial-gradient(circle at 50% 24%, rgba(133, 208, 255, 0.18), transparent 40%), linear-gradient(180deg, rgba(20, 34, 50, 0.55), rgba(8, 11, 20, 0.92)); display: grid; place-items: center; }
+    .spirit-frame img { max-width: min(100%, 760px); max-height: 72vh; object-fit: contain; filter: drop-shadow(0 14px 34px rgba(0, 0, 0, 0.42)); }
+    .spirit-copy { display: grid; gap: 0.9rem; align-content: start; }
+    h1 { margin: 0; font-family: "Cormorant Garamond", serif; font-size: clamp(2.3rem, 5vw, 4rem); letter-spacing: 0.02em; }
+    .eyebrow, .status, .pathline, p { margin: 0; line-height: 1.7; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.78rem; opacity: 0.82; }
+    .orientation { font-size: 1.05rem; opacity: 0.92; }
+    .pathline, .status { font-size: 0.92rem; opacity: 0.76; word-break: break-word; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.8rem; padding-top: 0.3rem; }
+    .actions a { text-decoration: none; }
+    @media (max-width: 860px) { .spirit-stage { grid-template-columns: 1fr; } .spirit-frame { min-height: 280px; } }
+  </style>
+</head>
+<body data-spirit="porpoise">
+  <a class="return-home" href="index.html">Return to Home Hub</a>
+  <main data-spirit-shell>
+    <section class="spirit-stage">
+      <div class="spirit-frame">
+        <img data-spirit-image alt="Loading spirit form" />
+      </div>
+      <div class="spirit-copy">
+        <p class="eyebrow">Vault Manifest Chamber</p>
+        <h1 data-spirit-title>Porpoise</h1>
+        <p class="orientation" data-spirit-orientation>Water chamber node.</p>
+        <p data-spirit-variants>Loading variants...</p>
+        <p class="status" data-spirit-status>Linking spirit form from vault manifest...</p>
+        <p class="pathline" data-spirit-path>Awaiting asset path...</p>
+        <div class="actions">
+          <a href="mythology.html">Return to Mythology</a>
+          <a data-spirit-note href="#">Open Vault Note</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="scripts/spirit-chamber.js"></script>
+  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
+  <style>
+    .engine-architecture-link {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 10000;
+      padding: 0.36rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(210, 228, 255, 0.5);
+      background: rgba(10, 16, 30, 0.78);
+      color: rgba(232, 242, 255, 0.96);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.64rem;
+      backdrop-filter: blur(4px);
+    }
+    .engine-architecture-link:hover,
+    .engine-architecture-link:focus-visible {
+      background: rgba(216, 233, 255, 0.95);
+      color: #101524;
+      outline: none;
+    }
+  </style>
+</body>
+</html>
+
+
+
+
+

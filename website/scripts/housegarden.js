@@ -3,8 +3,31 @@
   const oldHouse = document.getElementById("old-house");
   const newHouse = document.getElementById("new-house");
   const garden = document.getElementById("garden");
+  const pollen = Array.from(document.querySelectorAll(".pollen.clickable"));
+  const pollenProgress = document.querySelector("[data-pollen-progress]");
+  const gardenPortal = document.querySelector("[data-garden-portal]");
 
   if (!oldHouse || !newHouse || !garden) return;
+
+  const activatedPollen = new Set();
+  pollen.forEach((mote, index) => {
+    mote.addEventListener("click", () => {
+      if (activatedPollen.has(mote)) return;
+      activatedPollen.add(mote);
+      mote.dataset.activated = "true";
+      mote.disabled = true;
+      mote.classList.add("pulse");
+      setTimeout(() => mote.classList.remove("pulse"), 400);
+
+      if (pollenProgress) pollenProgress.textContent = `${activatedPollen.size} of ${pollen.length} pollen motes found.`;
+      if (gardenPortal && activatedPollen.size === pollen.length) {
+        gardenPortal.dataset.revealed = "true";
+        gardenPortal.setAttribute("aria-hidden", "false");
+        gardenPortal.querySelector("a")?.removeAttribute("tabindex");
+      }
+    });
+    mote.dataset.pollenIndex = String(index + 1);
+  });
 
   let state = {
     visits: 0,

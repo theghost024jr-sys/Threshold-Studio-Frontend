@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit a Glyph · Threshold Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Source+Code+Pro&display=swap" rel="stylesheet">
+  <style>
+    .submit-section {
+      max-width: 700px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+      font-size: 1.1rem;
+      color: #6e5c4f;
+    }
+    .submit-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #d6cfc2;
+      padding-bottom: 0.5rem;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.95rem;
+      color: #4b3f36;
+    }
+    input, textarea {
+      padding: 0.8rem;
+      border: 1px solid #d6cfc2;
+      border-radius: 6px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      background: #fdfaf6;
+      color: #2e2a26;
+    }
+    button {
+      font-family: 'Source Code Pro', monospace;
+      background: #2e2a26;
+      color: #f5f1eb;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #4b3f36;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Submit a Glyph</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="ethos.html">Ethos</a>
+      <a href="glyphs.html">Glyphs</a>
+      <a href="invitation.html">Invitation</a>
+    </nav>
+  </header>
+
+  <section class="submit-section">
+    <h2>Press Your Glyph Into the Archive</h2>
+    <form action="thankyou.html" method="GET">
+      <label for="name">Your Name (or Sigil)</label>
+      <input type="text" id="name" name="name" placeholder="The Tiny Dancer" required />
+
+      <label for="glyph">Glyph Name</label>
+      <input type="text" id="glyph" name="glyph" placeholder="The Mobius Strip with Three Loops" required />
+
+      <label for="description">Glyph Description</label>
+      <textarea id="description" name="description" rows="5" placeholder="A ritual of recursion, shimmer, and the refusal to flatten." required></textarea>
+
+      <button type="submit">Press the Glyph</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 Threshold Studio · Submission pressed with shimmer and breath
+  </footer>
+
+</body>
+</html>
+

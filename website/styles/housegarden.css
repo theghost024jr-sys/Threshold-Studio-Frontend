@@ -17,6 +17,11 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
+#flower-container {
+  position: relative;
+  overflow: hidden;
+}
+
 #flower-container,
 #old-house,
 #new-house,
@@ -45,6 +50,108 @@
   font-family: "Manrope", sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
+}
+
+.pollen-field {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.pollen {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  scale: 1;
+  transition: scale 400ms ease, opacity 400ms ease;
+}
+
+.pollen::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255, 246, 184, 0.98) 0 18%, rgba(209, 231, 145, 0.72) 28%, rgba(209, 231, 145, 0) 72%);
+  box-shadow: 0 0 11px rgba(222, 236, 157, 0.44);
+  animation: pollen-drift 8s ease-in-out infinite alternate;
+}
+
+.pollen:hover,
+.pollen:focus-visible {
+  transform: none;
+  outline: 1px solid rgba(244, 238, 184, 0.9);
+  outline-offset: 4px;
+}
+
+.pollen:hover::before,
+.pollen:focus-visible::before {
+  filter: brightness(1.45);
+}
+
+.pollen.pulse {
+  scale: 1.4;
+}
+
+.pollen[data-activated="true"] {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.pollen--one { left: 9%; top: 18%; }
+.pollen--two { left: 29%; top: 71%; }
+.pollen--three { left: 53%; top: 12%; }
+.pollen--four { left: 72%; top: 62%; }
+.pollen--five { left: 89%; top: 30%; }
+.pollen--one::before { animation-delay: -1.2s; }
+.pollen--two::before { animation-delay: -5.4s; animation-duration: 10s; }
+.pollen--three::before { animation-delay: -3.1s; animation-duration: 9s; }
+.pollen--four::before { animation-delay: -6.7s; animation-duration: 11s; }
+.pollen--five::before { animation-delay: -2.4s; animation-duration: 9.5s; }
+
+.pollen-progress {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.garden-portal {
+  min-height: 2.5rem;
+  margin-top: 1.5rem;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 8px;
+  transition: opacity 1.2s ease, translate 1.2s ease, visibility 1.2s;
+}
+
+.garden-portal[data-revealed="true"] {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+}
+
+.garden-portal a {
+  color: rgba(231, 239, 205, 0.96);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  text-decoration-color: rgba(201, 224, 171, 0.5);
+  text-underline-offset: 0.35rem;
+}
+
+@keyframes pollen-drift {
+  from { translate: -7px 8px; rotate: -8deg; }
+  to { translate: 10px -13px; rotate: 11deg; }
 }
 
 .garden-scene {
@@ -197,5 +304,14 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .pollen::before {
+    animation: none;
+  }
+
+  .pollen,
+  .garden-portal {
+    transition: none;
   }
 }

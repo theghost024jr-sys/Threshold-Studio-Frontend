@@ -60,7 +60,7 @@ import {
       return [spokeId];
     }
     try {
-      const response = await fetch("config/fibonacci-routes.json", { cache: "no-store" });
+      const response = await fetch("/config/fibonacci-routes.json", { cache: "no-store" });
       if (!response.ok) {
         return [routeLineage.version];
       }

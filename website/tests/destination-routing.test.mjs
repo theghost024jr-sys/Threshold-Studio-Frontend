@@ -37,7 +37,7 @@ test("ships the Fib 13 Hub reactor interaction contract", async () => {
   assert.match(hub, /class=["']entry-reactor["'][\s\S]*?<\/div>\s*<div class=["']entry-engine-core["'] data-engine-core/);
   assert.match(hub, /data-engine-state=["']latent["']/);
   assert.match(hub, /data-void-field/);
-  assert.match(hub, /fibonacci-entry\.js\?v=reveal-5/);
+  assert.match(hub, /src=["']\/scripts\/fibonacci-entry\.js["']/);
   assert.match(reactor, /const nodeCount = 8/);
   assert.match(reactor, /threshold:hub-signal/);
   assert.match(reactor, /threshold:engine-event/);

@@ -1,54 +1,47 @@
-# Threshold Repository Contract
+# Threshold System Contract
 
-This contract defines the ownership boundary between the public frontend and the private Node source repository. Changes that move a responsibility across this boundary must update both repositories and their deployment workflows in the same migration.
+This contract defines the canonical local source and the boundary between private vault content, generated build products, and the public website.
 
-## Threshold-Studio-Frontend
+## Path Authority
 
-This repository owns only public, deployable browser and edge code:
+`C:\Threshold\threshold.config.json` is the only path authority. Its canonical vault is:
 
-- `website/`: static HTML, CSS, JavaScript, public assets, configuration, and frontend tests
-- `worker.js`: the frontend edge worker
-- Cloudflare Pages build configuration and frontend CI
-- Documentation needed to build, test, and operate the public frontend
+`C:\Users\James Romeo\Threshold\ThresholdVault\theghost`
 
-This repository must never contain:
+Builders, scripts, tools, the world, node bundles, and the website must resolve their paths through that configuration. They must not depend on OneDrive, ghost vault copies, `vault-holding`, audit trees, `C:\Threshold\vault`, or `C:\Threshold\threshold\ThresholdVault`.
 
-- An Obsidian vault, `.obsidian/` state, or raw vault exports
-- `website/assets/vault/`, `vault-archive.json`, or `vault-index.json`
-- Architecture source, node builders, publication tools, or activation bundles
-- Node Gate Worker source or its Wrangler configuration
-- Credentials, environment files, private media, or generated deployment output
+## Source Ownership
 
-## Threshold-Node-Source
+- The canonical vault owns private notes, `_publish` notes, and source media.
+- `C:\Threshold\tools` owns vault scanning and bundle generation.
+- `C:\Threshold\website` owns browser and edge code plus generated public inputs.
+- `C:\Threshold\world` owns generated source metadata for world integrations.
+- `C:\Threshold\node-bundles` owns generated activation bundles.
+- `C:\Threshold\html-inventory` is preserved and is not rewritten by normal builds.
 
-This repository owns private architecture and node publication source:
+## Publication Boundary
 
-- Architecture indexes, topology, builders, and validation tools
-- Vault history and publication manifests
-- Vault export and node bundle publication tools
-- Node Gate Worker source, configuration, tests, and deployment workflows
+The build may publish only:
 
-This repository must never contain:
+1. Bodies of Markdown notes under the vault's `_publish` directory.
+2. Media explicitly referenced by those published notes.
+3. Title, relative path, and identifier metadata for the full vault index.
+4. Aggregate counts and canonical source metadata.
 
-- The public website implementation from `Threshold-Studio-Frontend/website/`
-- Generated activation bundles, copied vault media, or raw local vault contents
-- Credentials, environment files, or Wrangler state
+The build must not copy the raw vault, `.obsidian` state, private note bodies, credentials, environment files, or unrelated media into the system or website.
 
-Vault exports and activation bundles are generated locally or in CI and published to their private storage targets. They are not committed to either repository.
+## Generated Products
 
-## Deployment Ownership
-
-| Surface | Owner | Build or publication path |
-| --- | --- | --- |
-| Public static site | `Threshold-Studio-Frontend` | `npm run build` -> `website/` |
-| Frontend edge worker | `Threshold-Studio-Frontend` | `worker.js` |
-| Fib 1 foundation | `Threshold-Node-Source` | `threshold/publish/core/` |
-| Node Gate Worker | `Threshold-Node-Source` | `threshold/worker/` |
-| Activated node bundles and private media | External private storage | Node-Source publication workflows |
+- `website/data/threshold-vault.json`: public note data and resolved asset metadata
+- `website/data/vault-index.json`: metadata-only full-vault index
+- `website/assets/vault/`: media referenced by published notes
+- `world/vault-source.json`: world-facing source metadata
+- `node-bundles/`: generated canonical bundle families
 
 ## Change Rules
 
-1. Do not commit generated or private content to make a deployment pass.
-2. Move ownership losslessly: add and validate the destination before deleting the source.
-3. Keep tests with the code or publication tool they validate.
-4. Treat changes to this contract as architecture changes and review both repositories.
+1. Change paths in `threshold.config.json`, not independently in consumers.
+2. Generate public data at build time; browser code must not access local filesystem paths.
+3. Resolve source media from the canonical vault and retain its relative provenance in generated metadata.
+4. Do not move, mirror, or delete the canonical vault as part of a website build.
+5. Keep tests with the builder or browser integration they validate.

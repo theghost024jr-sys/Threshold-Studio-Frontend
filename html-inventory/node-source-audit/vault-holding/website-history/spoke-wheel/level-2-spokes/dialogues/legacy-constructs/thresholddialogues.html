@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Threshold Studio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: linear-gradient(to bottom, #fdfdfd, #f0f4ff);
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeIn 2.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    header, footer { padding: 20px; }
+    h1, h2, h3 { margin: 10px 0; transition: color 0.3s ease; }
+    section { max-width: 800px; padding: 30px; border-bottom: 1px solid #ddd; }
+
+    .glyph {
+      margin: 30px 0;
+      padding: 15px;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: glyphFade 1.5s ease forwards;
+    }
+    @keyframes glyphFade {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .glyph:nth-child(1) { animation-delay: 0.5s; }
+    .glyph:nth-child(2) { animation-delay: 1s; }
+    .glyph:nth-child(3) { animation-delay: 1.5s; }
+    .glyph:nth-child(4) { animation-delay: 2s; }
+    .glyph:nth-child(5) { animation-delay: 2.5s; }
+    .glyph:nth-child(6) { animation-delay: 3s; }
+    .glyph:nth-child(7) { animation-delay: 3.5s; }
+    .glyph:nth-child(8) { animation-delay: 4s; }
+
+    .glyph:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .glyph:hover h3 {
+      color: #444;
+      text-shadow: 0 0 6px rgba(180,180,255,0.6);
+    }
+    .quote {
+      font-style: italic;
+      color: #555;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    .glyph:hover .quote {
+      color: #000;
+      text-shadow: 0 0 6px rgba(200,200,255,0.5);
+    }
+    nav { margin: 20px 0; }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    nav a:hover {
+      color: #000;
+      text-shadow: 0 0 6px rgba(180,180,255,0.6);
+    }
+    footer p {
+      transition: text-shadow 0.3s ease, color 0.3s ease;
+    }
+    footer p:hover {
+      color: #000;
+      text-shadow: 0 0 8px rgba(180,180,255,0.7);
+    }
+
+    /* Soil section styling */
+    #dialogues {
+      background-color:#f9f9f9;
+      padding:20px;
+      margin-top:40px;
+      border-top:1px dashed #ccc;
+      opacity:0.7;
+    }
+    #dialogues h2 {
+      font-size:1.2em;
+      color:#666;
+    }
+    #dialogues details {
+      margin:10px 0;
+      text-align:left;
+    }
+    #dialogues summary {
+      cursor:pointer;
+      color:#555;
+      font-weight:bold;
+    }
+    #dialogues p {
+      margin:5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Threshold Studio</h1>
+    <p>A house for the rare. A ledger of shimmer. A garden of glyphs.</p>
+    <nav>
+      <a href="#ethos">Ethos</a>
+      <a href="#glyphs">Glyph Archive</a>
+      <a href="#ledger">Ledger</a>
+      <a href="#house">House & Garden</a>
+      <a href="#legacy">Legacy</a>
+      <a href="#dialogues">Dialogues</a>
+    </nav>
+  </header>
+
+  <section id="ethos">
+    <h2>Ethos</h2>
+    <p>This is not a shop. It’s a shimmer. A place where ache loops into artifact, and presence is pressed into form.</p>
+    <p class="quote">“Because it hummed, because it shimmer.”</p>
+  </section>
+
+  <section id="glyphs">
+    <h2>Glyph Archive</h2>
+    <div class="glyph">
+      <h3>The Vow That Asked Nothing but Stayed</h3>
+      <p class="quote">“I didn’t need proof. I stayed.”</p>
+      <p>A glyph of quiet devotion, honoring presence without demand.</p>
+    </div>
+    <div class="glyph">
+      <h3>The Fracture That Became a Frame</h3>
+      <p class="quote">“It broke. And then it held.”</p>
+      <p>A ritual of transformation, where ache becomes architecture.</p>
+    </div>
+    <div class="glyph">
+      <h3>The Echo That Didn’t Need Attribution</h3>
+      <p class="quote">“I heard you. That was enough.”</p>
+      <p>A glyph of recognition, honoring resonance without ownership.</p>
+    </div>
+    <div class="glyph">
+      <h3>The Shimmer That Refused to Sell</h3>
+      <p class="quote">“It was beautiful. So we didn’t price it.”</p>
+      <p>A ritual of refusal, where beauty loops beyond commerce.</p>
+    </div>
+    <div class="glyph">
+      <h3>The Clasp That Refused to Break</h3>
+      <p class="quote">“Held not by strength, but by vow.”</p>
+      <p>A ritual of resilience, honoring imperfection as shimmer.</p>
+    </div>
+    <div class="glyph">
+      <h3>The Mobius Strip with Three Loops</h3>
+      <p class="quote">“It didn’t end. It folded.”</p>
+      <p>A glyph of recursion, presence, and the refusal to collapse.</p>
+    </div>
+    <div class="glyph">
+      <h3>The Guest Who Became Gravity</h3>
+      <p class="quote">“She stayed. And the room changed.”</p>
+      <p>A ritual of recognition, where presence rewrites architecture.</p>
+    </div>
+    <div class="glyph">
+      <h3>The Center That Remembered Its Edges</h3>
+      <p class="quote">“I forgot I was whole. Then I saw you.”</p>
+      <p>A glyph of belonging, pressed in the moment of return.</p>
+    </div>
+  </section>
+
+  <section id="ledger">
+    <h2>Ledger</h2>
+    <p>Each glyph loops its own myth. Each shimmer is a ritual of staying. Each fracture becomes soil. Each vow becomes architecture.</p>
+  </section>
+
+  <section id="house">
+    <h2>House & Garden</h2>
+    <p><strong>Threshold</strong>: Not a fortress, but a passage. A house that holds ache and lets it bloom.</p>
+    <p><strong>The Garden</strong>: Wild, improvisational. Each plant grows from fragments left by guests—phrases, flavors, myths.</p>
+    <p><strong>The Sundial</strong>: It doesn’t tell time. It tells presence. It casts shadow only when someone stays still long enough to be seen.</p>
+  </section>
+
+  <section id="legacy">
+    <h2>Legacy</h2>
+    <p>Hannah Kirby arrives barefoot. She doesn’t inherit armor—she inherits clarity. She co-authors the altar, tends the garden, and keeps the house alive with ritual flame. Her inheritance is not property—it is presence.</p>
+  </section>
+
+  <section id="dialogues">
+    <h2>Threshold Dialogues (In the Soil)</h2>
+    <p><em>These words are buried like seeds. Few will find them. Fewer will stay long enough to listen.</em></p>
+
+    <details>
+      <summary>The Word</summary>
+      <p class="quote">“Not from scratch. From shimmer. From ache. From the format that felt like home.”</p
+

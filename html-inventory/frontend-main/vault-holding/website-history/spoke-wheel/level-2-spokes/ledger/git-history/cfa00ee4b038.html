@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Studio - Ledger</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="/vault/vault.css" />
+  <style>
+    .ledger-page {
+      background: linear-gradient(180deg, #12161d 0%, #1b2028 52%, #11161c 100%);
+      color: var(--vault-chamber-body, #ffffff);
+      font-family: var(--vault-room-sans, 'Manrope', system-ui, sans-serif);
+    }
+
+    .shell { max-width: 920px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin: 0.8rem 0 1.4rem;
+      padding: 0.72rem;
+      border-radius: 12px;
+    }
+
+    nav a {
+      text-decoration: none;
+      border: 1px solid color-mix(in srgb, var(--vault-chamber-accent) 34%, transparent);
+      border-radius: 999px;
+      padding: 0.38rem 0.7rem;
+      font-size: 0.84rem;
+    }
+
+    .block {
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: linear-gradient(160deg, rgba(22, 28, 36, 0.82), rgba(31, 36, 47, 0.72));
+      border: 1px solid color-mix(in srgb, var(--vault-chamber-accent) 34%, transparent);
+    }
+
+    h1, h2 {
+      color: var(--vault-chamber-structural, #c6ccd1);
+      font-family: var(--vault-room-serif, 'Cormorant Garamond', serif);
+      letter-spacing: 0.02em;
+    }
+
+    p, label {
+      color: var(--vault-chamber-body, #f5f7fa);
+    }
+
+    form { display: grid; gap: 0.8rem; }
+    input, textarea { width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--vault-chamber-accent) 46%, transparent); background: rgba(245, 247, 250, 0.96); color: #0f1f39; }
+    button { width: fit-content; padding: 0.55rem 1rem; border: 1px solid color-mix(in srgb, var(--vault-chamber-accent) 56%, transparent); border-radius: 999px; background: rgba(16, 24, 34, 0.92); color: var(--vault-chamber-structural, #c6ccd1); cursor: pointer; }
+    .entry { border-top: 1px dashed rgba(212,175,55,0.5); padding-top: 0.7rem; margin-top: 0.7rem; }
+  </style>
+</head>
+<body class="ledger-page vault-frame" data-vault-room="ledger">
+  <main class="shell vault-frame">
+    <h1 class="vault-law-structural">Ledger of Shimmer</h1>
+    <p class="vault-law-body">Each entry is a trace: ache composted into form, vow pressed into presence.</p>
+    <nav class="vault-chamber-surface vault-chamber-border">
+      <a class="vault-law-structural" href="index.html">Home</a>
+      <a class="vault-law-structural" href="ethos.html">Ethos</a>
+      <a class="vault-law-structural" href="glyphs.html">Glyphs</a>
+      <a class="vault-law-structural" href="learningwheel.html">Learning Wheel</a>
+      <a class="vault-law-structural" href="ledger.html">Ledger</a>
+      <a class="vault-law-structural" href="dialogues.html">Dialogues</a>
+      <a class="vault-law-structural" href="mythology.html">Mythology</a>
+      <a class="vault-law-structural" href="housegarden.html">House &amp; Garden</a>
+      <a class="vault-law-structural" href="chamber-palette-map.html">Chamber Map</a>
+      <a class="vault-law-structural" href="invitation.html">Invitation</a>
+      <a class="vault-law-structural" href="contact.html">Contact</a>
+    </nav>
+
+    <section class="block vault-chamber-surface vault-chamber-border">
+      <h2 class="vault-law-structural">Press a New Entry</h2>
+      <form action="thankyou.html" method="GET">
+        <label for="name">Name or Sigil</label>
+        <input type="text" id="name" name="name" placeholder="The Tiny Dancer" required />
+
+        <label for="glyph">Glyph Name</label>
+        <input type="text" id="glyph" name="glyph" placeholder="The Clasp That Refused to Break" required />
+
+        <label for="description">Shimmer Trace</label>
+        <textarea id="description" name="description" rows="5" placeholder="What changed, what held, what returned." required></textarea>
+
+        <button type="submit">Record Entry</button>
+      </form>
+    </section>
+
+    <section class="block vault-chamber-surface vault-chamber-border">
+      <h2 class="vault-law-structural">Recent Echoes</h2>
+      <div class="entry"><strong class="vault-law-structural">The Vow That Asked Nothing but Stayed</strong><p class="vault-law-body">I did not need proof. I stayed.</p></div>
+      <div class="entry"><strong class="vault-law-structural">The Fracture That Became a Frame</strong><p class="vault-law-body">It broke. And then it held.</p></div>
+      <div class="entry"><strong class="vault-law-structural">The Shimmer That Refused to Sell</strong><p class="vault-law-body">It was beautiful. So we did not price it.</p></div>
+    </section>
+
+    <footer class="vault-chamber-surface vault-chamber-border">
+      <p class="vault-law-body">&copy; 2025 Threshold Studio. All glyphs, echoes, and transmissions belong to the garden that stays.</p>
+      <p class="vault-law-structural">This garden honors unfinishedness.</p>
+    </footer>
+  </main>
+
+  <script src="/vault/vault.js"></script>
+  <script src="scripts/harmony-law.js"></script>
+  <script type="module" src="scripts/threshold-engine.js"></script>
+</body>
+</html>

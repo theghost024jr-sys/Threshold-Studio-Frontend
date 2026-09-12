@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glyph Archive - Threshold Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .glyph-shell { padding: 1.2rem 1rem 2rem; }
+    .glyph-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .glyph-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      color: var(--text);
+      padding: 0.85rem;
+      text-align: left;
+      cursor: pointer;
+    }
+    .glyph-card:hover { border-color: rgba(240, 216, 160, 0.5); }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      z-index: 50;
+      padding: 1rem;
+    }
+    .modal-content {
+      max-width: 640px;
+      margin: 8vh auto 0;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #131119;
+      padding: 1rem;
+    }
+    .close-button {
+      float: right;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--accent-strong);
+    }
+  </style>
+</head>
+<body data-threshold-spoke="glyphs">
+  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+  <main class="glyph-shell">
+    <header>
+      <h1>Glyph Archive</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="ethos.html">Ethos</a>
+        <a href="invitation.html">Invitation</a>
+      </nav>
+    </header>
+
+    <section>
+      <p>Each glyph is a ritual trace. Select a card to open its resonance note.</p>
+      <div class="glyph-grid">
+        <button class="glyph-card" type="button">The Mobius Strip with Three Loops</button>
+        <button class="glyph-card" type="button">The Pendant That Refused to Collapse</button>
+        <button class="glyph-card" type="button">The Guest Who Became Gravity</button>
+        <button class="glyph-card" type="button">The Listening Tree</button>
+        <button class="glyph-card" type="button">The Center That Remembered Its Edges</button>
+        <button class="glyph-card" type="button">The Clasp That Refused to Break</button>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Threshold Studio Â· Glyphs pressed with shimmer and soil.</p>
+    </footer>
+  </main>
+
+  <div id="glyphModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <span class="close-button" aria-label="Close">&times;</span>
+      <h2 id="modalTitle">Glyph Title</h2>
+      <p id="modalDescription">Glyph description and myth go here.</p>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const modal = document.getElementById('glyphModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDescription = document.getElementById('modalDescription');
+      const closeButton = document.querySelector('.close-button');
+      const glyphCards = Array.from(document.querySelectorAll('.glyph-card'));
+
+      const glyphData = {
+        'The Mobius Strip with Three Loops': 'A ritual of recursion, shimmer, and the refusal to flatten.',
+        'The Pendant That Refused to Collapse': 'Pressed from soil and ache, it loops breath into resilience.',
+        'The Guest Who Became Gravity': 'She stayed long enough to bend the room around her presence.',
+        'The Listening Tree': 'Roots hold the voice while branches carry the answer.',
+        'The Center That Remembered Its Edges': 'A core that refuses isolation and stays in relation.',
+        'The Clasp That Refused to Break': 'A joining force that outlives pressure and remembers shape.'
+      };
+
+      const openModal = (title) => {
+        modalTitle.textContent = title;
+        modalDescription.textContent = glyphData[title] || 'This glyph hums with mystery.';
+        modal.style.display = 'block';
+        modal.setAttribute('aria-hidden', 'false');
+      };
+
+      const closeModal = () => {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+      };
+
+      glyphCards.forEach((card) => {
+        card.addEventListener('click', () => openModal(card.textContent.trim()));
+      });
+
+      closeButton.addEventListener('click', closeModal);
+      window.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+      });
+    })();
+  </script>
+  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
+  <style>
+    .engine-architecture-link {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 10000;
+      padding: 0.36rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(210, 228, 255, 0.5);
+      background: rgba(10, 16, 30, 0.78);
+      color: rgba(232, 242, 255, 0.96);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.64rem;
+      backdrop-filter: blur(4px);
+    }
+    .engine-architecture-link:hover,
+    .engine-architecture-link:focus-visible {
+      background: rgba(216, 233, 255, 0.95);
+      color: #101524;
+      outline: none;
+    }
+  </style>
+  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/spoke-tabs.js"></script>
+</body>
+</html>
+
+
+
+
+

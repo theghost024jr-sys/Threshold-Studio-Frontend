@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Threshold Studio - Home</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="/vault/vault.css">
+</head>
+
+<body class="home-page">
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="threshold-nav-logo" data-threshold-logo-trigger="1" data-branch="rootSigil" aria-label="Enter Threshold Hub">
+      <img class="threshold-nav-logo-img" src="assets/logo/threshold-logo.svg" alt="Threshold Root Sigil" onerror="this.onerror=null;this.src='assets/logo.png';" />
+    </a>
+    <a href="index.html" data-branch="home">Home</a>
+    <a href="ethos.html" data-branch="ethos">Ethos</a>
+    <a href="glyphs.html" data-branch="glyphs">Glyphs</a>
+    <a href="learningwheel.html" data-branch="learningWheel">Learning Wheel</a>
+    <a href="ledger.html" data-branch="ledger">Ledger</a>
+    <a href="dialogues.html" data-branch="dialogues">Dialogues</a>
+    <a href="mythology.html" data-branch="mythology">Mythology</a>
+    <a href="housegarden.html" data-branch="houseGarden">House &amp; Garden</a>
+    <a href="invitation.html" data-branch="invitation">Invitation</a>
+    <a href="contact.html" data-branch="contact">Contact</a>
+  </nav>
+
+  <div id="particle-field" aria-hidden="true"></div>
+
+  <aside id="hubLore" class="hub-lore" hidden>
+    <h3>Lore Fragment</h3>
+    <p id="hubLoreText">The garden remembers where you paused.</p>
+  </aside>
+
+  <aside id="worldState" class="world-state" aria-live="polite">
+    <h3>World State</h3>
+    <p id="worldStateSeason">Season: --</p>
+    <p id="worldStateVisits">Visits: --</p>
+    <p id="worldStatePedals">Pedals: --</p>
+    <p id="worldStateGalleries">Galleries: --</p>
+    <p id="worldStateCounters">H:0 C:0 D:0 L:0 R:0</p>
+  </aside>
+
+  <button id="hubA" class="hub hub-bottom-right" type="button" aria-label="Activate Hub A (collapse path)" data-threshold-logo-trigger="1" data-branch="rootSigil">
+    <span id="root-machine">
+      <img id="threshold-logo" src="assets/logo/threshold-logo.svg" alt="Threshold Root Sigil" onerror="this.onerror=null;this.src='assets/logo.png';" />
+    </span>
+  </button>
+
+  <button id="hubB" class="hub hub-top-right" type="button" aria-label="Activate Hub B (drift path)" data-branch="rootSigil">
+    <span class="hub-sigil" aria-hidden="true">◌</span>
+  </button>
+
+  <div id="hub-root" aria-live="polite"></div>
+
+  <main class="page-content" data-branch="home">
+
+  <!-- Hero -->
+  <header class="hero-content fade-test" style="animation-delay: 0.06s;">
+    <h1>Threshold Studio</h1>
+    <p class="tagline">Welcome to the breath between.</p>
+  </header>
+
+  <section class="preview-content fib-flower-panel fade-test" id="fibFlowerRoot" aria-labelledby="fibFlowerTitle" data-branch="rootSigil" style="animation-delay: 0.14s;">
+    <div id="root-machine-container">
+      <div class="fib-flower-header">
+        <h2 id="fibFlowerTitle">Root Machine: Fib Flower Geometry</h2>
+        <p id="fibFlowerSummary">Booting geometry from vault manifests...</p>
+      </div>
+      <div class="fib-flower-stage" role="img" aria-label="Fib Flower geometry seeded from vault data">
+        <svg id="fibFlowerSvg" viewBox="0 0 960 640" preserveAspectRatio="xMidYMid meet"></svg>
+        <aside class="fib-flower-inspector" aria-live="polite">
+          <h3 id="fibFlowerNodeTitle">Threshold Root Machine</h3>
+          <div id="threshold-node">
+            <p id="fibFlowerNodeMeta">Geometry root waiting for vault signal.</p>
+          </div>
+          <p id="fibFlowerNodeLore">Loads from data/vault-archive.json and data/vault-index.json.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ethos Preview -->
+  <section class="preview-content fade-test" data-branch="ethos" style="animation-delay: 0.22s;">
+    <h2>Studio Ethos</h2>
+    <p>
+      <span class="ethos-line">We compost collapse into clarity.</span><br>
+      <span class="ethos-line">We honor unfinishedness as sacred.</span><br>
+      <span class="ethos-line shimmer-pulse">We build with breath, shimmer, and trust.</span><br>
+      <span class="ethos-line">Threshold is not a brand-it's a ritual of staying.</span>
+    </p>
+    <a href="ethos.html" class="button">Enter the Ethos</a>
+  </section>
+
+  <!-- Glyph Archive Preview -->
+  <section class="preview-content fade-test" data-branch="glyphs" style="animation-delay: 0.3s;">
+    <h2>Glyph Archive</h2>
+    <p>
+      <span class="shimmer-pulse">A garden of symbols, echoes, and quiet devotions.</span><br>
+      Each glyph is a small door into ache, shimmer, and staying.
+    </p>
+    <a href="glyphs.html" class="button">Explore the Glyphs</a>
+  </section>
+
+  <!-- Learning Wheel Preview -->
+  <section class="preview-content" data-branch="learningWheel">
+    <h2>Concentric Learning Wheel</h2>
+    <p>
+      A seasonal constellation of breath, shimmer, ache, and silence.<br>
+      Spring fog, summer ocean, autumn storm, winter soil.
+    </p>
+    <a href="learningwheel.html" class="button">View the Wheel</a>
+  </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Threshold Studio. All glyphs, echoes, and transmissions belong to the garden that stays.</p>
+    <p>This garden honors unfinishedness.</p>
+  </footer>
+
+  <div id="activation-overlay" aria-hidden="true"></div>
+  <div id="hub-fade-overlay" aria-hidden="true"></div>
+
+  <script src="/vault/vault.js"></script>
+  <script src="scripts/harmony-law.js"></script>
+  <script src="scripts/fib-flower.js"></script>
+  <script src="scripts/hub.js"></script>
+  <script type="module" src="scripts/threshold-engine.js"></script>
+  <script>
+    (function () {
+      function normalizeSeason(value) {
+        const raw = String(value || "").toLowerCase();
+        if (raw === "expand" || raw === "shimmer" || raw === "summer") {
+          return "shimmer";
+        }
+        if (raw === "collapse" || raw === "storm" || raw === "autumn") {
+          return "storm";
+        }
+        if (raw === "soil" || raw === "winter" || raw === "root") {
+          return "soil";
+        }
+        if (raw === "fog" || raw === "spring" || raw === "mist") {
+          return "fog";
+        }
+        return "";
+      }
+
+      function syncSeasonalBackground(input) {
+        const main = document.querySelector(".seasonal-background");
+        if (!main) {
+          return;
+        }
+
+        const season = normalizeSeason(input);
+        if (!season) {
+          return;
+        }
+
+        main.classList.add("is-season-synced");
+        main.setAttribute("data-season", season);
+      }
+
+      function syncFromDetail(detail) {
+        if (!detail) {
+          return;
+        }
+
+        syncSeasonalBackground(detail.weather || detail.channel || detail.season);
+      }
+
+      const bodySeason = document.body && document.body.getAttribute("data-season");
+      if (bodySeason) {
+        syncSeasonalBackground(bodySeason);
+      }
+
+      window.addEventListener("threshold:archive-entered", function (event) {
+        syncFromDetail(event && event.detail ? event.detail : null);
+      });
+
+      window.addEventListener("threshold:root-machine-initialized", function (event) {
+        syncFromDetail(event && event.detail ? event.detail : null);
+      });
+
+      window.addEventListener("threshold:hub-entered", function (event) {
+        syncFromDetail(event && event.detail ? event.detail : null);
+      });
+
+      window.addEventListener("threshold:engine-ready", function () {
+        if (window.threshold && typeof window.threshold.detectSeason === "function") {
+          syncSeasonalBackground(window.threshold.detectSeason());
+        }
+      });
+    })();
+
+    window.addEventListener("load", function () {
+      function initRootMachine() {
+        if (!window.threshold || typeof window.threshold.initializeRootMachine !== "function") {
+          return;
+        }
+
+        window.threshold.initializeRootMachine();
+
+        try {
+          const intent = sessionStorage.getItem("threshold.logo.entry.v1");
+          if (intent === "hub" && typeof window.threshold.activateHub === "function") {
+            sessionStorage.removeItem("threshold.logo.entry.v1");
+            window.threshold.activateHub();
+          } else if (intent === "hub" && typeof window.threshold.enterHub === "function") {
+            sessionStorage.removeItem("threshold.logo.entry.v1");
+            window.threshold.enterHub();
+          }
+        } catch (err) {
+          // Ignore storage restrictions.
+        }
+      }
+
+      initRootMachine();
+      window.addEventListener("threshold:engine-ready", initRootMachine, { once: true });
+    });
+  </script>
+
+</body>
+</html>

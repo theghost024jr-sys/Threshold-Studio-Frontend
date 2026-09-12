@@ -3,7 +3,10 @@
   const status = document.getElementById("archiveStatus");
   const trail = document.getElementById("archiveTrail");
   const chamber = document.getElementById("chamber");
+  const emergence = document.getElementById("glyphEmergence");
+  const traces = document.getElementById("glyphTraces");
   const paths = Array.from(document.querySelectorAll(".path"));
+  const traceStorageKey = "threshold.glyphTraces.v1";
 
   if (!archive || !status || !trail || !chamber || paths.length === 0) return;
 
@@ -15,6 +18,48 @@
     fog: { confusion: 1 },
     soil: { reflection: 1 }
   };
+
+  function loadTraces() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(traceStorageKey));
+      return Array.isArray(stored) ? stored.filter((id) => glyphs[id]) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function renderTraces() {
+    if (!traces) return;
+    traces.replaceChildren();
+    loadTraces().forEach(function (glyphId) {
+      const mark = document.createElement("img");
+      mark.className = "glyph-trace";
+      mark.dataset.glyph = glyphId;
+      mark.src = glyphs[glyphId].asset;
+      mark.alt = "";
+      traces.appendChild(mark);
+    });
+  }
+
+  function rememberTrace(glyphId) {
+    const remembered = loadTraces();
+    if (!remembered.includes(glyphId)) remembered.push(glyphId);
+    try {
+      localStorage.setItem(traceStorageKey, JSON.stringify(remembered));
+    } catch (error) {
+      // The activated chamber still works when persistent storage is restricted.
+    }
+    renderTraces();
+  }
+
+  function emergeGlyph(selected) {
+    if (!emergence) return;
+    emergence.classList.remove("is-emerging");
+    emergence.src = selected.asset;
+    emergence.dataset.glyph = selected.id;
+    void emergence.offsetWidth;
+    emergence.classList.add("is-emerging");
+  }
 
   function activateGlyph(choice, section, button, effectText) {
     const result = window.ThresholdEmotions.activateGlyph(choice);
@@ -30,6 +75,7 @@
     effectText.textContent = `Chamber ${result.status}: ${result.effects.join(", ")}.`;
     button.disabled = true;
     button.textContent = "Activated";
+    rememberTrace(choice);
   }
 
   function revealGlyph(choice) {
@@ -64,6 +110,7 @@
     copy.append(title, text, effectText, activate);
     section.append(image, copy);
     chamber.replaceChildren(section);
+    emergeGlyph(selected);
     status.textContent = `${selected.name} appears. Activate it to change the chamber.`;
   }
 
@@ -86,13 +133,14 @@
   }
 
   paths.forEach(function (path) { path.disabled = true; });
-  fetch("config/glyphs.json", { cache: "no-store" })
+  fetch("/config/glyphs.json", { cache: "no-store" })
     .then(function (response) {
       if (!response.ok) throw new Error("glyph index fetch failed");
       return response.json();
     })
     .then(function (data) {
       glyphs = data && data.glyphs ? data.glyphs : {};
+      renderTraces();
       bindPaths();
     })
     .catch(function () {

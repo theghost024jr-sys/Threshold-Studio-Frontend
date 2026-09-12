@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Basin</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      place-items: end center;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 52% 78%, rgba(182, 219, 192, 0.48) 0 8%, transparent 28%),
+        linear-gradient(180deg, #9fc3ae 0 34%, #527e62 35% 58%, #244e45 59% 100%);
+      color: #f4f4df;
+      font-family: Georgia, serif;
+    }
+
+    .canopy,
+    .basin,
+    .banks,
+    .ford {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .canopy {
+      background:
+        radial-gradient(ellipse at 4% 8%, #21462c 0 18%, transparent 19%),
+        radial-gradient(ellipse at 30% -4%, #315f38 0 20%, transparent 21%),
+        radial-gradient(ellipse at 78% 2%, #285533 0 22%, transparent 23%),
+        radial-gradient(ellipse at 102% 18%, #183e2b 0 25%, transparent 26%);
+    }
+
+    .basin {
+      inset: 47% -8% -18%;
+      border-radius: 50% 50% 0 0;
+      background:
+        repeating-linear-gradient(174deg, rgba(224, 242, 219, 0.22) 0 2px, transparent 2px 24px),
+        radial-gradient(ellipse at 50% 2%, rgba(220, 233, 193, 0.58), transparent 36%),
+        linear-gradient(180deg, #739e89, #2b5c57 72%);
+      box-shadow: inset 0 22px 60px rgba(229, 235, 196, 0.18);
+    }
+
+    .banks {
+      background:
+        radial-gradient(ellipse at 3% 70%, #315c38 0 23%, transparent 24%),
+        radial-gradient(ellipse at 98% 67%, #294f34 0 26%, transparent 27%),
+        radial-gradient(ellipse at 11% 81%, #55774a 0 17%, transparent 18%),
+        radial-gradient(ellipse at 88% 85%, #496e43 0 20%, transparent 21%);
+    }
+
+    .ford {
+      inset: 64% 22% 10%;
+      background:
+        radial-gradient(ellipse at 18% 52%, #8d927c 0 7%, transparent 8%),
+        radial-gradient(ellipse at 38% 60%, #a3a38a 0 8%, transparent 9%),
+        radial-gradient(ellipse at 58% 50%, #858b77 0 7%, transparent 8%),
+        radial-gradient(ellipse at 78% 58%, #aaa991 0 8%, transparent 9%);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: min(600px, calc(100% - 2rem));
+      margin-bottom: clamp(2rem, 8vh, 5rem);
+      text-align: center;
+      text-shadow: 0 2px 20px rgba(12, 31, 22, 0.9);
+    }
+
+    h1 {
+      margin: 0 0 0.4rem;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 auto 1.4rem;
+      max-width: 42ch;
+      line-height: 1.6;
+    }
+
+    a {
+      display: inline-block;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(244, 244, 223, 0.72);
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="canopy"></div>
+  <div class="basin"></div>
+  <div class="banks"></div>
+  <div class="ford"></div>
+  <main>
+    <h1>The Basin</h1>
+    <p>Warm seep-water gathers beneath the canopy. Flat stones mark a shallow crossing where the stream divides the soft banks.</p>
+    <a href="/environment/herbroom.html">Return through the threshold</a>
+  </main>
+</body>
+</html>

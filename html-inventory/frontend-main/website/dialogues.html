@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dialogues - Threshold Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="styles/dialogues.css" />
+  <link rel="stylesheet" href="styles/complexity-layers.css" />
+</head>
+<body class="dialogues-page" data-complexity="foundation atmosphere voice interaction" data-motion="bounded">
+  <header class="dialogue-site-header">
+    <a class="dialogue-brand" href="index.html">
+      <img src="assets/logo/threshold-logo.svg" alt="" />
+      <span>Threshold Studio</span>
+    </a>
+    <nav aria-label="Dialogue navigation">
+      <a href="index.html">Hub</a>
+      <a href="ethos.html">Ethos</a>
+      <a href="glyphs.html">Glyphs</a>
+    </nav>
+  </header>
+
+  <main class="dialogues-main">
+    <header class="dialogue-heading">
+      <p>Voice chamber</p>
+      <h1>Dialogues</h1>
+      <blockquote>Words fall like seeds. Some settle. Some return.</blockquote>
+    </header>
+
+    <section class="voice-field" aria-label="Dialogue chamber">
+      <div class="voice-architecture" aria-hidden="true">
+        <span class="voice-line voice-line-a"></span>
+        <span class="voice-line voice-line-b"></span>
+        <span class="voice-line voice-line-c"></span>
+        <span class="voice-glyph">⌁</span>
+      </div>
+      <div id="dialogue-viewer" class="dialogue-viewer" aria-live="polite">
+        <p class="dialogue-speaker">The Archivist</p>
+        <p class="dialogue-text">A voice has reached the chamber. How will you answer it?</p>
+        <div class="dialogue-options">
+          <button type="button" data-dialogue="listen">Listen before answering</button>
+          <button type="button" data-dialogue="name">Name what arrived</button>
+          <button type="button" data-dialogue="return">Return the signal</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="portal-grid" aria-label="Voice portals">
+      <article class="portal">
+        <p class="portal-number">01 / Arrival</p>
+        <h2>Leave five words.</h2>
+        <form data-portal="arrival">
+          <label for="arrival-input">Voice fragment</label>
+          <input id="arrival-input" type="text" placeholder="fearless drift echo memory soil" autocomplete="off" required />
+          <button type="submit">Open Arrival</button>
+        </form>
+        <p class="portal-response" aria-live="polite"></p>
+      </article>
+      <article class="portal">
+        <p class="portal-number">02 / Return</p>
+        <h2>Make a sentence.</h2>
+        <form data-portal="return">
+          <label for="return-input">Voice sentence</label>
+          <input id="return-input" type="text" placeholder="The echo returned softer than it left." autocomplete="off" required />
+          <button type="submit">Open Return</button>
+        </form>
+        <p class="portal-response" aria-live="polite"></p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="dialogue-footer">
+    <span>Threshold Studio</span>
+    <span>This chamber listens.</span>
+  </footer>
+  <script src="scripts/dialogues-page.js"></script>
+</body>
+</html>

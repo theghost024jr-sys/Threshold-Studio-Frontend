@@ -1302,7 +1302,7 @@ function initializeHubReactor() {
 initializeHubReactor();
 
 if (routeLinks.length) {
-  fetch("config/fibonacci-routes.json", { cache: "no-store" })
+  fetch("/config/fibonacci-routes.json", { cache: "no-store" })
     .then((response) => {
       if (!response.ok) {
         throw new Error("Fibonacci routes unavailable (" + response.status + ")");

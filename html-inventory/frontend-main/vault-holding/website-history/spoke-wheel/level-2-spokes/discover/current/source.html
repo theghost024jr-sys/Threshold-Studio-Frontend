@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threshold Discover</title>
+  <link rel="stylesheet" href="styles/styles.css" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05060a;
+      --panel: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.16);
+      --text: #f5efe8;
+      --muted: #b9b2a8;
+      --accent: #8d7ff4;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      background: radial-gradient(circle at top, rgba(141,127,244,0.24), transparent 30%), var(--bg);
+      color: var(--text);
+      padding: 1.4rem;
+    }
+
+    .page-shell { max-width: 1100px; margin: 0 auto; }
+    nav { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.5rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .hero {
+      padding: 1.2rem 1.2rem 1.4rem;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 { margin: 0 0 0.4rem; font-size: clamp(1.8rem, 3vw, 2.3rem); }
+    .hero p { margin: 0; color: var(--muted); }
+
+    .controls { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+    .pill {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.07);
+      padding: 1rem;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover, .card:focus-visible { transform: translateY(-2px); border-color: rgba(255,255,255,0.3); outline: none; }
+    .card.is-hidden { opacity: 0.45; }
+    .card .meta { color: var(--muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .card h2 { margin: 0.3rem 0 0.45rem; font-size: 1.1rem; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.45; }
+    .card .footer { margin-top: 0.8rem; font-size: 0.84rem; color: var(--accent); }
+
+    .viewer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(4,4,8,0.95);
+      padding: 1.25rem;
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .viewer.is-open { display: flex; }
+    .viewer-panel {
+      width: min(860px, 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      padding: 1rem;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .viewer-image {
+      min-height: 240px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .viewer-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1rem; }
+    .viewer-meta p { margin: 0.2rem 0; color: var(--muted); }
+    .viewer-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .viewer-actions button { border: 1px solid var(--border); background: rgba(255,255,255,0.08); color: var(--text); padding: 0.5rem 0.8rem; border-radius: 999px; cursor: pointer; }
+
+    @media (max-width: 760px) { .viewer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-threshold-spoke="discover">
+  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+  <div class="page-shell">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="housegarden.html">House &amp; Garden</a>
+      <a href="ethos.html">Ethos</a>
+      <a href="discover.html">Discover</a>
+    </nav>
+
+    <section class="hero">
+      <h1>Threshold Discover</h1>
+      <p>The codex of what the actor has earned, revealed, and encountered.</p>
+    </section>
+
+    <div class="controls">
+      <button class="pill" data-filter="all">All</button>
+      <button class="pill" data-filter="discovered">Discovered</button>
+      <button class="pill" data-filter="hidden">Hidden</button>
+    </div>
+
+    <div id="entityGrid" class="grid" aria-live="polite"></div>
+  </div>
+
+  <div id="viewer" class="viewer" aria-hidden="true">
+    <div class="viewer-panel">
+      <div class="viewer-image" id="viewerImage">Reveal image</div>
+      <div class="viewer-grid">
+        <div>
+          <h2 id="viewerTitle">Title</h2>
+          <p id="viewerDescription">Description</p>
+          <p id="viewerStory">Story fragment</p>
+        </div>
+        <div class="viewer-meta">
+          <p><strong>Type:</strong> <span id="viewerType">--</span></p>
+          <p><strong>Chamber:</strong> <span id="viewerChamber">--</span></p>
+          <p><strong>Flower:</strong> <span id="viewerFlower">--</span></p>
+          <p><strong>Pulse:</strong> <span id="viewerPulse">--</span></p>
+          <p><strong>Weight:</strong> <span id="viewerWeight">--</span></p>
+          <p><strong>Vault:</strong> <span id="viewerVault">--</span></p>
+          <div class="viewer-actions">
+            <button id="viewerClose">Close</button>
+            <button id="viewerReveal">Reveal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const entityGrid = document.getElementById('entityGrid');
+      const viewer = document.getElementById('viewer');
+      const viewerTitle = document.getElementById('viewerTitle');
+      const viewerDescription = document.getElementById('viewerDescription');
+      const viewerStory = document.getElementById('viewerStory');
+      const viewerType = document.getElementById('viewerType');
+      const viewerChamber = document.getElementById('viewerChamber');
+      const viewerFlower = document.getElementById('viewerFlower');
+      const viewerPulse = document.getElementById('viewerPulse');
+      const viewerWeight = document.getElementById('viewerWeight');
+      const viewerVault = document.getElementById('viewerVault');
+      const viewerImage = document.getElementById('viewerImage');
+      const viewerClose = document.getElementById('viewerClose');
+      const viewerReveal = document.getElementById('viewerReveal');
+      const filterButtons = Array.from(document.querySelectorAll('.pill'));
+      const discoverStorageKey = 'threshold.discover.entities.v1';
+
+      let entities = [];
+      let filter = 'all';
+
+      function loadEntities() {
+        fetch('data/discover-entities.json', { cache: 'no-store' })
+          .then((response) => response.json())
+          .then((data) => {
+            const persisted = JSON.parse(localStorage.getItem(discoverStorageKey) || 'null');
+            entities = (data || []).map((entity) => {
+              const saved = persisted && persisted[entity.id];
+              return Object.assign({}, entity, {
+                discovered: saved ? Boolean(saved.discovered) : Boolean(entity.discovered)
+              });
+            });
+            render();
+          })
+          .catch(() => {
+            entities = [];
+            render();
+          });
+      }
+
+      function saveEntities() {
+        const snapshot = {};
+        entities.forEach((entity) => {
+          snapshot[entity.id] = { discovered: Boolean(entity.discovered) };
+        });
+        localStorage.setItem(discoverStorageKey, JSON.stringify(snapshot));
+      }
+
+      function render() {
+        const filtered = entities.filter((entity) => {
+          if (filter === 'discovered') return entity.discovered;
+          if (filter === 'hidden') return !entity.discovered;
+          return true;
+        });
+
+        entityGrid.innerHTML = '';
+        if (filtered.length === 0) {
+          entityGrid.innerHTML = '<p>No entities match this filter yet.</p>';
+          return;
+        }
+
+        filtered.forEach((entity) => {
+          const card = document.createElement('button');
+          card.className = `card${entity.discovered ? '' : ' is-hidden'}`;
+          card.innerHTML = `
+            <div>
+              <div class="meta">${entity.type}</div>
+              <h2>${entity.title}</h2>
+              <p>${entity.discovered ? entity.description : 'Hidden until earned. The chamber keeps this entity veiled.'}</p>
+            </div>
+            <div class="footer">${entity.discovered ? 'Discovered â€¢ ' + entity.chamber : 'Hidden â€¢ ' + entity.chamber}</div>
+          `;
+          card.addEventListener('click', () => openViewer(entity));
+          entityGrid.appendChild(card);
+        });
+      }
+
+      function openViewer(entity) {
+        viewerTitle.textContent = entity.title;
+        viewerDescription.textContent = entity.discovered ? entity.description : 'This entity remains hidden until the actor earns it.';
+        viewerStory.textContent = entity.discovered ? entity.storyFragment : 'The threshold has not yet granted access.';
+        viewerType.textContent = entity.type;
+        viewerChamber.textContent = entity.chamber;
+        viewerFlower.textContent = entity.flower;
+        viewerPulse.textContent = entity.pulse;
+        viewerWeight.textContent = entity.weight;
+        viewerVault.textContent = entity.vaultSource;
+        viewerImage.textContent = entity.discovered ? 'Reveal image ready' : 'Hidden artifact';
+        viewer.classList.add('is-open');
+        viewer.setAttribute('aria-hidden', 'false');
+        viewerReveal.onclick = () => {
+          entity.discovered = true;
+          saveEntities();
+          render();
+          openViewer(entity);
+        };
+      }
+
+      function closeViewer() {
+        viewer.classList.remove('is-open');
+        viewer.setAttribute('aria-hidden', 'true');
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          filter = button.dataset.filter || 'all';
+          filterButtons.forEach((pill) => pill.style.borderColor = 'rgba(255,255,255,0.16)');
+          button.style.borderColor = 'rgba(255,255,255,0.4)';
+          render();
+        });
+      });
+
+      viewerClose.addEventListener('click', closeViewer);
+      viewer.addEventListener('click', (event) => {
+        if (event.target === viewer) closeViewer();
+      });
+
+      loadEntities();
+    })();
+  </script>
+  <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
+  <style>
+    .engine-architecture-link {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      z-index: 10000;
+      padding: 0.36rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(210, 228, 255, 0.5);
+      background: rgba(10, 16, 30, 0.78);
+      color: rgba(232, 242, 255, 0.96);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.64rem;
+      backdrop-filter: blur(4px);
+    }
+    .engine-architecture-link:hover,
+    .engine-architecture-link:focus-visible {
+      background: rgba(216, 233, 255, 0.95);
+      color: #101524;
+      outline: none;
+    }
+  </style>
+  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/spoke-tabs.js"></script>
+</body>
+</html>
+
+
+
+
+

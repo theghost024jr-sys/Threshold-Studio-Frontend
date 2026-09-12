@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-19T05:26:32.964793+00:00",
+  "vaultPath": "C:\\Users\\James Romeo\\Threshold\\ThresholdVault\\theghost",
+  "dataPath": "C:\\Threshold\\website\\data\\threshold-vault.json",
+  "counts": {
+    "markdown": 4039,
+    "publishedMarkdown": 129,
+    "entities": 15,
+    "chambers": 4,
+    "translations": 0
+  }
+}

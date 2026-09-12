@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glyph Archive - Threshold Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&amp;family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles/glyphs.css" />
+  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+  <link rel="stylesheet" href="styles/complexity-layers.css" />
+</head>
+<body class="glyphs-page" data-threshold-spoke="glyphs" data-complexity="foundation atmosphere topology interaction" data-motion="bounded">
+  <header class="glyph-site-header">
+    <a class="glyph-brand" href="index.html" aria-label="Threshold Hub">
+      <span class="glyph-brand-mark" aria-hidden="true">T</span>
+      <span>Threshold Studio</span>
+    </a>
+    <nav class="glyph-site-nav" aria-label="Archive navigation">
+      <a href="index.html">Hub</a>
+      <a href="ethos.html">Ethos</a>
+      <a href="invitation.html">Invitation</a>
+    </nav>
+  </header>
+
+  <main class="glyph-page-shell">
+    <header class="archive-heading">
+      <p class="archive-eyebrow">A living branch of the world</p>
+      <h1>Glyph Archive</h1>
+      <p class="archive-intro">The Archive is not a shelf. It is a descent. Choose a path and let the chamber answer.</p>
+    </header>
+
+    <section id="archive" data-weather="threshold" aria-label="Glyph Archive descent">
+      <div class="archive-weather" aria-hidden="true">
+        <div id="weather-fog"></div>
+        <div id="weather-shimmer"></div>
+        <div id="weather-storm"></div>
+        <div id="weather-soil"></div>
+      </div>
+      <div id="cave" aria-hidden="true">
+        <span class="cave-wall cave-wall-left"></span>
+        <span class="cave-wall cave-wall-right"></span>
+        <span class="cave-roof"></span>
+        <span class="cave-aperture"></span>
+        <span class="archive-sigil">◇</span>
+      </div>
+      <div id="paths" role="group" aria-label="Choose an archive path">
+        <button class="path" type="button" data-choice="collapse" aria-pressed="false"><span>01</span>Collapse</button>
+        <button class="path" type="button" data-choice="expand" aria-pressed="false"><span>02</span>Expand</button>
+        <button class="path" type="button" data-choice="fog" aria-pressed="false"><span>03</span>Fog</button>
+        <button class="path" type="button" data-choice="soil" aria-pressed="false"><span>04</span>Soil</button>
+      </div>
+      <div class="archive-reading">
+        <p id="archiveStatus" class="archive-status" role="status">Stand at the threshold. Four paths are listening.</p>
+        <p id="archiveTrail" class="archive-trail">Maze depth 0</p>
+      </div>
+      <div id="chamber" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="glyph-footer">
+    <span>Threshold Studio</span>
+    <span>The world is revealed by walking.</span>
+  </footer>
+
+  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/spoke-tabs.js"></script>
+  <script src="scripts/glyphs.js"></script>
+  <script type="module" src="scripts/destination-page.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

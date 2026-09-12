@@ -129,6 +129,35 @@
 .cave-roof { inset: -18% 15% auto; height: 52%; border-radius: 50%; background: #030405; }
 .cave-aperture { left: 50%; top: 45%; width: 18%; aspect-ratio: 1; border: 1px solid rgba(232, 184, 93, 0.3); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 70px rgba(232, 184, 93, 0.16), inset 0 0 34px rgba(119, 211, 196, 0.12); }
 .archive-sigil { position: absolute; left: 50%; top: 45%; color: rgba(232, 184, 93, 0.78); font-size: 2.8rem; transform: translate(-50%, -50%); text-shadow: 0 0 24px rgba(232, 184, 93, 0.5); }
+.glyph-emergence {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  z-index: 2;
+  width: clamp(150px, 24vw, 270px);
+  aspect-ratio: 1;
+  opacity: 0;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.4) brightness(0.75);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.72);
+}
+.glyph-emergence.is-emerging { animation: glyphEmerge 1600ms cubic-bezier(.18,.75,.2,1) both; }
+.glyph-traces { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.glyph-trace {
+  position: absolute;
+  width: 58px;
+  aspect-ratio: 1;
+  opacity: 0.24;
+  object-fit: contain;
+  filter: grayscale(1) sepia(.35) brightness(.72);
+  mix-blend-mode: screen;
+}
+.glyph-trace[data-glyph="collapse"] { left: 11%; top: 58%; transform: rotate(-12deg); }
+.glyph-trace[data-glyph="expand"] { right: 12%; top: 54%; transform: rotate(9deg); }
+.glyph-trace[data-glyph="fog"] { left: 24%; top: 18%; transform: rotate(7deg); }
+.glyph-trace[data-glyph="soil"] { right: 25%; top: 21%; transform: rotate(-8deg); }
 #archive[data-weather="collapse"] .cave-aperture { width: 11%; border-color: rgba(224, 111, 91, 0.5); }
 #archive[data-weather="expand"] .cave-aperture { width: 26%; box-shadow: 0 0 100px rgba(232, 184, 93, 0.34); }
 #archive[data-weather="fog"] .archive-sigil { filter: blur(3px); }
@@ -196,6 +225,12 @@
 .glyph-footer { min-height: 100px; border-top: 1px solid rgba(232, 184, 93, 0.2); color: var(--archive-muted); font-size: 0.7rem; text-transform: uppercase; }
 
 @keyframes chamberReveal { from { opacity: 0; transform: translateY(12px); } }
+@keyframes glyphEmerge {
+  0% { opacity: 0; filter: grayscale(1) blur(18px) contrast(1.8) brightness(.35); transform: translate(-50%, -45%) scale(.58); }
+  38% { opacity: .22; }
+  72% { opacity: .7; filter: grayscale(1) blur(1px) contrast(1.45) brightness(.8); }
+  100% { opacity: .42; filter: grayscale(1) blur(0) contrast(1.4) brightness(.68); transform: translate(-50%, -50%) scale(1); }
+}
 
 @media (max-width: 720px) {
   .glyph-site-header,

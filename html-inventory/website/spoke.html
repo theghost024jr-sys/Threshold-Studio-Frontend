@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threshold Spoke</title>
+  <link rel="stylesheet" href="styles/spoke-shell.css" />
+  <link rel="stylesheet" href="styles/spoke-tabs.css" />
+</head>
+<body class="spoke-shell-page" data-threshold-spoke="">
+  <main class="spoke-shell" aria-live="polite">
+    <header class="spoke-shell-header">
+      <p class="spoke-shell-circle" data-node-fib>Fib 8</p>
+      <h1 data-spoke-title>Opening spoke...</h1>
+      <p data-spoke-status>Only this route is active.</p>
+    </header>
+
+    <section class="spoke-node" data-node hidden>
+      <div class="spoke-node-heading">
+        <div>
+          <p class="spoke-node-kind" data-node-kind></p>
+          <h2 data-node-title></h2>
+        </div>
+        <button type="button" class="spoke-back" data-node-back hidden>Previous Fib</button>
+      </div>
+      <div class="spoke-node-content" data-node-content></div>
+      <div class="spoke-node-choices" data-node-choices></div>
+    </section>
+
+    <dialog class="spoke-card" data-zone-card aria-labelledby="spoke-card-title">
+      <button type="button" class="spoke-card-close" data-card-close aria-label="Close card" autofocus>&times;</button>
+      <p class="spoke-card-version" data-card-version></p>
+      <h2 id="spoke-card-title" data-card-title></h2>
+      <img class="spoke-card-image" data-card-image alt="" hidden />
+      <div class="spoke-card-story" data-card-story></div>
+      <nav class="spoke-zone-grid" data-zone-grid aria-label="Fib zone movement">
+        <button type="button" class="spoke-zone-north" data-zone-direction="north">North</button>
+        <button type="button" class="spoke-zone-west" data-zone-direction="west">West</button>
+        <button type="button" class="spoke-zone-stay" data-zone-direction="stay">Stay</button>
+        <button type="button" class="spoke-zone-east" data-zone-direction="east">East</button>
+        <button type="button" class="spoke-zone-south" data-zone-direction="south">South</button>
+      </nav>
+      <p class="spoke-card-status" data-card-status role="status"></p>
+    </dialog>
+
+    <button type="button" class="spoke-enter" data-spoke-enter>Enter Spoke</button>
+  </main>
+
+  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/spoke-tabs.js"></script>
+  <script type="module" src="scripts/spoke-shell.js"></script>
+</body>
+</html>

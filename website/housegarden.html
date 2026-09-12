@@ -6,7 +6,8 @@
   <title>Threshold Studio - House and Garden</title>
   <link rel="stylesheet" href="styles/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/housegarden.css" />
+  <link rel="stylesheet" href="styles/housegarden.css?v=pollen-1" />
+  <link rel="stylesheet" href="styles/pulse.css" />
   <link rel="stylesheet" href="styles/complexity-layers.css" />
 </head>
 <body class="housegarden-page vault-frame" data-vault-room="housegarden" data-threshold-spoke="house-garden" data-complexity="foundation atmosphere topology interaction simulation" data-motion="bounded">
@@ -19,16 +20,22 @@
     <a class="vault-law-structural" href="ethos.html">Ethos</a>
     <a class="vault-law-structural" href="glyphs.html">Glyphs</a>
     <a class="vault-law-structural" href="learningwheel.html">Learning Wheel</a>
-    <a class="vault-law-structural" href="ledger.html">Ledger</a>
     <a class="vault-law-structural" href="dialogues.html">Dialogues</a>
     <a class="vault-law-structural" href="mythology.html">Mythology</a>
     <a class="vault-law-structural" href="housegarden.html">House &amp; Garden</a>
-    <a class="vault-law-structural" href="chamber-palette-map.html">Chamber Map</a>
     <a class="vault-law-structural" href="invitation.html">Invitation</a>
     <a class="vault-law-structural" href="contact.html">Contact</a>
   </nav>
 
   <main id="flower-container" aria-label="House and Garden flower page">
+    <div class="pollen-field" data-pollen-field aria-label="Drifting pollen">
+      <button class="bubble breathe pollen clickable pollen--one" type="button" aria-label="Pollen mote 1 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--two" type="button" aria-label="Pollen mote 2 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--three" type="button" aria-label="Pollen mote 3 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--four" type="button" aria-label="Pollen mote 4 of 5"></button>
+      <button class="bubble breathe pollen clickable pollen--five" type="button" aria-label="Pollen mote 5 of 5"></button>
+      <span class="pollen-progress" data-pollen-progress aria-live="polite"></span>
+    </div>
     <div id="flower-glyph" aria-hidden="true">✿</div>
 
     <div id="flower-description">
@@ -58,6 +65,9 @@
         <button type="button" id="nav-camp">Camp</button>
       </nav>
     </section>
+    <div id="garden-portal" class="garden-portal" data-garden-portal data-revealed="false" aria-hidden="true">
+      <a href="garden.html" tabindex="-1">Enter Garden Organ</a>
+    </div>
   </main>
 
   <section class="garden-scene" aria-labelledby="garden-scene-title">
@@ -208,7 +218,7 @@
     });
   </script>
   <script src="scripts/chamber-loader.js"></script>
-  <script src="scripts/housegarden.js"></script>
+  <script src="scripts/housegarden.js?v=pollen-1"></script>
   <script src="scripts/Garden.js"></script>
   <script>
     document.querySelectorAll('[data-room-index]').forEach(function (button) {

@@ -182,3 +182,32 @@ test("grounds a bidirectional Fibonacci page graph", async () => {
   assert.deepEqual(topology.nodes["root-archive"].parents, ["house-garden", "ethos"]);
   assert.deepEqual(topology.nodes["storm-cabinet"].parents, ["seasonal-alcove", "fracture-pedal"]);
 });
+
+test("roots Ethos in its declaration and mandatory seed triad", async () => {
+  const topology = JSON.parse(await readFile(
+    new URL("../config/page-topology.json", import.meta.url),
+    "utf8"
+  ));
+  const loader = await readFile(
+    new URL("../scripts/destination-page.js", import.meta.url),
+    "utf8"
+  );
+  const ethos = topology.spokes.ethos;
+
+  assert.equal(ethos.branchType, "high-order-principle");
+  assert.equal(ethos.parent, "high-branch");
+  assert.equal(ethos.orbitZone, "Fib 5-8");
+  assert.deepEqual(ethos.children.slice(0, 3), ["alignment", "contribution", "presence"]);
+  assert.match(ethos.content.body, /Behavior generates gravity/);
+  assert.match(ethos.content.body, /circuit mirror/);
+  assert.match(ethos.content.body, /Branch Behavior/);
+  assert.match(ethos.content.body, /Node Physics/);
+  assert.match(ethos.content.body, /Ready for Attachment/);
+  assert.match(loader, /content: root\.content/);
+
+  for (const id of ["alignment", "contribution", "presence"]) {
+    assert.equal(topology.nodes[id].fib, 5);
+    assert.deepEqual(topology.nodes[id].parents, ["ethos"]);
+    assert.match(topology.nodes[id].content.body, /<p>/);
+  }
+});

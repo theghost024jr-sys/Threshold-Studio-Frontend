@@ -20,7 +20,13 @@
     },
     "ethos": {
       "fib": 8,
-      "children": ["root-archive", "lantern-vault"]
+      "branchType": "high-order-principle",
+      "parent": "high-branch",
+      "orbitZone": "Fib 5-8",
+      "children": ["alignment", "contribution", "presence", "root-archive", "lantern-vault"],
+      "content": {
+        "body": "<h3>Root Declaration</h3><p>Ethos defines how a player, node, or contributor behaves inside Threshold. It is not morality or rules. It is the behavioral physics of participation: the internal demand loop that determines whether a node stabilizes, drifts, collapses, or ascends.</p><p>Ethos acts as the circuit mirror for human behavior inside the system. Whatever passes through the slit - action, contribution, alignment, or neglect - returns as pressure, drift, or anchor. Ethos is where intent becomes force.</p><h3>Primary Slit</h3><blockquote><strong>Behavior generates gravity.</strong></blockquote><p>Aligned behavior gains orbit stability. Misaligned behavior loses orbit and drifts outward. No behavior collapses inward. This slit allows Ethos to self-assemble.</p><h3>Branch Behavior</h3><ul><li>Alignment reveals new subnodes.</li><li>Contribution opens new paths.</li><li>Stable Presence thickens the branch.</li></ul><p>Ethos grows in response to behavior. It is the first branch that reacts to the player.</p><h3>Node Physics</h3><ul><li>Collapse when behavior contradicts the slit.</li><li>Drift when behavior is inconsistent.</li><li>Anchor when behavior is aligned.</li><li>Resonance when behavior amplifies Flower energy.</li><li>Pressure when behavior is avoided or neglected.</li></ul><h3>Ready for Attachment</h3><p>The slit, triad, and physics make Ethos structurally valid for player contributions, generated subnodes, cross-Flower migration, higher-order principles, spirit-animal alignment, environmental cues, and Fib 5-8 frontier behavior.</p>"
+      }
     },
     "learning-wheel": {
       "fib": 8,
@@ -56,6 +62,36 @@
     }
   },
   "nodes": {
+    "alignment": {
+      "fib": 5,
+      "label": "Alignment",
+      "kind": "ethos-force",
+      "parents": ["ethos"],
+      "children": [],
+      "content": {
+        "body": "<h3>Alignment</h3><p>Measures whether a node's behavior matches the Flower it is orbiting.</p><ul><li>High alignment strengthens the anchor.</li><li>Low alignment creates drift.</li><li>Zero alignment triggers collapse.</li></ul>"
+      }
+    },
+    "contribution": {
+      "fib": 5,
+      "label": "Contribution",
+      "kind": "ethos-force",
+      "parents": ["ethos"],
+      "children": [],
+      "content": {
+        "body": "<h3>Contribution</h3><p>Tracks whether the node adds energy to the system.</p><ul><li>Contribution increases orbit height.</li><li>Non-contribution creates pressure debt.</li><li>Negative contribution triggers collapse.</li></ul>"
+      }
+    },
+    "presence": {
+      "fib": 5,
+      "label": "Presence",
+      "kind": "ethos-force",
+      "parents": ["ethos"],
+      "children": [],
+      "content": {
+        "body": "<h3>Presence</h3><p>Did you show up?</p><ul><li>Presence stabilizes orbit.</li><li>Absence creates drift.</li><li>Chronic absence triggers migration to the outer halo.</li></ul>"
+      }
+    },
     "root-archive": {
       "fib": 5,
       "label": "Root Archive",

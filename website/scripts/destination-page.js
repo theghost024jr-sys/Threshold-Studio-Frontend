@@ -232,6 +232,7 @@ function localRoot(topology, spoke) {
     id: spoke.id,
     label: spoke.label,
     fib: root.fib,
+    content: root.content,
     parents: ["hub"],
     children: root.children.map((id) => localChild(topology, spoke.id, id))
   };

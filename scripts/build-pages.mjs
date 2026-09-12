@@ -4,12 +4,13 @@ import { resolve } from "node:path";
 
 const outputDirectory = resolve("website");
 const requiredFiles = ["index.html"];
+const staticOnly = process.argv.includes("--static");
 const config = JSON.parse(await readFile(resolve("threshold.config.json"), "utf8"));
 const vaultData = JSON.parse(
   await readFile(resolve(outputDirectory, "data", "threshold-vault.json"), "utf8"),
 );
 
-if (vaultData.vaultRoot !== config.vaultRoot) {
+if (!staticOnly && vaultData.vaultRoot !== config.vaultRoot) {
   throw new Error(`Website vault source drifted: ${vaultData.vaultRoot}`);
 }
 
@@ -23,4 +24,6 @@ if (entries.length === 0) {
 }
 
 console.log(`Cloudflare Pages static output ready: ${outputDirectory}`);
-console.log(`Canonical vault data ready: ${vaultData.vaultRoot}`);
+console.log(staticOnly
+  ? "Committed public data accepted for CI; canonical vault generation was not run."
+  : `Canonical vault data ready: ${vaultData.vaultRoot}`);

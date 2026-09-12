@@ -3,56 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invitation · Threshold Studio</title>
+  <title>You Are Welcome · Threshold</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/invitation-letter.css" />
-  <link rel="stylesheet" href="styles/invitation-envelope.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/invitation-sanctuary.css" />
 </head>
 <body data-threshold-spoke="invitation" data-complexity="foundation editorial ritual" data-motion="bounded">
-  <a class="back-mark" href="index.html" aria-label="Return to the Hub">THR / RETURN</a>
+  <main class="sanctuary">
+    <div class="sanctuary-light" aria-hidden="true"></div>
+    <div class="sanctuary-ring sanctuary-ring--one" aria-hidden="true"></div>
+    <div class="sanctuary-ring sanctuary-ring--two" aria-hidden="true"></div>
+    <div class="sanctuary-ring sanctuary-ring--three" aria-hidden="true"></div>
 
-  <main class="invitation-room">
-    <figure class="found-image">
-      <img src="assets/vault/humanoids/invitationlisteningroom-001-listening-room.png" alt="A dark listening room at Threshold" />
-      <figcaption>Listening Room. Photographer and coordinates withheld.</figcaption>
-    </figure>
+    <section class="welcome" aria-labelledby="welcome-title">
+      <p class="welcome-before">Before anything else:</p>
+      <h1 id="welcome-title">You are<br><em>welcome here.</em></h1>
 
-    <section class="envelope" aria-labelledby="invitation-title">
-      <div class="envelope-back" aria-hidden="true"></div>
-      <article class="letter">
-        <header class="letter-head">
-          <span>Threshold Studio</span>
-          <span>Private correspondence · 1 of 1</span>
-        </header>
-        <p class="salutation">To the one who kept looking,</p>
-        <h1 id="invitation-title">You found it.</h1>
-        <p>That matters.</p>
-        <p>This place is for unfinished work, strange questions, and people who would rather make something real than make themselves legible.</p>
-        <p>You do not need a pitch. You do not need permission. Bring one thing you care enough about to change.</p>
-        <p class="signature">The door is yours,<br><strong>Threshold</strong></p>
-        <div class="letter-foot">
-          <span>NO AUDIENCE · NO PERFORMANCE</span>
-          <a href="hub.html">Come inside →</a>
-        </div>
-      </article>
-      <div class="envelope-front" aria-hidden="true"></div>
-      <div class="envelope-flap" aria-hidden="true"><span>FOR THE FINDER</span></div>
-      <button id="accept" class="wax-seal" type="button" data-threshold-accept aria-label="Break the seal and open your invitation">
-        <span aria-hidden="true">T</span>
-      </button>
-      <p class="seal-note">Break the seal</p>
+      <div class="welcome-truths">
+        <p>You do not have to make yourself smaller.</p>
+        <p>You do not have to explain how you arrived.</p>
+        <p>You do not have to hide the unfinished, uncertain, tender parts.</p>
+      </div>
+
+      <p class="welcome-center">Nothing about you disqualifies you from belonging.</p>
+
+      <div class="welcome-permission" aria-label="What is welcome here">
+        <span>Your joy</span>
+        <span>Your ache</span>
+        <span>Your strangeness</span>
+        <span>Your becoming</span>
+      </div>
+
+      <p class="welcome-close">Come in exactly as you are.<br>There is room.</p>
+      <a class="welcome-enter" href="hub.html">Enter Threshold <span aria-hidden="true">→</span></a>
     </section>
 
-    <aside class="margin-note" aria-hidden="true">
-      <span>It was never hidden.</span>
-      <span>It was waiting to be noticed.</span>
-    </aside>
+    <p class="sanctuary-mark">THRESHOLD · A PLACE TO ARRIVE WITHOUT SHAME</p>
   </main>
-
-  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
-  <script src="scripts/invitation.js"></script>
-  <script type="module" src="scripts/destination-page.js?v=reveal-5"></script>
 </body>
 </html>

@@ -1,0 +1,270 @@
+:root {
+  color-scheme: light;
+  --blood: #71303a;
+  --rose: #bd6e70;
+  --peach: #e8ae8b;
+  --milk: #fff5df;
+  --ink: #411d24;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--blood);
+  color: var(--ink);
+  font-family: "Karla", sans-serif;
+}
+
+.sanctuary {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  padding: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  overflow: hidden;
+  background-image:
+    radial-gradient(ellipse at center, rgba(255, 245, 223, 0.96) 0 20%, rgba(245, 202, 170, 0.88) 43%, rgba(189, 110, 112, 0.9) 70%, rgba(113, 48, 58, 0.98) 100%),
+    url("../assets/vault/humanoids/invitationafieldofwildflowe-001-a-field-of-wildflowe.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.sanctuary::before {
+  position: absolute;
+  inset: 1rem;
+  border: 1px solid rgba(255, 245, 223, 0.3);
+  border-radius: 48% 52% 46% 54% / 54% 43% 57% 46%;
+  content: "";
+  pointer-events: none;
+}
+
+.sanctuary-light {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(64rem, 82vw);
+  aspect-ratio: 1;
+  border-radius: 48% 52% 45% 55% / 54% 44% 56% 46%;
+  background: rgba(255, 248, 228, 0.38);
+  filter: blur(2rem);
+  transform: translate(-50%, -50%);
+  animation: breathe 8s ease-in-out infinite;
+  z-index: -2;
+}
+
+.sanctuary-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(255, 245, 223, 0.38);
+  border-radius: 47% 53% 50% 50% / 52% 44% 56% 48%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.sanctuary-ring--one {
+  width: min(74rem, 93vw);
+  aspect-ratio: 1.22;
+  animation: drift-one 18s ease-in-out infinite alternate;
+}
+
+.sanctuary-ring--two {
+  width: min(60rem, 80vw);
+  aspect-ratio: 1.08;
+  border-color: rgba(113, 48, 58, 0.2);
+  animation: drift-two 15s ease-in-out infinite alternate;
+}
+
+.sanctuary-ring--three {
+  width: min(46rem, 68vw);
+  aspect-ratio: 0.92;
+  border-color: rgba(113, 48, 58, 0.16);
+  animation: breathe-ring 10s ease-in-out infinite;
+}
+
+.welcome {
+  width: min(48rem, 100%);
+  padding: clamp(2rem, 5vw, 4.5rem);
+  text-align: center;
+}
+
+.welcome-before {
+  margin: 0 0 1.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.welcome h1 {
+  margin: 0;
+  font-family: "Gowun Batang", serif;
+  font-size: clamp(4rem, 9vw, 8rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.88;
+}
+
+.welcome h1 em {
+  color: var(--blood);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.welcome-truths {
+  margin: clamp(2rem, 5vh, 3.5rem) auto;
+  color: rgba(65, 29, 36, 0.76);
+  font-family: "Gowun Batang", serif;
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.welcome-truths p {
+  margin: 0.35rem 0;
+}
+
+.welcome-center {
+  max-width: 34rem;
+  margin: 0 auto clamp(1.75rem, 4vh, 3rem);
+  font-family: "Gowun Batang", serif;
+  font-size: clamp(1.35rem, 2.7vw, 2rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.welcome-permission {
+  display: flex;
+  margin: 0 auto clamp(2rem, 5vh, 3.5rem);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem 1.7rem;
+  color: var(--blood);
+  font-family: "Gowun Batang", serif;
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+}
+
+.welcome-permission span::before {
+  margin-right: 0.55rem;
+  content: "·";
+}
+
+.welcome-close {
+  margin: 0 0 1.6rem;
+  font-family: "Gowun Batang", serif;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.45;
+}
+
+.welcome-enter {
+  display: inline-flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--blood);
+  color: var(--blood);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.welcome-enter span {
+  font-size: 1.2rem;
+  transition: transform 180ms ease;
+}
+
+.welcome-enter:hover span,
+.welcome-enter:focus-visible span {
+  transform: translateX(0.4rem);
+}
+
+.welcome-enter:focus-visible {
+  outline: 2px solid var(--blood);
+  outline-offset: 0.6rem;
+}
+
+.sanctuary-mark {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.25rem;
+  margin: 0;
+  color: rgba(255, 245, 223, 0.78);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.72; transform: translate(-50%, -50%) scale(0.97); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+}
+
+@keyframes drift-one {
+  to { transform: translate(-50%, -50%) rotate(3deg) scale(1.02); }
+}
+
+@keyframes drift-two {
+  to { transform: translate(-50%, -50%) rotate(-4deg) scale(0.98); }
+}
+
+@keyframes breathe-ring {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@media (max-width: 640px) {
+  .sanctuary {
+    min-height: 100svh;
+    padding: 2.5rem 1.25rem 3.5rem;
+  }
+
+  .sanctuary::before {
+    inset: 0.6rem;
+  }
+
+  .sanctuary-ring--one { width: 145vw; }
+  .sanctuary-ring--two { width: 118vw; }
+  .sanctuary-ring--three { width: 92vw; }
+
+  .welcome {
+    padding: 1rem 0.5rem;
+  }
+
+  .welcome h1 {
+    font-size: clamp(3.7rem, 19vw, 5.2rem);
+  }
+
+  .welcome-truths {
+    margin: 1.8rem auto;
+  }
+
+  .welcome-permission {
+    gap: 0.35rem 1rem;
+  }
+
+  .sanctuary-mark {
+    right: auto;
+    bottom: 1rem;
+    left: 50%;
+    width: 90%;
+    text-align: center;
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

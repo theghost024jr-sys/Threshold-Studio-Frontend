@@ -100,7 +100,13 @@ test("ships every declared spoke page with the destination loader", async () => 
     await access(pageUrl);
     const page = await readFile(pageUrl, "utf8");
     assert.match(page, new RegExp(`data-threshold-spoke=["']${spoke.id}["']`));
-    assert.match(page, /scripts\/destination-page\.js/);
+    if (spoke.id === "invitation") {
+      assert.doesNotMatch(page, /scripts\/destination-page\.js/);
+      assert.match(page, /class="sanctuary"/);
+      assert.match(page, /Nothing about you disqualifies you from belonging/);
+    } else {
+      assert.match(page, /scripts\/destination-page\.js/);
+    }
   }
 });
 

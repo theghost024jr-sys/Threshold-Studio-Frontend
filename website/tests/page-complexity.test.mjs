@@ -91,3 +91,25 @@ test("uses the ship-wheel sigil on brand and engine surfaces", async () => {
   const engine = await readFile(new URL("threshold-engine.js", root), "utf8");
   assert.match(engine, /img\.src = "\/assets\/entry\/threshold-logo\.svg"/);
 });
+
+test("keeps Ella in the Beyond outer field", async () => {
+  const html = await readFile(new URL("pages/beyond/Ella.html", root), "utf8");
+  const script = await readFile(new URL("scripts/ella-immersive.js", root), "utf8");
+  const dialogues = await readFile(new URL("dialogues.html", root), "utf8");
+
+  assert.match(html, /Ella \| The Shepherd of Animals/);
+  assert.match(html, /Threshold \/ Beyond/);
+  assert.match(html, /Beyond the chambers, organs, and Hub/);
+  assert.match(html, /Ellaheard\.png"[^>]*loading="eager"/);
+  assert.match(html, /styles\/ella-immersive\.css/);
+  assert.match(html, /scripts\/ella-immersive\.js/);
+  assert.match(html, /href="\.\.\/\.\.\/index\.html"/);
+  assert.match(script, /three@0\.179\.1/);
+  assert.match(script, /glyphSystem\.mount/);
+  assert.doesNotMatch(dialogues, /Ella/i);
+
+  await readFile(new URL("assets/beyond/Ella.png", root));
+  await readFile(new URL("assets/beyond/Ellaheard.png", root));
+  await readFile(new URL("scripts/glyph-system.js", root), "utf8");
+  await readFile(new URL("styles/glyph-system.css", root), "utf8");
+});

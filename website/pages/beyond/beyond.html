@@ -1,75 +1,91 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#07100d" />
-  <title>Beyond | Threshold</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;family=Newsreader:opsz,wght@6..72,300;6..72,500&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/glyph-system.css" />
-  <link rel="stylesheet" href="/styles/immersive.css" />
-  <link rel="stylesheet" href="/pages/beyond/beyond.css" />
-</head>
-<body data-beyond-gateway>
-  <div class="world-stage" data-ella-stage aria-hidden="true">
-    <canvas id="ella-world"></canvas>
-  </div>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threshold · Beyond</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/styles/complexity-layers.css">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/beyond.css">
+  <link rel="stylesheet" href="/styles/immersive.css">
+</head>
+<body class="beyond-shell">
   <header class="site-header">
-    <a class="threshold-mark" href="/hub.html" aria-label="Return to the Hub">
-      <span class="threshold-mark__glyph" aria-hidden="true"></span>
-      <span>Threshold / Beyond</span>
+    <a class="brand" href="/index.html">
+      <img src="/assets/entry/threshold-logo.svg" alt="Threshold logo">
+      Threshold
     </a>
-    <p>Outer field / Gateway</p>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="/index.html">Entry</a>
+      <a href="/hub.html">Hub</a>
+      <a href="/pages/beyond/beyond.html" aria-current="page">Beyond</a>
+      <a href="/garden.html">Garden</a>
+    </nav>
   </header>
 
-  <main>
-    <section class="hero beyond-hero" aria-labelledby="beyond-title">
-      <img class="hero__portrait" src="/assets/beyond/Ella.png" alt="Ella surrounded by animals in pale winter light" />
-      <div class="hero__veil" aria-hidden="true"></div>
-      <div class="hero__copy">
-        <p class="eyebrow">Beyond the chambers, organs, and Hub</p>
-        <h1 id="beyond-title">Beyond</h1>
-        <p class="hero__epithet">The outer field.<br />The quiet. The aftermath.</p>
-      </div>
-      <aside class="signal-readout" aria-label="Beyond field signal">
-        <div id="ella-signal" class="threshold-glyph-host" data-glyph-id="field-signal" aria-hidden="true"></div>
-        <div><span>Resonance</span><strong id="signal-status">Listening</strong></div>
-      </aside>
+  <main class="shell beyond-main" aria-labelledby="beyond-title">
+    <p class="eyebrow">Circle II / Beyond</p>
+    <h1 id="beyond-title">Beyond the Hub.</h1>
+    <p class="lead">
+      The Hub holds the center. Beyond is where chosen paths deepen, branch, and begin to carry weight.
+      What you follow here does not stay abstract; it becomes part of the living record.
+    </p>
+
+    <section class="beyond-grid" aria-label="Beyond field">
+      <article class="beyond-panel beyond-panel--trace">
+        <h2>Trace</h2>
+        <p>
+          Every step taken beyond the Hub leaves a mark. Not all marks are permanent, but all are noticed.
+          This layer keeps a quiet ledger of movement, attention, and return.
+        </p>
+      </article>
+
+      <article class="beyond-panel beyond-panel--depth">
+        <h2>Depth</h2>
+        <p>
+          Threads that are followed repeatedly sink deeper. They gain context, counterpoint, and resistance.
+          Depth is not granted; it is earned by staying with what you’ve chosen.
+        </p>
+      </article>
+
+      <article class="beyond-panel beyond-panel--consequence">
+        <h2>Consequence</h2>
+        <p>
+          Some paths in Beyond eventually cross thresholds that cannot be undone.
+          This layer watches for those crossings and asks for clarity before you step.
+        </p>
+      </article>
     </section>
 
-    <section class="opening beyond-opening" aria-labelledby="gateway-title">
-      <p class="section-index">01 / Gateway</p>
-      <div>
-        <h2 id="gateway-title">Outside the world’s architecture.</h2>
-        <p>Beyond is where the deeper system becomes accessible: a field for connection without demand, sorrow that does not harm, and healing that does not force.</p>
+    <section class="ella-layer" aria-label="Ella’s authored space">
+      <header class="ella-header">
+        <p class="eyebrow">Ella / Notes</p>
+        <h2>Ella’s vantage.</h2>
+        <p class="lead">
+          Ella writes from within the system, not outside it. Her notes are not commentary;
+          they are part of the field you are entering.
+        </p>
+      </header>
+
+      <div class="ella-notes" data-notes-source="/pages/beyond/ella-notes.md">
+        <p class="placeholder">
+          Ella’s notes load here when the immersive layer opens.
+        </p>
       </div>
     </section>
 
-    <section class="beyond-record" aria-labelledby="ella-record-title">
-      <figure>
-        <img src="/assets/beyond/Ellaheard.png" alt="Ella walking with her animal herd" loading="eager" />
-        <figcaption>Inner narrative / Field record 01</figcaption>
-      </figure>
-      <div class="beyond-record__copy">
-        <p class="section-index">02 / The Shepherd of Animals</p>
-        <h2 id="ella-record-title">Ella</h2>
-        <div class="beyond-notes" data-ella-notes aria-live="polite">
-          <p>Her field record is gathering.</p>
-        </div>
-        <a class="field-link" href="/pages/beyond/Ella.html">Enter Ella’s field <span aria-hidden="true">→</span></a>
-      </div>
+    <section class="beyond-actions" aria-label="Movement options">
+      <a class="action" href="/hub.html">Return to the Hub</a>
+      <a class="action action--primary" href="/garden.html">Continue into the Garden</a>
     </section>
-
-    <footer class="closing">
-      <p>What remains outside the structure still belongs to the world.</p>
-      <a href="/hub.html">Return to the Hub <span aria-hidden="true">→</span></a>
-    </footer>
   </main>
 
+  <script type="module" src="/scripts/beyond.js"></script>
   <script type="module" src="/scripts/immersive.js"></script>
-  <script type="module" src="/pages/beyond/beyond.js"></script>
 </body>
 </html>

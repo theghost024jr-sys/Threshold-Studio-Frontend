@@ -1,9 +1,35 @@
-@import url("/styles/ella-immersive.css");
-
-[data-beyond-gateway] #ella-world {
-  opacity: calc(0.42 + var(--resonance) * 0.22);
+.ella-layer {
+  isolation: isolate;
+  overflow: hidden;
 }
 
-[data-beyond-gateway] .hero__portrait {
-  filter: saturate(0.58) contrast(1.08);
+.ella-layer::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  opacity: 0.32;
+  background-image: radial-gradient(circle, rgba(240, 201, 139, 0.52) 0 1px, transparent 1.5px);
+  background-size: 42px 42px;
+  animation: beyond-field-drift 18s linear infinite;
+}
+
+.beyond-shell[data-ella-notes-state="ready"] .ella-notes {
+  animation: beyond-notes-arrive 480ms ease-out both;
+}
+
+@keyframes beyond-field-drift {
+  to { background-position: 42px -42px; }
+}
+
+@keyframes beyond-notes-arrive {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ella-layer::before,
+  .beyond-shell[data-ella-notes-state="ready"] .ella-notes {
+    animation: none;
+  }
 }

@@ -1,6 +1,4 @@
-import "/scripts/ella-immersive.js";
-
-const notesHost = document.querySelector("[data-ella-notes]");
+const notesHost = document.querySelector("[data-notes-source]");
 
 function renderNotes(markdown) {
   const paragraphs = markdown
@@ -19,7 +17,7 @@ function renderNotes(markdown) {
 }
 
 if (notesHost) {
-  fetch("/pages/beyond/ella-notes.md")
+  fetch(notesHost.dataset.notesSource)
     .then((response) => {
       if (!response.ok) throw new Error(`Ella notes unavailable: ${response.status}`);
       return response.text();

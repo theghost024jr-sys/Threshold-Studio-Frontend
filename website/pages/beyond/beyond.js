@@ -1,4 +1,4 @@
-const gateway = document.querySelector("[data-beyond-gateway]");
+const gateway = document.querySelector(".beyond-shell");
 
 if (gateway) {
   gateway.dataset.beyondState = "open";

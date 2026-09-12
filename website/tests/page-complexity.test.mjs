@@ -122,11 +122,14 @@ test("anchors the Beyond gateway and Ella inner narrative", async () => {
   const immersive = await readFile(new URL("pages/beyond/immersive.js", root), "utf8");
 
   assert.match(hub, /href="\/pages\/beyond\/beyond\.html">Beyond<\/a>/);
+  assert.match(beyond, /<title>Threshold · Beyond<\/title>/);
+  assert.match(beyond, /href="\/styles\/beyond\.css"/);
   assert.match(beyond, /href="\/styles\/immersive\.css"/);
+  assert.match(beyond, /src="\/scripts\/beyond\.js"/);
   assert.match(beyond, /src="\/scripts\/immersive\.js"/);
-  assert.match(beyond, /href="\/pages\/beyond\/Ella\.html"/);
   assert.match(beyond, /href="\/hub\.html"/);
-  assert.match(immersive, /fetch\("\/pages\/beyond\/ella-notes\.md"\)/);
+  assert.match(beyond, /data-notes-source="\/pages\/beyond\/ella-notes\.md"/);
+  assert.match(immersive, /fetch\(notesHost\.dataset\.notesSource\)/);
   assert.match(immersive, /dataset\.ellaNotesState = "ready"/);
 
   for (const file of [
@@ -135,7 +138,9 @@ test("anchors the Beyond gateway and Ella inner narrative", async () => {
     "pages/beyond/ella-notes.md",
     "pages/beyond/immersive.css",
     "pages/beyond/immersive.js",
+    "scripts/beyond.js",
     "scripts/immersive.js",
+    "styles/beyond.css",
     "styles/immersive.css"
   ]) {
     await readFile(new URL(file, root), "utf8");

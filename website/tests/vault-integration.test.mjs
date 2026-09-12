@@ -59,11 +59,20 @@ test("publishes Cindervox intent signals from the canonical vault", async () => 
 
   const mythology = await readFile("website/mythology.html", "utf8");
   const controller = await readFile("website/scripts/species-signals.js", "utf8");
+  assert.match(mythology, /scripts\/image-fallback\.js/);
+  assert.match(mythology, /ThresholdImages\.candidatesFor/);
+  assert.match(mythology, /ThresholdImages\.loadWithFallback/);
+  assert.doesNotMatch(mythology, /const document = selectedNote\.document/);
+  assert.doesNotMatch(mythology, /id="viewer-note"[^>]*href="#"/);
   assert.match(mythology, /scripts\/species-signals\.js/);
   assert.match(controller, /fetch\("\/species-signals\.json"/);
   assert.match(controller, /window\.openCindervox/);
   assert.match(controller, /window\.openPorpoise/);
   assert.match(controller, /button\.hidden = !variants/);
+  assert.match(controller, /function variantsFor\(speciesKey\)/);
+  for (const species of ["cindervox", "porpoise", "whisperhawk", "stonecat", "lumenstag"]) {
+    assert.match(controller, new RegExp(`${species}: ["']\/`));
+  }
   for (const intent of ["default", "passive", "signal"]) {
     assert.match(mythology, new RegExp(`data-species-intent="${intent}"`));
   }
@@ -114,11 +123,12 @@ test("publishes and renders the four-path glyph archive", async () => {
   const engine = await readFile("website/scripts/glyphs.js", "utf8");
   const page = await readFile("website/glyphs.html", "utf8");
   assert.match(page, /scripts\/emotional-engine\.js/);
+  assert.match(page, /scripts\/image-fallback\.js/);
   assert.match(engine, /fetch\("\/config\/glyphs\.json"/);
   assert.match(engine, /depth \+= 1/);
   assert.match(engine, /archive\.dataset\.weather = choice/);
   assert.match(engine, /emotions\.checkGlyphAppearance/);
   assert.match(engine, /ThresholdEmotions\.activateGlyph/);
-  assert.match(engine, /image\.src = selected\.asset/);
+  assert.match(engine, /ThresholdImages\.loadWithFallback/);
   assert.match(engine, /chamber\.replaceChildren\(section\)/);
 });

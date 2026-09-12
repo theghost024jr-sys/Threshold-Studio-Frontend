@@ -977,7 +977,6 @@
         <header class="viewer-head">
           <h3 id="viewer-title">Spirit Viewer</h3>
           <div class="viewer-head-actions">
-            <a id="viewer-note" class="viewer-note" href="#" target="_blank" rel="noreferrer" aria-label="Open spirit note">[âœ¶]</a>
             <button type="button" class="viewer-close" data-viewer-close="true" aria-label="Close viewer">Close</button>
           </div>
         </header>
@@ -1021,6 +1020,7 @@
     </footer>
   </main>
 
+  <script src="scripts/image-fallback.js"></script>
   <script src="scripts/harmony-law.js"></script>
   <script>
     (function () {
@@ -1431,11 +1431,11 @@
             if (!selectedNote || !banner) {
               return;
             }
-            const document = selectedNote.document;
-            const sourceLore = document.body || document.description || "Storm mirrored itself into an archetypal chamber.";
+            const selectedDocument = selectedNote.document;
+            const sourceLore = selectedDocument.body || selectedDocument.description || "Storm mirrored itself into an archetypal chamber.";
             const lore = sourceLore.replace(/^#.*$/m, "").trim().replace(/\s+/g, " ").slice(0, 420);
             banner.textContent = title + " Â· " + lore;
-            const image = Array.isArray(document.assets) && document.assets[0] ? document.assets[0].webPath : "";
+            const imageCandidates = window.ThresholdImages.candidatesFor(selectedDocument);
             const panel = document.createElement("div");
             panel.style.maxWidth = "760px";
             panel.style.margin = "0.9rem auto 0";
@@ -1446,14 +1446,14 @@
             panel.style.color = "rgba(246, 236, 220, 0.88)";
             panel.textContent = lore;
             banner.insertAdjacentElement("afterend", panel);
-            if (image) {
+            if (imageCandidates.length) {
               const img = document.createElement("img");
-              img.src = image;
               img.alt = title;
               img.style.display = "block";
               img.style.width = "min(420px, 100%)";
               img.style.margin = "0.9rem auto 0";
               img.style.borderRadius = "18px";
+              window.ThresholdImages.loadWithFallback(img, imageCandidates);
               panel.appendChild(img);
             }
           })
@@ -1553,10 +1553,11 @@ async function loadMythology() {
     heading.textContent = chamber.title || chamber.chamber || chamber.id;
     description.textContent = chamber.body || chamber.description || 'No chamber lore available.';
     block.append(heading, description);
-    if (Array.isArray(chamber.assets) && chamber.assets[0]) {
+    const imageCandidates = window.ThresholdImages.candidatesFor(chamber);
+    if (imageCandidates.length) {
       const image = document.createElement('img');
-      image.src = chamber.assets[0].webPath;
       image.alt = chamber.title || chamber.chamber || 'Vault chamber';
+      window.ThresholdImages.loadWithFallback(image, imageCandidates);
       block.appendChild(image);
     }
     container.appendChild(block);

@@ -13,6 +13,13 @@
     stonecat: { emotion: "reflection", mode: "amplify" },
     lumenstag: { emotion: "confusion", mode: "dampen" }
   };
+  const speciesFallbacks = {
+    cindervox: "/vault/glyphs/collapse.png",
+    porpoise: "/assets/basin.png",
+    whisperhawk: "/vault/glyphs/fog.png",
+    stonecat: "/vault/glyphs/soil.png",
+    lumenstag: "/vault/glyphs/expand.png"
+  };
   let species = {};
   let activeCard = null;
 
@@ -20,14 +27,30 @@
     return speciesKey.charAt(0).toUpperCase() + speciesKey.slice(1);
   }
 
+  function variantsFor(speciesKey) {
+    const configured = species[speciesKey];
+    if (configured && Object.keys(configured).length) {
+      return configured;
+    }
+    return speciesFallbacks[speciesKey]
+      ? { default: speciesFallbacks[speciesKey] }
+      : {};
+  }
+
   function selectSpecies(speciesKey, intent) {
-    const variants = species[speciesKey];
-    const imagePath = variants && variants[intent];
+    const variants = variantsFor(speciesKey);
+    const imagePath = variants[intent] || Object.values(variants)[0];
     if (!imagePath || !viewerImage) {
       return;
     }
 
-    viewerImage.src = imagePath;
+    const imageCandidates = window.ThresholdImages.collectCandidates(
+      imagePath,
+      Object.values(variants),
+      speciesFallbacks[speciesKey],
+      window.ThresholdImages.defaultCandidates
+    );
+    window.ThresholdImages.loadWithFallback(viewerImage, imageCandidates);
     viewerImage.alt = speciesName(speciesKey) + " " + intent;
     if (viewerTitle) viewerTitle.textContent = speciesName(speciesKey);
     if (viewerMeta) viewerMeta.textContent = intent.charAt(0).toUpperCase() + intent.slice(1) + " intent";
@@ -40,13 +63,14 @@
   }
 
   function openSpecies(speciesKey, intent) {
-    if (!viewer || !species[speciesKey]) {
+    const variants = variantsFor(speciesKey);
+    if (!viewer || !Object.keys(variants).length) {
       return;
     }
     const requestedIntent = intent || "default";
-    const selectedIntent = species[speciesKey][requestedIntent]
+    const selectedIntent = variants[requestedIntent]
       ? requestedIntent
-      : Object.keys(species[speciesKey])[0];
+      : Object.keys(variants)[0];
     activeCard = document.querySelector('[data-spirit="' + speciesKey + '"]');
     selectSpecies(speciesKey, selectedIntent);
     viewer.classList.remove("is-hidden");
@@ -80,9 +104,16 @@
       species = data || {};
       speciesCards.forEach(function (card) {
         const speciesKey = card.dataset.spirit;
-        const variants = species[speciesKey];
+        const variants = variantsFor(speciesKey);
         const preview = card.querySelector(".mythology-image");
-        if (preview && variants && variants.default) preview.src = variants.default;
+        const previewPath = variants.default || Object.values(variants)[0];
+        if (preview && previewPath) {
+          window.ThresholdImages.loadWithFallback(preview, [
+            previewPath,
+            speciesFallbacks[speciesKey],
+            window.ThresholdImages.defaultCandidates
+          ]);
+        }
       });
     })
     .catch(function () {

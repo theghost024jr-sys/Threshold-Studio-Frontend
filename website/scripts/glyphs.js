@@ -19,6 +19,14 @@
     soil: { reflection: 1 }
   };
 
+  function glyphCandidates(selected) {
+    return window.ThresholdImages.collectCandidates(
+      selected && selected.asset,
+      Object.values(glyphs).map(function (glyph) { return glyph.asset; }),
+      window.ThresholdImages.defaultCandidates
+    );
+  }
+
   function loadTraces() {
     try {
       const stored = JSON.parse(localStorage.getItem(traceStorageKey));
@@ -35,8 +43,8 @@
       const mark = document.createElement("img");
       mark.className = "glyph-trace";
       mark.dataset.glyph = glyphId;
-      mark.src = glyphs[glyphId].asset;
       mark.alt = "";
+      window.ThresholdImages.loadWithFallback(mark, glyphCandidates(glyphs[glyphId]));
       traces.appendChild(mark);
     });
   }
@@ -55,8 +63,8 @@
   function emergeGlyph(selected) {
     if (!emergence) return;
     emergence.classList.remove("is-emerging");
-    emergence.src = selected.asset;
     emergence.dataset.glyph = selected.id;
+    window.ThresholdImages.loadWithFallback(emergence, glyphCandidates(selected));
     void emergence.offsetWidth;
     emergence.classList.add("is-emerging");
   }
@@ -105,8 +113,8 @@
       activateGlyph(choice, section, activate, effectText);
     });
     image.className = "glyph-asset";
-    image.src = selected.asset;
     image.alt = `${selected.name} glyph`;
+    window.ThresholdImages.loadWithFallback(image, glyphCandidates(selected));
     copy.append(title, text, effectText, activate);
     section.append(image, copy);
     chamber.replaceChildren(section);

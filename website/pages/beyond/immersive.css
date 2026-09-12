@@ -1,0 +1,9 @@
+@import url("/styles/ella-immersive.css");
+
+[data-beyond-gateway] #ella-world {
+  opacity: calc(0.42 + var(--resonance) * 0.22);
+}
+
+[data-beyond-gateway] .hero__portrait {
+  filter: saturate(0.58) contrast(1.08);
+}

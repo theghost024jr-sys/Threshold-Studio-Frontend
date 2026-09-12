@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07100d" />
+  <title>Beyond | Threshold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;family=Newsreader:opsz,wght@6..72,300;6..72,500&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/glyph-system.css" />
+  <link rel="stylesheet" href="/styles/immersive.css" />
+  <link rel="stylesheet" href="/pages/beyond/beyond.css" />
+</head>
+<body data-beyond-gateway>
+  <div class="world-stage" data-ella-stage aria-hidden="true">
+    <canvas id="ella-world"></canvas>
+  </div>
+
+  <header class="site-header">
+    <a class="threshold-mark" href="/hub.html" aria-label="Return to the Hub">
+      <span class="threshold-mark__glyph" aria-hidden="true"></span>
+      <span>Threshold / Beyond</span>
+    </a>
+    <p>Outer field / Gateway</p>
+  </header>
+
+  <main>
+    <section class="hero beyond-hero" aria-labelledby="beyond-title">
+      <img class="hero__portrait" src="/assets/beyond/Ella.png" alt="Ella surrounded by animals in pale winter light" />
+      <div class="hero__veil" aria-hidden="true"></div>
+      <div class="hero__copy">
+        <p class="eyebrow">Beyond the chambers, organs, and Hub</p>
+        <h1 id="beyond-title">Beyond</h1>
+        <p class="hero__epithet">The outer field.<br />The quiet. The aftermath.</p>
+      </div>
+      <aside class="signal-readout" aria-label="Beyond field signal">
+        <div id="ella-signal" class="threshold-glyph-host" data-glyph-id="field-signal" aria-hidden="true"></div>
+        <div><span>Resonance</span><strong id="signal-status">Listening</strong></div>
+      </aside>
+    </section>
+
+    <section class="opening beyond-opening" aria-labelledby="gateway-title">
+      <p class="section-index">01 / Gateway</p>
+      <div>
+        <h2 id="gateway-title">Outside the world’s architecture.</h2>
+        <p>Beyond is where the deeper system becomes accessible: a field for connection without demand, sorrow that does not harm, and healing that does not force.</p>
+      </div>
+    </section>
+
+    <section class="beyond-record" aria-labelledby="ella-record-title">
+      <figure>
+        <img src="/assets/beyond/Ellaheard.png" alt="Ella walking with her animal herd" loading="eager" />
+        <figcaption>Inner narrative / Field record 01</figcaption>
+      </figure>
+      <div class="beyond-record__copy">
+        <p class="section-index">02 / The Shepherd of Animals</p>
+        <h2 id="ella-record-title">Ella</h2>
+        <div class="beyond-notes" data-ella-notes aria-live="polite">
+          <p>Her field record is gathering.</p>
+        </div>
+        <a class="field-link" href="/pages/beyond/Ella.html">Enter Ella’s field <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <footer class="closing">
+      <p>What remains outside the structure still belongs to the world.</p>
+      <a href="/hub.html">Return to the Hub <span aria-hidden="true">→</span></a>
+    </footer>
+  </main>
+
+  <script type="module" src="/scripts/immersive.js"></script>
+  <script type="module" src="/pages/beyond/beyond.js"></script>
+</body>
+</html>

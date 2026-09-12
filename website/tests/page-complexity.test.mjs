@@ -61,6 +61,8 @@ test("binds the Prime Atom to the logo, Engine, reveal, and hidden door contract
   assert.match(script, /advanceHeartbeatClock/);
   assert.match(script, /ring-descent/);
   assert.match(script, /setPrimeState\("descending"\)/);
+  assert.match(script, /hubWheel\.addEventListener\("dblclick"/);
+  assert.match(script, /new URL\("\/hub\.html"/);
   assert.doesNotMatch(html, /(?:engine-core-heartbeat|receptor-heartbeat|reactor-breathe|reactor-flicker)\s+\d+s/);
 });
 
@@ -112,4 +114,30 @@ test("keeps Ella in the Beyond outer field", async () => {
   await readFile(new URL("assets/beyond/Ellaheard.png", root));
   await readFile(new URL("scripts/glyph-system.js", root), "utf8");
   await readFile(new URL("styles/glyph-system.css", root), "utf8");
+});
+
+test("anchors the Beyond gateway and Ella inner narrative", async () => {
+  const hub = await readFile(new URL("hub.html", root), "utf8");
+  const beyond = await readFile(new URL("pages/beyond/beyond.html", root), "utf8");
+  const immersive = await readFile(new URL("pages/beyond/immersive.js", root), "utf8");
+
+  assert.match(hub, /href="\/pages\/beyond\/beyond\.html">Beyond<\/a>/);
+  assert.match(beyond, /href="\/styles\/immersive\.css"/);
+  assert.match(beyond, /src="\/scripts\/immersive\.js"/);
+  assert.match(beyond, /href="\/pages\/beyond\/Ella\.html"/);
+  assert.match(beyond, /href="\/hub\.html"/);
+  assert.match(immersive, /fetch\("\/pages\/beyond\/ella-notes\.md"\)/);
+  assert.match(immersive, /dataset\.ellaNotesState = "ready"/);
+
+  for (const file of [
+    "pages/beyond/beyond.css",
+    "pages/beyond/beyond.js",
+    "pages/beyond/ella-notes.md",
+    "pages/beyond/immersive.css",
+    "pages/beyond/immersive.js",
+    "scripts/immersive.js",
+    "styles/immersive.css"
+  ]) {
+    await readFile(new URL(file, root), "utf8");
+  }
 });

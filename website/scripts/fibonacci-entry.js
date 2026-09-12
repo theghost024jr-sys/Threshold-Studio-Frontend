@@ -633,6 +633,12 @@ function initializeHubReactor() {
     });
     primeDoor.addEventListener("click", (event) => beginReveal(event, primeDoor, "door", "bottom"));
   }
+  if (hubWheel) {
+    hubWheel.addEventListener("dblclick", (event) => beginReveal(event, {
+      href: new URL("/hub.html", window.location.href).href,
+      textContent: "Hub"
+    }, "double-click", "bottom"));
+  }
   if (categoryLinks.includes(document.activeElement)) {
     setCategory(document.activeElement);
   }

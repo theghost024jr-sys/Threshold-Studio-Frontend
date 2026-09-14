@@ -59,6 +59,7 @@ _site/
 website/dist/
 website/build/
 website/.cache/
+website/_worker.js
 
 # ============================
 # Retired local build outputs
@@ -75,3 +76,4 @@ vault-index.json
 .env.*
 !.env.example
 *.local
+cloudflareapi.txt

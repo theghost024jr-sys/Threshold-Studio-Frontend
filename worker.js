@@ -1,3 +1,5 @@
+const VERSION = "2026-09-13b";
+
 const GROUPS = [
   {
     key: "identity",
@@ -26,16 +28,65 @@ const GROUPS = [
   }
 ];
 
+const BASE_QUERIES = [
+  "ethos",
+  "path:ethyl",
+  "path:ethos",
+  "archetype",
+  "resonance",
+  "alignment",
+  "invitation",
+  "ghost"
+];
+
 let cachedSearchIndex = null;
 let cachedPngIndex = null;
+let cachedPngMap = null;
+const cachedCorpora = new Map();
+const cachedChambers = new Map();
 
 function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
+  const payload = data && typeof data === "object" && !Array.isArray(data)
+    ? { version: VERSION, ...data }
+    : data;
+  return new Response(JSON.stringify(payload), {
     status,
     headers: {
       "content-type": "application/json; charset=utf-8",
       "cache-control": "no-store"
     }
+  });
+}
+
+function traceFor(request) {
+  return {
+    requestId: request.headers.get("cf-ray") || crypto.randomUUID(),
+    method: request.method,
+    path: new URL(request.url).pathname,
+    startedAt: Date.now()
+  };
+}
+
+function log(level, event, trace, data = {}) {
+  const writer = level === "error" ? console.error : level === "warn" ? console.warn : console.log;
+  writer({
+    version: VERSION,
+    event,
+    requestId: trace.requestId,
+    method: trace.method,
+    path: trace.path,
+    ...data
+  });
+}
+
+function withTraceHeaders(response, trace) {
+  const headers = new Headers(response.headers);
+  headers.set("x-threshold-version", VERSION);
+  headers.set("x-request-id", trace.requestId);
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers
   });
 }
 
@@ -89,7 +140,7 @@ async function verifyProgression(request, secret) {
 }
 
 function progressionResponse(payload, cookie) {
-  return new Response(JSON.stringify(payload), {
+  return new Response(JSON.stringify({ version: VERSION, ...payload }), {
     status: 200,
     headers: {
       "content-type": "application/json; charset=utf-8",
@@ -99,17 +150,24 @@ function progressionResponse(payload, cookie) {
   });
 }
 
-async function activateNode(request, env) {
+async function activateNode(request, env, trace) {
   const body = await request.json();
   const spoke = String(body?.spoke || "").replace(/[^a-z0-9-]/g, "");
   const activation = String(body?.activation || "").replace(/[^a-zA-Z0-9_-]/g, "");
+  log("info", "node.activate.request", trace, { spoke, activation });
   if (!spoke || !activation) {
+    log("warn", "node.activate.rejected", trace, { reason: "missing-fields" });
     return json({ error: "spoke and activation are required" }, 400);
   }
 
   if (PROTECTED_ACTIVATIONS.has(activation)) {
     const progression = await verifyProgression(request, env.SEED_SECRET);
+    log("info", "node.activate.protected", trace, {
+      activation,
+      seedPlanted: progression.seedPlanted === true
+    });
     if (!progression.seedPlanted) {
+      log("warn", "node.activate.denied", trace, { activation });
       return json({ error: "plant a seed to activate this node" }, 403);
     }
     return json({
@@ -123,12 +181,16 @@ async function activateNode(request, env) {
   }
 
   if (!env.NODE_BUNDLES) {
+    log("error", "node.activate.failed", trace, { reason: "node-storage-unavailable" });
     return json({ error: "node storage is unavailable" }, 503);
   }
-  const object = await env.NODE_BUNDLES.get(`nodes/${spoke}/${activation}.json`);
+  const key = `nodes/${spoke}/${activation}.json`;
+  const object = await env.NODE_BUNDLES.get(key);
   if (!object) {
+    log("warn", "node.activate.failed", trace, { reason: "not-found", key });
     return json({ error: "node not found" }, 404);
   }
+  log("info", "node.activate.succeeded", trace, { key });
   return new Response(object.body, {
     headers: {
       "content-type": "application/json; charset=utf-8",
@@ -137,19 +199,23 @@ async function activateNode(request, env) {
   });
 }
 
-async function activateNodeAsset(url, env) {
+async function activateNodeAsset(url, env, trace) {
   if (!env.NODE_BUNDLES) {
+    log("error", "node.asset.failed", trace, { reason: "node-storage-unavailable" });
     return json({ error: "node storage is unavailable" }, 503);
   }
   const match = url.pathname.match(/^\/api\/nodes\/assets\/([a-z0-9-]+)\/([a-zA-Z0-9_-]+)\/([^/]+)$/);
   if (!match) {
+    log("warn", "node.asset.failed", trace, { reason: "invalid-path" });
     return json({ error: "invalid asset path" }, 400);
   }
   const key = `assets/${match[1]}/${match[2]}/${match[3]}`;
   const object = await env.NODE_BUNDLES.get(key);
   if (!object) {
+    log("warn", "node.asset.failed", trace, { reason: "not-found", key });
     return json({ error: "asset not found" }, 404);
   }
+  log("info", "node.asset.succeeded", trace, { key });
   const headers = new Headers();
   object.writeHttpMetadata?.(headers);
   headers.set("cache-control", "private, max-age=3600");
@@ -332,6 +398,20 @@ function extractPngMentions(node) {
   return Array.from(new Set(found));
 }
 
+function buildPngMap(pngList) {
+  if (cachedPngMap) {
+    return cachedPngMap;
+  }
+  cachedPngMap = new Map();
+  pngList.forEach((assetPath) => {
+    const base = normalizeText(assetPath.split("/").pop() || "");
+    if (base) {
+      cachedPngMap.set(base, assetPath);
+    }
+  });
+  return cachedPngMap;
+}
+
 function resolveAssetsForNode(node, pngList, maxItems = 8) {
   const mentions = extractPngMentions(node);
   if (!mentions.length) {
@@ -340,15 +420,13 @@ function resolveAssetsForNode(node, pngList, maxItems = 8) {
 
   const assets = [];
   const seen = new Set();
+  const pngMap = buildPngMap(pngList);
 
   for (const mention of mentions) {
     if (assets.length >= maxItems) {
       break;
     }
-    const match = pngList.find((assetPath) => {
-      const base = assetPath.split("/").pop() || "";
-      return normalizeText(base) === mention;
-    });
+    const match = pngMap.get(mention);
     if (!match || seen.has(match)) {
       continue;
     }
@@ -373,8 +451,7 @@ function groupKeywords(groupKey) {
   return ["ghost", "theghost", "haunt", "shadow", "mirror"];
 }
 
-function scoreNodeForGroup(node, groupKey) {
-  const text = nodeText(node);
+function scoreTextForGroup(text, groupKey) {
   let score = 0;
   groupKeywords(groupKey).forEach((keyword) => {
     if (text.includes(keyword)) {
@@ -385,6 +462,16 @@ function scoreNodeForGroup(node, groupKey) {
     score += 1;
   }
   return score;
+}
+
+function precomputeGroupScores(nodes) {
+  return nodes.map((node) => {
+    const text = nodeText(node);
+    return {
+      node,
+      scores: Object.fromEntries(GROUPS.map((group) => [group.key, scoreTextForGroup(text, group.key)]))
+    };
+  });
 }
 
 function dedupeNodes(nodes) {
@@ -401,40 +488,71 @@ function dedupeNodes(nodes) {
   return out;
 }
 
-async function buildEthosChamberPayload(env, request, limit = 220) {
+function nodeKey(node) {
+  return normalizeText(node?.path || node?.id || "");
+}
+
+function buildCorpus(nodes, limit) {
+  if (cachedCorpora.has(limit)) {
+    return cachedCorpora.get(limit);
+  }
+  const corpusRaw = [];
+  BASE_QUERIES.forEach((query) => {
+    searchNodes(nodes, query, limit).forEach((node) => corpusRaw.push(node));
+  });
+  const corpus = dedupeNodes(corpusRaw).filter(isEthosNode);
+  cachedCorpora.set(limit, corpus);
+  return corpus;
+}
+
+async function buildEthosChamberPayload(env, request, trace, limit = 220) {
+  const startedAt = Date.now();
+  if (cachedChambers.has(limit)) {
+    const chamber = cachedChambers.get(limit);
+    log("info", "ethos.chamber.timing", trace, {
+      durationMs: Date.now() - startedAt,
+      totalEthosAlignedNodes: chamber.totalEthosAlignedNodes,
+      cacheHit: true,
+      limit
+    });
+    return chamber;
+  }
+
   const searchPayload = await loadSearchIndex(env, request);
   const nodes = Array.isArray(searchPayload?.nodes) ? searchPayload.nodes : [];
   const pngList = await loadPngIndex(env, request);
 
-  const baseQueries = ["ethos", "path:ethyl", "path:ethos", "archetype", "resonance", "alignment", "invitation", "ghost"];
-  const corpusRaw = [];
-  baseQueries.forEach((query) => {
-    searchNodes(nodes, query, limit).forEach((node) => corpusRaw.push(node));
-  });
-
-  const corpus = dedupeNodes(corpusRaw).filter((node) => isEthosNode(node));
-
-  const groups = {};
+  const corpus = buildCorpus(nodes, limit);
+  const candidatesByGroup = new Map();
+  const allCandidates = [];
   GROUPS.forEach((group) => {
     const picked = [];
     group.queries.forEach((query) => {
       searchNodes(nodes, query, limit).forEach((node) => picked.push(node));
     });
+    const candidates = dedupeNodes(picked.concat(corpus));
+    candidatesByGroup.set(group.key, new Set(candidates.map(nodeKey)));
+    allCandidates.push(...candidates);
+  });
+  const precomputed = precomputeGroupScores(dedupeNodes(allCandidates));
 
-    const groupNodes = dedupeNodes(picked.concat(corpus))
-      .filter((node) => scoreNodeForGroup(node, group.key) > 0)
-      .map((node) => {
-        const assets = resolveAssetsForNode(node, pngList, 8);
+  const groups = {};
+  GROUPS.forEach((group) => {
+    const candidateKeys = candidatesByGroup.get(group.key);
+    const groupNodes = precomputed
+      .filter((item) => candidateKeys.has(nodeKey(item.node)) && item.scores[group.key] > 0)
+      .map((item) => {
+        const assets = resolveAssetsForNode(item.node, pngList, 8);
         return {
-          id: node.id || "",
-          title: node.title || "Untitled",
-          path: node.path || "",
-          excerpt: node.excerpt || "",
-          tags: Array.isArray(node.tags) ? node.tags : [],
-          links: Array.isArray(node.links) ? node.links : [],
-          backlinks: Array.isArray(node.backlinks) ? node.backlinks : [],
-          tokens: Array.isArray(node.tokens) ? node.tokens : [],
-          score: scoreNodeForGroup(node, group.key),
+          id: item.node.id || "",
+          title: item.node.title || "Untitled",
+          path: item.node.path || "",
+          excerpt: item.node.excerpt || "",
+          tags: Array.isArray(item.node.tags) ? item.node.tags : [],
+          links: Array.isArray(item.node.links) ? item.node.links : [],
+          backlinks: Array.isArray(item.node.backlinks) ? item.node.backlinks : [],
+          tokens: Array.isArray(item.node.tokens) ? item.node.tokens : [],
+          score: item.scores[group.key],
           assets
         };
       })
@@ -453,21 +571,28 @@ async function buildEthosChamberPayload(env, request, limit = 220) {
     };
   });
 
-  return {
+  const chamber = {
     generatedAt: new Date().toISOString(),
     totalEthosAlignedNodes: corpus.length,
     groups
   };
+  cachedChambers.set(limit, chamber);
+  log("info", "ethos.chamber.timing", trace, {
+    durationMs: Date.now() - startedAt,
+    totalEthosAlignedNodes: corpus.length,
+    cacheHit: false,
+    limit
+  });
+  return chamber;
 }
 
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
+async function handleRequest(request, env, trace) {
+  const url = new URL(request.url);
 
-    if (url.pathname === "/api/progression" && request.method === "GET") {
-      const progression = await verifyProgression(request, env.SEED_SECRET);
-      return json({ seedPlanted: progression.seedPlanted === true });
-    }
+  if (url.pathname === "/api/progression" && request.method === "GET") {
+    const progression = await verifyProgression(request, env.SEED_SECRET);
+    return json({ seedPlanted: progression.seedPlanted === true });
+  }
 
     if (url.pathname === "/api/seeds/plant" && request.method === "POST") {
       if (!env.SEED_SECRET) {
@@ -483,19 +608,24 @@ export default {
     }
 
     if (url.pathname === "/api/nodes/activate" && request.method === "POST") {
-      return activateNode(request, env);
+      return activateNode(request, env, trace);
     }
 
     if (url.pathname.startsWith("/api/nodes/assets/") && request.method === "GET") {
-      return activateNodeAsset(url, env);
+      return activateNodeAsset(url, env, trace);
     }
 
     if (url.pathname === "/api/ethos/chamber") {
       try {
         const limit = Number(url.searchParams.get("limit") || 220);
-        const payload = await buildEthosChamberPayload(env, request, limit);
+        const payload = await buildEthosChamberPayload(env, request, trace, limit);
+        log("info", "ethos.chamber.succeeded", trace, {
+          totalEthosAlignedNodes: payload.totalEthosAlignedNodes,
+          groups: Object.keys(payload.groups)
+        });
         return json(payload, 200);
       } catch (error) {
+        log("error", "ethos.chamber.failed", trace, { error: error?.message || "unknown error" });
         return json({ error: error?.message || "ethos chamber query failed" }, 500);
       }
     }
@@ -507,12 +637,37 @@ export default {
         const searchPayload = await loadSearchIndex(env, request);
         const nodes = Array.isArray(searchPayload?.nodes) ? searchPayload.nodes : [];
         const results = searchNodes(nodes, query, limit);
+        log("info", "ethos.search.succeeded", trace, {
+          queryLength: query.length,
+          count: results.length
+        });
         return json({ query, count: results.length, results }, 200);
       } catch (error) {
+        log("error", "ethos.search.failed", trace, { error: error?.message || "unknown error" });
         return json({ error: error?.message || "ethos search failed" }, 500);
       }
     }
 
     return env.ASSETS.fetch(request);
+}
+
+export default {
+  async fetch(request, env) {
+    const trace = traceFor(request);
+    log("info", "request.started", trace);
+    try {
+      const response = withTraceHeaders(await handleRequest(request, env, trace), trace);
+      log("info", "request.completed", trace, {
+        status: response.status,
+        durationMs: Date.now() - trace.startedAt
+      });
+      return response;
+    } catch (error) {
+      log("error", "request.failed", trace, {
+        error: error?.message || "unknown error",
+        durationMs: Date.now() - trace.startedAt
+      });
+      throw error;
+    }
   }
 };

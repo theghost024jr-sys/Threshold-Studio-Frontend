@@ -11,6 +11,6 @@
     "build": "npm run build:data && node scripts/build-pages.mjs",
     "build:ci": "node scripts/build-pages.mjs --static",
     "test": "node --test website/tests/*.test.mjs",
-    "test:ci": "node --test website/tests/access-flow.test.mjs website/tests/destination-routing.test.mjs website/tests/emotional-engine.test.mjs website/tests/engine-heartbeat.test.mjs website/tests/fibonacci-routing.test.mjs website/tests/garden-portal.test.mjs website/tests/hub-activation.test.mjs website/tests/image-fallback.test.mjs website/tests/link-integrity.test.mjs website/tests/page-complexity.test.mjs website/tests/prime-atom-signals.test.mjs"
+    "test:ci": "node --test website/tests/access-flow.test.mjs website/tests/basin-ambience.test.mjs website/tests/deployment-config.test.mjs website/tests/destination-routing.test.mjs website/tests/emotional-engine.test.mjs website/tests/engine-heartbeat.test.mjs website/tests/fibonacci-routing.test.mjs website/tests/garden-portal.test.mjs website/tests/hub-activation.test.mjs website/tests/image-fallback.test.mjs website/tests/link-integrity.test.mjs website/tests/page-complexity.test.mjs website/tests/prime-atom-signals.test.mjs website/tests/worker-observability.test.mjs"
   }
 }

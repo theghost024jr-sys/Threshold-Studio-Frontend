@@ -1,3 +1,6 @@
 name = "threshold-studio-frontend"
 compatibility_date = "2026-08-11"
+
 pages_build_output_dir = "./website"
+
+main = "worker.js"

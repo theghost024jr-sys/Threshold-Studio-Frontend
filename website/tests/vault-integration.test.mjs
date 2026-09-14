@@ -78,26 +78,23 @@ test("publishes Cindervox intent signals from the canonical vault", async () => 
   }
 });
 
-test("keeps Basin in the Circle 1 chamber chain", async () => {
+test("keeps Basin as the first environment beyond the Herb Room chamber", async () => {
   const vault = JSON.parse(await readFile("website/data/threshold-vault.json", "utf8"));
-  const chambers = Object.fromEntries(vault.chambers.map((chamber) => [chamber.id, chamber]));
+  const basinDocument = vault.documents.find((document) => document.id === "basin");
 
-  assert.equal(chambers.basin.chamber, "HouseAndGarden");
-  assert.equal(chambers.basin.route, "/environment/basin");
-  assert.deepEqual(chambers.basin.entries, ["herbroom"]);
-  assert.deepEqual(chambers.basin.exits, ["waterfall"]);
-  assert.deepEqual(chambers.basin.neighbors, []);
-  assert.equal(chambers.basin.asset, "/assets/basin.png");
-  assert.equal(chambers.basin.publish, true);
-  assert.equal(chambers.basin.draft, false);
-  assert.deepEqual(chambers.herbroom.exits, ["basin"]);
-  assert.deepEqual(chambers.waterfall.entries, ["basin"]);
+  assert.equal(basinDocument.title, "Basin");
+  assert.equal(basinDocument.asset, "basin.png");
+  assert.equal(basinDocument.publish, true);
+  assert.equal(basinDocument.draft, false);
   await access("website/assets/basin.png");
 
   const herbRoom = await readFile("website/environment/herbroom.html", "utf8");
   const basin = await readFile("website/environment/basin.html", "utf8");
   const waterfall = await readFile("website/environment/waterfall.html", "utf8");
   const mythology = await readFile("website/mythology.html", "utf8");
+  assert.match(basin, /data-threshold-environment="basin"/);
+  assert.match(basin, /data-origin-chamber="herbroom"/);
+  assert.match(basin, /src="\/assets\/basin\.png"/);
   assert.match(herbRoom, /href="\/environment\/basin\.html"/);
   assert.doesNotMatch(herbRoom, /href="\/environment\/waterfall\.html"/);
   assert.match(basin, /href="\/environment\/herbroom\.html"/);

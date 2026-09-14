@@ -16,102 +16,384 @@
     }
 
     body {
-      display: grid;
-      place-items: end center;
+      position: relative;
       min-height: 100vh;
       overflow: hidden;
-      background:
-        radial-gradient(ellipse at 52% 78%, rgba(182, 219, 192, 0.48) 0 8%, transparent 28%),
-        linear-gradient(180deg, #9fc3ae 0 34%, #527e62 35% 58%, #244e45 59% 100%);
+      background: #07110d;
       color: #f4f4df;
       font-family: Georgia, serif;
     }
 
-    .canopy,
-    .basin,
-    .banks,
-    .ford {
+    .basin-world {
       position: absolute;
       inset: 0;
-      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      scale: 1.018;
+      transform-origin: 50% 62%;
+      animation: basin-breathe 18s ease-in-out infinite alternate;
     }
 
-    .canopy {
-      background:
-        radial-gradient(ellipse at 4% 8%, #21462c 0 18%, transparent 19%),
-        radial-gradient(ellipse at 30% -4%, #315f38 0 20%, transparent 21%),
-        radial-gradient(ellipse at 78% 2%, #285533 0 22%, transparent 23%),
-        radial-gradient(ellipse at 102% 18%, #183e2b 0 25%, transparent 26%);
-    }
-
-    .basin {
-      inset: 47% -8% -18%;
-      border-radius: 50% 50% 0 0;
-      background:
-        repeating-linear-gradient(174deg, rgba(224, 242, 219, 0.22) 0 2px, transparent 2px 24px),
-        radial-gradient(ellipse at 50% 2%, rgba(220, 233, 193, 0.58), transparent 36%),
-        linear-gradient(180deg, #739e89, #2b5c57 72%);
-      box-shadow: inset 0 22px 60px rgba(229, 235, 196, 0.18);
-    }
-
-    .banks {
-      background:
-        radial-gradient(ellipse at 3% 70%, #315c38 0 23%, transparent 24%),
-        radial-gradient(ellipse at 98% 67%, #294f34 0 26%, transparent 27%),
-        radial-gradient(ellipse at 11% 81%, #55774a 0 17%, transparent 18%),
-        radial-gradient(ellipse at 88% 85%, #496e43 0 20%, transparent 21%);
-    }
-
-    .ford {
-      inset: 64% 22% 10%;
-      background:
-        radial-gradient(ellipse at 18% 52%, #8d927c 0 7%, transparent 8%),
-        radial-gradient(ellipse at 38% 60%, #a3a38a 0 8%, transparent 9%),
-        radial-gradient(ellipse at 58% 50%, #858b77 0 7%, transparent 8%),
-        radial-gradient(ellipse at 78% 58%, #aaa991 0 8%, transparent 9%);
-    }
-
-    main {
-      position: relative;
+    .basin-vignette {
+      position: absolute;
+      inset: 0;
       z-index: 1;
-      width: min(600px, calc(100% - 2rem));
-      margin-bottom: clamp(2rem, 8vh, 5rem);
-      text-align: center;
-      text-shadow: 0 2px 20px rgba(12, 31, 22, 0.9);
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(3, 9, 7, 0.42), transparent 24%, transparent 76%, rgba(3, 9, 7, 0.38)),
+        linear-gradient(0deg, rgba(3, 9, 7, 0.72), transparent 32%);
     }
 
-    h1 {
-      margin: 0 0 0.4rem;
-      font-size: clamp(2.4rem, 7vw, 5.5rem);
+    .basin-vignette::before,
+    .basin-vignette::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    .basin-vignette::before {
+      background: radial-gradient(circle at 34% 42%, rgba(255, 229, 137, 0.2), transparent 24%);
+      mix-blend-mode: screen;
+      animation: basin-light 9s ease-in-out infinite alternate;
+    }
+
+    .basin-vignette::after {
+      inset: 58% 12% -12%;
+      background:
+        repeating-linear-gradient(176deg, transparent 0 12px, rgba(235, 240, 185, 0.11) 13px 14px, transparent 15px 28px),
+        radial-gradient(ellipse at 42% 22%, rgba(255, 228, 143, 0.16), transparent 48%);
+      opacity: 0.42;
+      transform-origin: 50% 20%;
+      animation: basin-water 12s ease-in-out infinite alternate;
+    }
+
+    .basin-name {
+      position: fixed;
+      bottom: clamp(1.25rem, 4vw, 3.5rem);
+      left: 50%;
+      z-index: 2;
+      margin: 0;
+      color: rgba(248, 244, 216, 0.94);
+      font-size: clamp(2rem, 5vw, 4.8rem);
       font-weight: 400;
       letter-spacing: 0;
+      line-height: 1;
+      text-shadow: 0 2px 24px rgba(3, 9, 7, 0.95);
+      translate: -50% 0;
     }
 
-    p {
-      margin: 0 auto 1.4rem;
-      max-width: 42ch;
-      line-height: 1.6;
-    }
-
-    a {
-      display: inline-block;
-      padding: 0.7rem 1rem;
-      border-bottom: 1px solid rgba(244, 244, 223, 0.72);
+    .basin-route {
+      position: fixed;
+      top: 50%;
+      z-index: 3;
+      display: grid;
+      gap: 0.3rem;
+      max-width: 13rem;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(244, 244, 223, 0.48);
+      background: rgba(5, 16, 12, 0.66);
       color: inherit;
       text-decoration: none;
+      text-shadow: 0 2px 14px rgba(3, 9, 7, 0.95);
+      translate: 0 -50%;
+      -webkit-backdrop-filter: blur(7px);
+      backdrop-filter: blur(7px);
+    }
+
+    .basin-route span {
+      color: rgba(229, 222, 179, 0.76);
+      font: 600 0.62rem/1.2 sans-serif;
+      text-transform: uppercase;
+    }
+
+    .basin-route strong {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .basin-route--chamber {
+      left: 1rem;
+      border-left: 0;
+    }
+
+    .basin-route--threshold {
+      right: 1rem;
+      border-right: 0;
+      text-align: right;
+    }
+
+    .basin-route:hover,
+    .basin-route:focus-visible {
+      border-color: rgba(244, 244, 223, 0.9);
+      background: rgba(12, 35, 25, 0.84);
+      outline: none;
+    }
+
+    .sound-toggle {
+      position: fixed;
+      top: 1.25rem;
+      left: 1.25rem;
+      z-index: 3;
+      min-width: 5.5rem;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid rgba(244, 244, 223, 0.52);
+      border-radius: 4px;
+      background: rgba(13, 42, 29, 0.68);
+      color: inherit;
+      font: 600 0.78rem/1 Georgia, serif;
+      cursor: pointer;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+    }
+
+    .sound-toggle:hover,
+    .sound-toggle:focus-visible,
+    .sound-toggle[aria-pressed="true"] {
+      border-color: rgba(244, 244, 223, 0.92);
+      background: rgba(22, 67, 44, 0.84);
+      outline: none;
+    }
+
+    @keyframes basin-breathe {
+      0% {
+        scale: 1.018;
+        filter: brightness(0.93) saturate(0.96);
+      }
+      48% {
+        scale: 1.028;
+        filter: brightness(1) saturate(1.03);
+      }
+      100% {
+        scale: 1.022;
+        filter: brightness(0.96) saturate(1);
+      }
+    }
+
+    @keyframes basin-light {
+      from { opacity: 0.38; scale: 0.96; }
+      to { opacity: 0.9; scale: 1.08; }
+    }
+
+    @keyframes basin-water {
+      from { opacity: 0.28; transform: translateY(-1%) skewY(-0.4deg); }
+      to { opacity: 0.58; transform: translateY(1.5%) skewY(0.4deg); }
+    }
+
+    @media (max-width: 680px) {
+      .basin-world {
+        object-position: 53% center;
+      }
+
+      .basin-route {
+        top: auto;
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        max-width: none;
+        min-width: 0;
+        padding: 0.72rem 0.65rem;
+        translate: 0;
+      }
+
+      .basin-route span,
+      .basin-route strong {
+        overflow-wrap: anywhere;
+      }
+
+      .basin-route span {
+        font-size: 0.52rem;
+      }
+
+      .basin-route--chamber {
+        bottom: 8.65rem;
+        border-left: 1px solid rgba(244, 244, 223, 0.48);
+      }
+
+      .basin-route--threshold {
+        bottom: 5.1rem;
+        border-right: 1px solid rgba(244, 244, 223, 0.48);
+      }
+
+      .basin-name {
+        bottom: 1.4rem;
+        white-space: nowrap;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .basin-world,
+      .basin-vignette::before,
+      .basin-vignette::after {
+        animation: none;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="canopy"></div>
-  <div class="basin"></div>
-  <div class="banks"></div>
-  <div class="ford"></div>
-  <main>
-    <h1>The Basin</h1>
-    <p>Warm seep-water gathers beneath the canopy. Flat stones mark a shallow crossing where the stream divides the soft banks.</p>
-    <a href="/environment/herbroom.html">Return west to the Herb Room</a>
-    <a href="/environment/waterfall.html">Continue south to the Waterfall</a>
-  </main>
+<body data-threshold-environment="basin" data-origin-chamber="herbroom">
+  <img class="basin-world" src="/assets/basin.png" alt="The Basin: a luminous wetland opening beyond the Herb Room" />
+  <div class="basin-vignette" aria-hidden="true"></div>
+  <button class="sound-toggle" type="button" aria-pressed="false" title="Start the bamboo fountain">Listen</button>
+  <h1 class="basin-name">The Basin</h1>
+  <nav aria-label="Paths through the Basin">
+    <a class="basin-route basin-route--chamber" href="/environment/herbroom.html">
+      <span>Return to the chamber</span>
+      <strong>Herb Room</strong>
+    </a>
+    <a class="basin-route basin-route--threshold" href="/environment/waterfall.html">
+      <span>Continue into Threshold</span>
+      <strong>Follow the water</strong>
+    </a>
+  </nav>
+  <script>
+    const soundToggle = document.querySelector('.sound-toggle');
+    let fountain = null;
+
+    function createWaterSource(context) {
+      const seconds = 6;
+      const frameCount = Math.floor(context.sampleRate * seconds);
+      const buffer = context.createBuffer(1, frameCount, context.sampleRate);
+      const samples = buffer.getChannelData(0);
+      let smoothed = 0;
+
+      for (let index = 0; index < frameCount; index += 1) {
+        const white = Math.random() * 2 - 1;
+        smoothed = smoothed * 0.985 + white * 0.015;
+        samples[index] = white * 0.32 + smoothed * 2.2;
+      }
+
+      const blendFrames = Math.floor(context.sampleRate * 0.08);
+      for (let index = 0; index < blendFrames; index += 1) {
+        const mix = index / blendFrames;
+        samples[frameCount - blendFrames + index] =
+          samples[frameCount - blendFrames + index] * (1 - mix) + samples[index] * mix;
+      }
+
+      const source = context.createBufferSource();
+      const body = context.createBiquadFilter();
+      const surface = context.createBiquadFilter();
+      const gain = context.createGain();
+
+      source.buffer = buffer;
+      source.loop = true;
+      body.type = 'highpass';
+      body.frequency.value = 180;
+      surface.type = 'lowpass';
+      surface.frequency.value = 1800;
+      surface.Q.value = 0.6;
+      gain.gain.value = 0.18;
+      source.connect(body).connect(surface).connect(gain);
+
+      return { source, output: gain };
+    }
+
+    function strikeBamboo(active, quieter = false) {
+      if (fountain !== active || active.context.state !== 'running') {
+        return;
+      }
+
+      const now = active.context.currentTime;
+      const resonance = active.context.createOscillator();
+      const overtone = active.context.createOscillator();
+      const resonanceGain = active.context.createGain();
+      const overtoneGain = active.context.createGain();
+
+      resonance.type = 'sine';
+      resonance.frequency.setValueAtTime(quieter ? 126 : 164, now);
+      resonance.frequency.exponentialRampToValueAtTime(quieter ? 82 : 96, now + 0.18);
+      resonanceGain.gain.setValueAtTime(quieter ? 0.075 : 0.16, now);
+      resonanceGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+
+      overtone.type = 'triangle';
+      overtone.frequency.setValueAtTime(quieter ? 310 : 430, now);
+      overtone.frequency.exponentialRampToValueAtTime(quieter ? 180 : 220, now + 0.11);
+      overtoneGain.gain.setValueAtTime(quieter ? 0.018 : 0.045, now);
+      overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+
+      resonance.connect(resonanceGain).connect(active.master);
+      overtone.connect(overtoneGain).connect(active.master);
+      resonance.start(now);
+      overtone.start(now);
+      resonance.stop(now + 0.45);
+      overtone.stop(now + 0.18);
+    }
+
+    function scheduleBamboo(active, delay = 5200) {
+      window.clearTimeout(active.timer);
+      active.timer = window.setTimeout(() => {
+        if (fountain !== active) {
+          return;
+        }
+        strikeBamboo(active);
+        active.returnTimer = window.setTimeout(() => strikeBamboo(active, true), 620);
+        scheduleBamboo(active, 6800 + Math.random() * 1400);
+      }, delay);
+    }
+
+    async function startFountain() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) {
+        soundToggle.textContent = 'Unavailable';
+        soundToggle.disabled = true;
+        return;
+      }
+
+      const context = new AudioContextClass();
+      const master = context.createGain();
+      const water = createWaterSource(context);
+      master.gain.setValueAtTime(0, context.currentTime);
+      master.gain.linearRampToValueAtTime(0.22, context.currentTime + 1.4);
+      water.output.connect(master).connect(context.destination);
+      water.source.start();
+
+      fountain = { context, master, source: water.source, timer: 0, returnTimer: 0 };
+      await context.resume();
+      scheduleBamboo(fountain, 1800);
+      soundToggle.textContent = 'Quiet';
+      soundToggle.title = 'Stop the bamboo fountain';
+      soundToggle.setAttribute('aria-pressed', 'true');
+    }
+
+    function stopFountain() {
+      if (!fountain) {
+        return;
+      }
+      const active = fountain;
+      fountain = null;
+      window.clearTimeout(active.timer);
+      window.clearTimeout(active.returnTimer);
+      active.master.gain.cancelScheduledValues(active.context.currentTime);
+      active.master.gain.setValueAtTime(active.master.gain.value, active.context.currentTime);
+      active.master.gain.linearRampToValueAtTime(0, active.context.currentTime + 0.4);
+      soundToggle.textContent = 'Listen';
+      soundToggle.title = 'Start the bamboo fountain';
+      soundToggle.setAttribute('aria-pressed', 'false');
+      window.setTimeout(() => active.context.close(), 450);
+    }
+
+    soundToggle.addEventListener('click', async () => {
+      if (fountain) {
+        stopFountain();
+      } else {
+        await startFountain();
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!fountain) {
+        return;
+      }
+      if (document.hidden) {
+        window.clearTimeout(fountain.timer);
+        window.clearTimeout(fountain.returnTimer);
+        fountain.context.suspend();
+      } else {
+        fountain.context.resume().then(() => scheduleBamboo(fountain, 2400));
+      }
+    });
+
+    window.addEventListener('pagehide', stopFountain);
+  </script>
 </body>
 </html>

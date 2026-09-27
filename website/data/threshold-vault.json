@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-12T18:25:07.488513+00:00",
+  "generatedAt": "2026-09-27T23:34:55.216164+00:00",
   "vaultRoot": "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish",
   "publishRoot": "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish\\_publish",
   "counts": {
@@ -18,9 +18,13 @@
       "kind": "chamber",
       "category": "chamber",
       "chamber": "Basin",
-      "route": null,
-      "entries": [],
-      "exits": [],
+      "route": "/environment/basin",
+      "entries": [
+        "herbroom"
+      ],
+      "exits": [
+        "old-forest"
+      ],
       "neighbors": [],
       "asset": "basin.png",
       "publish": true,
@@ -38,26 +42,6 @@
         }
       ],
       "body": "# Basin\n\n![[basin.png]]\n\nThe Basin is a quiet, reflective pool fed by underground channels..."
-    },
-    {
-      "id": "old-forest",
-      "title": "Old Forest",
-      "relativePath": "03 - World/01 - Biomes/Old Forest.md",
-      "kind": "chamber",
-      "category": "biome",
-      "chamber": "Old Forest",
-      "route": null,
-      "entries": [],
-      "exits": [],
-      "neighbors": [],
-      "asset": null,
-      "publish": true,
-      "draft": false,
-      "tags": [],
-      "description": "Old Forest",
-      "links": [],
-      "assets": [],
-      "body": "# Old Forest"
     },
     {
       "id": "herbroom-threshold-east",
@@ -158,6 +142,38 @@
       ],
       "assets": [],
       "body": "# Notes\n\nPublic notes from Threshold will collect here.\n\n[[../index|Back to Threshold]]"
+    },
+    {
+      "id": "old-forest",
+      "title": "Old Forest",
+      "relativePath": "_publish/old-forest.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "Old Forest",
+      "route": "/environment/old-forest",
+      "entries": [
+        "basin"
+      ],
+      "exits": [
+        "basin"
+      ],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "chamber",
+        "forest",
+        "memory",
+        "resonance",
+        "temporal"
+      ],
+      "description": "The Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance.",
+      "links": [
+        "02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic"
+      ],
+      "assets": [],
+      "body": "Essence\nThe Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance. It is a place where the world has been thinking for a very long time — where trunks hold centuries of pressure, roots braid through forgotten pathways, and the air itself feels older than the traveler.\nAn Old Forest is not overgrown.\nIt is overremembered.\nEnvironmental Physics\n• \tVisibility: Dim, filtered through dense, ancient canopy\n• \tSound Behavior: Deepened; echoes return slower and heavier\n• \tPressure: Thick, temporal; movement feels slightly delayed\n• \tStability: Extremely high; age reinforces structure\n• \tTemperature: Cool, steady, rarely fluctuates\nField Dynamics\n• \tTime feels slower, heavier, more deliberate\n• \tEmotional resonance sinks into roots and bark\n• \tMemory accumulates in rings, knots, and hollows\n• \tLight behaves like dust — slow, drifting, particulate\n• \tMovement naturally quiets; footsteps soften\nPhenomena\n1. Time Rings\nTree rings that hold emotional and environmental memory.\nTouching them can trigger:\n• \tslow recall\n• \tlayered impressions\n• \tancestral echoes\n2. Root Drift\nRoots shift subtly underfoot, guiding or redirecting movement.\nThey respond to emotional weight more than physical weight.\n3. Canopy Murmur\nA low, continuous sound like distant breathing.\nIt’s the forest’s age resonating through leaves.\n4. Hollow Memory\nLarge hollows act as memory chambers.\nEntering one can cause:\n• \tslowed thought\n• \tdeep introspection\n• \ttemporal disorientation\nFlora & Fauna\n• \tTreeforms (Elder Variant): Massive, slow, deeply resonant\n• \tOld Owls: Perception tuned to layered time\n• \tMosslights: Glow in response to ancient memory\n• \tRoot Deer: Move silently along root pathways\n• \tStill Foxes: Appear and vanish between time layers\nEmotional Physics\n• \tVector: Downward → Backward\n• \tResonance: Temporal coherence\n• \tEffect: Deepens introspection; reveals long arcs and old patterns\n• \tInstability: Over‑immersion in the past; difficulty returning to present\n• \tSignature: A heavy, slow warmth behind the sternum\nRole Interaction\n• \tGuide Roles: Read time layers; navigate ancient pathways\n• \tTrickster Roles: Diminished; age exposes misdirection\n• \tHealer Roles: Thrive; old memory amplifies restorative work\n• \tWanderer Roles: Risk drifting into temporal loops\nDrift Behavior\n• \tEarly Drift: Steps slow; attention lingers on old details\n• \tMid Drift: Emotional memory surfaces in layered waves\n• \tLate Drift: Identity blends with forest age; time feels circular\n• \tCollapse Mode: Time‑sink collapse — falling into old patterns as if they’re present\nMythic Fragment\n\nThey say the Old Forest\nremembers the world\nbefore it learned to speak.\n\nEvery trunk is a story\ntold in slow circles,\nevery root a path\nthat once mattered.\n\nWalk long enough,\nand the forest will show you\nthe part of yourself\nthat never grew young.\n\nIntegration Notes\n• \tUse Old Forest for scenes involving deep memory, ancestral resonance, or slow revelation\n• \tIdeal for characters confronting long arcs, inherited patterns, or forgotten truths\n• \tPairs naturally with Grove (stillness), Ruins (memory), and Stone Basin (weight)\n• \tWorks as a counterpoint to Plains (clarity), Spiral Field (curvature), and Drift Zones (instability)\n• \tExcellent for mapping temporal arcs, lineage, or slow emotional transformation\n\n[[02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic]]"
     },
     {
       "id": "b23a170e0be0",
@@ -3385,9 +3401,13 @@
       "kind": "chamber",
       "category": "chamber",
       "chamber": "Basin",
-      "route": null,
-      "entries": [],
-      "exits": [],
+      "route": "/environment/basin",
+      "entries": [
+        "herbroom"
+      ],
+      "exits": [
+        "old-forest"
+      ],
       "neighbors": [],
       "asset": "basin.png",
       "publish": true,
@@ -3405,26 +3425,6 @@
         }
       ],
       "body": "# Basin\n\n![[basin.png]]\n\nThe Basin is a quiet, reflective pool fed by underground channels..."
-    },
-    {
-      "id": "old-forest",
-      "title": "Old Forest",
-      "relativePath": "03 - World/01 - Biomes/Old Forest.md",
-      "kind": "chamber",
-      "category": "biome",
-      "chamber": "Old Forest",
-      "route": null,
-      "entries": [],
-      "exits": [],
-      "neighbors": [],
-      "asset": null,
-      "publish": true,
-      "draft": false,
-      "tags": [],
-      "description": "Old Forest",
-      "links": [],
-      "assets": [],
-      "body": "# Old Forest"
     },
     {
       "id": "herbroom",
@@ -3447,6 +3447,38 @@
       ],
       "assets": [],
       "body": "# Herb Room\n\nA threshold doorway stands on the eastern side of the Herb Room.  \nSee: [[herbroom-threshold-east]]"
+    },
+    {
+      "id": "old-forest",
+      "title": "Old Forest",
+      "relativePath": "_publish/old-forest.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "Old Forest",
+      "route": "/environment/old-forest",
+      "entries": [
+        "basin"
+      ],
+      "exits": [
+        "basin"
+      ],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "chamber",
+        "forest",
+        "memory",
+        "resonance",
+        "temporal"
+      ],
+      "description": "The Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance.",
+      "links": [
+        "02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic"
+      ],
+      "assets": [],
+      "body": "Essence\nThe Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance. It is a place where the world has been thinking for a very long time — where trunks hold centuries of pressure, roots braid through forgotten pathways, and the air itself feels older than the traveler.\nAn Old Forest is not overgrown.\nIt is overremembered.\nEnvironmental Physics\n• \tVisibility: Dim, filtered through dense, ancient canopy\n• \tSound Behavior: Deepened; echoes return slower and heavier\n• \tPressure: Thick, temporal; movement feels slightly delayed\n• \tStability: Extremely high; age reinforces structure\n• \tTemperature: Cool, steady, rarely fluctuates\nField Dynamics\n• \tTime feels slower, heavier, more deliberate\n• \tEmotional resonance sinks into roots and bark\n• \tMemory accumulates in rings, knots, and hollows\n• \tLight behaves like dust — slow, drifting, particulate\n• \tMovement naturally quiets; footsteps soften\nPhenomena\n1. Time Rings\nTree rings that hold emotional and environmental memory.\nTouching them can trigger:\n• \tslow recall\n• \tlayered impressions\n• \tancestral echoes\n2. Root Drift\nRoots shift subtly underfoot, guiding or redirecting movement.\nThey respond to emotional weight more than physical weight.\n3. Canopy Murmur\nA low, continuous sound like distant breathing.\nIt’s the forest’s age resonating through leaves.\n4. Hollow Memory\nLarge hollows act as memory chambers.\nEntering one can cause:\n• \tslowed thought\n• \tdeep introspection\n• \ttemporal disorientation\nFlora & Fauna\n• \tTreeforms (Elder Variant): Massive, slow, deeply resonant\n• \tOld Owls: Perception tuned to layered time\n• \tMosslights: Glow in response to ancient memory\n• \tRoot Deer: Move silently along root pathways\n• \tStill Foxes: Appear and vanish between time layers\nEmotional Physics\n• \tVector: Downward → Backward\n• \tResonance: Temporal coherence\n• \tEffect: Deepens introspection; reveals long arcs and old patterns\n• \tInstability: Over‑immersion in the past; difficulty returning to present\n• \tSignature: A heavy, slow warmth behind the sternum\nRole Interaction\n• \tGuide Roles: Read time layers; navigate ancient pathways\n• \tTrickster Roles: Diminished; age exposes misdirection\n• \tHealer Roles: Thrive; old memory amplifies restorative work\n• \tWanderer Roles: Risk drifting into temporal loops\nDrift Behavior\n• \tEarly Drift: Steps slow; attention lingers on old details\n• \tMid Drift: Emotional memory surfaces in layered waves\n• \tLate Drift: Identity blends with forest age; time feels circular\n• \tCollapse Mode: Time‑sink collapse — falling into old patterns as if they’re present\nMythic Fragment\n\nThey say the Old Forest\nremembers the world\nbefore it learned to speak.\n\nEvery trunk is a story\ntold in slow circles,\nevery root a path\nthat once mattered.\n\nWalk long enough,\nand the forest will show you\nthe part of yourself\nthat never grew young.\n\nIntegration Notes\n• \tUse Old Forest for scenes involving deep memory, ancestral resonance, or slow revelation\n• \tIdeal for characters confronting long arcs, inherited patterns, or forgotten truths\n• \tPairs naturally with Grove (stillness), Ruins (memory), and Stone Basin (weight)\n• \tWorks as a counterpoint to Plains (clarity), Spiral Field (curvature), and Drift Zones (instability)\n• \tExcellent for mapping temporal arcs, lineage, or slow emotional transformation\n\n[[02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic]]"
     }
   ],
   "translations": []

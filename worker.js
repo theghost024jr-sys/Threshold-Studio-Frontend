@@ -589,6 +589,25 @@ async function buildEthosChamberPayload(env, request, trace, limit = 220) {
 async function handleRequest(request, env, trace) {
   const url = new URL(request.url);
 
+  if (request.method === "GET" && (url.pathname === "/portal" || url.pathname.startsWith("/portal/"))) {
+    const portalUrl = new URL(request.url);
+    const isShellRequest = !url.pathname.startsWith("/portal/assets/") && url.pathname !== "/portal/favicon.svg";
+    if (url.pathname.startsWith("/portal/assets/")) {
+      portalUrl.pathname = "/portal-dist/assets/" + url.pathname.slice("/portal/assets/".length);
+    } else if (url.pathname === "/portal/favicon.svg") {
+      portalUrl.pathname = "/portal-dist/favicon.svg";
+    } else {
+      portalUrl.pathname = "/portal-dist/portal-shell.txt";
+    }
+    const response = await env.ASSETS.fetch(new Request(portalUrl, request));
+    if (isShellRequest) {
+      const headers = new Headers(response.headers);
+      headers.set("content-type", "text/html; charset=utf-8");
+      return new Response(response.body, { status: response.status, headers });
+    }
+    return response;
+  }
+
   if (url.pathname === "/api/progression" && request.method === "GET") {
     const progression = await verifyProgression(request, env.SEED_SECRET);
     return json({ seedPlanted: progression.seedPlanted === true });

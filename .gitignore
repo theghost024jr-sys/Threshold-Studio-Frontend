@@ -60,6 +60,7 @@ website/dist/
 website/build/
 website/.cache/
 website/_worker.js
+website/portal-dist/
 
 # ============================
 # Retired local build outputs

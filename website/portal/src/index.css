@@ -54,6 +54,23 @@ body {
   margin: 0;
 }
 
+:root {
+  --paper: #f5f1e8;
+  --ink: #17251f;
+  --muted: #617067;
+  --line: #bbc6bb;
+  --accent: #b7482d;
+  --display: Georgia, serif;
+  color: var(--ink);
+  background: var(--paper);
+  color-scheme: light;
+  font-family: Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 #root {
   width: 1126px;
   max-width: 100%;

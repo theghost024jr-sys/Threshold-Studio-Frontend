@@ -140,6 +140,20 @@
     });
   }
 
+  function renderPathGlyphs() {
+    paths.forEach(function (path) {
+      const glyph = glyphs[path.dataset.choice];
+      if (!glyph) return;
+
+      const image = document.createElement("img");
+      image.className = "path-glyph";
+      image.alt = "";
+      image.setAttribute("aria-hidden", "true");
+      window.ThresholdImages.loadWithFallback(image, glyphCandidates(glyph));
+      path.prepend(image);
+    });
+  }
+
   paths.forEach(function (path) { path.disabled = true; });
   fetch("/config/glyphs.json", { cache: "no-store" })
     .then(function (response) {
@@ -148,6 +162,7 @@
     })
     .then(function (data) {
       glyphs = data && data.glyphs ? data.glyphs : {};
+      renderPathGlyphs();
       renderTraces();
       bindPaths();
     })

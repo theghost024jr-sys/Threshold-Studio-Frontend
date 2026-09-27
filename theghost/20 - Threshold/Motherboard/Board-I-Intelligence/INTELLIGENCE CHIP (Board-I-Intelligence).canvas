@@ -1,0 +1,31 @@
+{
+	"nodes":[
+		{"id":"e24ced4108e361e0","x":-125,"y":-30,"width":250,"height":60,"type":"text","text":"Basin"},
+		{"id":"b05e19d33c61539e","x":-125,"y":-857,"width":185,"height":50,"type":"text","text":"Basin"},
+		{"id":"d4aeb114308411a7","x":220,"y":-857,"width":250,"height":50,"type":"text","text":"Node Bundles\n"},
+		{"id":"51a8933104ab2a79","x":620,"y":-857,"width":250,"height":50,"type":"text","text":"Circuit Mirrors\n\n"},
+		{"id":"60d6c1d4d9f57608","x":260,"y":-760,"width":250,"height":60,"type":"text","text":"Behavior Engine\n"},
+		{"id":"eb725ffa0c336396","x":615,"y":-530,"width":130,"height":60,"type":"text","text":"Pressure"},
+		{"id":"5829bc1338f66975","x":495,"y":-440,"width":250,"height":60,"type":"text","text":"Collapse"},
+		{"id":"58a05cf1876a8d54","x":-780,"y":-517,"width":805,"height":415,"type":"file","file":"Group.md"},
+		{"id":"a7223d6cb7d9db1b","x":1420,"y":0,"width":250,"height":60,"type":"text","text":"Node Physics (Behavior)"},
+		{"id":"543a0189ad6f4f0e","x":338,"y":-183,"width":682,"height":403,"type":"file","file":"Group 1.md"},
+		{"id":"8bcd248a9be0e330","x":640,"y":-162,"width":250,"height":60,"type":"text","text":"Anchor"},
+		{"id":"d9227c14ff07e88e","x":370,"y":-106,"width":250,"height":60,"type":"text","text":"Drift"},
+		{"id":"3344df01f6bd0702","x":680,"y":-90,"width":250,"height":60,"type":"text","text":"Resonance"},
+		{"id":"6cabe978119a5d09","x":280,"y":400,"width":250,"height":60,"type":"text","text":"Migration Rules"}
+	],
+	"edges":[
+		{"id":"47f86bb48818d9dd","fromNode":"b05e19d33c61539e","fromSide":"top","toNode":"d4aeb114308411a7","toSide":"top"},
+		{"id":"d63413c9c369a440","fromNode":"b05e19d33c61539e","fromSide":"top","toNode":"51a8933104ab2a79","toSide":"top"},
+		{"id":"4ae108bbe46391ed","fromNode":"b05e19d33c61539e","fromSide":"bottom","toNode":"60d6c1d4d9f57608","toSide":"left"},
+		{"id":"372845679101b455","fromNode":"d4aeb114308411a7","fromSide":"right","toNode":"51a8933104ab2a79","toSide":"left"},
+		{"id":"b80b641767863705","fromNode":"d4aeb114308411a7","fromSide":"right","toNode":"60d6c1d4d9f57608","toSide":"right"},
+		{"id":"939aa32e74ed03ea","fromNode":"51a8933104ab2a79","fromSide":"bottom","toNode":"60d6c1d4d9f57608","toSide":"right"},
+		{"id":"ccc0c92cc641a29c","fromNode":"51a8933104ab2a79","fromSide":"right","toNode":"b05e19d33c61539e","toSide":"left"},
+		{"id":"d379a59986500fcd","fromNode":"60d6c1d4d9f57608","fromSide":"bottom","toNode":"58a05cf1876a8d54","toSide":"top"},
+		{"id":"dbea9223385da24f","fromNode":"60d6c1d4d9f57608","fromSide":"bottom","toNode":"6cabe978119a5d09","toSide":"right"},
+		{"id":"3a4dc726606c969d","fromNode":"eb725ffa0c336396","fromSide":"left","toNode":"d9227c14ff07e88e","toSide":"right"},
+		{"id":"5d438c3accec120b","fromNode":"eb725ffa0c336396","fromSide":"left","toNode":"d9227c14ff07e88e","toSide":"right"}
+	]
+}

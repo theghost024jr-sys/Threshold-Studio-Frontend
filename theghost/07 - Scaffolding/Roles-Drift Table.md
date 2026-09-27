@@ -1,0 +1,83 @@
+
+Roles · Drift Table
+Subsystem: Role Drift Cluster
+Upstream: [[Identity Drift]] · [[Role Drift]] · [[01 - Physics/Misc Layer Assets/Elemental Overlay System]]
+Lateral: [[Role Identity Drift]] · [[Behavioral Loops]] · [[Species–Role Expression Table]]
+Downstream: [[Role Collapse]] · [[Collapse Signals]] · [[Signal Interpretation]]
+
+Purpose
+The Roles Drift Table defines how each role moves under pressure, which direction it drifts, what signals accompany the drift, and what collapse conditions emerge if the drift is not integrated.
+This table is the mechanical backbone of the Role Drift subsystem.
+
+Drift Mechanics Overview
+Role drift is governed by three forces:
+• 	Identity Pressure
+When the role no longer fits the internal self‑model.
+• 	Environmental Pressure
+When the role is misaligned with context or demand.
+• 	Signal Pressure
+When incoming signals contradict the role’s expected behavior.
+Drift is predictable, directional, and interpretable.
+
+Role Drift Table
+
+
+Drift Loop Notes
+1. Guide → Caretaker
+• 	Emotional logic overwhelms structural logic
+• 	Boundaries soften
+• 	The role becomes relational instead of directional
+2. Caretaker → Anchor
+• 	The role seeks stability
+• 	Energy conservation begins
+• 	Withdrawal is protective, not punitive
+3. Anchor → Sentinel
+• 	Stability becomes rigidity
+• 	The role shifts from grounding to guarding
+4. Sentinel → Judge
+• 	Threat detection becomes threat definition
+• 	The role begins enforcing patterns
+5. Judge → Architect
+• 	Enforcement becomes systemization
+• 	The role retreats into structure
+6. Architect → Guide
+• 	When the system fails or dissolves
+• 	The role reopens to relational alignment
+• 	Drift loop resets
+
+Cross‑Layer Influence
+Identity Layer
+Identity Drift accelerates role drift when:
+• 	self‑model is unstable
+• 	internal contradictions increase
+• 	emotional load exceeds capacity
+Signal Layer
+Signal distortion produces:
+• 	false threat detection
+• 	misinterpretation of relational cues
+• 	collapse signals
+Environmental Layer
+Environmental mismatch determines:
+• 	drift speed
+• 	drift severity
+• 	collapse likelihood
+
+Collapse Conditions
+A role collapses when drift exceeds structural tolerance.
+Collapse types:
+• 	Fusion Collapse (Guide/Caretaker)
+• 	Shutdown Collapse (Caretaker/Anchor)
+• 	Lock Collapse (Anchor/Sentinel)
+• 	Hard Collapse (Sentinel/Judge)
+• 	Spillover Collapse (Judge/Architect)
+• 	Reset Collapse (Architect/Guide)
+See: [[Role Collapse]] · [[Collapse Signals]]
+
+Canonical Links
+• 	[[Role Drift]]
+• 	[[Role Identity Drift]]
+• 	[[Behavioral Loops]]
+• 	[[Identity Drift]]
+• 	[[Signal Interpretation]]
+• 	[[Collapse Signals]]
+• 	[[Role Collapse]]

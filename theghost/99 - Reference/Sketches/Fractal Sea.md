@@ -1,0 +1,4 @@
+![[fractalsea.png]]
+
+
+[[Freedom]]

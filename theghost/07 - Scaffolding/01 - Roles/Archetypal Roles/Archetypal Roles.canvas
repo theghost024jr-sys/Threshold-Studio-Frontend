@@ -1,0 +1,24 @@
+{
+	"nodes":[
+		{"id":"2fa3aeb3fcc356a7","x":-380,"y":-350,"width":105,"height":50,"type":"text","text":"[[Oracle]]\n"},
+		{"id":"4bf770626c4fbba2","x":-522,"y":-160,"width":105,"height":50,"type":"text","text":"[[Hunter]]\n"},
+		{"id":"caca5cc5be909995","x":-519,"y":-440,"width":100,"height":50,"type":"text","text":"[[Lantern]]\n"},
+		{"id":"a757ac9dc7434487","x":-377,"y":-260,"width":100,"height":50,"type":"text","text":"[[07 - Scaffolding/05 - Roles/Archetypal Roles/Echo]]\n"},
+		{"id":"806fdbdce863783e","type":"text","text":"[[Sentinel]]\n","x":-660,"y":-260,"width":100,"height":50},
+		{"id":"7be772aca7e44eca","x":-660,"y":-350,"width":100,"height":50,"type":"text","text":"[[Weaver]]\n"}
+	],
+	"edges":[
+		{"id":"6b69c1cd66af9c30","fromNode":"a757ac9dc7434487","fromSide":"bottom","toNode":"4bf770626c4fbba2","toSide":"right","toEnd":"none","color":"5"},
+		{"id":"c8981f764f3bb21d","fromNode":"caca5cc5be909995","fromSide":"right","toNode":"2fa3aeb3fcc356a7","toSide":"top","toEnd":"none","color":"5"},
+		{"id":"ef2d5f3ca580180f","fromNode":"2fa3aeb3fcc356a7","fromSide":"bottom","toNode":"a757ac9dc7434487","toSide":"top","toEnd":"none","color":"5"},
+		{"id":"456aaad36f02a871","fromNode":"4bf770626c4fbba2","fromSide":"left","toNode":"806fdbdce863783e","toSide":"bottom","toEnd":"none","color":"5"},
+		{"id":"38c6cf7a82d331a9","fromNode":"806fdbdce863783e","fromSide":"top","toNode":"7be772aca7e44eca","toSide":"bottom","toEnd":"none","color":"5"},
+		{"id":"daa38c3dd2c049bd","fromNode":"7be772aca7e44eca","fromSide":"top","toNode":"caca5cc5be909995","toSide":"left","toEnd":"none","color":"5"},
+		{"id":"9ed1f5eba1b69b7e","fromNode":"caca5cc5be909995","fromSide":"bottom","toNode":"a757ac9dc7434487","toSide":"left","toEnd":"none","color":"4"},
+		{"id":"205f12d84b2a8d08","fromNode":"2fa3aeb3fcc356a7","fromSide":"left","toNode":"4bf770626c4fbba2","toSide":"top","toEnd":"none","color":"4"},
+		{"id":"daf0a91be075e704","fromNode":"a757ac9dc7434487","fromSide":"left","toNode":"806fdbdce863783e","toSide":"right","toEnd":"none","color":"4"},
+		{"id":"66d144cd0d5e6661","fromNode":"4bf770626c4fbba2","fromSide":"top","toNode":"7be772aca7e44eca","toSide":"right","toEnd":"none","color":"4"},
+		{"id":"823ddf93721a68b3","fromNode":"806fdbdce863783e","fromSide":"right","toNode":"caca5cc5be909995","toSide":"bottom","toEnd":"none","color":"4"},
+		{"id":"305759de546b1ed1","fromNode":"2fa3aeb3fcc356a7","fromSide":"left","toNode":"7be772aca7e44eca","toSide":"right","toEnd":"none","color":"4"}
+	]
+}

@@ -1,0 +1,102 @@
+4R. Containment → “I stop the bleed.”
+This is the moment a player realizes they’re in trouble — not because a bar flashes red, but because the world tells them.
+Signals the player feels:
+• 	Their spirit animal goes quiet or circles them tightly
+• 	The environment stops responding to their gestures
+• 	Their breath pattern becomes shallow or erratic
+• 	The world’s shimmer dulls
+What the player does (without being told):
+• 	They stop moving
+• 	They take shelter under a tree, near water, or by a fire
+• 	They breathe
+• 	They drop whatever frantic task they were doing
+What the world does in response:
+• 	The shimmer stabilizes
+• 	The spirit animal returns to proximity
+• 	The environment stops escalating
+Containment is the moment the player says, through action:
+“I’m not making it worse.”
+
+3R. Reconstitution → “I rebuild my core.”
+Once the player is safe, they begin to reassemble their internal architecture.
+Signals the player feels:
+• 	Their gestures regain precision
+• 	Their movement stops feeling “slippery”
+• 	Their spirit animal resumes its normal orbit
+• 	The world’s soundscape becomes tonal again
+What the player does:
+• 	Simple, grounding actions
+• 	Gathering a single resource
+• 	Repairing a small structure
+• 	Feeding or tending to something
+What the world does:
+• 	Responds to small actions with clarity
+• 	Restores basic affordances
+• 	Reopens the player’s sense of agency
+Reconstitution is the moment the player says:
+“I can function again, even if I’m fragile.”
+
+2R. Realignment → “I correct the warp.”
+Now the player begins to undo the distortions that formed during collapse.
+Signals the player feels:
+• 	Their gifts feel “true” again
+• 	Their movement syncs with the environment
+• 	Their spirit animal mirrors their intent accurately
+• 	The world’s shimmer brightens
+What the player does:
+• 	Performs actions that require intention, not instinct
+• 	Rebuilds a pattern they previously broke
+• 	Returns something they took
+• 	Repairs a relationship with an NPC or creature
+What the world does:
+• 	Reinforces correct patterns
+• 	Stops echoing distorted behaviors
+• 	Reopens pathways that were closed
+Realignment is the moment the player says:
+“I’m back in the right rhythm.”
+
+1R. Resonance → “I move with ease again.”
+This is the return of natural pattern — the player is no longer compensating.
+Signals the player feels:
+• 	Flow returns
+• 	Gestures feel effortless
+• 	The world responds instantly
+• 	Their spirit animal becomes playful again
+What the player does:
+• 	Engages in generative actions
+• 	Builds, explores, restores
+• 	Moves with curiosity instead of caution
+What the world does:
+• 	Opens its full affordance set
+• 	Rewards presence
+• 	Mirrors the player’s emotional state accurately
+Resonance is the moment the player says:
+“I’m myself again.”
+
+0. Integration → “I become more than I was.”
+This is the part most games never touch — the collapse becomes part of the player’s identity physics.
+Signals the player feels:
+• 	A new stability
+• 	A new sensitivity to early drift
+• 	A new capacity for generosity
+• 	A new relationship with their spirit animal
+What the player does:
+• 	Incorporates the lesson into their playstyle
+• 	Avoids the old pattern without being told
+• 	Gains a new gesture, gift, or environmental response
+What the world does:
+• 	Recognizes the integration
+• 	Unlocks a new resonance state
+• 	Treats the player as someone who has “been through it”
+Integration is the moment the player says:
+“That collapse changed me — and I’m stronger for it.”
+
+The Full Player Arc (One Line Each)
+• 	Containment: stop the bleed
+• 	Reconstitution: rebuild the core
+• 	Realignment: correct the warp
+• 	Resonance: return to ease
+• 	Integration: become more than before
+This is the emotional physics of Threshold made playable.
+
+[[Identity Memory]]

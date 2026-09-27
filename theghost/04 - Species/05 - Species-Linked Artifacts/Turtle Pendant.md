@@ -1,0 +1,1 @@
+![[a stylized ring desi.png]]

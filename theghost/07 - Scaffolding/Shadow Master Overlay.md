@@ -1,0 +1,112 @@
+Overview
+This overlay maps each phase of the Master Cycle to its corresponding inversion in the Shadow Cycle.
+It shows:
+• 	the functional expression
+• 	the collapse expression
+• 	the failure trigger
+• 	the recovery vector
+This file is the bridge between the two orbits.
+
+1. Gate ↔ False Gate
+Master Phase: Gate — Initiation
+Opening, curiosity, threshold contact.
+Shadow Phase: False Gate — Misdirected Beginning
+Opening collapses into misdirection.
+Failure Trigger
+• 	Acting without orientation
+• 	Mistaking noise for signal
+• 	Premature commitment
+Recovery Vector
+Re‑establish orientation before movement.
+Slow the opening. Re‑contact the edge.
+
+2. Signal ↔ Noise Spiral
+Master Phase: Signal — Patterning
+Meaning, momentum, interpretation.
+Shadow Phase: Noise Spiral — Collapse of Meaning
+Patterns dissolve into static.
+Failure Trigger
+• 	Over‑interpretation
+• 	Conflicting signals
+• 	Information overload
+Recovery Vector
+Reduce input density.
+Return to a single clean signal.
+
+3. Fault ↔ Destructive Rupture
+Master Phase: Fault — Rupture
+Necessary break, pressure release.
+Shadow Phase: Destructive Rupture — Break That Breaks Too Much
+Rupture becomes damage.
+Failure Trigger
+• 	Escalation
+• 	Emotional spikes
+• 	Breaking what still works
+Recovery Vector
+Contain the break.
+Limit the rupture to what must be released.
+
+4. Drift ↔ Dissociation
+Master Phase: Drift — Dissolution
+Softening, surrender, unmaking.
+Shadow Phase: Dissociation — Vanishing
+Unmaking becomes disappearance.
+Failure Trigger
+• 	Loss of thread
+• 	Emotional diffusion
+• 	Falling out of contact
+Recovery Vector
+Reintroduce a single point of contact.
+A breath, a sensation, a simple anchor.
+
+5. Anchor ↔ Rigidity
+Master Phase: Anchor — Grounding
+Stability, presence, gravity.
+Shadow Phase: Rigidity — Hardening
+Grounding becomes immobility.
+Failure Trigger
+• 	Over‑control
+• 	Defensive bracing
+• 	Inflexibility
+Recovery Vector
+Soften the ground.
+Reintroduce flexibility before stability.
+
+6. Return ↔ Failed Re‑Entry
+Master Phase: Return — Integration
+Reassembly, renewal, coherence.
+Shadow Phase: Failed Re‑Entry — Broken Return
+Integration collapses into fragmentation.
+Failure Trigger
+• 	Partial integration
+• 	Looping
+• 	Re‑entry shock
+Recovery Vector
+Re‑integrate at a smaller scale.
+Don’t force the full return.
+
+7. Burden ↔ Immobilizing Weight
+Master Phase: Burden — Continuity
+Memory, responsibility, structure.
+Shadow Phase: Immobilizing Weight — Gravity That Stops Movement
+Continuity becomes paralysis.
+Failure Trigger
+• 	Over‑responsibility
+• 	Drag
+• 	Accumulated weight
+Recovery Vector
+Redistribute the load.
+Lighten the burden before restarting the cycle.
+
+Overlay Summary Table
+
+
+How to Use This Overlay
+This file becomes the diagnostic lens for the entire system:
+• 	If something feels off → check which shadow phase it resembles
+• 	If a process is stuck → check which recovery vector applies
+• 	If a cycle collapses → trace the failure trigger backward
+• 	If you want to re‑enter the Master Cycle → follow the recovery vector forward
+This is the switchboard between the two orbits.
+
+[[Signal Map]]

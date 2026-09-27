@@ -1,0 +1,1 @@
+![[a tranquil nature sc.png]]

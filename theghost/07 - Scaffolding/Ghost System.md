@@ -1,0 +1,1 @@
+![[ghostsystem.png]]

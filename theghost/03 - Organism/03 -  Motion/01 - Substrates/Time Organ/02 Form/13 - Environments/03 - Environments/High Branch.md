@@ -1,0 +1,73 @@
+[[03 - Organism/03 -  Motion/01 - Substrates/Time Organ/02 Form/13 - Environments/03 - Environments/Branch]]
+
+Essence
+A High Branch is an environment defined by elevation, exposure, and sharpened perception. It is a place where the world narrows into a single elevated path, where wind and height strip away noise, and where every step demands intention.
+A High Branch is not simply “up in a tree.”
+It is the physics of height distilled into a path.
+Environmental Physics
+• 	Visibility: Extremely high; long sightlines in all directions
+• 	Sound Behavior: Wind‑carried; sharp, directional
+• 	Pressure: Outward and downward; height amplifies emotional vectors
+• 	Stability: Medium; depends on branch thickness and wind conditions
+• 	Temperature: Cooler, with rapid shifts due to exposure
+Field Dynamics
+• 	Movement becomes careful, deliberate, and precise
+• 	Emotional resonance sharpens; clarity increases but so does tension
+• 	Memory feels lighter, less sticky, more aerial
+• 	Wind interacts strongly with the traveler’s balance and intention
+Phenomena
+1. Height Drift
+A subtle pull outward, toward the edges.
+Often mistaken for curiosity or fear.
+2. Wind Shear
+Sudden gusts that shift balance.
+Reveals the branch’s true stability.
+3. Skyline Echo
+Sound travels far along the branch’s length.
+Used by Owls and Crows for long‑range communication.
+4. Sway Pulse
+The branch moves in slow, rhythmic arcs in response to:
+• 	emotional spikes
+• 	group resonance
+• 	wind pressure
+• 	nearby movement
+Flora & Fauna
+• 	Treeforms (High Variant): Narrow, flexible, wind‑tuned
+• 	Sky Crows: Navigate high paths with ease
+• 	Branch Owls: Perch on thin limbs; sense micro‑movements
+• 	Wind Lizards: Grip bark tightly; move in short bursts
+Emotional Physics
+• 	Vector: Upward → Outward
+• 	Resonance: Elevated coherence
+• 	Effect: Sharpens perception; heightens awareness and tension
+• 	Instability: Over‑exposure; emotional vertigo
+• 	Signature: A rising, airy pressure behind the sternum
+Role Interaction
+• 	Guide Roles: Thrive; elevation clarifies direction
+• 	Trickster Roles: Struggle; exposure limits misdirection
+• 	Healer Roles: Use height to create perspective shifts
+• 	Wanderer Roles: Risk drifting outward toward dangerous edges
+Drift Behavior
+• 	Early Drift: Steps become light; attention widens
+• 	Mid Drift: Emotional states sharpen; tension rises
+• 	Late Drift: Identity feels stretched thin across the sky
+• 	Collapse Mode: Height‑fall collapse — emotional or physical slip toward the edge
+Mythic Fragment
+
+They say the first High Branch
+grew upward so far
+that the world below
+forgot how to hold it.
+
+Up there,
+the wind spoke clearly,
+the sky pressed close,
+and every step
+became a choice with weight.
+
+Integration Notes
+• 	Use High Branch for scenes involving perspective, tension, or elevated clarity
+• 	Ideal for moments where characters must choose carefully or confront exposure
+• 	Pairs naturally with Branch (multiplicity), Wind Channel (direction), and Plains (clarity)
+• 	Works as a counterpoint to Grove (inward stillness) and Stone Basin (downward weight)
+• 	Excellent for mapping vertical arcs, perspective shifts, or precarious emotional states

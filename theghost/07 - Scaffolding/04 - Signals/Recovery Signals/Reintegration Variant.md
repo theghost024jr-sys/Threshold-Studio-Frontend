@@ -1,0 +1,19 @@
+Variant: The Thawing Field
+Type: Reintegration
+Curvature Pattern: Cold Curvature
+Dominant Drift: Primary Drift (Identity)
+Primary Instability: Identity Resonance
+Outcome: Reintegration
+Canonical Lesson: Warmth requires structure.
+Matrix Snapshot
+
+Notes
+• 	Environment is cold but not hostile; it slows collapse.
+• 	Species adapt with low-energy behaviors.
+• 	Identity resonance becomes brittle but clarifies under pressure.
+• 	Drift is slow and predictable.
+• 	Collapse layer remains stable.
+Reintegration Payload
+• 	New emotional physics: slow resonance stabilizes roles.
+• 	New lineage rule: cold environments preserve memory.
+• 	New signal behavior: quiet fields amplify subtle gifts.

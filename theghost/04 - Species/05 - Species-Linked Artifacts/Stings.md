@@ -1,0 +1,1 @@
+![[A symbolic sketch stings.png]]

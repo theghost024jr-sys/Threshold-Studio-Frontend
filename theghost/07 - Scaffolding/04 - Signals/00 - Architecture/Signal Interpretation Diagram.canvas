@@ -1,0 +1,43 @@
+{
+	"nodes":[
+		{"id":"dc33abad50d8d4b1","x":-420,"y":-140,"width":250,"height":60,"type":"text","text":"Input Ring\n\n"},
+		{"id":"002746245e93c6ea","x":-125,"y":-140,"width":250,"height":60,"type":"text","text":"Processing Ring"},
+		{"id":"40c9d27a2d223779","x":180,"y":-140,"width":250,"height":60,"type":"text","text":"Output Ring"},
+		{"id":"ca70943041e9537b","x":-375,"y":-40,"width":250,"height":60,"type":"text","text":"Signal Types\n“What kind of signal is this?”\n"},
+		{"id":"f7bda7e36de8d881","x":-375,"y":60,"width":250,"height":60,"type":"text","text":"Signal Drift\n“Is this signal stable or drifting?”\n\n\n"},
+		{"id":"40cf0e4c25bfda3a","x":-375,"y":160,"width":250,"height":60,"type":"text","text":"Signal Distortion\n“Is this signal clean or warped?”\n\n"},
+		{"id":"8bd87f4fd2a8bc3c","x":160,"y":420,"width":180,"height":60,"type":"text","text":"Classification\nSoft / Sharp / Hard\n"},
+		{"id":"3f46130adeb7891a","x":-375,"y":260,"width":250,"height":60,"type":"text","text":"Role Drift\n“What is the role doing under pressure?”\n"},
+		{"id":"39bbe8fe34f5192c","x":-375,"y":360,"width":250,"height":60,"type":"text","text":"Identity Drift\n“What is the self‑model doing?”\n"},
+		{"id":"628a3980f55d951c","x":-375,"y":450,"width":250,"height":60,"type":"text","text":"Species-Role Expression \n“How does this species express this role?”\n"},
+		{"id":"3b1ff15ce75e85c0","x":-90,"y":540,"width":250,"height":60,"type":"text","text":"Signal Interpretation\n"},
+		{"id":"4820131c249366cf","x":160,"y":640,"width":180,"height":60,"type":"text","text":"Contextualization\nRole · Identity · Species · Environment\n"},
+		{"id":"67f507a8bc6e7733","x":-340,"y":640,"width":250,"height":60,"type":"text","text":"Direction Mapping\nDrift / Collapse / Recovery / Relational Need\n"},
+		{"id":"cc6d7b22ed0208f3","x":160,"y":840,"width":250,"height":60,"type":"text","text":"Behavioral Loops\n“Is this feeding a loop?”\n"},
+		{"id":"5602ab400bdeafa5","x":160,"y":940,"width":250,"height":60,"type":"text","text":"Recovery Signals\n“Is there a recovery path?”\n"},
+		{"id":"9aba809552f84fbb","x":160,"y":1040,"width":250,"height":50,"type":"text","text":"Collapse Physics\n“What happens if collapse proceeds?”\n"},
+		{"id":"95de7c1a9cedfc4d","x":160,"y":1120,"width":250,"height":60,"type":"text","text":"Recovery Flow\n“What happens if recovery is engaged?”\n"},
+		{"id":"86dfda401be0260d","x":160,"y":740,"width":250,"height":60,"type":"text","text":"Collapse Signals\n“Is this pointing toward collapse?”\n"}
+	],
+	"edges":[
+		{"id":"2af176e93391b051","fromNode":"ca70943041e9537b","fromSide":"bottom","toNode":"3b1ff15ce75e85c0","toSide":"left"},
+		{"id":"81bce210e1d3ec90","fromNode":"f7bda7e36de8d881","fromSide":"right","toNode":"3b1ff15ce75e85c0","toSide":"top"},
+		{"id":"3818b9d650ea6d4c","fromNode":"3f46130adeb7891a","fromSide":"right","toNode":"3b1ff15ce75e85c0","toSide":"top"},
+		{"id":"a444130ea72632be","fromNode":"39bbe8fe34f5192c","fromSide":"right","toNode":"3b1ff15ce75e85c0","toSide":"top"},
+		{"id":"f6109a5583d4d057","fromNode":"628a3980f55d951c","fromSide":"right","toNode":"3b1ff15ce75e85c0","toSide":"top"},
+		{"id":"f9ca1b00481ca7ac","fromNode":"40cf0e4c25bfda3a","fromSide":"right","toNode":"3b1ff15ce75e85c0","toSide":"top"},
+		{"id":"4eb232b338324774","fromNode":"ca70943041e9537b","fromSide":"right","toNode":"8bd87f4fd2a8bc3c","toSide":"top"},
+		{"id":"b29fa67d93931221","fromNode":"8bd87f4fd2a8bc3c","fromSide":"left","toNode":"3b1ff15ce75e85c0","toSide":"top"},
+		{"id":"5b4657cd0e7187f1","fromNode":"3f46130adeb7891a","fromSide":"bottom","toNode":"4820131c249366cf","toSide":"top"},
+		{"id":"433d80125afb9171","fromNode":"39bbe8fe34f5192c","fromSide":"right","toNode":"4820131c249366cf","toSide":"top"},
+		{"id":"fd10972f782ed663","fromNode":"628a3980f55d951c","fromSide":"right","toNode":"4820131c249366cf","toSide":"top"},
+		{"id":"86c75d65929bafa6","fromNode":"4820131c249366cf","fromSide":"left","toNode":"3b1ff15ce75e85c0","toSide":"bottom"},
+		{"id":"2dd616ea42fcd094","fromNode":"3b1ff15ce75e85c0","fromSide":"bottom","toNode":"67f507a8bc6e7733","toSide":"right"},
+		{"id":"c51c5d7d4398ad23","fromNode":"86dfda401be0260d","fromSide":"right","toNode":"8bd87f4fd2a8bc3c","toSide":"right"},
+		{"id":"47d6a0dbef36cdd3","fromNode":"67f507a8bc6e7733","fromSide":"bottom","toNode":"86dfda401be0260d","toSide":"left"},
+		{"id":"4e495c398bf2b45a","fromNode":"67f507a8bc6e7733","fromSide":"bottom","toNode":"cc6d7b22ed0208f3","toSide":"left"},
+		{"id":"4f7fd3cba915428c","fromNode":"67f507a8bc6e7733","fromSide":"bottom","toNode":"5602ab400bdeafa5","toSide":"left"},
+		{"id":"9af9635292b468a4","fromNode":"86dfda401be0260d","fromSide":"right","toNode":"9aba809552f84fbb","toSide":"right"},
+		{"id":"eca688b775df798c","fromNode":"5602ab400bdeafa5","fromSide":"left","toNode":"95de7c1a9cedfc4d","toSide":"left"}
+	]
+}

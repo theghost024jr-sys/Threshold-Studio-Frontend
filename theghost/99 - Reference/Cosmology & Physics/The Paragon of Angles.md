@@ -1,0 +1,31 @@
+(also known locally as “The Acute One”)
+Every town has a guardian.
+Greeley’s Bend has a geometry dropout with a grudge.
+Name:
+Marla Quill, former substitute math teacher, now the town’s only sanctioned “Shape Compliance Officer.”
+Her job:
+• 	Patrol the streets for illegal angles
+• 	Confiscate contraband protractors
+• 	Issue citations for “suspicious pointiness”
+• 	Respond to emergency calls about Acute Incidents
+• 	Keep the town’s roofs from accidentally forming triangles during renovations
+Her secret:
+She’s the only person in town who actually likes triangles.
+She studies them in private.
+She sketches them in notebooks hidden inside cereal boxes.
+She once cried at the sight of a perfect isosceles.
+Why she defends the town anyway:
+Because she knows something the council doesn’t.
+Triangles aren’t just shapes.
+They’re signals.
+Every time someone sees a triangle in Greeley’s Bend, it’s not a hallucination — it’s a breach.
+A thin spot in reality.
+A place where the forbidden geometry presses through.
+Marla isn’t protecting the town from triangles.
+She’s protecting the triangles from the town.
+If the council ever realized what triangles really do, they’d try to destroy them — and that would tear the whole place open.
+So she plays the role:
+• 	the enforcer
+• 	the inspector
+• 	the anti‑triangle zealot
+All while secretly maintaining the delicate balance that keeps the geometry from collapsing.

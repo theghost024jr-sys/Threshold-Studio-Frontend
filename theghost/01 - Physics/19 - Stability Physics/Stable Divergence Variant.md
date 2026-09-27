@@ -1,0 +1,19 @@
+Variant: The Signal Orchard
+Type: Stable Divergence
+Curvature Pattern: Dense Signal Fog
+Dominant Drift: Shadow Drift (Signal)
+Primary Instability: Signal Overload
+Outcome: Divergence
+Canonical Lesson: Abundance distorts clarity.
+Matrix Snapshot
+
+Notes
+• 	Signal layer is hyper-abundant; communication becomes multi-threaded.
+• 	Roles stretch to accommodate new signal channels.
+• 	Identity fractures into sub-selves but remains functional.
+• 	Drift accelerates unpredictably.
+• 	Collapse layer stays stable because the environment is neutral.
+Divergence Signature
+• 	Parallel world with multi-channel identity structures.
+• 	New role forms emerge from signal saturation.
+• 	Species remain unchanged but develop new instincts around noise.

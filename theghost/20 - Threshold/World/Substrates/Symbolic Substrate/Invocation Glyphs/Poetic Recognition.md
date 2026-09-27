@@ -1,0 +1,1 @@
+![[a poetic recognition.png]]

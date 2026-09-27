@@ -1,0 +1,1 @@
+![[a stylized talisman.png]]

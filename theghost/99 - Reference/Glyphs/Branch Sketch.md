@@ -1,0 +1,1 @@
+![[A symbolic sketch ti.png]]

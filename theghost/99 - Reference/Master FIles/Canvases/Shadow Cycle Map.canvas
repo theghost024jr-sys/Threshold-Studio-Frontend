@@ -1,0 +1,22 @@
+{
+	"nodes":[
+		{"id":"f782f77c50719288","type":"text","text":"\nNoise Spiral - Inversion of Signal\nEssence: Pattern collapses into distortion.\nDistortion\n• \tOver‑interpretation\n• \tHyper‑analysis\n• \tConflicting meanings\nCollapse\n• \tSignal overload\n• \tMisreading the environment\n• \tTriggering rupture prematurely\nShadow Expression\nMeaning becomes noise\nSignal becomes static that accelerates the break\n","x":-300,"y":-80,"width":250,"height":180},
+		{"id":"780bae5977da66ce","x":110,"y":160,"width":250,"height":240,"type":"text","text":"\nFailed Re-entry - Inversion of Return\nEssence: Integration collapses into fragmentation.\nDistortion\n• \tPartial integration\n• \tLooping\n• \tEmotional whiplash\nCollapse\n• \tRe‑entry shock\n• \tFalling back into Fault or Gate\n• \tLosing coherence\nShadow Expression\nIntegration becomes disintegration\nReturn becomes a false completion that cannot hold."},
+		{"id":"43fc6ed379ff9326","type":"text","text":"\nFalse Gate - Inversion of Gate\nEssence: Opening collapses into misdirection.\nDistortion\n• \tOver‑opening\n• \tChasing novelty\n• \tBoundary confusion\nCollapse\n• \tStepping through the wrong threshold\n• \tPremature commitment\n• \tMistaking noise for signal\nShadow Expression\nCompulsion to begin without orientation\nGate becomes a trapdoor instead of a doorway.","x":-300,"y":-480,"width":250,"height":240},
+		{"id":"f6f2b75ba957271f","type":"text","text":"\nRigidity - Inversion of Anchor\nEssence: Grounding collapses into immobility.\nDistortion\n• \tOver‑control\n• \tDefensive grounding\n• \tEmotional bracing\nCollapse\n• \tInflexibility\n• \tCollapse of stability\n• \tSnapping under pressure\nShadow Expression\nStability becomes stagnation\nAnchor becomes a cage instead of a foundation.\n","x":-140,"y":920,"width":250,"height":206},
+		{"id":"45de1a34fa0f2eb0","type":"text","text":"\nDissociation - Inversion of Drift\nEssence: Surrender collapses into disconnection.\nDistortion\n• \tFog\n• \tEmotional diffusion\n• \tLoss of thread\nCollapse\n• \tDisorientation\n• \tFalling out of the cycle\n• \tLosing contact with self or environment\nShadow Expression\nUnmaking becomes disappearance\nDrift becomes a void instead of a softening.","x":-140,"y":520,"width":250,"height":260},
+		{"id":"87b8acc71cfebc7b","type":"text","text":"\nDisruptive Rupture -Inversion of Fault\nEssence: Necessary break collapses into uncontrolled damage.\nDistortion\n• \tEscalation\n• \tOverreaction\n• \tEmotional spikes\nCollapse\n• \tChain‑reaction breaks\n• \tBurnout\n• \tShattering what didn’t need to break\nShadow Expression\nRupture becomes destruction\nFault stops being a release and becomes a weapon.","x":-300,"y":200,"width":250,"height":240},
+		{"id":"1fb72809aafbf6ad","x":110,"y":-120,"width":250,"height":180,"type":"text","text":"\nImmobilizing Weight - Inversion of Burden\nEssence: Continuity collapses into paralysis.\nDistortion\n• \tHeaviness\n• \tOver‑responsibility\n• \tDrag\nCollapse\n• \tFreezing\n• \tCollapse under weight\n• \tBecoming immovable\nShadow Expression\nMemory becomes inertia\nBurden becomes a gravitational sink that pulls the system backward.\n"}
+	],
+	"edges":[
+		{"id":"1f0b8358de6a59e5","fromNode":"43fc6ed379ff9326","fromSide":"bottom","toNode":"f782f77c50719288","toSide":"top","label":"False Gate"},
+		{"id":"51d63c0ef939646c","fromNode":"f782f77c50719288","fromSide":"bottom","toNode":"87b8acc71cfebc7b","toSide":"top","label":"False Fault"},
+		{"id":"fcd1b3534bfb9ccf","fromNode":"87b8acc71cfebc7b","fromSide":"bottom","toNode":"45de1a34fa0f2eb0","toSide":"top","label":"False Drift"},
+		{"id":"2e99afc721dfda0a","fromNode":"45de1a34fa0f2eb0","fromSide":"bottom","toNode":"f6f2b75ba957271f","toSide":"top","label":"False Stable"},
+		{"id":"60980d2e62811863","fromNode":"f6f2b75ba957271f","fromSide":"right","toNode":"780bae5977da66ce","toSide":"bottom","label":"False Stable"},
+		{"id":"b6438a3ff8777c1b","fromNode":"780bae5977da66ce","fromSide":"top","toNode":"1fb72809aafbf6ad","toSide":"bottom","label":"False Fault"},
+		{"id":"66ae26722029a5a2","fromNode":"1fb72809aafbf6ad","fromSide":"top","toNode":"43fc6ed379ff9326","toSide":"right","label":"False Stable"},
+		{"id":"25066736408a9447","fromNode":"43fc6ed379ff9326","fromSide":"bottom","toNode":"f782f77c50719288","toSide":"top"},
+		{"id":"92189c9f3b8dd0d0","fromNode":"43fc6ed379ff9326","fromSide":"bottom","toNode":"f782f77c50719288","toSide":"top"}
+	]
+}

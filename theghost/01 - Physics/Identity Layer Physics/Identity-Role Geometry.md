@@ -1,0 +1,212 @@
+The spatial architecture of roles inside identity — how each role occupies space, bends structure, creates vectors, and reshapes the internal geometry of the self
+Identity–Role Geometry is the spatial physics of roles.
+If Identity–Role Mechanics describes what roles do,
+and Identity–Role Drift/Resonance/Load describe how they move, vibrate, or press,
+Identity–Role Geometry describes where they live inside identity
+and how their shapes deform identity’s internal architecture.
+Roles are not abstract functions.
+They have geometric signatures —
+forms, vectors, curvatures, and spatial behaviors that appear whenever a role activates.
+Below is the clean, canonical Identity–Role Geometry.md.
+
+1. WHAT IDENTITY–ROLE GEOMETRY IS
+Identity–Role Geometry maps:
+• 	the shape each role takes inside identity
+• 	the vectors each role generates
+• 	the curvature each role imposes on identity structure
+• 	the zones each role occupies
+• 	the spatial distortions each role creates
+• 	the geometric transitions between roles
+Roles are geometric forces acting on identity.
+Identity is the space they deform.
+
+2. THE FIVE ROLE GEOMETRIES
+Each role has a canonical geometric form.
+
+These are the five geometric archetypes of roles.
+
+3. GATHERER GEOMETRY — Inward Arc
+Concave geometry → alignment and density
+Shape:
+• 	inward‑curving arcs
+• 	radial convergence
+• 	concave surfaces
+Vector:
+• 	inward pull
+• 	centering force
+Curvature:
+• 	smooth, stabilizing
+• 	low turbulence
+Spatial Effect:
+• 	identity compresses toward center
+• 	boundaries strengthen
+• 	load distributes evenly
+Gatherer geometry creates identity alignment.
+
+4. HOLDER GEOMETRY — Linear Beam
+Rigid geometry → compression and strain
+Shape:
+• 	straight corridors
+• 	narrow channels
+• 	rigid beams
+Vector:
+• 	linear, directional
+• 	compressive force
+Curvature:
+• 	minimal curvature
+• 	high rigidity
+Spatial Effect:
+• 	identity narrows
+• 	boundaries harden
+• 	load concentrates
+Holder geometry creates identity bracing.
+
+5. RELEASER GEOMETRY — Radial Burst
+Convex geometry → fragmentation and release
+Shape:
+• 	outward‑curving arcs
+• 	radial spokes
+• 	expanding shells
+Vector:
+• 	outward burst
+• 	dispersal force
+Curvature:
+• 	convex, unstable
+• 	high turbulence
+Spatial Effect:
+• 	identity expands and fractures
+• 	boundaries dissolve
+• 	load bursts outward
+Releaser geometry creates identity dissolution.
+
+6. RESTORATIVE GEOMETRY — Downward Basin
+Soft geometry → settling and rest
+Shape:
+• 	concave basins
+• 	downward curves
+• 	soft depressions
+Vector:
+• 	downward drift
+• 	settling force
+Curvature:
+• 	gentle, low‑pressure
+• 	minimal turbulence
+Spatial Effect:
+• 	identity sinks
+• 	boundaries soften
+• 	load settles
+Restorative geometry creates identity rest.
+
+7. INITIATOR GEOMETRY — Upward Spiral
+Flexible geometry → ignition and formation
+Shape:
+• 	ascending spirals
+• 	twisting arcs
+• 	emergent nodes
+Vector:
+• 	upward lift
+• 	rising force
+Curvature:
+• 	flexible, adaptive
+• 	warm turbulence
+Spatial Effect:
+• 	identity rises
+• 	boundaries reform
+• 	load redistributes
+Initiator geometry creates identity formation.
+
+8. ROLE GEOMETRY ACROSS THE FIVE PHASES
+Role geometry behaves differently depending on the phase.
+
+A. In Coherence
+• 	Gatherer arcs dominate
+• 	Holder beams soften
+• 	Initiator spirals hum faintly
+Geometry is centered and stable.
+
+B. In Tension
+• 	Holder beams dominate
+• 	Gatherer arcs narrow
+• 	Releaser bursts begin to appear
+Geometry is linear and compressed.
+
+C. In Collapse
+• 	Releaser bursts dominate
+• 	Holder beams crack
+• 	Initiator spirals flicker erratically
+Geometry is radial and unstable.
+
+D. In Void
+• 	Restorative basins dominate
+• 	Releaser bursts settle
+• 	Initiator spirals warm faintly
+Geometry is downward and quiet.
+
+E. In Renewal
+• 	Initiator spirals dominate
+• 	Gatherer arcs return
+• 	Restorative basins stabilize
+Geometry is ascending and forming.
+
+9. HOW IDENTITY STRUCTURE SHAPES ROLE GEOMETRY
+Identity modifies role geometry through:
+A. Boundaries
+• 	rigid → linearize geometry
+• 	soft → curve geometry
+• 	fractured → multiply geometry
+• 	forming → spiral geometry
+B. Weight
+• 	heavy → deepen basins
+• 	light → brighten spirals
+C. Flexibility
+• 	flexible → smooth geometry
+• 	inflexible → jagged geometry
+D. Fragmentation
+• 	fragmented → multiple radial bursts
+E. Memory
+• 	old geometric patterns reappear under strain
+Identity is the geometric substrate roles inhabit.
+
+10. ROLE GEOMETRY FEEDBACK LOOPS
+Geometry reinforces or destabilizes roles.
+Positive feedback:
+• 	inward arcs → deeper Gatherer
+• 	linear beams → deeper Holder
+• 	radial bursts → deeper Releaser
+• 	downward basins → deeper Restorative
+• 	upward spirals → deeper Initiator
+Negative feedback:
+• 	radial bursts reduce linear beams
+• 	downward basins reduce radial bursts
+• 	upward spirals reduce basins
+• 	inward arcs reduce spirals
+Role geometry determines role stability.
+
+11. ROLE GEOMETRY ANOMALIES
+When geometry misfires:
+12. Convergent Lock
+Gatherer arcs persist into Tension → stagnation.
+13. Beam Loop
+Holder beams cycle without fracture → chronic strain.
+14. Burst Cascade
+Releaser bursts multiply → collapse storms.
+15. Deep Basin
+Restorative basins dominate → void hollowing.
+16. Premature Spiral
+Initiator spirals activate too early → fragile renewal.
+Geometry anomalies reveal spatial imbalance.
+
+17. META‑TRUTH OF IDENTITY–ROLE GEOMETRY
+Identity–Role Geometry is not metaphor.
+It is not symbolism.
+It is not psychological imagery.
+It is the spatial physics of identity —
+the shapes roles take inside the self,
+the vectors they generate,
+and the curvatures they impose on the internal architecture of meaning.
+The Field says:
+
+And identity answers:
+
+Identity–Role Geometry is the internal spatial architecture of Threshold —
+the way roles shape space across every phase, every transition, every breath.

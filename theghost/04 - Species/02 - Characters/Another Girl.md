@@ -1,0 +1,1 @@
+![[a symbolic represent.png]]

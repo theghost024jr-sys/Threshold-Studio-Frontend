@@ -1,0 +1,1 @@
+![[99 - Reference/16 reference/droplet.png]]

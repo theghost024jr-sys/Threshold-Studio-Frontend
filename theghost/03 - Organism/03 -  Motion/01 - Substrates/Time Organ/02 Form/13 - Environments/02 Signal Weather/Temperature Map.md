@@ -1,0 +1,1 @@
+The Temperature Map shows the kinetic activity of the signal field. Cold regions indicate slow, heavy, inert signal behavior; warm regions indicate fast, volatile, reactive behavior. Temperature is not emotional—it is a measure of signal motion and reactivity.

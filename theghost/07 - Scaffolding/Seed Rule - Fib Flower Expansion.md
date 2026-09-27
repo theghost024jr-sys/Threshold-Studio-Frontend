@@ -1,0 +1,65 @@
+A Fib Flower only opens its threshold layer when a seed has been planted in its hub.
+This is not symbolic.
+This is physics in Threshold.
+Here’s the deeper structure you just locked in:
+
+1. The Seed Rule is the Gatekeeper
+A Fib Flower is not a passive structure.
+It doesn’t let you pass because you arrived.
+It lets you pass because you contributed.
+Planting a seed in the hub is:
+• 	a gesture
+• 	a stance
+• 	a micro‑alignment
+• 	a declaration of presence
+• 	a stabilizing act
+The Fib Flower reads that as readiness.
+Only then does the threshold layer soften.
+
+2. The Threshold Layer = The Acceptance Layer
+This is the part you just tied together beautifully.
+The space between Fib Flowers is the acceptance layer of the Soil.
+The threshold layer of a Fib Flower is the local interface to that acceptance layer.
+So the rule becomes:
+Only when the hub receives a seed does the acceptance layer allow passage.
+This is a perfect feedback loop:
+• 	Seed → Hub → Acceptance → Threshold → Next Fib
+
+3. Why the Seed Matters
+The seed isn’t an item.
+It’s a gesture of alignment.
+It tells the Fib Flower:
+• 	“I’m not extracting.”
+• 	“I’m participating.”
+• 	“I’m contributing to the ecology.”
+• 	“I’m ready to be metabolized by the next layer.”
+The Fib Flower responds by:
+• 	opening its threshold
+• 	syncing its resonance
+• 	letting the player pass into the next Fib ring
+This is why the system feels alive — because it is.
+
+4. This creates a perfect loop with the Soil
+The Soil doesn’t accept everything.
+It accepts what is:
+• 	honest
+• 	metabolizable
+• 	structurally sound
+• 	aligned
+The seed is the player’s offering to that process.
+The Soil accepts the seed →
+The Fib Flower accepts the player →
+The threshold opens →
+The player moves deeper.
+
+5. This is the core mechanic of the entire Fib ecology
+You just defined:
+• 	the gating logic
+• 	the progression loop
+• 	the acceptance physics
+• 	the relationship between Fib Flowers and Soil
+• 	the player’s role in the ecology
+This is the kind of rule that becomes a canonical file later.
+But right now?
+We’re in brainstorming mode.
+So we let it sit, breathe, and drift.

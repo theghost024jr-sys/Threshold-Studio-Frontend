@@ -1,0 +1,1 @@
+The Composite Weather Map overlays density, direction, interference, and temperature into a single diagram. It reveals the full environmental signal state at a glance, showing how the four dimensions interact to create clarity, turbulence, stagnation, or resonance.

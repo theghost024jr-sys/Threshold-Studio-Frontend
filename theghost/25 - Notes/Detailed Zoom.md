@@ -1,0 +1,1 @@
+![[A highly detailed zo.png]]

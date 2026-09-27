@@ -1,0 +1,26 @@
+{
+	"nodes":[
+		{"id":"9c03f24d7bec3192","type":"file","file":"07 - Scaffolding/Threshold Map 6.md","x":-340,"y":420,"width":680,"height":680},
+		{"id":"a31ed7b2b005510b","type":"text","text":"[[Earthbind]]\n[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Anchor]]","x":-291,"y":160,"width":162,"height":50},
+		{"id":"5aeae84a28a1f7a7","type":"text","text":"[[Stonefield]]\n[[Burden]]","x":-291,"y":15,"width":165,"height":50},
+		{"id":"9502f8936df655c8","type":"text","text":"[[Threshold]]\n[[Return]]","x":-82,"y":80,"width":165,"height":50},
+		{"id":"2a4ead7a1ce08507","type":"text","text":"[[Airswell]]\n[[Signal]]","x":120,"y":15,"width":160,"height":50},
+		{"id":"5157c41ff3383b86","type":"text","text":"[[Emberfall]]\n[[Fault]]","x":120,"y":160,"width":165,"height":50},
+		{"id":"8d18ede6f49da025","type":"text","text":"[[Ethyldeep]]\n[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Drift]]","x":-82,"y":240,"width":155,"height":50},
+		{"id":"87dc7d787eff98f4","type":"text","text":"[[Mistreach]]\n[[Gate]]","x":-82,"y":-70,"width":165,"height":50}
+	],
+	"edges":[
+		{"id":"3ef86fc0c53f3773","fromNode":"5aeae84a28a1f7a7","fromSide":"top","toNode":"87dc7d787eff98f4","toSide":"left"},
+		{"id":"f8be11cf5861dab0","fromNode":"87dc7d787eff98f4","fromSide":"right","toNode":"2a4ead7a1ce08507","toSide":"top"},
+		{"id":"aabae98e0988da43","fromNode":"2a4ead7a1ce08507","fromSide":"bottom","toNode":"5157c41ff3383b86","toSide":"top"},
+		{"id":"28ce3e57a3b5c0b0","fromNode":"5157c41ff3383b86","fromSide":"bottom","toNode":"8d18ede6f49da025","toSide":"right"},
+		{"id":"7cb0f4243b770c20","fromNode":"8d18ede6f49da025","fromSide":"left","toNode":"a31ed7b2b005510b","toSide":"bottom"},
+		{"id":"5519512b31a00cdf","fromNode":"a31ed7b2b005510b","fromSide":"top","toNode":"5aeae84a28a1f7a7","toSide":"bottom"},
+		{"id":"bc99fe7d174ecb3a","fromNode":"5157c41ff3383b86","fromSide":"left","toNode":"9502f8936df655c8","toSide":"right"},
+		{"id":"ba939ad205937e25","fromNode":"8d18ede6f49da025","fromSide":"top","toNode":"9502f8936df655c8","toSide":"bottom"},
+		{"id":"a7f3751619a16866","fromNode":"a31ed7b2b005510b","fromSide":"right","toNode":"9502f8936df655c8","toSide":"left"},
+		{"id":"cc0da1ae21735b9b","fromNode":"5aeae84a28a1f7a7","fromSide":"right","toNode":"9502f8936df655c8","toSide":"left"},
+		{"id":"fec9d857795c0169","fromNode":"2a4ead7a1ce08507","fromSide":"left","toNode":"9502f8936df655c8","toSide":"right"},
+		{"id":"082ec1085a894f6f","fromNode":"87dc7d787eff98f4","fromSide":"bottom","toNode":"9502f8936df655c8","toSide":"top"}
+	]
+}

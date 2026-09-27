@@ -1,0 +1,1 @@
+![[03 - Organism/03 -  Motion/08 - Player Abilities/14 - Cleansing Phenomena/Environmental Phenomena/sadstaircase.png]]

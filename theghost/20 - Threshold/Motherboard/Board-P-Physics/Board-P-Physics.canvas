@@ -1,0 +1,25 @@
+{
+	"nodes":[
+		{"id":"9a23adb79c4f6d2c","x":120,"y":-700,"width":125,"height":50,"type":"text","text":"Resonance"},
+		{"id":"690350fc23837760","x":420,"y":-700,"width":140,"height":50,"type":"text","text":"Collapse"},
+		{"id":"ebe67c573b2d6ada","x":-180,"y":-700,"width":125,"height":50,"type":"text","text":"Pressure"},
+		{"id":"9656115c50a8a61f","x":-117,"y":-591,"width":97,"height":60,"type":"text","text":"Drift"},
+		{"id":"cb9ebd2a2dc84350","x":120,"y":-460,"width":250,"height":60,"type":"text","text":"Cross-Flower Migration"},
+		{"id":"07b28771f0fb5fbd","x":183,"y":-591,"width":170,"height":60,"type":"text","text":"Anchor"},
+		{"id":"7368ae03bd033aa2","x":480,"y":-591,"width":250,"height":60,"type":"text","text":"Instability"}
+	],
+	"edges":[
+		{"id":"ba25ab7527b57257","fromNode":"ebe67c573b2d6ada","fromSide":"right","toNode":"9a23adb79c4f6d2c","toSide":"left"},
+		{"id":"7dcf4df7d8b24cb2","fromNode":"ebe67c573b2d6ada","fromSide":"top","toNode":"690350fc23837760","toSide":"top"},
+		{"id":"b2d0e727b5858232","fromNode":"ebe67c573b2d6ada","fromSide":"bottom","toNode":"9656115c50a8a61f","toSide":"top"},
+		{"id":"7e822a2e0774e03a","fromNode":"ebe67c573b2d6ada","fromSide":"right","toNode":"07b28771f0fb5fbd","toSide":"left"},
+		{"id":"9a66bcf6489adf75","fromNode":"9a23adb79c4f6d2c","fromSide":"bottom","toNode":"9656115c50a8a61f","toSide":"right"},
+		{"id":"ce0d5db8ec1f7639","fromNode":"9a23adb79c4f6d2c","fromSide":"right","toNode":"690350fc23837760","toSide":"left"},
+		{"id":"ec7ab898cf71a4bc","fromNode":"9a23adb79c4f6d2c","fromSide":"bottom","toNode":"07b28771f0fb5fbd","toSide":"top"},
+		{"id":"205368c477075417","fromNode":"690350fc23837760","fromSide":"right","toNode":"9656115c50a8a61f","toSide":"bottom"},
+		{"id":"d30b0b4a7a20757b","fromNode":"690350fc23837760","fromSide":"bottom","toNode":"07b28771f0fb5fbd","toSide":"top"},
+		{"id":"b9a4da887caa4369","fromNode":"690350fc23837760","fromSide":"right","toNode":"7368ae03bd033aa2","toSide":"right"},
+		{"id":"48e6797a311b8bc2","fromNode":"9656115c50a8a61f","fromSide":"left","toNode":"7368ae03bd033aa2","toSide":"bottom"},
+		{"id":"6e5a19cdec9194f6","fromNode":"7368ae03bd033aa2","fromSide":"bottom","toNode":"cb9ebd2a2dc84350","toSide":"right"}
+	]
+}

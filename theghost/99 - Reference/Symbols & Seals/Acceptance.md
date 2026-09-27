@@ -1,0 +1,3 @@
+![[acceptance.png]]
+
+[[Avatar Shimmer]]

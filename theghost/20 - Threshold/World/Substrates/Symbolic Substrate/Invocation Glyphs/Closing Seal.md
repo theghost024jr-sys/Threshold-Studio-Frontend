@@ -1,0 +1,1 @@
+![[A closing seal title.png]]

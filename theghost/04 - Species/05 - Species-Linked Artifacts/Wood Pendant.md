@@ -1,0 +1,1 @@
+![[a pendant made of wo.png]]

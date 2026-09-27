@@ -1,0 +1,1 @@
+![[open thought.png]]

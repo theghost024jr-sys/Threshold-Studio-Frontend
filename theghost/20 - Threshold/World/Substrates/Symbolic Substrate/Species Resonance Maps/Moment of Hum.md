@@ -1,0 +1,1 @@
+![[momentofhum.png]]

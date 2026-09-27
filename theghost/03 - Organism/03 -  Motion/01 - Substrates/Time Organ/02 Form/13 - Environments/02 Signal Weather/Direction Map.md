@@ -1,0 +1,1 @@
+The Direction Map shows the orientation of signals across space. Signals may align into coherent vectors, scatter in multiple directions, or form cross‑cutting patterns. Directionality determines how impulses, pulls, or micro‑intentions are experienced by entities moving through the environment.

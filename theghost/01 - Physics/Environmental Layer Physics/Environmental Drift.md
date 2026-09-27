@@ -1,0 +1,151 @@
+Subsystem Type: Drift Behavior Engine
+Upstream: [[Environmental Pressure Field]]
+Lateral: [[Drift as Unresolved Force]] · [[Collapse Physics]] · [[Identity Physics]]
+Downstream: All Environment Nodes · Drift Corridors · Collapse Zones
+
+Purpose
+Environmental Drift defines how drift behaves inside environments.
+Where the Pressure Field describes force, Environmental Drift describes motion.
+This subsystem governs:
+• 	drift speed
+• 	drift curvature
+• 	drift compression
+• 	drift stability
+• 	drift collapse thresholds
+• 	drift resonance with signals
+Every environment inherits these rules and modifies them through its own pressure profile.
+
+1. Drift Components
+Environmental Drift is composed of four interacting behaviors:
+1.1 Drift Vector
+The direction drift naturally moves within an environment.
+Influenced by:
+• 	gradient pressure
+• 	terrain slope
+• 	water flow
+• 	wind shear
+• 	brine descent
+• 	spiral geometry
+
+1.2 Drift Velocity
+How fast drift moves.
+Velocity increases with:
+• 	strong gradients
+• 	low density
+• 	high distortion
+Velocity decreases with:
+• 	high density
+• 	high memory pressure
+• 	enclosed spaces
+
+1.3 Drift Curvature
+How drift bends or spirals.
+Curvature is caused by:
+• 	rotational pressure
+• 	heat shimmer
+• 	echo corridors
+• 	brinicle spirals
+• 	canyon geometry
+Curved drift increases disorientation and collapse risk.
+
+1.4 Drift Compression
+How tightly drift is packed.
+Compression occurs in:
+• 	dense forests
+• 	deep ice
+• 	ruins
+• 	caves
+• 	sediment layers
+Compression stabilizes identity but increases collapse brittleness.
+
+2. Drift Expression Types
+Environmental Drift expresses itself in four modes:
+2.1 Linear Drift
+Straight, predictable movement.
+Examples:
+• 	plains
+• 	open water
+• 	tundra
+
+2.2 Turbulent Drift
+Chaotic, shifting movement.
+Examples:
+• 	storms
+• 	fog banks
+• 	heat shimmer
+
+2.3 Spiral Drift
+Rotational, tightening movement.
+Examples:
+• 	brinicle spirals
+• 	whirlpools
+• 	dust devils
+
+2.4 Compressive Drift
+Slow, dense, identity‑tightening movement.
+Examples:
+• 	deep forests
+• 	ruins
+• 	caves
+
+3. Drift → Pressure Interaction
+Environmental Drift is shaped by the Pressure Field:
+3.1 Gradient → Acceleration
+Steeper gradients = faster drift.
+3.2 Density → Resistance
+Higher density = slower drift.
+3.3 Distortion → Curvature
+Higher distortion = more curved drift.
+3.4 Memory → Compression
+Higher memory pressure = tighter drift.
+
+4. Drift → Collapse Interaction
+Drift determines how collapse begins and spreads:
+4.1 Accelerated Drift → Sudden Collapse
+Fast drift overwhelms identity.
+4.2 Curved Drift → Spiral Collapse
+Rotational drift pulls collapse inward.
+4.3 Compressed Drift → Brittle Collapse
+Tight drift shatters under pressure.
+4.4 Turbulent Drift → Fragmented Collapse
+Chaotic drift produces multi‑point collapse.
+
+5. Drift → Identity Interaction
+Environmental Drift affects identity stability:
+• 	linear drift stabilizes
+• 	turbulent drift destabilizes
+• 	spiral drift disorients
+• 	compressed drift tightens identity
+Identity is most stable in:
+• 	groves
+• 	warm pockets
+• 	sheltered ruins
+Identity is most unstable in:
+• 	spirals
+• 	heat shimmer
+• 	brittle ice
+
+6. Drift → Signals
+Environmental Drift can generate Drift Signals when:
+• 	drift becomes rhythmic
+• 	drift becomes patterned
+• 	drift compresses into a stable loop
+• 	drift spirals into collapse
+Examples:
+• 	Drift Flare
+• 	Spiral Echo
+• 	Stillwatch (if drift‑based)
+These are Signals, not environments.
+
+7. Canonical Links
+Upstream
+• 	[[Environmental Pressure Field]]
+Lateral
+• 	[[Drift as Unresolved Force]]
+• 	[[Collapse Physics]]
+• 	[[Identity Physics]]
+Downstream
+• 	All Environment Nodes
+• 	Drift Corridors
+• 	Collapse Zones
+• 	Environmental Signals

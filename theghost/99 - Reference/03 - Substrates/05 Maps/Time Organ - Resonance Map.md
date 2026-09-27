@@ -1,0 +1,40 @@
+Overview
+The Resonance Map visualizes how the Time Organ interacts with symbolic curvature, Drift‑layer motion, and Crown‑layer cognition. It is the organ’s “signal topology.”
+Primary Resonance Nodes
+1. Shimmer Node
+• 	receives curvature input
+• 	drives symbolic interpretation
+• 	located in the membrane
+2. Drift Node
+• 	receives motion input
+• 	controls phase drift
+• 	located along the Drift Nerve
+3. Crown Node
+• 	receives cognitive input
+• 	enables projection
+• 	located at the upper chamber filament
+Resonance Pathways
+Shimmer → Chambers
+• 	curvature becomes rhythm
+• 	rhythm becomes meaning
+Drift → Chambers
+• 	motion becomes phase
+• 	phase becomes timing
+Crown → Chambers
+• 	cognition becomes projection
+• 	projection becomes foresight
+Resonance States
+Harmonic
+• 	all three nodes aligned
+• 	high clarity
+Bifurcated
+• 	Shimmer + Drift aligned, Crown misaligned
+• 	symbolic overload
+Collapsed
+• 	Drift node fails
+• 	temporal flatline
+Resonance Loops
+• 	Interpretive Loop: Shimmer → Crown
+• 	Stabilization Loop: Drift → Stone
+• 	Projection Loop: Crown → Shimmer
+These loops define the organ’s “temporal voice.”

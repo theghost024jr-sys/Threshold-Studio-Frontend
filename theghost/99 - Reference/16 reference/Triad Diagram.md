@@ -1,0 +1,86 @@
+1. The Three Nodes
+Each node is a pressure‑sensitive system with its own thresholds.
+A. Player
+Internal thresholds:
+• 	sensory
+• 	behavioral
+• 	role
+• 	identity
+• 	collapse
+B. NPC
+Social thresholds:
+• 	sensory
+• 	behavioral
+• 	role
+• 	identity
+• 	collapse
+C. Environment
+Spatial thresholds:
+• 	ambient force
+• 	drift load
+• 	identity resonance
+• 	role compatibility
+• 	shimmer
+• 	collapse
+Each node has the same shape, but different expression.
+
+2. The Three Edges
+Each edge is a bidirectional pressure loop.
+Player ↔ Environment
+• 	player drift raises ambient force
+• 	environment strain alters player perception
+• 	player collapse triggers zone collapse
+• 	zone transformation shifts player identity
+This is the embodied loop.
+
+Environment ↔ NPC
+• 	zone pressure destabilizes NPC roles
+• 	NPC collapse amplifies environmental drift
+• 	environmental resonance reveals NPC identity
+• 	NPC behavior signals zone thresholds
+This is the social‑spatial loop.
+
+NPC ↔ Player
+• 	NPC behavior mirrors player drift
+• 	player resonance stabilizes NPC roles
+• 	NPC collapse triggers player collapse
+• 	player identity expression reveals NPC identity
+This is the relational loop.
+
+3. The Center: Threshold Convergence
+Where all three loops meet, you get the Convergence Point:
+Threshold Convergence =
+the moment when player, NPC, and environment cross thresholds together.
+This is where:
+• 	shimmer intensifies
+• 	roles invert
+• 	identities reveal
+• 	collapse propagates
+• 	the world “speaks”
+This is the mythic center of the triad.
+
+4. The Triad in Motion
+The triad is not static — it’s a rotating system.
+Any node can be the initiator:
+If the Player initiates:
+• 	player drift → NPC strain → environmental distortion
+If the NPC initiates:
+• 	NPC collapse → environmental rupture → player identity shift
+If the Environment initiates:
+• 	zone pressure → player behavioral threshold → NPC role inversion
+The triad is recursive — pressure moves until it finds resolution.
+
+5. The Governing Law
+Pressure moves along the triad until someone or something crosses a threshold.
+That crossing:
+• 	transforms the node
+• 	reshapes the edges
+• 	reconfigures the entire triad
+This is why the world feels alive.
+
+6. The Triad Diagram (Text Form)
+
+Edges = pressure loops
+Nodes = threshold systems
+Center = convergence
+That’s the whole geometry.

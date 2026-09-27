@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"589a0ae7ed2fe641","type":"text","text":"[[Gate]]\n[[Mistreach]]","x":-140,"y":-280,"width":140,"height":50},
+		{"id":"330b5200ae7e26be","type":"text","text":"","x":-250,"y":240,"width":250,"height":60},
+		{"id":"1cf737ccf160e880","type":"text","text":"[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Anchor]]\n[[Earthbind]]","x":-140,"y":-130,"width":140,"height":50},
+		{"id":"cfe363a33d9f86f5","type":"text","text":"[[Signal]]\n[[Airswell]]","x":-325,"y":-200,"width":125,"height":50},
+		{"id":"2813721335f62007","type":"text","text":"[[Burden]]\n[[Stonefield]]","x":60,"y":-200,"width":125,"height":50},
+		{"id":"fad1e83d53bdb911","type":"text","text":"[[Return]]\n[[Threshold]]","x":-140,"y":40,"width":140,"height":50},
+		{"id":"db53344718724b32","type":"text","text":"[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Drift]]\n[[Ethyldeep]]","x":-325,"y":-40,"width":125,"height":50},
+		{"id":"69754f77147e95e4","type":"text","text":"[[Fault]]\n[[Emberfall]]","x":60,"y":-65,"width":125,"height":50}
+	],
+	"edges":[
+		{"id":"14eff30ed6e104bd","fromNode":"589a0ae7ed2fe641","fromSide":"left","toNode":"cfe363a33d9f86f5","toSide":"top"},
+		{"id":"f0624af2af47a89a","fromNode":"cfe363a33d9f86f5","fromSide":"bottom","toNode":"2813721335f62007","toSide":"bottom"},
+		{"id":"733eb629090d8e34","fromNode":"2813721335f62007","fromSide":"top","toNode":"db53344718724b32","toSide":"top"},
+		{"id":"42ca93640b783a9c","fromNode":"db53344718724b32","fromSide":"right","toNode":"69754f77147e95e4","toSide":"bottom"},
+		{"id":"ecce27955ccc2561","fromNode":"69754f77147e95e4","fromSide":"top","toNode":"1cf737ccf160e880","toSide":"right"},
+		{"id":"313cafd8f961f81c","fromNode":"1cf737ccf160e880","fromSide":"left","toNode":"fad1e83d53bdb911","toSide":"top"},
+		{"id":"6c9e697f44d0cfec","fromNode":"fad1e83d53bdb911","fromSide":"right","toNode":"589a0ae7ed2fe641","toSide":"bottom"}
+	]
+}

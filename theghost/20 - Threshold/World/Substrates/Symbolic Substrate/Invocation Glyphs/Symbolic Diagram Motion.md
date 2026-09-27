@@ -1,0 +1,1 @@
+![[A symbolic diagram o.png]]

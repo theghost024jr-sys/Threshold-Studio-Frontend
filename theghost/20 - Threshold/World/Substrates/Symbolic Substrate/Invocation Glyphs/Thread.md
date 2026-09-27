@@ -1,0 +1,3 @@
+![[thread.png]]
+
+[[risilience]]

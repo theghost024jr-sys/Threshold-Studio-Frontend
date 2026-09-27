@@ -1,0 +1,4 @@
+![[ascar.png]]
+
+
+- [[03 - Organism/Organism/09 Myth Cluster/06 Lore/Mythic Substrate Index]] - [[Symbolic Coding 1]] - [[Visual Language Index]] - [[01 - Physics/03  - Collapse Physics/Collapse Architecture Index]] - [[Identity Geometry]] - [[Emotional Physics Index]]

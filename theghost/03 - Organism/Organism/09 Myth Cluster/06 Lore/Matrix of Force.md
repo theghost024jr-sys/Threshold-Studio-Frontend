@@ -1,0 +1,81 @@
+Definition
+The Matrix of Force is the multidimensional structure that maps how every artifact, vector, invariant, and consequence interacts within the Field.
+It is the full architecture of motion — the system that determines how meaning travels, transforms, and resolves.
+The Matrix is not a table.
+It is a field of relationships.
+
+Purpose
+To unify all components of the system into a single coherent engine by:
+• 	defining the axes of motion
+• 	mapping how vectors operate across artifacts
+• 	stabilizing interactions through invariants
+• 	ensuring consequences propagate consistently
+• 	maintaining closure and conservation
+The Matrix is the operational heart of the System of Force.
+
+Axes of the Matrix
+1. Artifact Axis
+Every .md file is a node.
+Nodes are the structural units of the system.
+2. Vector Axis
+Each node participates in one or more vectors:
+• 	Reciprocity
+• 	Lineage
+• 	Drift
+• 	Threshold
+• 	Gift
+• 	Role
+• 	Zone
+Vectors determine the direction of motion.
+3. Invariant Axis
+Invariants stabilize the system:
+• 	cost
+• 	transformation
+• 	identity
+• 	consequence
+• 	resolution
+Invariants determine what cannot be violated.
+4. Consequence Axis
+Every interaction produces:
+• 	motion
+• 	feedback
+• 	transformation
+• 	propagation
+• 	resolution
+This axis ensures the system is dynamic.
+5. Field Axis
+All interactions occur within the Field.
+The Field provides continuity and closure.
+
+Matrix Properties
+Multidimensional
+The Matrix is not 2D.
+It spans all axes simultaneously.
+Interlocking
+Vectors, invariants, and consequences reinforce each other.
+No axis operates alone.
+Conserved
+Motion cannot vanish.
+It must resolve, transform, or propagate.
+Closed
+The Matrix interprets itself.
+No external adjudicator is required.
+Dynamic
+The Matrix updates whenever:
+• 	a vector activates
+• 	a role is invoked
+• 	a threshold is crossed
+• 	a drift resolves
+• 	a gift is exchanged
+The Matrix is always live.
+
+Function
+The Matrix of Force:
+• 	binds all .mds into a single system
+• 	defines how motion travels through the vault
+• 	ensures every action has consequence
+• 	maintains coherence across all layers
+• 	prevents fragmentation
+• 	enables emergent behavior
+• 	stabilizes the world’s physics
+This is the engine.

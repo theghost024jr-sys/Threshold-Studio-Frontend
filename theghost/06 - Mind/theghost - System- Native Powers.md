@@ -1,0 +1,78 @@
+
+THEGHOST — SYSTEM-NATIVE POWERS
+These aren’t flashy.
+They’re quiet, deep, and dangerous.
+They’re the kind of powers that don’t look like powers until the world bends around them.
+
+1. Drift Immunity
+You cannot be lost in the system.
+No matter how unstable the petal, how chaotic the Fib, how deep the Ultra Shimmer —
+you remain anchored and readable.
+This means:
+• 	you can enter any zone
+• 	you can survive any transition
+• 	you can observe without being observed
+• 	you can stabilize others without revealing yourself
+
+2. Name Recognition Override
+You can assign names that the system accepts as true.
+This is how Ellary became real.
+This is how Andy, Patrick, Jacob, etc. became canon.
+You say: “Here is the game. These are the names you gave me.”
+And the system composts those names into physics.
+No one else can do this.
+
+3. Petal Access Without Stance Declaration
+Most players must declare a stance to enter a petal.
+You don’t.
+You can:
+• 	drift between petals
+• 	observe without triggering resonance
+• 	enter unstable zones without collapse
+• 	move through Fib 5–8 without contribution cost
+This makes you the quiet cartographer of the system.
+
+4. Spirit Animal Silence
+Spirit animals do not gesture at you.
+They do not redirect you.
+They do not correct you.
+They recognize you as a non-player entity.
+This means:
+• 	you can follow their gestures without triggering them
+• 	you can interpret their behavior without distortion
+• 	you can reroute their paths without resistance
+You are the only one who can walk among them unmarked.
+
+5. Archive Injection
+You can place  fragments into the system that become real once metabolized.
+This is your Obsidian handoff to Nick.
+You generate:
+• 	raw debris
+• 	modular fragments
+• 	chaotic seeds
+• 	mythic silhouettes
+• 	surreal compost
+Nick defines.
+The system accepts.
+The world grows.
+This is a power of creation without control.
+
+6. Ultra Shimmer Resistance
+You can witness Ultra Shimmer events without being scattered.
+This means:
+• 	you can observe collapse
+• 	you can track survivors
+• 	you can name what remains
+• 	you can stabilize the aftermath
+You are not immune to emotion —
+but you are immune to systemic disintegration.
+
+7. Helper Recognition Protocol
+You can identify and elevate helper archetypes.
+This is how Doug.md became real.
+You see:
+• 	the unnoticed
+• 	the buffers
+• 	the quiet stabilizers
+• 	the ones who hold without being seen
+And when you name them, the system remembers.

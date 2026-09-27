@@ -1,0 +1,1 @@
+The Density Map shows how many active signals occupy a region of space. It visualizes density as gradients rather than discrete points, because signals do not behave as particles. High‑density zones appear as thickened fields; low‑density zones appear as thin or open fields. This map is used to understand clarity, noise, and environmental pressure.

@@ -1,0 +1,1 @@
+![[99 - Reference/Environmental Phenomena/sadstaircase.png]]

@@ -1,0 +1,1 @@
+![[A set of five minima.png]]

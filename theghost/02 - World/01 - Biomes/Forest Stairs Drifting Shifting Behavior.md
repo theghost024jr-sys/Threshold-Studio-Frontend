@@ -1,0 +1,38 @@
+Core Behavior
+The stairs are not objects.
+They are manifestations of environmental drift.
+They appear when:
+• 	drift pressure spikes
+• 	emotional resonance aligns
+• 	collapse probability dips below threshold
+• 	memory density reaches a tipping point
+They do not belong to any one environment.
+They shift through environments based on behavioral conditions.
+
+Appearance Logic
+The stairs appear “randomly” — but the randomness is responsive, not chaotic.
+Trigger Conditions
+• 	A player enters an environment with unresolved memory
+• 	A role is present but unexpressed
+• 	The environment has low shimmer but high drift
+• 	A nearby environment recently collapsed
+Environmental Compatibility
+They can appear in:
+• 	Spiral Grove
+• 	Mist Corridor
+• 	Quiet Grove
+• 	Stone Basin
+• 	Shimmer Path
+• 	Collapse Ring
+They cannot appear in:
+• 	environments with locked geometry
+• 	environments with active role expression
+• 	environments under macro-collapse
+
+Form Variants by Environment
+
+
+Canonical Statement
+The Forest Stairs are drift-responsive structures that shift through environments based on emotional and structural conditions.
+They appear “randomly,” but the randomness is governed by pressure, drift, and memory logic.
+They do not belong to any one place. They belong to the system.

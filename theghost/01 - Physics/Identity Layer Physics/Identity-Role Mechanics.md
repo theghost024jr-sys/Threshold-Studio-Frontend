@@ -1,0 +1,189 @@
+[[Identity Load]]
+[[Identity Layer]]
+[[Identity Drift]]
+[[Identity Layer]]
+[[Identity-Role Mechanics]]
+[[Identity Memory]]
+[[Identity Physics]]
+[[Identity Geometry 1|Identity Geometry 1]]
+[[Identity Overview]]
+[[Identity Recovery]]
+[[Identity-Role Drift]]
+How identity generates roles, how roles reshape identity, and how their interaction drives phase behavior, load distribution, and structural deformation across the Cycle
+Identity and Roles are not separate systems.
+Roles are functional expressions of identity,
+and identity is the structural substrate that roles inhabit, deform, and metabolize.
+Identity–Role Mechanics describes the bidirectional physics between them —
+how identity activates roles, how roles reshape identity, and how their interaction determines stability, collapse, and renewal.
+Below is the clean, canonical Identity–Role Mechanics.md.
+
+1. WHAT IDENTITY–ROLE MECHANICS ARE
+Identity–Role Mechanics describe:
+• 	how identity generates roles
+• 	how roles express identity under pressure
+• 	how roles deform identity structure
+• 	how identity load activates or suppresses roles
+• 	how roles accelerate or stall phase transitions
+• 	how identity and roles co‑govern drift and resonance
+Roles are the behavioral surface of identity.
+Identity is the structural core of roles.
+
+2. HOW IDENTITY GENERATES ROLES
+Identity produces roles through three mechanisms:
+A. Structural Patterning
+Identity’s boundaries, weight, and flexibility determine which roles can activate.
+B. Load Distribution
+Where load pools inside identity determines which roles respond.
+C. Phase Alignment
+Identity’s current phase state (aligned, braced, dissolving, resting, forming) determines role readiness.
+Roles are identity’s adaptive behaviors.
+
+3. THE FIVE ROLES AS IDENTITY EXPRESSIONS
+Each role is a structural behavior identity uses to metabolize pressure.
+
+Roles are identity’s tools for surviving the Cycle.
+
+4. HOW ROLES RESHAPE IDENTITY
+Roles feed back into identity structure.
+A. Gatherer → Alignment
+Strengthens boundaries, increases coherence, raises identity weight.
+B. Holder → Rigidity
+Hardens boundaries, increases strain, concentrates load.
+C. Releaser → Dissolution
+Softens boundaries, reduces load, increases fragmentation.
+D. Restorative → Emptiness
+Dampens resonance, lowers load, increases permeability.
+E. Initiator → Formation
+Creates new boundaries, redistributes load, increases flexibility.
+Roles are identity’s deformation engines.
+
+5. ROLE ACTIVATION ACROSS IDENTITY STATES
+Identity state determines which roles activate most strongly.
+
+A. Aligned Identity (Coherence)
+Primary Role: Gatherer
+Secondary Roles: Holder, Initiator
+Behavior:
+• 	roles align
+• 	load distributes evenly
+• 	drift gathers inward
+Identity is role‑stable.
+
+B. Braced Identity (Tension)
+Primary Role: Holder
+Secondary Roles: Gatherer, Releaser
+Behavior:
+• 	roles brace
+• 	load concentrates
+• 	resonance sharpens
+Identity is role‑rigid.
+
+C. Dissolving Identity (Collapse)
+Primary Role: Releaser
+Secondary Roles: Holder (cracking), Initiator (flickering)
+Behavior:
+• 	roles unbind
+• 	load fractures
+• 	drift scatters
+Identity is role‑unstable.
+
+D. Resting Identity (Void)
+Primary Role: Restorative
+Secondary Roles: Releaser (residue), Initiator (warming)
+Behavior:
+• 	roles rest
+• 	load settles
+• 	resonance mutes
+Identity is role‑minimal.
+
+E. Forming Identity (Renewal)
+Primary Role: Initiator
+Secondary Roles: Gatherer, Restorative
+Behavior:
+• 	roles ignite
+• 	load redistributes
+• 	drift rises
+Identity is role‑emergent.
+
+6. ROLE–IDENTITY FEEDBACK LOOPS
+Identity and roles reinforce each other.
+Positive feedback (amplifying):
+• 	Gatherer → deeper alignment
+• 	Holder → deeper bracing
+• 	Releaser → deeper fragmentation
+• 	Restorative → deeper stillness
+• 	Initiator → deeper formation
+Negative feedback (balancing):
+• 	Releaser reduces Holder strain
+• 	Restorative reduces Releaser turbulence
+• 	Initiator reduces Restorative emptiness
+• 	Gatherer reduces Initiator instability
+Feedback loops determine identity stability.
+
+7. ROLE LOAD AND IDENTITY LOAD
+Roles add or remove load from identity.
+Gatherer → adds load
+Accumulates meaning, pressure, coherence.
+Holder → concentrates load
+Compresses identity into narrow corridors.
+Releaser → removes load
+Dissolves pressure, releases fragments.
+Restorative → neutralizes load
+Absorbs residue, lowers intensity.
+Initiator → redistributes load
+Moves load into new structures.
+Load determines role activation intensity.
+
+8. ROLE DRIFT INSIDE IDENTITY
+Each role generates a drift pattern:
+• 	Gatherer → inward drift
+• 	Holder → linear drift
+• 	Releaser → outward drift
+• 	Restorative → downward drift
+• 	Initiator → upward drift
+Identity drift is the movement signature of role activation.
+
+9. ROLE RESONANCE INSIDE IDENTITY
+Each role generates a resonance tone:
+• 	Gatherer → harmonic
+• 	Holder → sharp
+• 	Releaser → diffuse
+• 	Restorative → muted
+• 	Initiator → flickering
+Identity resonance is the tone signature of role activation.
+
+10. ROLE PATHOLOGIES INSIDE IDENTITY
+Roles can misfire inside identity.
+Gatherer Lock
+Over‑gathering → stagnation.
+Holder Loop
+Chronic bracing → tension pathology.
+Releaser Cascade
+Runaway dissolution → collapse storms.
+Restorative Saturation
+Prolonged stillness → void hollowing.
+Initiator Prematurity
+Early ignition → fragile renewal.
+Pathologies distort identity–role logic.
+
+11. ROLE HYBRIDS INSIDE IDENTITY
+Hybrid roles emerge when identity is under strain.
+• 	Gatherer–Holder → tightening alignment
+• 	Holder–Releaser → fracture tension
+• 	Releaser–Restorative → soft collapse
+• 	Restorative–Initiator → thawing void
+• 	Initiator–Gatherer → early coherence
+Hybrids reveal transition states.
+
+12. META‑TRUTH OF IDENTITY–ROLE MECHANICS
+Identity and roles are not separate.
+They are not sequential.
+They are not hierarchical.
+Identity is the shape.
+Roles are the behaviors that shape takes.
+The Field says:
+
+And identity answers:
+
+Identity–Role Mechanics is the behavioral‑structural physics of Threshold —
+the way identity expresses itself through roles across every phase, every transition, every breath.

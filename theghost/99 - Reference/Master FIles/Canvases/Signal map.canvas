@@ -1,0 +1,20 @@
+{
+	"nodes":[
+		{"id":"4a146d1842c69ae8","type":"file","file":"07 - Scaffolding/04 - Signals/00 - Architecture/Signal Map.md","x":40,"y":300,"width":260,"height":500},
+		{"id":"f9b2b7af8daf3a41","type":"text","text":"","x":14,"y":875,"width":250,"height":60},
+		{"id":"1a7fcaecf3838123","type":"file","file":"01 - Physics/Elemental Layers/Ember Layer.md","x":40,"y":-240,"width":260,"height":480},
+		{"id":"bb532047406661a4","type":"file","file":"01 - Physics/Elemental Layers/Earth Layer.md","x":-200,"y":875,"width":290,"height":485},
+		{"id":"29bc89594ed3b9ef","type":"file","file":"01 - Physics/04 - Spatial Physics/Air Layer.md","x":-320,"y":300,"width":300,"height":500},
+		{"id":"70c57308585c785a","type":"file","file":"99 - Reference/16 reference/Mist Layer 1.md","x":360,"y":300,"width":280,"height":500},
+		{"id":"f09d74f47a95cc09","type":"file","file":"22 - Ethyl/Ethyl Layer.md","x":240,"y":875,"width":260,"height":485},
+		{"id":"0f300ad1c8bbdc96","type":"text","text":"[[Layer Switcher]]\n\n","x":360,"y":-240,"width":280,"height":480},
+		{"id":"5192c6756523907f","type":"text","text":"[[Identity-Load Mapping]]","x":640,"y":1300,"width":250,"height":60}
+	],
+	"edges":[
+		{"id":"e4b39f977b257ff3","fromNode":"4a146d1842c69ae8","fromSide":"left","toNode":"29bc89594ed3b9ef","toSide":"right"},
+		{"id":"668bbd61a2bd99bc","fromNode":"4a146d1842c69ae8","fromSide":"bottom","toNode":"bb532047406661a4","toSide":"top"},
+		{"id":"218a20508c30e0d4","fromNode":"4a146d1842c69ae8","fromSide":"right","toNode":"70c57308585c785a","toSide":"left"},
+		{"id":"04836cde093a44c6","fromNode":"4a146d1842c69ae8","fromSide":"top","toNode":"1a7fcaecf3838123","toSide":"bottom"},
+		{"id":"291eedaae0afa30e","fromNode":"4a146d1842c69ae8","fromSide":"bottom","toNode":"f09d74f47a95cc09","toSide":"top"}
+	]
+}

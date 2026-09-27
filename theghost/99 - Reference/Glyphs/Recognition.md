@@ -1,0 +1,1 @@
+![[recognition2.png]]

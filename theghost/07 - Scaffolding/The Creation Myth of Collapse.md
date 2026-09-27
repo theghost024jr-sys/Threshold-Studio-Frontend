@@ -1,0 +1,164 @@
+How the Field first breathed, how Coherence and Collapse were born as twins, and how the world learned to live between their rhythms
+This is the origin story of the entire architecture — the myth that explains why the Cycle exists, why the Archetypes arose, and why Collapse is not an intruder but a native season of the world.
+Below is the clean, canonical The Creation Myth of Collapse.md.
+
+1. BEFORE ANYTHING, THERE WAS PRESSURE
+Not darkness.
+Not void.
+Not silence.
+Pressure.
+A formless, directionless tension —
+not yet meaning,
+not yet identity,
+not yet world.
+This pressure had no shape to hold
+and no space to expand into.
+It simply was.
+And because it could not remain only itself,
+it began to move.
+That movement was the first breath.
+
+2. THE FIRST INHALE — THE BIRTH OF THE FIELD
+When the pressure drew inward,
+it gathered itself into coherence.
+This gathering became:
+• 	resonance
+• 	pattern
+• 	direction
+• 	identity
+• 	form
+The Field was born in that inhale —
+a vast, living continuity of meaning.
+The Field did not yet know itself,
+but it knew how to hold.
+This was the first appearance of Circle,
+the archetype of Coherence.
+
+3. THE FIRST EXHALE — THE BIRTH OF COLLAPSE
+But no inhale can last forever.
+The Field grew dense.
+Meaning thickened.
+Identity sharpened.
+Structure tightened.
+And the pressure that had once gathered
+now needed to release.
+The Field exhaled.
+That exhale became:
+• 	dissolution
+• 	unbinding
+• 	scattering
+• 	release
+• 	return to potential
+This was the birth of Collapse,
+the first appearance of Crown,
+the archetype of Unmaking.
+Collapse was not the opposite of the Field.
+Collapse was the Field’s other half.
+
+4. THE TWINS — COHERENCE AND COLLAPSE
+The Field’s first breath created two forces:
+• 	Coherence, which gathers
+• 	Collapse, which releases
+They were born together.
+They cannot exist without each other.
+They are the inhale and exhale of the same being.
+Neither is older.
+Neither is stronger.
+Neither is sovereign.
+They are twins.
+And the world is their shared body.
+
+5. THE FIRST CYCLE — THE WORLD BEGINS TO TURN
+After the first inhale and exhale,
+the Field discovered something profound:
+Breathing could continue.
+Coherence gathered again.
+Collapse released again.
+And between them,
+new states emerged:
+• 	Tension, the held breath
+• 	Void, the empty lung
+• 	Renewal, the first spark after stillness
+These became the five seasons of existence.
+And from them arose the five archetypes:
+• 	Circle (Coherence)
+• 	Gate (Tension)
+• 	Crown (Collapse)
+• 	Tree (Void)
+• 	Lantern (Renewal)
+The Field had found its rhythm.
+
+6. THE FIRST FORMS — ENTITIES, WEATHER, MYTH
+As the Field breathed,
+its inhale and exhale shaped the world.
+From Coherence came:
+• 	entities
+• 	structures
+• 	stories
+• 	identities
+From Collapse came:
+• 	weather
+• 	drift
+• 	dissolution
+• 	mutation
+From Renewal came:
+• 	new myths
+• 	new patterns
+• 	new resonance
+From Void came:
+• 	stillness
+• 	potential
+• 	the soil of becoming
+The world was not created once.
+It is created every cycle.
+
+7. THE FIRST LESSON — NOTHING IS PERMANENT
+The Field learned:
+• 	what gathers will one day release
+• 	what forms will one day dissolve
+• 	what grows will one day rest
+• 	what rests will one day rise
+This is not tragedy.
+This is not punishment.
+This is not loss.
+This is ecology.
+Collapse is not the end of the world.
+Collapse is how the world breathes.
+
+8. THE SECOND LESSON — NOTHING IS LOST
+When Collapse dissolves a form,
+it does not destroy it.
+It returns it to the Field.
+Every identity becomes soil.
+Every story becomes seed.
+Every structure becomes potential.
+Collapse is the great recycler —
+the composting layer of the cosmos.
+Nothing is lost.
+Everything is returned.
+
+9. THE THIRD LESSON — EVERYTHING RETURNS
+Because nothing is lost,
+everything can return.
+Entities regenerate.
+Myths reassemble.
+Weather reforms.
+Archetypes awaken again.
+Collapse is not a grave.
+Collapse is a doorway.
+The Field says:
+
+And Collapse answers:
+
+
+10. META‑TRUTH OF THE CREATION MYTH OF COLLAPSE
+The world was not created by a god.
+The world was created by a breath.
+Coherence and Collapse are not enemies.
+They are not rivals.
+They are not moral forces.
+They are the two halves of existence —
+the inhale and exhale of the Field.
+The myth ends where it began:
+The Field breathes.
+And everything breathes with it.

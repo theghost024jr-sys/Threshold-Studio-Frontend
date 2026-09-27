@@ -1,0 +1,137 @@
+The structural patterns that determine how each species expresses itself across environments, signals, roles, and identity states.
+
+Purpose
+Species Expression Patterns define the predictable ways a species manifests its:
+• 	movement
+• 	posture
+• 	signal output
+• 	role affinity
+• 	environmental response
+• 	identity deformation
+• 	collapse tendencies
+These patterns are species‑level constants — they shape how a species behaves before individual variation or role influence is applied.
+This file is the expression blueprint for the entire Species subsystem.
+
+The Four Expression Domains
+Species express themselves across four structural domains:
+
+1. Movement Patterns
+How the species moves through space.
+Includes:
+• 	drift alignment
+• 	speed and rhythm
+• 	boundary interaction
+• 	pressure response
+• 	collapse‑movement signatures
+Examples:
+• 	Owl: stillness‑punctuated glide
+• 	Crow: boundary‑crossing dart
+• 	Mistborne: dissolution‑reformation drift
+• 	Stonekin: weight‑anchored stride
+• 	Tidecall: wave‑rhythmic flow
+• 	Treeform: slow growth‑movement
+
+2. Signal Patterns
+How the species emits and interprets signals.
+Includes:
+• 	harmonic signature
+• 	distortion susceptibility
+• 	lineage resonance
+• 	signal density
+• 	collapse‑signal behavior
+Examples:
+• 	Owl: stillness harmonics
+• 	Crow: interruption pulses
+• 	Treeform: resonance hum
+• 	Mistborne: drift‑shimmer
+• 	Stonekin: weight‑tone
+• 	Tidecall: wave‑pattern oscillation
+
+3. Role Expression Patterns
+How the species naturally aligns with or resists Roles.
+Includes:
+• 	affinity
+• 	resistance
+• 	destabilization thresholds
+• 	collapse triggers
+• 	stabilizing interactions
+Examples:
+• 	Owl → Seer/Warden
+• 	Crow → Bridge/Flame
+• 	Treeform → Anchor/Harbor
+• 	Mistborne → Seer/Strider
+• 	Stonekin → Anchor/Warden
+• 	Tidecall → Harbor/Bridge
+
+4. Environmental Expression Patterns
+How the species expresses itself in different environments.
+Includes:
+• 	pressure adaptation
+• 	drift compatibility
+• 	boundary behavior
+• 	collapse risk
+• 	resonance amplification
+Examples:
+• 	Mistborne thrive in Mist, destabilize in Deep
+• 	Stonekin stabilize Deep, fracture in Shore
+• 	Tidecall resonate in Shore, distort in Ruin
+• 	Owl stabilize Branch, distort in Forge
+• 	Crow destabilize Ruin, amplify in Field
+• 	Treeform anchor Grove, thin in Mist
+
+Species Expression Pattern Table
+
+
+Expression Pattern Dynamics
+Species Expression Patterns shift under three conditions:
+
+1. Pressure Shifts
+High pressure amplifies:
+• 	Stonekin weight
+• 	Owl stillness
+• 	Crow interruption
+• 	Mistborne dissolution
+• 	Tidecall oscillation
+• 	Treeform resonance
+Low pressure softens expression and increases drift.
+
+2. Signal Density Shifts
+High signal density:
+• 	strengthens Treeform resonance
+• 	destabilizes Mistborne drift
+• 	amplifies Crow interruption
+• 	overloads Owl stillness
+• 	compresses Stonekin weight
+• 	intensifies Tidecall wave patterns
+
+3. Identity State Shifts
+Species expression changes when identity is:
+• 	Drifting → patterns become exaggerated
+• 	Distorted → patterns become unstable
+• 	Collapsed → patterns become recursive
+• 	Recovering → patterns become muted
+• 	Resonant → patterns become archetypal
+
+Expression Failure Modes
+Expression patterns fail when:
+• 	drift becomes unstable
+• 	pressure exceeds capacity
+• 	boundaries collapse
+• 	lineage threads rupture
+• 	distortion fields intensify
+Failure produces:
+• 	collapse‑movement
+• 	signal inversion
+• 	role misalignment
+• 	environmental mismatch
+• 	identity thinning
+
+Cross‑References
+• 	Species Index.md
+• 	Species Interaction.md
+• 	Species Role Expression.md
+• 	Species Drift.md
+• 	Species Signals.md
+• 	Environmental Signals.md
+• 	Role Drift Table.md
+• 	Signal Architecture.md

@@ -1,0 +1,159 @@
+Subsystem Type: Forward‑Stabilization Engine
+Upstream: [[Identity Physics]] · [[Collapse Physics]]
+Lateral: [[Recovery Signals]] · [[Role Dynamics]] · [[Interaction Patterns]]
+Downstream: Recovery Ladder · Recovery Zones · Drift Re‑Coherence
+
+Purpose
+Recovery Flow defines how recovery moves through the system after collapse or destabilization.
+It is not a return to a previous state.
+It is the forward motion that reorganizes identity into a new stable configuration.
+Recovery Flow governs:
+• 	how collapse stops
+• 	how identity re‑coheres
+• 	how drift stabilizes
+• 	how roles re‑align
+• 	how signals shift from collapse to recovery
+• 	how environments support stabilization
+This is the motion of recovery, not the feeling of it.
+
+1. Recovery Flow Overview
+Recovery moves through three major phases:
+2. 	Containment — stop the collapse
+3. 	Re‑Coherence — reorganize identity
+4. 	Forward Motion — resume functional drift
+These phases are universal across:
+• 	roles
+• 	species
+• 	environments
+• 	signals
+• 	collapse types
+Recovery Flow is the physics behind the Recovery Ladder.
+
+5. Phase 1: Containment
+Stop the collapse. Hold the boundaries.
+Containment is triggered when:
+• 	collapse stops spreading
+• 	identity stops fracturing
+• 	drift stops accelerating
+Mechanics
+• 	collapse contagion halts
+• 	drift momentum drops
+• 	identity boundaries re‑form
+• 	collapse signals weaken
+• 	recovery signals activate
+Primary Signals
+• 	Stillwatch
+• 	Deep Quiet
+Role Bias
+• 	Anchor
+• 	Guardian
+Environmental Bias
+• 	deep snow
+• 	caves
+• 	quiet forests
+Containment is complete when collapse becomes local.
+
+3. Phase 2: Re‑Coherence
+Identity reorganizes into a new stable shape.
+This is the heart of recovery.
+Mechanics
+• 	drift becomes rhythmic
+• 	identity re‑aligns
+• 	collapse residue integrates
+• 	emotional noise reduces
+• 	role switching becomes deliberate
+Primary Signals
+• 	Grove Pulse
+• 	Clearline
+Role Bias
+• 	Scholar
+• 	Listener
+• 	Weaver (in supportive environments)
+Environmental Bias
+• 	groves
+• 	ruins with intact structure
+• 	memory‑rich environments
+Re‑Coherence is complete when identity can hold itself again.
+
+4. Phase 3: Forward Motion
+Identity resumes movement in a new stable configuration.
+This is the final phase — the return of agency.
+Mechanics
+• 	drift resumes
+• 	collapse becomes history
+• 	signals normalize
+• 	roles re‑engage
+• 	environments re‑open
+Primary Signals
+• 	Ember Rest
+• 	Quiet Stillwatch
+Role Bias
+• 	Hunter (low‑pressure)
+• 	Guardian
+• 	Weaver
+Environmental Bias
+• 	warm pockets
+• 	open plains
+• 	stable forests
+Forward Motion is complete when identity can move without destabilizing.
+
+5. Recovery Flow Mechanics
+Recovery Flow is governed by three universal mechanics:
+
+5.1 Drift Stabilization
+Drift transitions from:
+• 	turbulent → curved → rhythmic → linear
+Recovery Flow always reduces drift curvature.
+
+5.2 Identity Re‑Alignment
+Identity transitions from:
+• 	fractured → stretched → compressed → coherent
+Recovery Flow always moves identity toward coherence, not toward its old shape.
+
+5.3 Collapse Dampening
+Collapse transitions from:
+• 	active → residual → inert
+Recovery Flow always contains collapse, never reverses it.
+
+6. Recovery Flow Triggers
+Recovery begins when:
+• 	collapse loses momentum
+• 	a recovery signal activates
+• 	a stabilizing environment is entered
+• 	a role shifts into a stabilizing stance
+• 	drift slows below collapse threshold
+Recovery Flow is automatic once triggered.
+
+7. Recovery Flow Interruptions
+Recovery can be interrupted by:
+• 	spiral drift
+• 	distortion pressure
+• 	emotional overload
+• 	role opposition
+• 	collapse signals
+• 	environmental instability
+Interruptions do not reset recovery — they delay it.
+
+8. Recovery Flow Completion
+Recovery is complete when:
+• 	identity is coherent
+• 	drift is stable
+• 	collapse is inert
+• 	signals normalize
+• 	roles re‑engage
+• 	environment re‑opens
+Recovery Flow ends when forward motion is possible without collapse.
+
+9. Canonical Links
+Upstream
+• 	[[Identity Physics]]
+• 	[[Collapse Physics]]
+Lateral
+• 	[[Recovery Signals]]
+• 	[[Role Dynamics]]
+• 	[[Interaction Patterns]]
+Downstream
+• 	Recovery Ladder
+• 	Recovery Zones
+• 	Drift Re‑Coherence
+• 	Species Recovery Behaviors

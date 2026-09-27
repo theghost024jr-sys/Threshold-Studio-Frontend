@@ -1,0 +1,20 @@
+{
+	"nodes":[
+		{"id":"7bc7d3ffed3b4fe7","type":"text","text":"[[Gate Opener]]\n[[Mistreach]]\n[[Gate]]","x":-140,"y":-240,"width":250,"height":115},
+		{"id":"c20bcc683e9fe020","type":"text","text":"[[Signal-Keeper]]\n[[Signal]]\n[[Airswell]]","x":-390,"y":-120,"width":250,"height":85},
+		{"id":"6000a771253e79fb","type":"text","text":"[[Drift-Walker]]\n[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Drift]]\n[[Ethyldeep]]\n","x":-385,"y":-30,"width":250,"height":90},
+		{"id":"e490d1e8906e9214","type":"text","text":"[[Burden Carrier]]\n[[Burden]]\n[[Stonefield]]\n","x":110,"y":-120,"width":250,"height":85},
+		{"id":"0b88b289ac8e2282","type":"text","text":"[[Fault-Bearer]]\n[[Fault]]\n[[Emberfall]]\n","x":110,"y":-30,"width":250,"height":90},
+		{"id":"fe8b73a3c342ccc9","type":"text","text":"[[Anchor-Holder]]\n[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Anchor]]\n[[Earthbind]]\n","x":-135,"y":80,"width":250,"height":80},
+		{"id":"689a292c7b488d62","type":"text","text":"[[Return-Guide]]\n[[Return]]\n[[Threshold]]","x":-135,"y":180,"width":250,"height":80}
+	],
+	"edges":[
+		{"id":"d5dbec5f4d782eb7","fromNode":"7bc7d3ffed3b4fe7","fromSide":"left","toNode":"c20bcc683e9fe020","toSide":"top"},
+		{"id":"381754f5943ca0a1","fromNode":"c20bcc683e9fe020","fromSide":"right","toNode":"0b88b289ac8e2282","toSide":"left"},
+		{"id":"0d075c66b74d3b28","fromNode":"6000a771253e79fb","fromSide":"right","toNode":"fe8b73a3c342ccc9","toSide":"top"},
+		{"id":"33de52fb5f9c171d","fromNode":"fe8b73a3c342ccc9","fromSide":"bottom","toNode":"689a292c7b488d62","toSide":"top"},
+		{"id":"7bc06697454361ff","fromNode":"689a292c7b488d62","fromSide":"right","toNode":"e490d1e8906e9214","toSide":"left"},
+		{"id":"8826aab4b7e2ce71","fromNode":"e490d1e8906e9214","fromSide":"top","toNode":"7bc7d3ffed3b4fe7","toSide":"right"},
+		{"id":"43920a82bcb97684","fromNode":"0b88b289ac8e2282","fromSide":"left","toNode":"6000a771253e79fb","toSide":"right"}
+	]
+}

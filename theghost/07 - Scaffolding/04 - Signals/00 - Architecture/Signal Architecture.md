@@ -1,0 +1,161 @@
+The structural blueprint of how signals are formed, transmitted, distorted, and interpreted within Threshold.
+
+Purpose
+Signal Architecture defines the physics and structure of all signals in Threshold.
+It explains:
+• 	how signals originate
+• 	how they move
+• 	how they deform
+• 	how they interact with identity and environment
+• 	how they collapse
+• 	how they recover
+This file is the root system for the entire Signal Cluster.
+
+The Four Layers of Signal Architecture
+Signals are not single events — they are four‑layer structures:
+
+1. Origin Layer
+Where the signal is generated.
+• 	species
+• 	environment
+• 	artifact
+• 	identity
+• 	collapse field
+• 	lineage thread
+Origin determines:
+• 	signal type
+• 	baseline clarity
+• 	harmonic signature
+
+2. Transmission Layer
+How the signal moves through space.
+• 	drift vectors
+• 	pressure gradients
+• 	environmental geometry
+• 	boundary reflection
+• 	signal density
+Transmission determines:
+• 	direction
+• 	speed
+• 	stability
+• 	distortion potential
+
+3. Interpretation Layer
+How the signal is received and understood.
+• 	identity geometry
+• 	role alignment
+• 	boundary permeability
+• 	lineage resonance
+• 	signal literacy
+Interpretation determines:
+• 	meaning
+• 	accuracy
+• 	emotional impact
+• 	behavioral response
+
+4. Resonance Layer
+How the signal integrates into the system.
+• 	identity resonance
+• 	environmental resonance
+• 	lineage activation
+• 	role expression
+Resonance determines:
+• 	long‑term effect
+• 	memory
+• 	transformation
+• 	drift correction or amplification
+
+Signal Architecture Table
+
+
+Signal Types (Structural Categories)
+Signal Architecture recognizes six canonical signal types:
+• 	Stillness Signals
+• 	Interruption Signals
+• 	Resonance Signals
+• 	Drift Signals
+• 	Weight Signals
+• 	Wave Signals
+Each type has:
+• 	a unique harmonic signature
+• 	a predictable drift behavior
+• 	a characteristic distortion pattern
+• 	a lineage affinity
+• 	a role interaction profile
+These are defined in Signal Types.md.
+
+Signal Behaviors
+Signals behave according to three universal principles:
+
+1. Harmonic Principle
+Every signal has a frequency and pattern.
+• 	clean harmonics → clarity
+• 	unstable harmonics → distortion
+• 	collapsed harmonics → noise
+
+2. Drift Principle
+Signals follow drift vectors.
+• 	stable drift → stable transmission
+• 	unstable drift → warped transmission
+• 	collapse drift → spirals, echoes, inversion
+
+3. Boundary Principle
+Signals interact with boundaries.
+• 	strong boundaries → reflection
+• 	porous boundaries → bleed
+• 	collapsed boundaries → inversion
+
+Distortion in Signal Architecture
+Distortion occurs when:
+• 	pressure exceeds capacity
+• 	drift becomes unstable
+• 	boundaries thin
+• 	identity geometry fractures
+• 	collapse fields form
+Distortion produces:
+• 	echo‑curved signals
+• 	spiral‑aligned signals
+• 	mirage‑pattern signals
+These are defined in Distortion Signals.md.
+
+Collapse in Signal Architecture
+Signals collapse when:
+• 	harmonic structure breaks
+• 	drift vectors implode
+• 	pressure spikes
+• 	identity cannot interpret
+• 	environment destabilizes
+Collapse produces:
+• 	noise
+• 	spirals
+• 	inversion
+• 	recursive loops
+Defined in Collapse Signals.md.
+
+Recovery in Signal Architecture
+Signals recover through:
+• 	harmonic reset
+• 	drift realignment
+• 	pressure return
+• 	boundary reformation
+• 	lineage rebinding
+Defined in Recovery Signals.md.
+
+Signal Architecture Flow
+A signal moves through the system in four steps:
+1. 	Origin — the signal is generated
+2. 	Transmission — the signal moves
+3. 	Interpretation — the signal is understood
+4. 	Resonance — the signal integrates
+Failure at any stage produces drift, distortion, or collapse.
+
+Cross‑References
+• 	Signal Types.md
+• 	Signal Drift.md
+• 	Distortion Signals.md
+• 	Signal Interpretation.md
+• 	Collapse Signals.md
+• 	Recovery Signals.md
+• 	Environmental Signals.md
+• 	Identity Geometry.md
+• 	Identity Resonance.md

@@ -1,0 +1,47 @@
+
+[[Overview]]
+
+Different species express the Time Organ differently. These variants are not failures — they are adaptations that reflect species physics, roles, and environmental niches.
+
+Shimmer‑Aligned Species Variant
+(e.g., Avatar Shimmer, Whisperwing Moths)
+Structural Traits
+• 	membrane highly reflective
+• 	upper chamber enlarged
+• 	Drift Nerve extremely sensitive
+Functional Traits
+• 	rapid symbolic interpretation
+• 	strong foresight
+• 	high resonance bandwidth
+
+Drift‑Aligned Species Variant
+(e.g., Treeform, Deepwater)
+Structural Traits
+• 	Drift Nerve dominant
+• 	chambers loosely synchronized
+• 	membrane semi‑permeable
+Functional Traits
+• 	fluid temporal perception
+• 	adaptive drift
+• 	strong resilience to turbulence
+
+Stone‑Aligned Species Variant
+(e.g., Deer, Seal)
+Structural Traits
+• 	chamber spine thickened
+• 	lower chamber dominant
+• 	membrane low‑reflective
+Functional Traits
+• 	strong grounding
+• 	stable temporal rhythm
+• 	high collapse resistance
+
+Iceform Variant
+(low temporal sensitivity)
+Structural Traits
+• 	minimal membrane conductivity
+• 	chambers small and uniform
+Functional Traits
+• 	stable but limited temporal awareness
+• 	low symbolic resonance
+• 	minimal foresight

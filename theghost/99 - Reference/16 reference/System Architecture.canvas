@@ -1,0 +1,39 @@
+{
+	"nodes":[
+		{"id":"03a9a5c5f74b69dc","x":-160,"y":-240,"width":250,"height":60,"type":"text","text":"System Architecture"},
+		{"id":"63d7e6703cd9e254","x":-440,"y":240,"width":250,"height":60,"type":"text","text":""},
+		{"id":"f6d19418f0e7fda7","x":240,"y":-140,"width":200,"height":60,"type":"text","text":"Identity Cluster Index"},
+		{"id":"aece2976a750a988","x":-35,"y":-140,"width":250,"height":60,"type":"text","text":"Signal Cluster Index"},
+		{"id":"4e9f6d52c1c6bdeb","x":-315,"y":-140,"width":250,"height":60,"type":"text","text":"Physics Cluster Index"},
+		{"id":"3ec6341a339d03d9","x":-600,"y":-140,"width":250,"height":60,"type":"text","text":"Meta Systems Index"},
+		{"id":"de8a84060bb79166","x":-410,"y":20,"width":250,"height":60,"type":"text","text":"03 Signals"},
+		{"id":"de6467a5cb2efe38","x":840,"y":20,"width":250,"height":60,"type":"text","text":"07 Myth"},
+		{"id":"c3687cad1260c349","x":-1040,"y":20,"width":250,"height":60,"type":"text","text":"01 Meta Systems"},
+		{"id":"24cf46f99ecae8dd","x":-725,"y":20,"width":250,"height":60,"type":"text","text":"02 Layers"},
+		{"id":"f57e79c5a8017a83","x":560,"y":20,"width":250,"height":60,"type":"text","text":"06 Map"},
+		{"id":"8e611c11cacd2d18","x":240,"y":20,"width":250,"height":60,"type":"text","text":"05 Roles"},
+		{"id":"2da2dbfcd6aa69a5","x":-65,"y":20,"width":250,"height":60,"type":"text","text":"04 Species"},
+		{"id":"eba75009631fc9c1","x":-1360,"y":-65,"width":250,"height":230,"type":"text","text":"00 System Architecture\n01 Meta Systems\n02 Layers\n03 Signals\n04 Species\n05 Roles\n06 Map\n07 Myth"},
+		{"id":"1d78dfefc73e50f3","x":1160,"y":-80,"width":250,"height":240,"type":"text","text":"• \trules → Meta Systems\n• \tphysics → Layers\n• \tbehavior → Signals\n• \tembodiment → Species\n• \tarchetype → Roles\n• \tspace → Map\n• \tstory → Myth"}
+	],
+	"edges":[
+		{"id":"609fe4e2a2a39f51","fromNode":"03a9a5c5f74b69dc","fromSide":"bottom","toNode":"aece2976a750a988","toSide":"top"},
+		{"id":"52f508023628b416","fromNode":"03a9a5c5f74b69dc","fromSide":"bottom","toNode":"4e9f6d52c1c6bdeb","toSide":"top"},
+		{"id":"3f91a49472debfe8","fromNode":"03a9a5c5f74b69dc","fromSide":"left","toNode":"3ec6341a339d03d9","toSide":"top"},
+		{"id":"b560da7f22055565","fromNode":"03a9a5c5f74b69dc","fromSide":"right","toNode":"f6d19418f0e7fda7","toSide":"top"},
+		{"id":"632d5a529469a2bd","fromNode":"c3687cad1260c349","fromSide":"right","toNode":"24cf46f99ecae8dd","toSide":"left"},
+		{"id":"c48ada204b92a0d2","fromNode":"24cf46f99ecae8dd","fromSide":"right","toNode":"de8a84060bb79166","toSide":"left"},
+		{"id":"de0dc6e2517ed789","fromNode":"de8a84060bb79166","fromSide":"right","toNode":"2da2dbfcd6aa69a5","toSide":"left"},
+		{"id":"a1b00b080fe9418a","fromNode":"de8a84060bb79166","fromSide":"bottom","toNode":"8e611c11cacd2d18","toSide":"bottom"},
+		{"id":"07cedf1868422b25","fromNode":"24cf46f99ecae8dd","fromSide":"bottom","toNode":"8e611c11cacd2d18","toSide":"bottom"},
+		{"id":"4d2ab961a90e34d2","fromNode":"24cf46f99ecae8dd","fromSide":"bottom","toNode":"f57e79c5a8017a83","toSide":"bottom"},
+		{"id":"53e6cdbfcbadd871","fromNode":"de8a84060bb79166","fromSide":"bottom","toNode":"f57e79c5a8017a83","toSide":"bottom"},
+		{"id":"e6e76b055b13f83e","fromNode":"f57e79c5a8017a83","fromSide":"bottom","toNode":"de6467a5cb2efe38","toSide":"bottom"},
+		{"id":"940a9b9f02155452","fromNode":"24cf46f99ecae8dd","fromSide":"bottom","toNode":"de6467a5cb2efe38","toSide":"bottom"},
+		{"id":"e9292b9d2f81887f","fromNode":"3ec6341a339d03d9","fromSide":"bottom","toNode":"c3687cad1260c349","toSide":"top"},
+		{"id":"4bb08a9639da4fe8","fromNode":"4e9f6d52c1c6bdeb","fromSide":"bottom","toNode":"c3687cad1260c349","toSide":"top"},
+		{"id":"5b1d10a088b0e74c","fromNode":"aece2976a750a988","fromSide":"bottom","toNode":"de8a84060bb79166","toSide":"top"},
+		{"id":"636c3c577ae2ab66","fromNode":"f6d19418f0e7fda7","fromSide":"bottom","toNode":"8e611c11cacd2d18","toSide":"top"},
+		{"id":"81a0645b6ac848fe","fromNode":"f6d19418f0e7fda7","fromSide":"bottom","toNode":"2da2dbfcd6aa69a5","toSide":"top"}
+	]
+}

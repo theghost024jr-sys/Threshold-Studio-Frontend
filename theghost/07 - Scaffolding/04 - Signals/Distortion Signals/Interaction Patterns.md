@@ -1,0 +1,189 @@
+Subsystem Type: Cross‑Behavior Engine
+Upstream: [[Identity Physics]] · [[Drift as Unresolved Force]]
+Lateral: [[Role Dynamics]] · [[Signal Interpretation]] · [[Species Interaction]]
+Downstream: All Roles · Species · Signals · Environments
+
+Purpose
+Interaction Patterns define the fundamental ways entities engage with each other in Threshold — roles, species, signals, environments, artifacts, and even collapse events.
+Where Identity Physics defines what something is,
+and Role Dynamics defines how it behaves,
+Interaction Patterns define how two or more things meet.
+This subsystem governs:
+• 	relational pressure
+• 	behavioral resonance
+• 	conflict and alignment
+• 	drift synchronization
+• 	collapse contagion
+• 	signal amplification
+• 	environmental influence
+Every interaction in the world expresses one or more of these patterns.
+
+1. Core Interaction Patterns
+There are seven canonical patterns.
+Everything in Threshold uses these.
+
+1.1 Alignment
+Two entities reinforce each other’s stance or motion.
+Effects:
+• 	identity stabilizes
+• 	drift synchronizes
+• 	collapse risk decreases
+• 	signals harmonize
+Examples:
+• 	Guardian + Anchor
+• 	Grove + Listener
+• 	Winter Crown + Scholar
+
+1.2 Tension
+Entities pull in different directions.
+Effects:
+• 	drift accelerates
+• 	identity stretches
+• 	collapse risk increases
+• 	signals distort
+Examples:
+• 	Hunter + Scholar
+• 	Brinicle Spiral + Weaver
+• 	Trickster + Anchor
+
+1.3 Resonance
+Entities amplify each other’s patterns.
+Effects:
+• 	drift becomes rhythmic
+• 	signals strengthen
+• 	identity becomes expressive
+• 	collapse becomes patterned
+Examples:
+• 	Ember Pulse + Hunter
+• 	Spiral Drift + Trickster
+• 	Old Grove + Weaver
+
+1.4 Interference
+Entities disrupt each other’s patterns.
+Effects:
+• 	drift becomes turbulent
+• 	signals fragment
+• 	identity destabilizes
+• 	collapse becomes chaotic
+Examples:
+• 	Heat Mirage + Listener
+• 	Fog Corridor + Scholar
+• 	Trickster + Guardian
+
+1.5 Overlap
+Entities share functional territory.
+Effects:
+• 	identity blends
+• 	drift becomes ambiguous
+• 	collapse becomes brittle
+• 	signals bleed into each other
+Examples:
+• 	Weaver + Scholar
+• 	Guardian + Hunter
+• 	Ruins + Branch Species
+
+1.6 Opposition
+Entities directly contradict each other.
+Effects:
+• 	identity destabilizes
+• 	drift becomes polarized
+• 	collapse becomes likely
+• 	signals invert
+Examples:
+• 	Anchor + Trickster
+• 	Winter Crown + Ember Pulse
+• 	Brinicle + Heat Basin
+
+1.7 Absorption
+One entity takes on the pattern of another.
+Effects:
+• 	identity shifts
+• 	drift reorients
+• 	collapse resets or transfers
+• 	signals imprint
+Examples:
+• 	Listener absorbing a Signal
+• 	Species adapting to an environment
+• 	Role switching under pressure
+
+2. Interaction Pressure
+Every interaction produces interaction pressure, composed of:
+2.1 Directional Pressure
+Push or pull between entities.
+2.2 Interpretive Pressure
+Meaning‑making or meaning‑breaking.
+2.3 Stabilizing Pressure
+Grounding, anchoring, or containment.
+2.4 Disruptive Pressure
+Inversion, drift, or collapse.
+Interaction pressure determines whether the pattern becomes:
+• 	stable
+• 	unstable
+• 	rhythmic
+• 	brittle
+• 	recursive
+• 	explosive
+
+3. Drift Interaction Modes
+Interactions modify drift in four ways:
+3.1 Synchronization
+Drift aligns between entities.
+3.2 Divergence
+Drift splits or accelerates apart.
+3.3 Curvature
+Drift bends around pressure.
+3.4 Compression
+Drift tightens under shared density.
+These modes determine whether interactions become:
+• 	cooperative
+• 	competitive
+• 	destabilizing
+• 	transformative
+
+4. Collapse Interaction
+Collapse spreads through interactions via:
+4.1 Contagion
+Collapse jumps between entities.
+4.2 Resonant Collapse
+Collapse becomes rhythmic or patterned.
+4.3 Brittle Collapse
+Collapse fractures along shared identity.
+4.4 Spiral Collapse
+Collapse tightens inward through drift curvature.
+Interaction Patterns determine collapse style in multi‑entity situations.
+
+5. Signal Interaction
+Signals interact with roles, species, and environments through:
+5.1 Amplification
+Signal strengthens.
+5.2 Distortion
+Signal warps.
+5.3 Inversion
+Signal flips meaning.
+5.4 Imprint
+Signal leaves residue on identity.
+Interaction Patterns govern all of these.
+
+6. Environmental Influence
+Environments bias interaction patterns:
+• 	spirals → tension + resonance
+• 	groves → alignment + stabilization
+• 	ruins → overlap + brittle collapse
+• 	plains → linear alignment
+• 	deep ice → compression + identity tightening
+This is how the world shapes behavior.
+
+7. Canonical Links
+Upstream
+• 	[[Identity Physics]]
+• 	[[Drift as Unresolved Force]]
+Lateral
+• 	[[Role Dynamics]]
+• 	[[Signal Interpretation]]
+• 	[[Species Interaction]]
+Downstream
+• 	All Role Nodes
+• 	Species Behaviors
+• 	Signal Behaviors
+• 	Environmental Interactions
+• 	Collapse Events

@@ -1,0 +1,37 @@
+{
+	"nodes":[
+		{"id":"f137d85c3671f024","x":-180,"y":-240,"width":250,"height":100,"type":"text","text":"Elemental Overlay System\nSubtitle: Energetic Modifiers of Signal Motion.\n"},
+		{"id":"fcd064101f051d51","x":-180,"y":-100,"width":250,"height":60,"type":"text","text":"Definition\n“Parallel classification axis describing the energetic flavor of a signal.\nOverlays modify how a signal moves, not where it lives.”"},
+		{"id":"92d53b1c82b0b2b9","x":-180,"y":0,"width":250,"height":60,"type":"text","text":"Purpose\n• \tenergetic clustering\n• \temotional temperature\n• \tresonance families\n• \treinterpretation without identity change\n• \tsecond axis for mapping"},
+		{"id":"c341396f00afeede","x":-260,"y":120,"width":250,"height":60,"type":"text","text":"Water Overlay\n• \temotion\n• \treflection\n• \tcycles\n• \tlunar resonance\n• \tintuition"},
+		{"id":"3fd66aa05171dda9","x":20,"y":120,"width":250,"height":60,"type":"text","text":"Fire Overlay\n• \taction\n• \tdisruption\n• \ttransformation\n• \tbreakthrough energy"},
+		{"id":"4a1aefeb62b5d158","x":300,"y":120,"width":250,"height":60,"type":"text","text":"Earth Overlay\n• \tgrounding\n• \tstability\n• \ttactile experience\n• \tslow growth"},
+		{"id":"ec28fd7539d1ba81","x":100,"y":230,"width":250,"height":60,"type":"text","text":"Water + Earth"},
+		{"id":"ba38d1216b971dc1","x":-180,"y":230,"width":250,"height":60,"type":"text","text":"Fire + Air"},
+		{"id":"069ab1c7aff4f453","x":-460,"y":230,"width":250,"height":60,"type":"text","text":"Water + Air"},
+		{"id":"0242772f0e84e5f2","x":-135,"y":370,"width":250,"height":60,"type":"text","text":""},
+		{"id":"1313a8997f003ee6","x":100,"y":340,"width":250,"height":90,"type":"text","text":"Layers (Air, Earth, Ember, Mist, Stone)\nOverlays operate independently of habitat."},
+		{"id":"fce60987f5cfe889","x":-180,"y":340,"width":250,"height":90,"type":"text","text":"Species Architecture\nOverlays influence embodiment flavor.\n"},
+		{"id":"85e33157ad68ba93","x":-460,"y":340,"width":250,"height":90,"type":"text","text":"Signal Drift\nOverlays modify drift expression."},
+		{"id":"b0aaf55ec3015b27","x":-740,"y":340,"width":250,"height":90,"type":"text","text":"Signal Types\nOverlays tint behavioral archetypes."},
+		{"id":"1493e04fa4c1c6b8","x":-540,"y":120,"width":250,"height":60,"type":"text","text":"Air Overlay\n• \tperception\n• \tmovement\n• \tscanning\n• \tclarity\n• \tcognitive insight"}
+	],
+	"edges":[
+		{"id":"5e6f8b4ae14556ee","fromNode":"1493e04fa4c1c6b8","fromSide":"top","toNode":"f137d85c3671f024","toSide":"left"},
+		{"id":"7264250949e01a14","fromNode":"c341396f00afeede","fromSide":"top","toNode":"f137d85c3671f024","toSide":"left"},
+		{"id":"9bb66c466c944d75","fromNode":"3fd66aa05171dda9","fromSide":"top","toNode":"f137d85c3671f024","toSide":"right"},
+		{"id":"6260e38088723ad3","fromNode":"4a1aefeb62b5d158","fromSide":"top","toNode":"f137d85c3671f024","toSide":"right"},
+		{"id":"781ce1d4b036872f","fromNode":"069ab1c7aff4f453","fromSide":"top","toNode":"c341396f00afeede","toSide":"bottom"},
+		{"id":"e1ca01248dee26d0","fromNode":"069ab1c7aff4f453","fromSide":"top","toNode":"1493e04fa4c1c6b8","toSide":"bottom"},
+		{"id":"3f622718ac7b7f92","fromNode":"ba38d1216b971dc1","fromSide":"top","toNode":"1493e04fa4c1c6b8","toSide":"bottom"},
+		{"id":"03af615bcf59d251","fromNode":"ba38d1216b971dc1","fromSide":"top","toNode":"3fd66aa05171dda9","toSide":"bottom"},
+		{"id":"c2908ef2697ecf13","fromNode":"ec28fd7539d1ba81","fromSide":"top","toNode":"c341396f00afeede","toSide":"bottom"},
+		{"id":"3e7f7b1b7f45fa7a","fromNode":"ec28fd7539d1ba81","fromSide":"top","toNode":"4a1aefeb62b5d158","toSide":"bottom"},
+		{"id":"6d74ef5b3092a62a","fromNode":"f137d85c3671f024","fromSide":"top","toNode":"1313a8997f003ee6","toSide":"right"},
+		{"id":"9f7a037c1f9f9c44","fromNode":"f137d85c3671f024","fromSide":"bottom","toNode":"fce60987f5cfe889","toSide":"top"},
+		{"id":"7d173e70e66ae28a","fromNode":"f137d85c3671f024","fromSide":"bottom","toNode":"85e33157ad68ba93","toSide":"top"},
+		{"id":"a8edd443cc7c4eed","fromNode":"f137d85c3671f024","fromSide":"left","toNode":"b0aaf55ec3015b27","toSide":"top"},
+		{"id":"c09197c95dc6abb7","fromNode":"92d53b1c82b0b2b9","fromSide":"top","toNode":"f137d85c3671f024","toSide":"bottom"},
+		{"id":"8472dcfb3ed0da3f","fromNode":"fcd064101f051d51","fromSide":"top","toNode":"f137d85c3671f024","toSide":"bottom"}
+	]
+}

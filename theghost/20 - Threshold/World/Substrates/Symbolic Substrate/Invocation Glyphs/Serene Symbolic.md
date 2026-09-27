@@ -1,0 +1,1 @@
+![[A serene, symbolic s.png]]

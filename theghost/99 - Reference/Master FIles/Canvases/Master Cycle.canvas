@@ -1,0 +1,20 @@
+{
+	"nodes":[
+		{"id":"22f3b94d58f90fec","type":"text","text":"[[Gate]]\n[[Gate Opener]]\n[[Mistreach]]\n[[Gate]]\n[[Initiation Engine]]\n\n","x":-140,"y":-360,"width":250,"height":160},
+		{"id":"c1cb1a4efac434d3","type":"text","text":"[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Anchor]]\n[[Earthbind]]\n[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Anchor]]\n[[Anchor Holder]]\n[[Grounding Engine]]","x":-140,"y":240,"width":250,"height":120},
+		{"id":"e26180ef8926506b","type":"text","text":"[[Signal]]\n[[Airswell]]\n[[Signal]]\n[[Signal-Keeper]]\n[[Initiation Engine]]\n[[Rupture Engine]]","x":-440,"y":-240,"width":250,"height":140},
+		{"id":"7727791c23eeaaa6","type":"text","text":"[[Fault]]\n[[Emberfall]]\n[[Fault]]\n[[Fault-Bearer]]\n[[Rupture Engine]]","x":-440,"y":-40,"width":250,"height":130},
+		{"id":"16d51882af4ff67e","type":"text","text":"[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Drift]]\n[[Ethyldeep]]\n[[20 - Threshold/Motherboard/Board-G-Geometry/Fib Flower/Node Physics/Drift]]\n[[Drift-Walker]]\n[[Dissolution Engine]]\n","x":-140,"y":35,"width":250,"height":120},
+		{"id":"2aa37332d6688dc5","type":"text","text":"[[Return]]\n[[Return Guide]]\n[[Threshold]]\n[[Return]]\n[[03 - Organism/Organism/09 Myth Cluster/Integration Philosophy/Integration Engine]]","x":160,"y":-40,"width":250,"height":140},
+		{"id":"456f336798aec605","type":"text","text":"[[Burden]]\n[[Burden]]\n[[Stonefield]]\n[[Burden-Carrier]]\n[[Continuity Engine]]\n","x":160,"y":-240,"width":250,"height":140}
+	],
+	"edges":[
+		{"id":"7a571535f112b578","fromNode":"22f3b94d58f90fec","fromSide":"left","toNode":"e26180ef8926506b","toSide":"top"},
+		{"id":"28b6c3a31c39c52a","fromNode":"e26180ef8926506b","fromSide":"bottom","toNode":"7727791c23eeaaa6","toSide":"top"},
+		{"id":"86c62db5e5376721","fromNode":"7727791c23eeaaa6","fromSide":"right","toNode":"16d51882af4ff67e","toSide":"top"},
+		{"id":"72fc5e6d8b2bc4fe","fromNode":"16d51882af4ff67e","fromSide":"bottom","toNode":"c1cb1a4efac434d3","toSide":"top"},
+		{"id":"ea2d2a90ff81cf0d","fromNode":"c1cb1a4efac434d3","fromSide":"right","toNode":"2aa37332d6688dc5","toSide":"bottom"},
+		{"id":"96e2df3bdb55a294","fromNode":"2aa37332d6688dc5","fromSide":"top","toNode":"456f336798aec605","toSide":"bottom"},
+		{"id":"e3867f9ae05ce1c4","fromNode":"456f336798aec605","fromSide":"top","toNode":"22f3b94d58f90fec","toSide":"right"}
+	]
+}

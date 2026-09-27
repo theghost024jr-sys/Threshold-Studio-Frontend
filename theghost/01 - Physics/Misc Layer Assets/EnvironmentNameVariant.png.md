@@ -1,0 +1,1 @@
+![[architectural diagra.png]]

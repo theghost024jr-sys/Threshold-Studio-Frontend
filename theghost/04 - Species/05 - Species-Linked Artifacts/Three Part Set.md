@@ -1,0 +1,1 @@
+![[a small three-part g.png]]

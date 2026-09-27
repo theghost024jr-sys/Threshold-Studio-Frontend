@@ -1,0 +1,1 @@
+![[Ritual RIng.png]]

@@ -1,0 +1,1 @@
+The Interference Map shows where overlapping signals create distortions, flickers, or micro‑echoes. Interference appears as knots, ripples, or turbulence in the field. This map is essential for understanding false impulses, perceptual noise, and pre‑transition instability.

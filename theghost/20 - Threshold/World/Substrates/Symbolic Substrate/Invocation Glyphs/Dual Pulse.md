@@ -1,0 +1,1 @@
+![[dualpulse.png]]

@@ -1,0 +1,1 @@
+[[Color System]] - [[Symbolic Encoding]] - [[03 - Organism/Organism/09 Myth Cluster/06 Lore/Mythic Substrate Index]] - [[10 - Signals/Signal Types]] - [[Environment Index]]

@@ -1,0 +1,1 @@
+![[a ritual ring inspir.png]]

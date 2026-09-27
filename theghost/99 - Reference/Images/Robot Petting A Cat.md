@@ -1,0 +1,1 @@
+![[a friendly robot gen.png]]

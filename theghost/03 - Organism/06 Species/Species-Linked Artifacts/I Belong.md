@@ -1,0 +1,1 @@
+![[stylized ritual bo.png]]

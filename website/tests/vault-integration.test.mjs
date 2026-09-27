@@ -90,7 +90,7 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
 
   const herbRoom = await readFile("website/environment/herbroom.html", "utf8");
   const basin = await readFile("website/environment/basin.html", "utf8");
-  const waterfall = await readFile("website/environment/waterfall.html", "utf8");
+  const oldForest = await readFile("website/environment/old-forest.html", "utf8");
   const mythology = await readFile("website/mythology.html", "utf8");
   assert.match(basin, /data-threshold-environment="basin"/);
   assert.match(basin, /data-origin-chamber="herbroom"/);
@@ -98,9 +98,11 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
   assert.match(herbRoom, /href="\/environment\/basin\.html"/);
   assert.doesNotMatch(herbRoom, /href="\/environment\/waterfall\.html"/);
   assert.match(basin, /href="\/environment\/herbroom\.html"/);
-  assert.match(basin, /href="\/environment\/waterfall\.html"/);
-  assert.match(waterfall, /href="\/environment\/basin\.html"/);
-  assert.doesNotMatch(waterfall, /href="\/environment\/herbroom\.html"/);
+  assert.match(basin, /href="\/environment\/old-forest\.html"/);
+  assert.match(oldForest, /data-branch="old-forest"/);
+  assert.match(oldForest, /scripts\/chamber-loader\.js/);
+  assert.ok(vault.chambers.some((chamber) => chamber.id === "old-forest"));
+  assert.ok(!vault.chambers.some((chamber) => chamber.id === "waterfall"));
   assert.match(mythology, /values\.includes\('mythology'\)/);
 });
 

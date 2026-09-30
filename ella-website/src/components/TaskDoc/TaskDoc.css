@@ -1,0 +1,19 @@
+.task-doc__column {
+  border-top: 1px solid #aebbb2;
+  padding-top: 18px;
+}
+
+.task-doc__column h2 {
+  margin: 0 0 10px;
+  color: #244043;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 500;
+}
+
+.task-doc__column p {
+  max-width: 36ch;
+  margin: 0;
+  color: #54665f;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}

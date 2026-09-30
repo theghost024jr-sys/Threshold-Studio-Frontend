@@ -1,0 +1,7 @@
+.carousel-3d { min-height: 560px; padding: 72px 20px 96px; overflow: hidden; background: #dbe5d9; }
+.carousel-3d__viewport { display: grid; place-items: center; height: 420px; cursor: grab; perspective: 1000px; touch-action: pan-y; user-select: none; }
+.carousel-3d__viewport:active { cursor: grabbing; }
+.carousel-3d__track { --rotation: 0deg; position: relative; width: 220px; height: 300px; transform-style: preserve-3d; transform: rotateY(var(--rotation)); }
+.carousel-3d__item { position: absolute; inset: 0; margin: 0; transform: rotateY(var(--angle)) translateZ(330px); backface-visibility: hidden; overflow: hidden; border: 5px solid #f8f4ea; box-shadow: 0 18px 32px rgba(33, 57, 55, .28); }
+.carousel-3d__item img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+@media (max-width: 620px) { .carousel-3d { min-height: 460px; padding: 42px 16px 60px; } .carousel-3d__viewport { height: 350px; } .carousel-3d__track { width: 170px; height: 240px; } .carousel-3d__item { transform: rotateY(var(--angle)) translateZ(235px); } }

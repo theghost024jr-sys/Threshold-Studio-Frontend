@@ -86,6 +86,16 @@
       animation: hub-fade-in 1.2s ease both;
     }
 
+    .entry-shell::before {
+      content: "";
+      position: absolute;
+      inset: -200px;
+      z-index: 0;
+      background: radial-gradient(circle, rgba(255, 240, 220, 0.05), rgba(0, 0, 0, 0.9));
+      animation: hub-fade-field 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+
     .entry-panel {
       width: min(1440px, 100%);
       padding: clamp(0.25rem, 1vw, 0.8rem);
@@ -233,13 +243,41 @@
     .entry-orbit::after {
       content: "";
       position: absolute;
-      inset: -20px;
+      inset: -40px;
       z-index: -1;
       border-radius: 50%;
       background: var(--season-color);
       filter: blur(60px);
-      opacity: 0.6;
+      animation: hub-glow 8s ease-in-out infinite;
       pointer-events: none;
+    }
+
+    .entry-orbit::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      z-index: -2;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 200, 150, 0.12), rgba(255, 200, 150, 0) 70%);
+      animation: hub-ambient 10s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hub-light {
+      position: absolute;
+      z-index: 2;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 220, 180, 0.9), rgba(255, 220, 180, 0));
+      animation: hub-light-drift 12s ease-in-out infinite;
+      animation-delay: var(--hub-light-delay, 0s);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .entry-orbit > img {
+      animation: hub-shimmer 6s linear infinite;
     }
 
     .entry-rotor,
@@ -532,7 +570,7 @@
       background: rgba(255, 228, 173, 0.95);
       color: #ffdca8;
       text-shadow: 0 0 8px rgba(255, 200, 150, 0.6);
-      transform: translateX(4px);
+      transform: translateX(8px);
       outline: none;
     }
 
@@ -635,6 +673,31 @@
       50% { transform: scale(1.03); opacity: 1; }
     }
 
+    @keyframes hub-ambient {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.4; }
+      50% { transform: scale(1.08) rotate(4deg); opacity: 0.6; }
+    }
+
+    @keyframes hub-glow {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.08); }
+    }
+
+    @keyframes hub-light-drift {
+      0%, 100% { transform: translate(0, 0) scale(0.8); opacity: 0.4; }
+      50% { transform: translate(40px, -60px) scale(1.2); opacity: 0.9; }
+    }
+
+    @keyframes hub-shimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.15); }
+    }
+
+    @keyframes hub-fade-field {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.7; }
+    }
+
     @keyframes hub-fade-in {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -724,6 +787,11 @@
       .entry-mark,
       .prime-atom-logo-field,
       .entry-orbit,
+      .entry-orbit::before,
+      .entry-orbit::after,
+      .entry-orbit > img,
+      .hub-light,
+      .entry-shell::before,
       .entry-receptor::after,
       .entry-engine-core::before,
       .entry-engine-core::after,

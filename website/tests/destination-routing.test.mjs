@@ -26,14 +26,21 @@ test("routes Hub cards to owned destination pages", async () => {
 
 test("warms the existing Entry Hub without replacing its route structure", async () => {
   const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const warmth = await readFile(new URL("../scripts/entry-warmth.js", import.meta.url), "utf8");
 
   assert.match(hub, /--season-color:/);
+  assert.match(hub, /\.entry-orbit::before/);
+  assert.match(hub, /animation: hub-ambient 10s ease-in-out infinite/);
   assert.match(hub, /\.entry-orbit::after/);
+  assert.match(hub, /animation: hub-glow 8s ease-in-out infinite/);
+  assert.match(hub, /\.hub-light/);
   assert.match(hub, /animation: hub-pulse 4s ease-in-out infinite/);
   assert.match(hub, /width: min\(560px, 76vw\)/);
   assert.match(hub, /font-size: clamp\(0\.82rem, 1\.2vw, 1\.25rem\)/);
-  assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(4px\)/);
+  assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(8px\)/);
   assert.match(hub, /src=["']\/scripts\/entry-warmth\.js["']/);
+  assert.match(warmth, /const lightPositions/);
+  assert.match(warmth, /function addAmbientLights\(\)/);
 });
 
 test("boots the public Hub from a real engine entry control", async () => {

@@ -18,11 +18,7 @@ test("configures the canonical project as Cloudflare Pages advanced mode", async
   assert.match(wrangler, /^name = "threshold-studio-frontend"$/m);
   assert.match(wrangler, /^pages_build_output_dir = "\.\/website"$/m);
   assert.doesNotMatch(wrangler, /^main\s*=/m);
-  assert.match(wrangler, /^\[observability\]$/m);
-  assert.match(wrangler, /^enabled = true$/m);
-  assert.match(wrangler, /^head_sampling_rate = 1$/m);
-  assert.match(wrangler, /^\[observability\.logs\]$/m);
-  assert.match(wrangler, /^invocation_logs = true$/m);
+  assert.doesNotMatch(wrangler, /^\[observability\]$/m);
   assert.match(wrangler, /binding = "NODE_BUNDLES"/);
   assert.match(wrangler, /bucket_name = "threshold-node-bundles"/);
 });

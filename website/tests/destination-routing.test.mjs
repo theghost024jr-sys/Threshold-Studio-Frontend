@@ -29,6 +29,8 @@ test("warms the existing Entry Hub without replacing its route structure", async
   const warmth = await readFile(new URL("../scripts/entry-warmth.js", import.meta.url), "utf8");
 
   assert.match(hub, /--season-color:/);
+  assert.match(hub, /<span class="hub-lens" aria-hidden="true"><\/span>/);
+  assert.match(hub, /animation: hub-lens-pulse 18s ease-in-out infinite/);
   assert.match(hub, /<span class="hub-cosmic-rotation" aria-hidden="true"><span class="hub-oort-field"><\/span><\/span>/);
   assert.match(hub, /\.hub-cosmic-rotation::before/);
   assert.match(hub, /hub-atmosphere-parallax 140s linear infinite/);

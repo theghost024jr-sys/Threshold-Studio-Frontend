@@ -363,6 +363,18 @@
       pointer-events: none;
     }
 
+    .hub-lens {
+      position: absolute;
+      inset: -110px;
+      z-index: -3;
+      border-radius: 50%;
+      background: radial-gradient(circle, transparent 22%, rgba(186, 213, 235, 0.018) 42%, rgba(255, 240, 220, 0.06) 51%, rgba(186, 213, 235, 0.018) 62%, transparent 74%);
+      mix-blend-mode: screen;
+      opacity: 0.25;
+      pointer-events: none;
+      animation: hub-lens-pulse 18s ease-in-out infinite;
+    }
+
     .hub-oort {
       position: absolute;
       z-index: 1;
@@ -812,6 +824,11 @@
       to { transform: rotate(360deg); }
     }
 
+    @keyframes hub-lens-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.12); opacity: 0.45; }
+    }
+
     @keyframes hub-atmosphere {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 0.7; transform: scale(1.05); }
@@ -929,6 +946,7 @@
       .entry-orbit,
       .hub-cosmic-rotation,
       .hub-oort-field,
+      .hub-lens,
       .entry-orbit > img,
       .hub-oort,
       .entry-shell::before,
@@ -1004,6 +1022,7 @@
             <span class="entry-spoke entry-spoke-c"></span>
           </div>
           <div class="entry-orbit" data-hub-wheel data-prime-atom role="img" aria-label="Prime Atom, the living threshold between the Hub and Engine">
+            <span class="hub-lens" aria-hidden="true"></span>
             <span class="hub-cosmic-rotation" aria-hidden="true"><span class="hub-oort-field"></span></span>
             <img class="prime-atom-logo-field" src="/assets/entry/threshold-logo.svg" alt="" aria-hidden="true" />
             <span class="entry-signal-ring"></span>

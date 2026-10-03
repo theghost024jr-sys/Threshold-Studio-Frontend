@@ -30,17 +30,17 @@ test("warms the existing Entry Hub without replacing its route structure", async
 
   assert.match(hub, /--season-color:/);
   assert.match(hub, /\.entry-orbit::before/);
-  assert.match(hub, /animation: hub-ambient 10s ease-in-out infinite/);
+  assert.match(hub, /animation: hub-atmosphere 10s ease-in-out infinite/);
   assert.match(hub, /\.entry-orbit::after/);
-  assert.match(hub, /animation: hub-glow 8s ease-in-out infinite/);
-  assert.match(hub, /\.hub-light/);
+  assert.match(hub, /animation: hub-heliosphere 14s ease-in-out infinite/);
+  assert.match(hub, /\.hub-oort/);
   assert.match(hub, /animation: hub-pulse 4s ease-in-out infinite/);
   assert.match(hub, /width: min\(560px, 76vw\)/);
   assert.match(hub, /font-size: clamp\(0\.82rem, 1\.2vw, 1\.25rem\)/);
   assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(8px\)/);
   assert.match(hub, /src=["']\/scripts\/entry-warmth\.js["']/);
-  assert.match(warmth, /const lightPositions/);
-  assert.match(warmth, /function addAmbientLights\(\)/);
+  assert.match(warmth, /const oortPositions/);
+  assert.match(warmth, /function addOortCloud\(\)/);
 });
 
 test("boots the public Hub from a real engine entry control", async () => {

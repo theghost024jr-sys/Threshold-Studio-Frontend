@@ -243,41 +243,42 @@
     .entry-orbit::after {
       content: "";
       position: absolute;
-      inset: -40px;
+      inset: -60px;
       z-index: -1;
       border-radius: 50%;
       background: var(--season-color);
-      filter: blur(60px);
-      animation: hub-glow 8s ease-in-out infinite;
+      filter: blur(80px);
+      animation: hub-heliosphere 14s ease-in-out infinite;
       pointer-events: none;
     }
 
     .entry-orbit::before {
       content: "";
       position: absolute;
-      inset: -30%;
+      inset: -20px;
       z-index: -2;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 200, 150, 0.12), rgba(255, 200, 150, 0) 70%);
-      animation: hub-ambient 10s ease-in-out infinite;
+      background: radial-gradient(circle, rgba(255, 240, 220, 0.25), rgba(255, 240, 220, 0) 70%);
+      filter: blur(40px);
+      animation: hub-atmosphere 10s ease-in-out infinite;
       pointer-events: none;
     }
 
-    .hub-light {
+    .hub-oort {
       position: absolute;
-      z-index: 2;
-      width: 12px;
-      height: 12px;
+      z-index: 1;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255, 220, 180, 0.9), rgba(255, 220, 180, 0));
-      animation: hub-light-drift 12s ease-in-out infinite;
-      animation-delay: var(--hub-light-delay, 0s);
+      animation: hub-oort-drift 18s ease-in-out infinite;
+      animation-delay: var(--hub-oort-delay, 0s);
       pointer-events: none;
       mix-blend-mode: screen;
     }
 
     .entry-orbit > img {
-      animation: hub-shimmer 6s linear infinite;
+      animation: hub-orbit-shimmer 12s linear infinite;
     }
 
     .entry-rotor,
@@ -673,24 +674,24 @@
       50% { transform: scale(1.03); opacity: 1; }
     }
 
-    @keyframes hub-ambient {
-      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.4; }
-      50% { transform: scale(1.08) rotate(4deg); opacity: 0.6; }
+    @keyframes hub-atmosphere {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
     }
 
-    @keyframes hub-glow {
+    @keyframes hub-heliosphere {
       0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.08); }
+      50% { opacity: 0.6; transform: scale(1.1); }
     }
 
-    @keyframes hub-light-drift {
+    @keyframes hub-oort-drift {
       0%, 100% { transform: translate(0, 0) scale(0.8); opacity: 0.4; }
-      50% { transform: translate(40px, -60px) scale(1.2); opacity: 0.9; }
+      50% { transform: translate(80px, -120px) scale(1.3); opacity: 0.9; }
     }
 
-    @keyframes hub-shimmer {
+    @keyframes hub-orbit-shimmer {
       0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(1.15); }
+      50% { filter: brightness(1.25); }
     }
 
     @keyframes hub-fade-field {
@@ -790,7 +791,7 @@
       .entry-orbit::before,
       .entry-orbit::after,
       .entry-orbit > img,
-      .hub-light,
+      .hub-oort,
       .entry-shell::before,
       .entry-receptor::after,
       .entry-engine-core::before,

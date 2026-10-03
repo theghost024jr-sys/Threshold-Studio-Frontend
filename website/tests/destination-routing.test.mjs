@@ -36,6 +36,7 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /\.hub-oort/);
   assert.match(hub, /animation: hub-pulse 4s ease-in-out infinite/);
   assert.match(hub, /width: min\(560px, 76vw\)/);
+  assert.match(hub, /@media \(min-width: 1100px\)[\s\S]*?width: min\(640px, 76vw\)/);
   assert.match(hub, /font-size: clamp\(0\.82rem, 1\.2vw, 1\.25rem\)/);
   assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(8px\)/);
   assert.match(hub, /src=["']\/scripts\/entry-warmth\.js["']/);

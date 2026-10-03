@@ -105,6 +105,28 @@
       position: relative;
     }
 
+    @media (min-width: 1100px) {
+      .entry-panel {
+        grid-template-columns: 1.35fr 0.85fr;
+      }
+
+      .entry-orbit {
+        width: min(640px, 76vw);
+      }
+
+      .entry-mark {
+        width: min(160px, 10vw);
+      }
+
+      h1 {
+        font-size: 4rem;
+      }
+
+      .entry-copy p {
+        font-size: 1.3rem;
+      }
+    }
+
     .entry-copy,
     .entry-nav {
       position: relative;

@@ -31,6 +31,18 @@
 
     * { box-sizing: border-box; }
 
+    html::after {
+      content: "";
+      position: fixed;
+      inset: -24%;
+      z-index: 2;
+      background: linear-gradient(104deg, transparent 29%, rgba(255, 221, 172, 0.025) 43%, rgba(139, 228, 213, 0.065) 50%, rgba(255, 221, 172, 0.025) 57%, transparent 71%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      pointer-events: none;
+      animation: threshold-wind 48s cubic-bezier(0.36, 0, 0.64, 1) infinite;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -757,6 +769,13 @@
       to { transform: rotate(360deg); }
     }
 
+    @keyframes threshold-wind {
+      0%, 100% { opacity: 0; transform: translateX(-18%) scale(1.01); }
+      14%, 72% { opacity: 0.82; }
+      50% { opacity: 0.46; transform: translateX(12%) scale(1.05); }
+      86% { transform: translateX(28%) scale(1.02); }
+    }
+
     @keyframes hub-pulse {
       0%, 100% { transform: scale(1); opacity: 0.9; }
       50% { transform: scale(1.03); opacity: 1; }
@@ -899,6 +918,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      html::after,
       body::before,
       body::after,
       .entry-core,

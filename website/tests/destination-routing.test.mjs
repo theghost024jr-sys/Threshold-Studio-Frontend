@@ -36,6 +36,8 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /hub-heliosphere-parallax 100s linear infinite/);
   assert.match(hub, /animation: hub-oort-parallax 60s linear infinite/);
   assert.match(hub, /animation: void-field-rotation 240s linear infinite/);
+  assert.match(hub, /html::after/);
+  assert.match(hub, /animation: threshold-wind 48s cubic-bezier/);
   assert.match(hub, /\.hub-oort/);
   assert.match(hub, /\.hub-comet/);
   assert.match(hub, /hub-solar-wind/);

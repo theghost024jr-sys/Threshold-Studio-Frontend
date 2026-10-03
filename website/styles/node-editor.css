@@ -1,0 +1,46 @@
+.node-editor {
+  position: fixed;
+  z-index: 20001;
+  top: 1rem;
+  right: 1rem;
+  width: min(22rem, calc(100vw - 2rem));
+  padding: 1rem;
+  border: 1px solid rgba(215, 210, 255, 0.38);
+  border-radius: 8px;
+  background: rgba(10, 10, 15, 0.94);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  color: #e8e8f0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.node-editor-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.node-editor h2,
+.node-editor p { margin: 0; }
+.node-editor h2 { font-size: 1.35rem; }
+.node-editor-kicker { color: #a8e6cf; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.node-editor output { color: #d8b56b; font-size: 0.85rem; }
+.node-editor label { display: grid; gap: 0.25rem; margin-top: 0.65rem; color: #c2b6a3; font-size: 0.82rem; }
+.node-editor select,
+.node-editor input { min-width: 0; border: 1px solid rgba(215, 210, 255, 0.28); border-radius: 4px; background: #1c1c24; color: #f5f2ee; padding: 0.35rem; }
+.node-editor-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 0.6rem; }
+.node-editor button { width: 100%; margin-top: 0.9rem; border: 1px solid #a8e6cf; border-radius: 4px; background: #a8e6cf; color: #10131a; font-weight: 700; padding: 0.55rem; }
+
+@media (max-width: 720px) {
+  .node-editor {
+    position: fixed;
+    top: auto;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    width: min(22rem, calc(100vw - 1rem));
+    max-height: min(78vh, 42rem);
+    margin: 0;
+    overflow: auto;
+  }
+}

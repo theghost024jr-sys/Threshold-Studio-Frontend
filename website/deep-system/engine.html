@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../styles/styles.css" />
   <link rel="stylesheet" href="../styles/hub-interaction.css?v=20260807d" />
   <link rel="stylesheet" href="../styles/complexity-layers.css" />
+  <link rel="stylesheet" href="../styles/node-editor.css" />
 </head>
 <body class="page-hub hub-page" data-hub-state="idle" data-mode="schematic" data-complexity="foundation atmosphere interaction simulation" data-motion="bounded">
   <div class="hub-overlay" aria-hidden="true"></div>
@@ -143,7 +144,10 @@
   </main>
 
   <div id="glyph-layer" class="glyph-layer" aria-hidden="true"></div>
+  <aside id="node-editor" class="node-editor" aria-label="Node state editor"></aside>
 
+  <script type="module" src="/threshold-engine.js"></script>
+  <script type="module" src="/scripts/node-editor.js"></script>
   <script type="module" src="../scripts/hub-engine.js?v=20260807h"></script>
   <script type="module" src="/scripts/access-flow.js"></script>
 

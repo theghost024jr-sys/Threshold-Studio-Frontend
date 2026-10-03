@@ -67,7 +67,6 @@ GLYPH_DEFINITIONS = {
     },
 }
 
-
 def relative_path(root: Path, path: Path) -> str:
     return path.relative_to(root).as_posix()
 
@@ -247,18 +246,60 @@ def split_frontmatter(source: str) -> tuple[dict[str, Any], str]:
     except StopIteration:
         return {}, source
 
-    metadata: dict[str, Any] = {}
-    for line in lines[1:end]:
-        if not line or line[:1].isspace() or ":" not in line:
-            continue
-        key, raw_value = line.split(":", 1)
+    def parse_value(raw_value: str) -> Any:
         value = raw_value.strip().strip('"\'')
         if value.lower() in {"true", "false"}:
-            metadata[key.strip()] = value.lower() == "true"
-        elif value.startswith("[") and value.endswith("]"):
-            metadata[key.strip()] = [item.strip().strip('"\'') for item in value[1:-1].split(",") if item.strip()]
-        else:
-            metadata[key.strip()] = value
+            return value.lower() == "true"
+        if value.lower() in {"null", "none"}:
+            return None
+        if value.startswith("[") and value.endswith("]"):
+            return [item.strip().strip('"\'') for item in value[1:-1].split(",") if item.strip()]
+        if value.startswith("{") and value.endswith("}"):
+            try:
+                return json.loads(value)
+            except json.JSONDecodeError:
+                return value
+        try:
+            return int(value)
+        except ValueError:
+            try:
+                return float(value)
+            except ValueError:
+                return value
+
+    metadata: dict[str, Any] = {}
+    frontmatter = lines[1:end]
+    index = 0
+    while index < len(frontmatter):
+        line = frontmatter[index]
+        if not line or line[:1].isspace() or ":" not in line:
+            index += 1
+            continue
+        key, raw_value = line.split(":", 1)
+        key = key.strip()
+        if raw_value.strip():
+            metadata[key] = parse_value(raw_value)
+            index += 1
+            continue
+
+        nested: dict[str, Any] = {}
+        nested_key = ""
+        index += 1
+        while index < len(frontmatter):
+            nested_line = frontmatter[index]
+            if not nested_line[:1].isspace():
+                break
+            stripped = nested_line.strip()
+            if stripped.startswith("- ") and nested_key:
+                values = nested.setdefault(nested_key, [])
+                if isinstance(values, list):
+                    values.append(parse_value(stripped[2:]))
+            elif ":" in stripped:
+                nested_key, nested_value = stripped.split(":", 1)
+                nested_key = nested_key.strip()
+                nested[nested_key] = parse_value(nested_value) if nested_value.strip() else []
+            index += 1
+        metadata[key] = nested
     return metadata, "\n".join(lines[end + 1 :]).strip()
 
 
@@ -301,9 +342,30 @@ def public_document(
         "draft": metadata.get("draft"),
         "tags": metadata.get("tags", []) if isinstance(metadata.get("tags", []), list) else [],
         "description": metadata.get("description", ""),
+        "type": metadata.get("type"),
+        "map": metadata.get("map"),
+        "physics": metadata.get("physics", {}),
+        "weather": metadata.get("weather", {}),
+        "characters": metadata.get("characters", []),
+        "connections": metadata.get("connections", []),
+        "page": metadata.get("page", {}),
+        "html": metadata.get("html") or metadata.get("page", {}).get("html") if isinstance(metadata.get("page"), dict) else metadata.get("html"),
         "links": links,
         "assets": resolve_public_assets(vault_root, path, links, assets_by_name, asset_output_root),
         "body": body,
+    }
+
+
+def node_record(document: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "id": document["id"],
+        "type": document.get("type") or document["kind"],
+        "map": document.get("map"),
+        "physics": document.get("physics") if isinstance(document.get("physics"), dict) else {},
+        "weather": document.get("weather") if isinstance(document.get("weather"), (dict, str)) else {},
+        "characters": document.get("characters") if isinstance(document.get("characters"), list) else [],
+        "connections": document.get("connections") if isinstance(document.get("connections"), list) else [],
+        "html": document.get("html") or (document.get("page") or {}).get("html") or document.get("route"),
     }
 
 
@@ -348,6 +410,7 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
             "translations": len(translations),
         },
         "documents": published,
+        "nodes": [node_record(document) for document in published],
         "entities": [document for document in published if document["kind"] == "entity"],
         "chambers": [document for document in published if document["kind"] == "chamber"],
         "translations": translations,

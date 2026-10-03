@@ -28,6 +28,8 @@ const BRANCH_IDS = [
   "contact"
 ];
 
+const BRANCH_ACTIONS = new Set(["hide", "reveal", "pulse", "alter"]);
+
 class ThresholdBranch {
   constructor(id, render) {
     this.id = id;
@@ -135,39 +137,66 @@ class ThresholdGlyphEngine {
     this.enabled = false;
   }
 
-  glyphInteractWithBranch(glyph) {
-    const branch = this.branchEngine.pickBranch(glyph && glyph.branchId ? glyph.branchId : "");
-    if (!branch) {
-      return;
+  selectAction(glyph) {
+    if (glyph && BRANCH_ACTIONS.has(glyph.action)) {
+      return glyph.action;
     }
 
     const roll = Math.random();
-    let action = "none";
-
     if (roll < 0.15) {
-      action = "hide";
-      branch.hide();
-    } else if (roll < 0.30) {
-      action = "reveal";
-      branch.reveal();
-    } else if (roll < 0.45) {
-      action = "pulse";
-      branch.pulse();
-    } else if (roll < 0.55) {
-      action = "alter";
-      branch.alter({ glyph: glyph || null });
+      return "hide";
     }
+    if (roll < 0.30) {
+      return "reveal";
+    }
+    if (roll < 0.45) {
+      return "pulse";
+    }
+    if (roll < 0.55) {
+      return "alter";
+    }
+    return "none";
+  }
+
+  glyphInteractWithBranch(glyph) {
+    const input = glyph && typeof glyph === "object" ? glyph : {};
+    const branch = this.branchEngine.pickBranch(input.branchId || input.nodeId || "");
+    if (!branch) {
+      return null;
+    }
+
+    const action = this.selectAction(input);
+
+    if (action === "hide") {
+      branch.hide();
+    } else if (action === "reveal") {
+      branch.reveal();
+    } else if (action === "pulse") {
+      branch.pulse();
+    } else if (action === "alter") {
+      branch.alter({ glyph: input });
+    }
+
+    const update = {
+      branchId: branch.id,
+      action: action,
+      glyph: input,
+      visible: branch.visible,
+      state: branch.state,
+      payload: branch.payload || null
+    };
 
     window.dispatchEvent(new CustomEvent("threshold:branch-entity-update", {
       detail: {
-        branchId: branch.id,
-        action: action,
-        glyph: glyph || null,
-        visible: branch.visible,
-        state: branch.state,
-        payload: branch.payload || null
+        branchId: update.branchId,
+        action: update.action,
+        glyph: update.glyph,
+        visible: update.visible,
+        state: update.state,
+        payload: update.payload
       }
     }));
+    return update;
   }
 
   handleGlyphInteraction(event) {
@@ -192,6 +221,9 @@ class ThresholdEngine {
     this.interactions = null;
     this.archive = null;
     this.weather = null;
+    this.nodeRegistry = null;
+    this.nodeStates = new Map();
+    this.nodeGraph = new Map();
     this.branchModule = null;
     this.branches = {};
     this.mythic = null;
@@ -220,6 +252,7 @@ class ThresholdEngine {
     this.moduleMap = {
       archive: () => import("./archive.js"),
       weather: () => import("./weather.js"),
+      nodes: () => import("./scripts/node-registry.js"),
       branches: () => import("./branches.js"),
       mythic: () => import("./mythic.js"),
       housegarden: () => import("./scripts/housegarden.js"),
@@ -253,6 +286,7 @@ class ThresholdEngine {
 
       const archiveMod = await this.loadModule("archive");
       const weatherMod = await this.loadModule("weather");
+        const nodesMod = await this.loadModule("nodes");
       const branchesMod = await this.loadModule("branches");
       const mythicMod = await this.loadModule("mythic");
 
@@ -262,6 +296,11 @@ class ThresholdEngine {
       this.mythic = mythicMod.createMythicModule(this);
 
       this.vault = await this.archive.loadVault();
+      this.nodeRegistry = nodesMod.createNodeRegistry(this.vault && this.vault.nodes);
+      this.nodeUpdate = nodesMod.updateNodeRecord;
+      this.nodeRegistry.list().forEach((node) => this.nodeStates.set(node.id, node));
+      this.graphBuilder = nodesMod.buildNodeGraph;
+      this.buildGraph();
       this.territory = await this.archive.loadTerritory(this);
       this.booted = true;
       this.renderProjectChamber({
@@ -706,6 +745,199 @@ class ThresholdEngine {
       : 1;
 
     return (pressure * v) > threshold;
+  }
+
+  getNode(id) {
+    return this.nodeStates.get(String(id || "")) || (this.nodeRegistry ? this.nodeRegistry.get(id) : null);
+  }
+
+  updateNode(id, changes = {}) {
+    const node = this.getNode(id);
+    if (!node || typeof this.nodeUpdate !== "function") {
+      return null;
+    }
+
+    const updated = this.nodeUpdate(node, changes);
+    this.nodeStates.set(updated.id, updated);
+    window.dispatchEvent(new CustomEvent("threshold:node-updated", { detail: { node: updated, changes } }));
+    return updated;
+  }
+
+  buildGraph() {
+    if (typeof this.graphBuilder !== "function" || !this.nodeRegistry) {
+      this.nodeGraph = new Map();
+      return this.nodeGraph;
+    }
+    this.nodeGraph = this.graphBuilder(this.nodeRegistry.list());
+    window.dispatchEvent(new CustomEvent("threshold:node-graph-built", {
+      detail: { graph: this.nodeGraph }
+    }));
+    return this.nodeGraph;
+  }
+
+  getConnectedNodeIds(id) {
+    return this.nodeGraph.get(String(id || "")) || [];
+  }
+
+  applyPhysicsTick(nodeOrId) {
+    const node = typeof nodeOrId === "string" ? this.getNode(nodeOrId) : nodeOrId;
+    if (!node || !node.physics) {
+      return [];
+    }
+    const resonance = Number(node.physics.resonance);
+    const drift = Number(node.physics.drift);
+    if (!Number.isFinite(resonance) && !Number.isFinite(drift)) {
+      return [];
+    }
+
+    const updated = this.getConnectedNodeIds(node.id).map((neighborId) => {
+      const neighbor = this.getNode(neighborId);
+      if (!neighbor || !neighbor.physics) {
+        return null;
+      }
+      const changes = {};
+      if (Number.isFinite(resonance) && Number.isFinite(Number(neighbor.physics.resonance))) {
+        changes.resonance = (Number(neighbor.physics.resonance) + resonance) / 2;
+      }
+      if (Number.isFinite(drift) && Number.isFinite(Number(neighbor.physics.drift))) {
+        changes.drift = (Number(neighbor.physics.drift) + drift) / 2;
+      }
+      return Object.keys(changes).length ? this.updateNode(neighbor.id, { physics: changes }) : null;
+    }).filter(Boolean);
+
+    window.dispatchEvent(new CustomEvent("threshold:node-physics-tick", { detail: { node, updated } }));
+    return updated;
+  }
+
+  applyWeatherTick(nodeOrId) {
+    const node = typeof nodeOrId === "string" ? this.getNode(nodeOrId) : nodeOrId;
+    const weather = node && typeof node.weather === "object" ? node.weather : null;
+    if (!weather) {
+      return [];
+    }
+    const humidity = Number(weather.humidity);
+    const pollenPulse = Number(weather.pollen_pulse);
+    if (!Number.isFinite(humidity) && !Number.isFinite(pollenPulse)) {
+      return [];
+    }
+
+    const updated = this.getConnectedNodeIds(node.id).map((neighborId) => {
+      const neighbor = this.getNode(neighborId);
+      const neighborWeather = neighbor && typeof neighbor.weather === "object" ? neighbor.weather : null;
+      if (!neighborWeather) {
+        return null;
+      }
+      const changes = {};
+      if (Number.isFinite(humidity) && Number.isFinite(Number(neighborWeather.humidity))) {
+        changes.humidity = (Number(neighborWeather.humidity) + humidity) / 2;
+      }
+      if (Number.isFinite(pollenPulse) && Number.isFinite(Number(neighborWeather.pollen_pulse))) {
+        changes.pollen_pulse = (Number(neighborWeather.pollen_pulse) + pollenPulse) / 2;
+      }
+      return Object.keys(changes).length ? this.updateNode(neighbor.id, { weather: changes }) : null;
+    }).filter(Boolean);
+
+    window.dispatchEvent(new CustomEvent("threshold:node-weather-tick", { detail: { node, updated } }));
+    return updated;
+  }
+
+  navigateTo(nodeId, options = {}) {
+    const node = this.getNode(nodeId);
+    if (!node) {
+      return null;
+    }
+    const activation = this.activateNode(node, { reveal: options.reveal === true });
+    const physics = this.applyPhysicsTick(node);
+    const weather = this.applyWeatherTick(node);
+    window.dispatchEvent(new CustomEvent("threshold:node-navigated", {
+      detail: { node, activation, physics, weather }
+    }));
+    return { node, activation, physics, weather };
+  }
+
+  runFlowback(node) {
+    if (!node) {
+      return null;
+    }
+    const flowback = { nodeId: node.id, connections: this.getConnectedNodeIds(node.id) };
+    window.dispatchEvent(new CustomEvent("threshold:node-flowback", { detail: flowback }));
+    return flowback;
+  }
+
+  activateBiome(node) {
+    if (!node || node.type !== "biome") {
+      return null;
+    }
+    document.body.dataset.thresholdBiome = node.id;
+    if (node.map) {
+      document.body.style.setProperty("--threshold-biome-map", `url("${node.map}")`);
+    }
+    window.dispatchEvent(new CustomEvent("threshold:biome-activated", { detail: { node } }));
+    return node;
+  }
+
+  applyWeather(node) {
+    if (!node || !node.weather) {
+      return null;
+    }
+    const weather = typeof node.weather === "string" ? node.weather : node.weather.channel || node.weather.id;
+    if (!weather) {
+      return null;
+    }
+    const channel = this.setWeather(weather);
+    window.dispatchEvent(new CustomEvent("threshold:node-weather-applied", { detail: { node, channel } }));
+    return channel;
+  }
+
+  applyPhysics(node) {
+    if (!node || !node.physics || Object.keys(node.physics).length === 0) {
+      return null;
+    }
+    this.physics = Object.assign({}, this.physics || {}, node.physics);
+    window.dispatchEvent(new CustomEvent("threshold:node-physics-applied", { detail: { node, physics: this.physics } }));
+    return this.physics;
+  }
+
+  moveCharacters(node) {
+    if (!node || !Array.isArray(node.characters) || node.characters.length === 0) {
+      return [];
+    }
+    const characters = node.characters.slice();
+    window.dispatchEvent(new CustomEvent("threshold:characters-move", { detail: { node, characters } }));
+    return characters;
+  }
+
+  revealPage(nodeOrPage) {
+    const html = typeof nodeOrPage === "string" ? nodeOrPage : nodeOrPage && nodeOrPage.html;
+    if (!html) {
+      return null;
+    }
+    const page = new URL(html, window.location.href);
+    if (page.origin !== window.location.origin || !page.pathname.endsWith(".html")) {
+      throw new Error("Node page must be a local HTML path");
+    }
+    window.location.assign(page.href);
+    return page.pathname;
+  }
+
+  activateNode(nodeOrId, options = {}) {
+    const node = typeof nodeOrId === "string" ? this.getNode(nodeOrId) : nodeOrId;
+    if (!node) {
+      return null;
+    }
+    const result = {
+      node,
+      biome: this.activateBiome(node),
+      weather: this.applyWeather(node),
+      physics: this.applyPhysics(node),
+      characters: this.moveCharacters(node),
+      flowback: this.runFlowback(node)
+    };
+    if (options.reveal === true) {
+      result.page = this.revealPage(node);
+    }
+    window.dispatchEvent(new CustomEvent("threshold:node-activated", { detail: result }));
+    return result;
   }
 
   ensureProjectChamberInspector() {
@@ -1255,10 +1487,15 @@ class ThresholdEngine {
   }
 }
 
-const threshold = new ThresholdEngine();
-window.threshold = threshold;
-threshold.boot().catch(function () {
-  // Keep pages functional even if module boot fails.
-});
+const threshold = typeof window === "undefined" || typeof document === "undefined"
+  ? null
+  : new ThresholdEngine();
+if (threshold) {
+  window.threshold = threshold;
+  threshold.boot().catch(function () {
+    // Keep pages functional even if module boot fails.
+  });
+}
 
+export { ThresholdBranch, ThresholdBranchEngine, ThresholdEngine, ThresholdGlyphEngine };
 export default threshold;

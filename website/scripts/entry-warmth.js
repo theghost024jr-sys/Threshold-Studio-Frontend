@@ -26,8 +26,8 @@ function applySeasonTint(season) {
 
 function addOortCloud() {
   const orbit = document.querySelector(".entry-orbit");
-  const cosmicLayer = orbit?.querySelector(".hub-cosmic-rotation");
-  if (!cosmicLayer || cosmicLayer.querySelector(".hub-oort")) {
+  const oortField = orbit?.querySelector(".hub-oort-field");
+  if (!oortField || oortField.querySelector(".hub-oort")) {
     return;
   }
   oortPositions.forEach(([left, top], index) => {
@@ -36,7 +36,7 @@ function addOortCloud() {
     particle.style.left = `${left}px`;
     particle.style.top = `${top}px`;
     particle.style.setProperty("--hub-oort-delay", `${index * -1.125}s`);
-    cosmicLayer.appendChild(particle);
+    oortField.appendChild(particle);
   });
 }
 

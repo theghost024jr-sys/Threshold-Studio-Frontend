@@ -55,13 +55,13 @@
         radial-gradient(circle at 15% 18%, rgba(31, 59, 255, 0.2), transparent 39%),
         conic-gradient(from 0deg, #000000, #0a0f2b 26%, rgba(31, 59, 255, 0.18) 49%, #000000 74%, #0a0f2b);
       mix-blend-mode: screen;
-      animation: void-field-rotation 7200s linear infinite;
+      animation: void-field-rotation 240s linear infinite;
     }
 
     body::after {
       opacity: 0.16;
       filter: blur(46px);
-      animation-duration: 9600s;
+      animation-duration: 320s;
       animation-direction: reverse;
     }
 
@@ -314,8 +314,15 @@
       inset: 0;
       z-index: 1;
       border-radius: 50%;
-      animation: hub-cosmic-rotation 120s linear infinite;
       pointer-events: none;
+    }
+
+    .hub-oort-field {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: 50%;
+      animation: hub-oort-parallax 60s linear infinite;
     }
 
     .hub-cosmic-rotation::after {
@@ -326,7 +333,8 @@
       border-radius: 50%;
       background: var(--season-color);
       filter: blur(80px);
-      animation: hub-heliosphere 14s ease-in-out infinite;
+      scale: 0.96 1.04;
+      animation: hub-heliosphere 14s ease-in-out infinite, hub-heliosphere-parallax 100s linear infinite;
       pointer-events: none;
     }
 
@@ -338,7 +346,8 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255, 240, 220, 0.25), rgba(255, 240, 220, 0) 70%);
       filter: blur(40px);
-      animation: hub-atmosphere 10s ease-in-out infinite;
+      scale: 1.04 0.96;
+      animation: hub-atmosphere 10s ease-in-out infinite, hub-atmosphere-parallax 140s linear infinite;
       pointer-events: none;
     }
 
@@ -769,7 +778,17 @@
       50% { --orbit-drift: 0.2deg; }
     }
 
-    @keyframes hub-cosmic-rotation {
+    @keyframes hub-atmosphere-parallax {
+      from { rotate: 0deg; }
+      to { rotate: 360deg; }
+    }
+
+    @keyframes hub-heliosphere-parallax {
+      from { rotate: 0deg; }
+      to { rotate: -360deg; }
+    }
+
+    @keyframes hub-oort-parallax {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
@@ -889,6 +908,7 @@
       .prime-atom-logo-field,
       .entry-orbit,
       .hub-cosmic-rotation,
+      .hub-oort-field,
       .entry-orbit > img,
       .hub-oort,
       .entry-shell::before,
@@ -964,7 +984,7 @@
             <span class="entry-spoke entry-spoke-c"></span>
           </div>
           <div class="entry-orbit" data-hub-wheel data-prime-atom role="img" aria-label="Prime Atom, the living threshold between the Hub and Engine">
-            <span class="hub-cosmic-rotation" aria-hidden="true"></span>
+            <span class="hub-cosmic-rotation" aria-hidden="true"><span class="hub-oort-field"></span></span>
             <img class="prime-atom-logo-field" src="/assets/entry/threshold-logo.svg" alt="" aria-hidden="true" />
             <span class="entry-signal-ring"></span>
             <div class="entry-rotor">

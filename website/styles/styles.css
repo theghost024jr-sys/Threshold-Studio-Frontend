@@ -44,6 +44,18 @@ body {
   min-height: 100%;
 }
 
+html::after {
+  content: "";
+  position: fixed;
+  inset: -24%;
+  z-index: 3;
+  background: linear-gradient(104deg, transparent 29%, rgba(255, 221, 172, 0.025) 43%, rgba(139, 228, 213, 0.065) 50%, rgba(255, 221, 172, 0.025) 57%, transparent 71%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  animation: threshold-wind 48s cubic-bezier(0.36, 0, 0.64, 1) infinite;
+}
+
 body {
   color: var(--text);
   font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -81,6 +93,13 @@ body::after {
 @keyframes ts-shimmer {
   0% { opacity: 0.11; transform: translateY(0); }
   100% { opacity: 0.2; transform: translateY(-1.5%); }
+}
+
+@keyframes threshold-wind {
+  0%, 100% { opacity: 0; transform: translateX(-18%) scale(1.01); }
+  14%, 72% { opacity: 0.82; }
+  50% { opacity: 0.46; transform: translateX(12%) scale(1.05); }
+  86% { transform: translateX(28%) scale(1.02); }
 }
 
 @keyframes ts-drift {
@@ -273,7 +292,8 @@ footer {
     scroll-behavior: auto !important;
   }
 
-  body::after {
+  body::after,
+  html::after {
     opacity: 0.14;
   }
 }

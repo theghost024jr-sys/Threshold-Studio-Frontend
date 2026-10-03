@@ -11,7 +11,6 @@
   if (!archive || !status || !trail || !chamber || paths.length === 0) return;
 
   let glyphs = {};
-  let depth = 0;
   const emotionByGlyph = {
     collapse: { fear: 1 },
     expand: { relief: 1 },
@@ -25,6 +24,11 @@
       Object.values(glyphs).map(function (glyph) { return glyph.asset; }),
       window.ThresholdImages.defaultCandidates
     );
+  }
+
+  function renderMazeDepth() {
+    const depth = window.threshold?.getMazeDepth?.() || 0;
+    trail.textContent = `Maze depth ${depth}`;
   }
 
   function loadTraces() {
@@ -73,12 +77,11 @@
     const result = window.ThresholdEmotions.activateGlyph(choice);
     if (!result) return;
 
-    depth += 1;
     archive.dataset.weather = choice;
     archive.dataset.chamberState = result.status;
     paths.forEach((path) => path.setAttribute("aria-pressed", String(path.dataset.choice === choice)));
     status.textContent = `${glyphs[choice].name} activated.`;
-    trail.textContent = `Maze depth ${depth}`;
+    renderMazeDepth();
     section.dataset.state = "activated";
     effectText.textContent = `Chamber ${result.status}: ${result.effects.join(", ")}.`;
     button.disabled = true;
@@ -135,10 +138,23 @@
     paths.forEach(function (path) {
       path.disabled = false;
       path.addEventListener("click", function () {
-        enterPath(path.dataset.choice);
+        const choice = path.dataset.choice;
+        const nodeId = `glyph_${choice}`;
+        if (window.threshold && window.threshold.getNode(nodeId)) {
+          window.threshold.navigateTo(nodeId, { reveal: true });
+          return;
+        }
+        enterPath(choice);
       });
     });
   }
+
+  function enterHashGlyph() {
+    const match = location.hash.match(/^#glyph-(collapse|expand|fog|soil)$/);
+    if (match) enterPath(match[1]);
+  }
+
+  window.addEventListener("threshold:maze-depth-changed", renderMazeDepth);
 
   function renderPathGlyphs() {
     paths.forEach(function (path) {
@@ -165,6 +181,8 @@
       renderPathGlyphs();
       renderTraces();
       bindPaths();
+      enterHashGlyph();
+      renderMazeDepth();
     })
     .catch(function () {
       status.textContent = "The glyph index could not be opened.";

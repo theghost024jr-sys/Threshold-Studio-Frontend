@@ -24,11 +24,24 @@ test("routes Hub cards to owned destination pages", async () => {
   assert.doesNotMatch(hub, /href=["']spoke\.html/);
 });
 
-test("boots the world Hub from a real activation control", async () => {
+test("warms the existing Entry Hub without replacing its route structure", async () => {
+  const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+
+  assert.match(hub, /--season-color:/);
+  assert.match(hub, /\.entry-orbit::after/);
+  assert.match(hub, /animation: hub-pulse 4s ease-in-out infinite/);
+  assert.match(hub, /width: min\(560px, 76vw\)/);
+  assert.match(hub, /font-size: clamp\(0\.82rem, 1\.2vw, 1\.25rem\)/);
+  assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(4px\)/);
+  assert.match(hub, /src=["']\/scripts\/entry-warmth\.js["']/);
+});
+
+test("boots the public Hub from a real engine entry control", async () => {
   const hub = await readFile(new URL("../hub.html", import.meta.url), "utf8");
 
-  assert.match(hub, /<button id="hubA"[^>]*>Wake the hub<\/button>/);
+  assert.match(hub, /<button id="hub-enter-engine"[^>]*>Enter Engine<\/button>/);
   assert.match(hub, /src="\/threshold-engine\.js"/);
+  assert.match(hub, /src="\/scripts\/hub-public-runtime\.js"/);
   assert.doesNotMatch(hub, /src="\/scripts\/fibonacci-entry\.js"/);
 });
 

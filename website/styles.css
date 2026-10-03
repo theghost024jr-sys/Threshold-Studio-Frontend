@@ -117,6 +117,20 @@ h1 {
 	text-decoration: none;
 }
 
+.hub-engine-status {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+	margin-top: 1.25rem;
+}
+
+.hub-engine-indicator {
+	color: var(--muted);
+	font-size: 0.72rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
 .field-grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));

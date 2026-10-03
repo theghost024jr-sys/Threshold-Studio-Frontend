@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-03T13:13:43.590735+00:00",
+  "generatedAt": "2026-10-03T13:33:24.801075+00:00",
   "vaultRoot": "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish",
   "publishRoot": "C:\\Users\\James Romeo\\Threshold\\Threshold-Studio-Content\\publish\\_publish",
   "counts": {
-    "markdown": 4041,
-    "publishedMarkdown": 130,
+    "markdown": 4046,
+    "publishedMarkdown": 135,
     "entities": 15,
     "chambers": 3,
     "translations": 0
@@ -50,6 +50,181 @@
         }
       ],
       "body": "# Basin\n\n![[basin.png]]\n\nThe Basin is a quiet, reflective pool fed by underground channels..."
+    },
+    {
+      "id": "glyph_archive",
+      "title": "Glyph Archive",
+      "relativePath": "_publish/glyph_archive.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "page": {
+        "html": "/glyphs.html",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html",
+      "links": [],
+      "assets": [],
+      "body": "# Glyph Archive\n\nThe Glyph Archive chamber connects to House & Garden."
+    },
+    {
+      "id": "glyph_collapse",
+      "title": "Collapse Glyph",
+      "relativePath": "_publish/glyph_collapse.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-collapse",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-collapse",
+      "links": [],
+      "assets": [],
+      "body": "# Collapse Glyph\n\nGlyph chamber reached from the Glyph Archive collapse path."
+    },
+    {
+      "id": "glyph_expand",
+      "title": "Expand Glyph",
+      "relativePath": "_publish/glyph_expand.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-expand",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-expand",
+      "links": [],
+      "assets": [],
+      "body": "# Expand Glyph\n\nGlyph chamber reached from the Glyph Archive expand path."
+    },
+    {
+      "id": "glyph_fog",
+      "title": "Fog Glyph",
+      "relativePath": "_publish/glyph_fog.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-fog",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-fog",
+      "links": [],
+      "assets": [],
+      "body": "# Fog Glyph\n\nGlyph chamber reached from the Glyph Archive fog path."
+    },
+    {
+      "id": "glyph_soil",
+      "title": "Soil Glyph",
+      "relativePath": "_publish/glyph_soil.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-soil",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-soil",
+      "links": [],
+      "assets": [],
+      "body": "# Soil Glyph\n\nGlyph chamber reached from the Glyph Archive soil path."
     },
     {
       "id": "herbroom-threshold-east",
@@ -4312,6 +4487,66 @@
       "characters": [],
       "connections": [],
       "html": "/environment/basin"
+    },
+    {
+      "id": "glyph_archive",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "html": "/glyphs.html"
+    },
+    {
+      "id": "glyph_collapse",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-collapse"
+    },
+    {
+      "id": "glyph_expand",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-expand"
+    },
+    {
+      "id": "glyph_fog",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-fog"
+    },
+    {
+      "id": "glyph_soil",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-soil"
     },
     {
       "id": "herbroom-threshold-east",

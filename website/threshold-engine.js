@@ -29,6 +29,13 @@ const BRANCH_IDS = [
 ];
 
 const BRANCH_ACTIONS = new Set(["hide", "reveal", "pulse", "alter"]);
+const SEASONAL_MODIFIERS = Object.freeze({
+  spring: Object.freeze({ humidity: 0.2, pollen_pulse: 0.3, resonance: 0.1, pressure: 0, drift: 0 }),
+  summer: Object.freeze({ humidity: 0.1, pollen_pulse: 0, resonance: 0.2, pressure: 1, drift: 0.1 }),
+  autumn: Object.freeze({ humidity: 0.3, pollen_pulse: 0, resonance: -0.1, pressure: 0, drift: -0.1 }),
+  winter: Object.freeze({ humidity: -0.2, pollen_pulse: 0, resonance: -0.3, pressure: 0, drift: 0 })
+});
+const GLYPH_CHAMBER_IDS = new Set(["glyph_collapse", "glyph_expand", "glyph_fog", "glyph_soil"]);
 
 class ThresholdBranch {
   constructor(id, render) {
@@ -224,6 +231,15 @@ class ThresholdEngine {
     this.nodeRegistry = null;
     this.nodeStates = new Map();
     this.nodeGraph = new Map();
+    this.nodeStateStorageKey = document.body.dataset.thresholdNodeStorageKey || "";
+    this.persistedNodeIds = new Set((document.body.dataset.thresholdNodeIds || "").split(",").map((id) => id.trim()).filter(Boolean));
+    this.seasonStorageKey = "threshold_season";
+    this.season = this.getSeason();
+    this.appliedNodeSeason = "";
+    this.mazeDepthStorageKey = "threshold.maze-depth.v1";
+    this.mazeDepth = this.getMazeDepth();
+    this.currentNodeStorageKey = "threshold.current-node.v1";
+    this.currentNodeId = this.getCurrentNodeId();
     this.branchModule = null;
     this.branches = {};
     this.mythic = null;
@@ -299,6 +315,8 @@ class ThresholdEngine {
       this.nodeRegistry = nodesMod.createNodeRegistry(this.vault && this.vault.nodes);
       this.nodeUpdate = nodesMod.updateNodeRecord;
       this.nodeRegistry.list().forEach((node) => this.nodeStates.set(node.id, node));
+      this.restoreNodeStates();
+      this.applySeasonalOverlay();
       this.graphBuilder = nodesMod.buildNodeGraph;
       this.buildGraph();
       this.territory = await this.archive.loadTerritory(this);
@@ -356,6 +374,191 @@ class ThresholdEngine {
     } catch (err) {
       // Ignore storage write issues.
     }
+  }
+
+  restoreNodeStates() {
+    if (!this.nodeStateStorageKey || this.persistedNodeIds.size === 0 || typeof this.nodeUpdate !== "function") {
+      return;
+    }
+    try {
+      const stored = JSON.parse(localStorage.getItem(this.nodeStateStorageKey) || "{}");
+      const states = stored && typeof stored === "object" && stored.nodes ? stored.nodes : stored;
+      if (!states || typeof states !== "object") {
+        return;
+      }
+      this.appliedNodeSeason = typeof stored.season === "string" && SEASONAL_MODIFIERS[stored.season]
+        ? stored.season
+        : "";
+      this.persistedNodeIds.forEach((id) => {
+        const source = this.nodeRegistry.get(id);
+        const stored = states[id];
+        if (!source || !stored || typeof stored !== "object") {
+          return;
+        }
+        this.nodeStates.set(id, this.nodeUpdate(source, stored));
+      });
+      window.dispatchEvent(new CustomEvent("threshold:node-states-restored", {
+        detail: { nodeIds: Array.from(this.persistedNodeIds) }
+      }));
+    } catch (err) {
+      // Ignore storage read/parse issues.
+    }
+  }
+
+  persistNodeStates() {
+    if (!this.nodeStateStorageKey || this.persistedNodeIds.size === 0) {
+      return;
+    }
+    try {
+      const states = {};
+      this.persistedNodeIds.forEach((id) => {
+        const node = this.nodeStates.get(id);
+        if (node) {
+          states[id] = {
+            weather: node.weather,
+            physics: node.physics,
+            connections: node.connections,
+            characters: node.characters,
+            html: node.html
+          };
+        }
+      });
+      localStorage.setItem(this.nodeStateStorageKey, JSON.stringify({
+        version: 1,
+        season: this.appliedNodeSeason,
+        nodes: states
+      }));
+    } catch (err) {
+      // Ignore storage write issues.
+    }
+  }
+
+  resetPersistedNodeStates() {
+    if (!this.nodeRegistry || this.persistedNodeIds.size === 0) {
+      return [];
+    }
+    const restored = [];
+    this.persistedNodeIds.forEach((id) => {
+      const source = this.nodeRegistry.get(id);
+      if (source) {
+        this.nodeStates.set(id, source);
+        restored.push(source);
+      }
+    });
+    this.appliedNodeSeason = "";
+    this.applySeasonalOverlay();
+    window.dispatchEvent(new CustomEvent("threshold:node-states-reset", { detail: { nodes: restored } }));
+    return restored;
+  }
+
+  getSeason() {
+    try {
+      const season = localStorage.getItem(this.seasonStorageKey);
+      return SEASONAL_MODIFIERS[season] ? season : "spring";
+    } catch (err) {
+      return "spring";
+    }
+  }
+
+  getMazeDepth() {
+    try {
+      const depth = Number(localStorage.getItem(this.mazeDepthStorageKey));
+      return Number.isFinite(depth) && depth >= 0 ? Math.floor(depth) : 0;
+    } catch (err) {
+      return 0;
+    }
+  }
+
+  setMazeDepth(depth) {
+    this.mazeDepth = Math.max(0, Math.floor(Number(depth) || 0));
+    try {
+      localStorage.setItem(this.mazeDepthStorageKey, String(this.mazeDepth));
+    } catch (err) {
+      // Ignore storage write issues.
+    }
+    window.dispatchEvent(new CustomEvent("threshold:maze-depth-changed", { detail: { depth: this.mazeDepth } }));
+    return this.mazeDepth;
+  }
+
+  incrementMazeDepth() {
+    return this.setMazeDepth(this.getMazeDepth() + 1);
+  }
+
+  resetMazeDepth() {
+    return this.setMazeDepth(0);
+  }
+
+  getCurrentNodeId() {
+    try {
+      return localStorage.getItem(this.currentNodeStorageKey) || "housegarden";
+    } catch (err) {
+      return "housegarden";
+    }
+  }
+
+  setCurrentNodeId(nodeId) {
+    this.currentNodeId = String(nodeId || "housegarden");
+    try {
+      localStorage.setItem(this.currentNodeStorageKey, this.currentNodeId);
+    } catch (err) {
+      // Ignore storage write issues.
+    }
+    window.dispatchEvent(new CustomEvent("threshold:current-node-changed", {
+      detail: { nodeId: this.currentNodeId }
+    }));
+    return this.currentNodeId;
+  }
+
+  setSeason(season) {
+    if (!SEASONAL_MODIFIERS[season]) {
+      return null;
+    }
+    this.season = season;
+    try {
+      localStorage.setItem(this.seasonStorageKey, season);
+    } catch (err) {
+      // Ignore storage write issues.
+    }
+    return this.applySeasonalOverlay();
+  }
+
+  applySeasonalOverlay() {
+    if (!this.nodeRegistry || this.persistedNodeIds.size === 0) {
+      return [];
+    }
+    const previous = SEASONAL_MODIFIERS[this.appliedNodeSeason] || SEASONAL_MODIFIERS.spring;
+    const next = SEASONAL_MODIFIERS[this.season] || SEASONAL_MODIFIERS.spring;
+    const removePrevious = this.appliedNodeSeason ? previous : { humidity: 0, pollen_pulse: 0, resonance: 0, pressure: 0, drift: 0 };
+    const updated = [];
+
+    this.persistedNodeIds.forEach((id) => {
+      const node = this.getNode(id);
+      if (!node) {
+        return;
+      }
+      const physics = { ...node.physics };
+      const weather = typeof node.weather === "object" ? { ...node.weather } : {};
+      ["resonance", "pressure", "drift"].forEach((field) => {
+        if (Number.isFinite(Number(physics[field]))) {
+          physics[field] = Number(physics[field]) - removePrevious[field] + next[field];
+        }
+      });
+      ["humidity", "pollen_pulse"].forEach((field) => {
+        if (Number.isFinite(Number(weather[field]))) {
+          weather[field] = Number(weather[field]) - removePrevious[field] + next[field];
+        }
+      });
+      const overlayNode = this.nodeUpdate(node, { physics, weather });
+      this.nodeStates.set(id, overlayNode);
+      updated.push(overlayNode);
+    });
+
+    this.appliedNodeSeason = this.season;
+    this.persistNodeStates();
+    window.dispatchEvent(new CustomEvent("threshold:season-changed", {
+      detail: { season: this.season, nodes: updated }
+    }));
+    return updated;
   }
 
   ensureRenderTargets() {
@@ -759,6 +962,9 @@ class ThresholdEngine {
 
     const updated = this.nodeUpdate(node, changes);
     this.nodeStates.set(updated.id, updated);
+    if (this.persistedNodeIds.has(updated.id)) {
+      this.persistNodeStates();
+    }
     window.dispatchEvent(new CustomEvent("threshold:node-updated", { detail: { node: updated, changes } }));
     return updated;
   }
@@ -846,13 +1052,17 @@ class ThresholdEngine {
     if (!node) {
       return null;
     }
+    this.setCurrentNodeId(node.id);
+    const mazeDepth = GLYPH_CHAMBER_IDS.has(node.id) && options.incrementMazeDepth !== false
+      ? this.incrementMazeDepth()
+      : this.getMazeDepth();
     const activation = this.activateNode(node, { reveal: options.reveal === true });
     const physics = this.applyPhysicsTick(node);
     const weather = this.applyWeatherTick(node);
     window.dispatchEvent(new CustomEvent("threshold:node-navigated", {
-      detail: { node, activation, physics, weather }
+      detail: { node, activation, physics, weather, mazeDepth }
     }));
-    return { node, activation, physics, weather };
+    return { node, activation, physics, weather, mazeDepth };
   }
 
   runFlowback(node) {

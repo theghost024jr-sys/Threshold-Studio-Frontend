@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/styles/pulse.css">
   <link rel="stylesheet" href="/styles/styles.css">
 </head>
-<body>
+<body data-threshold-spoke="hub">
   <header class="site-header">
     <a class="brand" href="index.html"><img src="/assets/entry/threshold-logo.svg" alt="">Threshold</a>
     <nav class="site-nav" aria-label="Primary">
@@ -25,7 +25,11 @@
     <p class="eyebrow">Circle I / Anchor</p>
     <h1>The hub holds.</h1>
     <p class="lead">A stable center for movement between the known field and the branches waiting beyond it.</p>
-    <button id="hubA" class="action" type="button">Wake the hub</button>
+    <div class="hub-engine-status" aria-live="polite">
+      <span id="hub-engine-node" class="hub-engine-indicator"></span>
+      <span id="hub-maze-depth" class="hub-engine-indicator"></span>
+    </div>
+    <button id="hub-enter-engine" class="action" type="button">Enter Engine</button>
     <a class="action" href="garden.html">Cross into the garden</a>
     <a class="action" href="/pages/beyond/beyond.html">Beyond</a>
     <section class="field-grid" aria-label="Hub field">
@@ -35,5 +39,6 @@
     </section>
   </main>
   <script type="module" src="/threshold-engine.js"></script>
+  <script type="module" src="/scripts/hub-public-runtime.js"></script>
 </body>
 </html>

@@ -2,7 +2,10 @@ const UNIT_VALUES = Array.from({ length: 11 }, (_, index) => (index / 10).toFixe
 const PAGE_ACTIONS = ["enter", "physics_change", "weather_change", "character_enter", "character_exit"];
 
 function createOptions(values, selected) {
-  return values.map((value) => `<option value="${value}"${String(value) === String(selected) ? " selected" : ""}>${value}</option>`).join("");
+  const selectedValue = String(selected);
+  const normalizedValues = values.map(String);
+  const currentOption = normalizedValues.includes(selectedValue) ? "" : `<option value="${selectedValue}" selected>${selectedValue}</option>`;
+  return currentOption + values.map((value) => `<option value="${value}"${String(value) === selectedValue ? " selected" : ""}>${value}</option>`).join("");
 }
 
 function numericValue(value) {
@@ -76,6 +79,9 @@ async function initialize() {
       if (event.target.matches("[data-node-id]")) {
         showNode(event.target.value);
       }
+    });
+    window.addEventListener("threshold:season-changed", () => {
+      showNode(root.querySelector("[data-node-id]").value);
     });
     root.addEventListener("click", (event) => {
       if (!event.target.matches("[data-apply-node]")) {

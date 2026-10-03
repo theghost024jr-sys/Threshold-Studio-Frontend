@@ -95,7 +95,8 @@ test("publishes and renders the four-path glyph archive", async () => {
   assert.match(page, /scripts\/emotional-engine\.js/);
   assert.match(page, /scripts\/image-fallback\.js/);
   assert.match(engine, /fetch\("\/config\/glyphs\.json"/);
-  assert.match(engine, /depth \+= 1/);
+  assert.match(engine, /getMazeDepth/);
+  assert.match(engine, /threshold:maze-depth-changed/);
   assert.match(engine, /archive\.dataset\.weather = choice/);
   assert.match(engine, /emotions\.checkGlyphAppearance/);
   assert.match(engine, /ThresholdEmotions\.activateGlyph/);

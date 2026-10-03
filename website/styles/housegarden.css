@@ -258,6 +258,103 @@
   margin: 1.5rem 0 0;
 }
 
+.housegarden-runtime {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem 1rem;
+  align-items: start;
+  width: min(42rem, 100%);
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(198, 218, 174, 0.22);
+  border-radius: 8px;
+  background: rgba(9, 16, 10, 0.62);
+}
+
+.housegarden-runtime h2,
+.housegarden-runtime p {
+  margin: 0;
+}
+
+.housegarden-runtime h2 {
+  color: rgba(244, 237, 214, 0.96);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.housegarden-runtime__kicker {
+  color: rgba(181, 205, 153, 0.72);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.housegarden-runtime__list {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.housegarden-runtime__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(198, 218, 174, 0.13);
+  color: rgba(217, 220, 202, 0.72);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.76rem;
+}
+
+.housegarden-runtime__list li[data-active="true"] strong {
+  color: rgba(211, 232, 178, 0.98);
+}
+
+.housegarden-runtime__list strong {
+  color: rgba(232, 238, 218, 0.92);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.housegarden-runtime button {
+  border: 1px solid rgba(211, 232, 178, 0.58);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(232, 238, 218, 0.92);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.72rem;
+  padding: 0.45rem 0.65rem;
+  cursor: pointer;
+}
+
+.housegarden-runtime label {
+  display: grid;
+  gap: 0.25rem;
+  color: rgba(217, 220, 202, 0.72);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.72rem;
+  text-transform: capitalize;
+}
+
+.housegarden-runtime select {
+  border: 1px solid rgba(211, 232, 178, 0.4);
+  border-radius: 4px;
+  background: rgba(9, 16, 10, 0.86);
+  color: rgba(232, 238, 218, 0.92);
+  font: inherit;
+  padding: 0.35rem;
+}
+
+.housegarden-runtime button:hover,
+.housegarden-runtime button:focus-visible {
+  background: rgba(211, 232, 178, 0.14);
+}
+
 .garden-depth {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

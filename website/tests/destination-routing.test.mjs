@@ -29,11 +29,16 @@ test("warms the existing Entry Hub without replacing its route structure", async
   const warmth = await readFile(new URL("../scripts/entry-warmth.js", import.meta.url), "utf8");
 
   assert.match(hub, /--season-color:/);
-  assert.match(hub, /\.entry-orbit::before/);
+  assert.match(hub, /<span class="hub-cosmic-rotation" aria-hidden="true"><\/span>/);
+  assert.match(hub, /\.hub-cosmic-rotation::before/);
   assert.match(hub, /animation: hub-atmosphere 10s ease-in-out infinite/);
-  assert.match(hub, /\.entry-orbit::after/);
+  assert.match(hub, /\.hub-cosmic-rotation::after/);
   assert.match(hub, /animation: hub-heliosphere 14s ease-in-out infinite/);
+  assert.match(hub, /animation: hub-cosmic-rotation 120s linear infinite/);
   assert.match(hub, /\.hub-oort/);
+  assert.match(hub, /\.hub-comet/);
+  assert.match(hub, /hub-solar-wind/);
+  assert.match(hub, /hub-orbit-drift/);
   assert.match(hub, /animation: hub-pulse 4s ease-in-out infinite/);
   assert.match(hub, /width: min\(560px, 76vw\)/);
   assert.match(hub, /@media \(min-width: 1100px\)[\s\S]*?width: min\(640px, 76vw\)/);
@@ -42,6 +47,9 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /src=["']\/scripts\/entry-warmth\.js["']/);
   assert.match(warmth, /const oortPositions/);
   assert.match(warmth, /function addOortCloud\(\)/);
+  assert.match(warmth, /querySelector\("\.hub-cosmic-rotation"\)/);
+  assert.match(warmth, /function addMicroComets\(\)/);
+  assert.match(warmth, /function wireRouteConstellations\(\)/);
 });
 
 test("boots the public Hub from a real engine entry control", async () => {

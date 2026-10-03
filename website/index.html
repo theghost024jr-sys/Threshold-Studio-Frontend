@@ -23,6 +23,12 @@
       --season-color: rgba(255, 200, 150, 0.25);
     }
 
+    @property --orbit-drift {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: 0deg;
+    }
+
     * { box-sizing: border-box; }
 
     body {
@@ -79,10 +85,12 @@
     .entry-shell {
       position: relative;
       z-index: 1;
+      isolation: isolate;
       min-height: 100vh;
       display: grid;
       place-items: center;
       padding: clamp(2.2rem, 5vw, 4.8rem);
+      overflow: clip;
       animation: hub-fade-in 1.2s ease both;
     }
 
@@ -96,6 +104,16 @@
       pointer-events: none;
     }
 
+    .entry-shell::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      z-index: 0;
+      background: linear-gradient(112deg, transparent 36%, rgba(255, 229, 190, 0.05) 48%, transparent 60%);
+      animation: hub-solar-wind 24s linear infinite;
+      pointer-events: none;
+    }
+
     .entry-panel {
       width: min(1440px, 100%);
       padding: clamp(0.25rem, 1vw, 0.8rem);
@@ -103,6 +121,35 @@
       grid-template-columns: 1.1fr 0.9fr;
       gap: clamp(1.25rem, 3.2vw, 3.5rem);
       position: relative;
+    }
+
+    .hub-constellation {
+      position: absolute;
+      z-index: 0;
+      height: 1px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(255, 220, 166, 0), rgba(255, 220, 166, 0.58), rgba(255, 220, 166, 0));
+      box-shadow: 0 0 8px rgba(255, 210, 138, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 500ms ease;
+    }
+
+    .hub-constellation.is-visible {
+      opacity: 1;
+    }
+
+    .hub-comet {
+      position: absolute;
+      z-index: 0;
+      width: 140px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 236, 204, 0.76), transparent);
+      filter: blur(0.25px);
+      opacity: 0;
+      pointer-events: none;
+      animation: hub-comet 27s ease-in-out infinite;
+      animation-delay: var(--hub-comet-delay, 0s);
     }
 
     @media (min-width: 1100px) {
@@ -262,7 +309,16 @@
       animation: hub-pulse 4s ease-in-out infinite;
     }
 
-    .entry-orbit::after {
+    .hub-cosmic-rotation {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: 50%;
+      animation: hub-cosmic-rotation 120s linear infinite;
+      pointer-events: none;
+    }
+
+    .hub-cosmic-rotation::after {
       content: "";
       position: absolute;
       inset: -60px;
@@ -274,7 +330,7 @@
       pointer-events: none;
     }
 
-    .entry-orbit::before {
+    .hub-cosmic-rotation::before {
       content: "";
       position: absolute;
       inset: -20px;
@@ -313,9 +369,10 @@
     }
 
     .entry-rotor {
-      transform: rotateX(var(--wheel-tilt-x)) rotateY(var(--wheel-tilt-y)) rotate(var(--wheel-rotation)) scale(var(--wheel-scale));
+      transform: rotateX(var(--wheel-tilt-x)) rotateY(var(--wheel-tilt-y)) rotate(calc(var(--wheel-rotation) + var(--orbit-drift, 0deg))) scale(var(--wheel-scale));
       transform-style: preserve-3d;
       will-change: transform;
+      animation: hub-orbit-drift 20s ease-in-out infinite;
     }
 
     .entry-ring {
@@ -696,6 +753,27 @@
       50% { transform: scale(1.03); opacity: 1; }
     }
 
+    @keyframes hub-solar-wind {
+      from { transform: translateX(-20%) translateY(4%); }
+      to { transform: translateX(20%) translateY(-4%); }
+    }
+
+    @keyframes hub-comet {
+      0%, 8%, 100% { opacity: 0; transform: translate(-20vw, 16vh) rotate(-18deg); }
+      11% { opacity: 0.36; }
+      16% { opacity: 0; transform: translate(110vw, -20vh) rotate(-18deg); }
+    }
+
+    @keyframes hub-orbit-drift {
+      0%, 100% { --orbit-drift: -0.2deg; }
+      50% { --orbit-drift: 0.2deg; }
+    }
+
+    @keyframes hub-cosmic-rotation {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
     @keyframes hub-atmosphere {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 0.7; transform: scale(1.05); }
@@ -810,11 +888,13 @@
       .entry-mark,
       .prime-atom-logo-field,
       .entry-orbit,
-      .entry-orbit::before,
-      .entry-orbit::after,
+      .hub-cosmic-rotation,
       .entry-orbit > img,
       .hub-oort,
       .entry-shell::before,
+      .entry-shell::after,
+      .hub-comet,
+      .entry-rotor,
       .entry-receptor::after,
       .entry-engine-core::before,
       .entry-engine-core::after,
@@ -884,6 +964,7 @@
             <span class="entry-spoke entry-spoke-c"></span>
           </div>
           <div class="entry-orbit" data-hub-wheel data-prime-atom role="img" aria-label="Prime Atom, the living threshold between the Hub and Engine">
+            <span class="hub-cosmic-rotation" aria-hidden="true"></span>
             <img class="prime-atom-logo-field" src="/assets/entry/threshold-logo.svg" alt="" aria-hidden="true" />
             <span class="entry-signal-ring"></span>
             <div class="entry-rotor">

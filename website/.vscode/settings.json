@@ -1,0 +1,48 @@
+{
+    // Python Interpreter
+    "python.defaultInterpreterPath": "C:\\Users\\James Romeo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "python.terminal.activateEnvironment": false,
+
+    // Pylance / Python Analysis
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.includeAliasesFromUserFiles": true,
+    "python.analysis.indexing": true,
+    "python.analysis.persistAllIndices": true,
+    "python.analysis.regenerateStdLibIndices": true,
+    "python.analysis.followSymlinkedDirectories": false,
+    "python.analysis.userFileIndexingLimit": -1,
+    "python.analysis.stubPath": "typings",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.displayEnglishDiagnostics": true,
+
+    // Editor Behavior
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.renderWhitespace": "boundary",
+    "editor.minimap.enabled": false,
+    "editor.stickyScroll.enabled": true,
+    "editor.smoothScrolling": true,
+    "editor.largeFileOptimizations": true,
+    "breadcrumbs.enabled": true,
+
+    // Explorer / Workspace
+    "explorer.compactFolders": false,
+    "explorer.confirmDragAndDrop": true,
+
+    // Search
+    "search.useIgnoreFiles": true,
+
+    // Terminal
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.scrollback": 10000,
+
+    // Git
+    "git.autofetch": true,
+    "git.confirmSync": true,
+
+    // Extensions
+    "extensions.autoUpdate": false,
+    "extensions.autoCheckUpdates": false
+}

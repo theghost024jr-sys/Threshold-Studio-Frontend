@@ -57,6 +57,25 @@ test("preserves static response bodies while adding trace headers", async () => 
   }
 });
 
+test("serves the Portal router shell for direct World navigation", async () => {
+  const requestedPaths = [];
+  const response = await worker.fetch(
+    new Request("https://threshold.example/world/chambers"),
+    {
+      ASSETS: {
+        async fetch(request) {
+          requestedPaths.push(new URL(request.url).pathname);
+          return new Response("<!doctype html><title>Threshold World</title>");
+        }
+      }
+    }
+  );
+
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("content-type"), "text/html; charset=utf-8");
+  assert.deepEqual(requestedPaths, ["/portal-dist/portal-shell.txt"]);
+});
+
 test("logs sanitized node activation failures without a LOG binding", async () => {
   const logs = captureLogs();
   try {

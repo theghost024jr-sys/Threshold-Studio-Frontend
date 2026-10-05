@@ -1,0 +1,11 @@
+{
+    "name": "Threshold Studio Frontend",
+    "folders": [
+        {
+            "path": "C:\\Threshold-Studio-Frontend"
+        }
+    ],
+    "settings": {
+        "python.defaultInterpreterPath": "C:\\Users\\James Romeo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe"
+    }
+}

@@ -291,6 +291,22 @@
       font-size: clamp(0.68rem, 0.9vw, 0.9rem);
     }
 
+    .entry-map-link {
+      display: inline-block;
+      margin-top: 1.25rem;
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .entry-map-link:hover,
+    .entry-map-link:focus-visible {
+      color: var(--gold);
+    }
+
     p {
       margin: 0.95rem 0 0;
       max-width: 54ch;
@@ -1015,6 +1031,7 @@
           and what you contribute becomes part of the whole.
         </p>
         <p class="entry-invitation">Begin at the Hub. Follow what draws you inward.</p>
+        <a class="entry-map-link" href="world-map.html">Open World Map</a>
         <div class="entry-reactor" data-hub-reactor>
           <div class="hub-heartbeat-spokes" aria-hidden="true">
             <span class="entry-spoke entry-spoke-a"></span>

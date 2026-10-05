@@ -589,7 +589,9 @@ async function buildEthosChamberPayload(env, request, trace, limit = 220) {
 async function handleRequest(request, env, trace) {
   const url = new URL(request.url);
 
-  if (request.method === "GET" && (url.pathname === "/portal" || url.pathname.startsWith("/portal/"))) {
+  const isPortalPath = url.pathname === "/portal" || url.pathname.startsWith("/portal/");
+  const isWorldPath = url.pathname === "/world" || url.pathname.startsWith("/world/");
+  if (request.method === "GET" && (isPortalPath || isWorldPath)) {
     const portalUrl = new URL(request.url);
     const isShellRequest = !url.pathname.startsWith("/portal/assets/") && url.pathname !== "/portal/favicon.svg";
     if (url.pathname.startsWith("/portal/assets/")) {

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "garden",
+    "name": "House & Garden",
+    "path": "/world/garden",
+    "type": "chamber",
+    "description": "A soft, resting space in Threshold's world.",
+    "accent": "green"
+  },
+  {
+    "id": "ella",
+    "name": "Ella",
+    "path": "/world/ella",
+    "type": "chamber",
+    "description": "Cinematic signals, world-stage, and pointer-driven behavior.",
+    "accent": "violet"
+  },
+  {
+    "id": "chambers",
+    "name": "Chambers",
+    "path": "/world/chambers",
+    "type": "index",
+    "description": "Explore Threshold's rooms, dialogues, and spaces.",
+    "accent": "blue"
+  },
+  {
+    "id": "world-holding",
+    "name": "World Holding",
+    "path": "/world/map",
+    "type": "map",
+    "description": "The structural container for Threshold's world.",
+    "accent": "gold"
+  }
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "id": "house-and-garden",
+        "name": "House & Garden",
+        "file": "house-and-garden.md",
+        "renderer": "garden",
+        "description": "A soft resting chamber."
+    },
+    {
+        "id": "ella",
+        "name": "Ella",
+        "file": "ella.md",
+        "renderer": "ella",
+        "description": "Cinematic world-stage behavior."
+    },
+    {
+        "id": "dialogues",
+        "name": "Dialogues",
+        "file": "dialogues.md",
+        "renderer": "dialogue",
+        "description": "Conversation-driven chamber."
+    }
+]

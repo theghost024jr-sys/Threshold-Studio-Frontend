@@ -1,0 +1,183 @@
+:root {
+  --world-night: #07100d;
+  --world-ink: #f5f1e7;
+  --world-muted: #b8c6bd;
+  --world-line: rgba(201, 228, 181, 0.24);
+  --world-glow: #cbe7a8;
+}
+
+* { box-sizing: border-box; }
+
+body.world-map-page {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--world-ink);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(94, 142, 111, 0.18), transparent 29rem),
+    radial-gradient(circle at 82% 76%, rgba(111, 153, 175, 0.15), transparent 27rem),
+    linear-gradient(145deg, #06110e 0%, var(--world-night) 52%, #0d1118 100%);
+  font-family: "Manrope", sans-serif;
+}
+
+.world-map-header,
+.world-map-shell {
+  width: min(1180px, calc(100% - 3rem));
+  margin: 0 auto;
+}
+
+.world-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 5.5rem;
+  border-bottom: 1px solid var(--world-line);
+}
+
+.world-map-brand,
+.world-map-return {
+  color: inherit;
+  text-decoration: none;
+}
+
+.world-map-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: "Cinzel", serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.world-map-brand img {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.world-map-return {
+  color: var(--world-muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.world-map-return:hover,
+.world-map-return:focus-visible { color: var(--world-glow); }
+
+.world-map-shell { padding: clamp(4rem, 10vw, 8rem) 0; }
+.world-map-intro { max-width: 43rem; }
+
+.world-map-kicker,
+.world-map-node__kind,
+.world-map-node__index {
+  color: var(--world-glow);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.world-map-kicker { margin: 0 0 1rem; }
+
+.world-map-intro h1 {
+  max-width: 11ch;
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.world-map-intro > p:last-child {
+  max-width: 38rem;
+  margin: 1.5rem 0 0;
+  color: var(--world-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.world-map-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: clamp(3rem, 8vw, 6.5rem);
+}
+
+.world-map-node {
+  position: relative;
+  display: grid;
+  min-height: 17rem;
+  padding: 1.4rem;
+  overflow: hidden;
+  border: 1px solid var(--world-line);
+  border-radius: 0.85rem;
+  color: var(--world-ink);
+  background: rgba(12, 25, 22, 0.66);
+  isolation: isolate;
+  text-decoration: none;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+.world-map-node::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  opacity: 0;
+  background: radial-gradient(circle at 50% 100%, var(--node-glow), transparent 62%);
+  transition: opacity 220ms ease;
+}
+
+.world-map-node:hover,
+.world-map-node:focus-visible {
+  border-color: var(--world-glow);
+  box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.26);
+  outline: none;
+  transform: translateY(-0.35rem);
+}
+
+.world-map-node:hover::before,
+.world-map-node:focus-visible::before { opacity: 0.58; }
+
+.world-map-node__index {
+  justify-self: end;
+  color: var(--world-muted);
+}
+
+.world-map-node__kind { align-self: end; }
+
+.world-map-node strong {
+  align-self: end;
+  margin-top: 0.25rem;
+  font-family: "Cinzel", serif;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  font-weight: 500;
+}
+
+.world-map-node > span:last-child {
+  align-self: end;
+  margin-top: 0.75rem;
+  color: var(--world-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.world-map-node--garden { --node-glow: rgba(142, 199, 112, 0.72); }
+.world-map-node--ella { --node-glow: rgba(185, 205, 232, 0.68); }
+.world-map-node--house { --node-glow: rgba(229, 174, 105, 0.65); }
+.world-map-node--dialogues { --node-glow: rgba(196, 139, 212, 0.65); }
+.world-map-node--holding { --node-glow: rgba(112, 202, 195, 0.66); }
+.world-map-node--tools { --node-glow: rgba(137, 164, 228, 0.67); }
+
+@media (max-width: 760px) {
+  .world-map-header,
+  .world-map-shell { width: min(100% - 2rem, 1180px); }
+  .world-map-grid { grid-template-columns: 1fr; }
+  .world-map-node { min-height: 13rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-map-node { transition: none; }
+  .world-map-node:hover,
+  .world-map-node:focus-visible { transform: none; }
+}

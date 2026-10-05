@@ -40,9 +40,5 @@
 
     // Git
     "git.autofetch": true,
-    "git.confirmSync": true,
-
-    // Extensions
-    "extensions.autoUpdate": false,
-    "extensions.autoCheckUpdates": false
+    "git.confirmSync": true
 }

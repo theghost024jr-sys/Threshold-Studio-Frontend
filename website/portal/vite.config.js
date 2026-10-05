@@ -10,6 +10,8 @@ export default defineConfig({
       'react-router-dom': resolve(import.meta.dirname, 'node_modules/react-router-dom'),
       'react/jsx-runtime': resolve(import.meta.dirname, 'node_modules/react/jsx-runtime.js'),
       'react': resolve(import.meta.dirname, 'node_modules/react'),
+      'dompurify': resolve(import.meta.dirname, 'node_modules/dompurify'),
+      'marked': resolve(import.meta.dirname, 'node_modules/marked'),
     },
   },
   build: {

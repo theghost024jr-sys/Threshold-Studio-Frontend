@@ -26,7 +26,8 @@ function toWorldChamber(chamber) {
     name: chamber.title,
     description: chamber.description || "A Threshold chamber.",
     renderer: resolveRenderer(chamber),
-    content: chamber.body || ""
+    content: chamber.body || "",
+    assets: chamber.assets || []
   };
 }
 

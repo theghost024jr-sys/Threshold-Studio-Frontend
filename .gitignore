@@ -3,6 +3,8 @@
 # ============================
 .obsidian/
 vault/
+!website/world/vault/
+!website/world/vault/**
 !website/assets/vault/
 website/assets/vault/*
 !website/assets/vault/5b8218c41ed2.png

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { loadChamber } from "./loadChamber.js";
+import { getChamber } from "../vault/vaultAdapter.js";
 import { ChamberRenderer } from "./ChamberRenderer.jsx";
 
 export function ChamberPage() {
@@ -10,7 +10,8 @@ export function ChamberPage() {
   useEffect(() => {
     let active = true;
 
-    loadChamber(id).then((nextChamber) => {
+    setChamber(null);
+    getChamber(id).then((nextChamber) => {
       if (active) {
         setChamber(nextChamber);
       }

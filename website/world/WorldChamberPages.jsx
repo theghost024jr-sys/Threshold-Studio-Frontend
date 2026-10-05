@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import chambers from "./chambers/chambers.index.json";
+import { getChambers } from "./vault/vaultAdapter.js";
 
 function ChamberPage({ title, children }) {
   return (
@@ -29,6 +30,22 @@ export function EllaPage() {
 }
 
 export function ChambersIndexPage() {
+  const [chambers, setChambers] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+
+    getChambers().then((nextChambers) => {
+      if (active) {
+        setChambers(nextChambers);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <main className="world-chamber">
       <p className="world-map__eyebrow">Threshold World</p>

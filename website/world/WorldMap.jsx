@@ -1,27 +1,40 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import chambers from "./chambers.config.json";
-import "./world.css";
+import { getChambers } from "./vault/vaultAdapter";
 
 export function WorldMap() {
   const navigate = useNavigate();
+  const [chambers, setChambers] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+
+    getChambers().then((nextChambers) => {
+      if (active) {
+        setChambers(nextChambers);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <main className="world-map">
       <header className="world-map__header">
-        <p className="world-map__eyebrow">Threshold navigation</p>
         <h1>Threshold World</h1>
         <p>Choose a place in the world to enter.</p>
       </header>
 
-      <section className="world-map__grid" aria-label="World destinations">
+      <section className="world-map__grid" aria-label="World chambers">
         {chambers.map((chamber) => (
           <button
             key={chamber.id}
-            className={`world-map__card world-map__card--${chamber.accent}`}
+            className={`world-map__card world-map__card--${chamber.renderer}`}
             type="button"
-            onClick={() => navigate(chamber.path)}
+            onClick={() => navigate(`/world/chambers/${chamber.id}`)}
           >
-            <span>{chamber.type}</span>
             <h2>{chamber.name}</h2>
             <p>{chamber.description}</p>
           </button>
@@ -30,5 +43,3 @@ export function WorldMap() {
     </main>
   );
 }
-
-export default WorldMap;

@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Dashboard from './pages/Dashboard.jsx'
 import Home from './pages/Home.jsx'
-import WorldMap from '../../world/WorldMap.jsx'
+import { WorldMap } from '../../world/WorldMap.jsx'
 import {
   ChambersIndexPage,
   EllaPage,

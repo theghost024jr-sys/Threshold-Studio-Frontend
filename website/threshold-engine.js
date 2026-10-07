@@ -1161,7 +1161,7 @@ class ThresholdEngine {
         '<p class="project-chamber-line"><strong>Channel:</strong> <span data-project-field="channel">threshold</span></p>',
         '<p class="project-chamber-line"><strong>Branch:</strong> <span data-project-field="branch">--</span></p>',
         '<p class="project-chamber-line"><strong>Route:</strong> <span data-project-field="route">--</span></p>',
-        '<p class="project-chamber-line"><span data-project-field="note">' + PUBLIC_AUTHORSHIP + '</span></p>'
+        '<p class="project-chamber-line"><span data-project-field="note" style="text-transform: lowercase;">' + PUBLIC_AUTHORSHIP + '</span></p>'
       ].join("");
       document.body.appendChild(inspector);
     }

@@ -7,14 +7,9 @@ const workerSource = resolve("worker.js");
 const workerOutput = resolve(outputDirectory, "_worker.js");
 const requiredFiles = ["index.html", "_worker.js"];
 const staticOnly = process.argv.includes("--static");
-const config = JSON.parse(await readFile(resolve("threshold.config.json"), "utf8"));
 const vaultData = JSON.parse(
   await readFile(resolve(outputDirectory, "data", "threshold-vault.json"), "utf8"),
 );
-
-if (!staticOnly && vaultData.vaultRoot !== config.vaultRoot) {
-  throw new Error(`Website vault source drifted: ${vaultData.vaultRoot}`);
-}
 
 await copyFile(workerSource, workerOutput);
 
@@ -31,4 +26,4 @@ console.log(`Cloudflare Pages static output ready: ${outputDirectory}`);
 console.log(`Cloudflare Pages advanced-mode Worker ready: ${workerOutput}`);
 console.log(staticOnly
   ? "Committed public data accepted for CI; canonical vault generation was not run."
-  : `Canonical vault data ready: ${vaultData.vaultRoot}`);
+  : `Canonical vault data ready for ${vaultData.authorship} authorship.`);

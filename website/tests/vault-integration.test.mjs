@@ -45,6 +45,14 @@ test("publishes Cindervox intent signals from the canonical vault", async () => 
   }
 });
 
+test("keeps local paths and personal authorship out of public vault data", async () => {
+  const vaultData = await readFile("website/data/threshold-vault.json", "utf8");
+
+  assert.match(vaultData, /"authorship": "theghost echoroot"/);
+  assert.doesNotMatch(vaultData, /C:\\\\Users\\\\/);
+  assert.doesNotMatch(vaultData, /James Romeo/);
+});
+
 test("keeps Basin as the first environment beyond the Herb Room chamber", async () => {
   const vault = JSON.parse(await readFile("website/data/threshold-vault.json", "utf8"));
   const basinDocument = vault.documents.find((document) => document.id === "basin");

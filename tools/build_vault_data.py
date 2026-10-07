@@ -24,6 +24,7 @@ IGNORED_PARTS = {
     "_private",
 }
 WIKILINK_PATTERN = re.compile(r"\[\[([^\]|#]+)")
+PUBLIC_AUTHORSHIP = "theghost echoroot"
 PUBLIC_MEDIA_EXTENSIONS = {
     ".avif",
     ".gif",
@@ -352,7 +353,7 @@ def public_document(
         "html": metadata.get("html") or metadata.get("page", {}).get("html") if isinstance(metadata.get("page"), dict) else metadata.get("html"),
         "links": links,
         "assets": resolve_public_assets(vault_root, path, links, assets_by_name, asset_output_root),
-        "body": body,
+        "body": body.replace("James Romeo", PUBLIC_AUTHORSHIP),
     }
 
 
@@ -400,8 +401,7 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
     payload = {
         "version": 1,
         "generatedAt": generated_at,
-        "vaultRoot": str(paths.vault_root),
-        "publishRoot": str(publish_root),
+        "authorship": PUBLIC_AUTHORSHIP,
         "counts": {
             "markdown": len(indexed),
             "publishedMarkdown": len(published),
@@ -418,7 +418,6 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
     index = {
         "version": 1,
         "generatedAt": generated_at,
-        "vaultRoot": str(paths.vault_root),
         "count": len(indexed),
         "documents": indexed,
     }
@@ -438,8 +437,8 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
             {
                 "version": 1,
                 "generatedAt": generated_at,
-                "vaultPath": str(paths.vault_root),
-                "dataPath": str(data_root / "threshold-vault.json"),
+                "authorship": payload["authorship"],
+                "dataPath": "/data/threshold-vault.json",
                 "counts": payload["counts"],
             },
             indent=2,
@@ -453,7 +452,7 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
 def main() -> int:
     paths = load_threshold_paths()
     payload = build_vault_data(paths)
-    print(f"Vault data built from {payload['vaultRoot']}")
+    print(f"Vault data built for {payload['authorship']} authorship")
     print(f"Published {payload['counts']['publishedMarkdown']} notes to {paths.website_root / 'data'}")
     return 0
 

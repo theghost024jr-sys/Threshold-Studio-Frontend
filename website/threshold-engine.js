@@ -328,7 +328,9 @@ class ThresholdEngine {
         branch: document.body.dataset.thresholdBranch || "",
         weather: "threshold",
         noteTitle: this.vault ? "Vault connected" : "Vault not loaded",
-        notePath: this.vault && this.vault.vaultRoot ? this.vault.vaultRoot : ""
+        notePath: this.vault && this.vault.authorship
+          ? this.vault.authorship + " authorship"
+          : ""
       });
 
       window.dispatchEvent(new CustomEvent("threshold:engine-ready", {

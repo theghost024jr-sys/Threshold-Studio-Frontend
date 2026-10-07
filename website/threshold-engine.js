@@ -328,8 +328,7 @@ class ThresholdEngine {
         page: location.pathname.split("/").pop() || "",
         branch: document.body.dataset.thresholdBranch || "",
         weather: "threshold",
-        noteTitle: this.vault ? "Vault connected" : "Vault not loaded",
-        notePath: PUBLIC_AUTHORSHIP
+        noteTitle: PUBLIC_AUTHORSHIP
       });
 
       window.dispatchEvent(new CustomEvent("threshold:engine-ready", {
@@ -1162,8 +1161,7 @@ class ThresholdEngine {
         '<p class="project-chamber-line"><strong>Channel:</strong> <span data-project-field="channel">threshold</span></p>',
         '<p class="project-chamber-line"><strong>Branch:</strong> <span data-project-field="branch">--</span></p>',
         '<p class="project-chamber-line"><strong>Route:</strong> <span data-project-field="route">--</span></p>',
-        '<p class="project-chamber-line"><strong>Note:</strong> <span data-project-field="note">--</span></p>',
-        '<p class="project-chamber-path" data-project-field="path">' + PUBLIC_AUTHORSHIP + '</p>'
+        '<p class="project-chamber-line"><span data-project-field="note">' + PUBLIC_AUTHORSHIP + '</span></p>'
       ].join("");
       document.body.appendChild(inspector);
     }
@@ -1173,8 +1171,7 @@ class ThresholdEngine {
       channel: inspector.querySelector('[data-project-field="channel"]'),
       branch: inspector.querySelector('[data-project-field="branch"]'),
       route: inspector.querySelector('[data-project-field="route"]'),
-      note: inspector.querySelector('[data-project-field="note"]'),
-      path: inspector.querySelector('[data-project-field="path"]')
+      note: inspector.querySelector('[data-project-field="note"]')
     };
 
     window.addEventListener("threshold:branch-update", (event) => {
@@ -1197,8 +1194,7 @@ class ThresholdEngine {
       channel: "threshold",
       branch: "",
       route: "",
-      noteTitle: "--",
-      notePath: "--"
+      noteTitle: PUBLIC_AUTHORSHIP
     }, detail || {});
 
     this.lastDetail = snapshot;
@@ -1206,8 +1202,7 @@ class ThresholdEngine {
     this.inspector.channel.textContent = snapshot.channel || "threshold";
     this.inspector.branch.textContent = snapshot.branch || "--";
     this.inspector.route.textContent = snapshot.route || "--";
-    this.inspector.note.textContent = snapshot.noteTitle || "--";
-    this.inspector.path.textContent = PUBLIC_AUTHORSHIP;
+    this.inspector.note.textContent = PUBLIC_AUTHORSHIP;
     this.inspector.node.dataset.channel = snapshot.channel || "threshold";
   }
 
@@ -1343,7 +1338,6 @@ class ThresholdEngine {
       this.branchModule.apply(route, selection);
     }
 
-    const selectedNote = this.pickSelectedNote(selection);
     const branch = document.body.dataset.thresholdBranch || "";
 
     const detail = Object.assign({}, selection, {
@@ -1352,8 +1346,7 @@ class ThresholdEngine {
       weather: options.weather || channel,
       page: options.page || "",
       branch: branch,
-      noteTitle: selectedNote && selectedNote.title ? selectedNote.title : "--",
-      notePath: PUBLIC_AUTHORSHIP
+      noteTitle: PUBLIC_AUTHORSHIP
     });
 
     this.renderProjectChamber(detail);

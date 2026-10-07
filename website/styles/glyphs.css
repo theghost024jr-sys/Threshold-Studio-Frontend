@@ -41,6 +41,10 @@
   text-decoration: none;
   text-transform: uppercase;
 }
+.glyph-brand .authorship-name {
+  font-family: "Manrope", sans-serif;
+  text-transform: lowercase;
+}
 
 .glyph-brand-mark {
   display: grid;

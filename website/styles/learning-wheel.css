@@ -23,6 +23,7 @@
 .wheel-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .wheel-site-header { min-height: 76px; border-bottom: 1px solid var(--wheel-line); }
 .wheel-brand { display: flex; align-items: center; gap: 12px; color: var(--wheel-ink); font: 600 .74rem/1 "Cinzel", serif; text-decoration: none; text-transform: uppercase; }
+.wheel-brand .authorship-name { font-family: "Manrope", sans-serif; text-transform: lowercase; }
 .wheel-brand img { width: 34px; height: 34px; }
 .wheel-site-header nav { display: flex; gap: 24px; }
 .wheel-site-header nav a { color: var(--wheel-muted); font-size: .7rem; text-decoration: none; text-transform: uppercase; }

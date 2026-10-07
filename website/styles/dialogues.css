@@ -24,6 +24,7 @@
 .dialogue-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .dialogue-site-header { min-height: 76px; border-bottom: 1px solid var(--voice-line); }
 .dialogue-brand { display: flex; align-items: center; gap: 12px; color: var(--voice-ink); font: 600 .74rem/1 "Cinzel", serif; text-decoration: none; text-transform: uppercase; }
+.dialogue-brand .authorship-name { font-family: "Manrope", sans-serif; text-transform: lowercase; }
 .dialogue-brand img { width: 34px; height: 34px; }
 .dialogue-site-header nav { display: flex; gap: 24px; }
 .dialogue-site-header nav a { color: var(--voice-muted); font-size: .72rem; text-decoration: none; text-transform: uppercase; }

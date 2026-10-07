@@ -48,7 +48,7 @@ test("publishes Cindervox intent signals from the canonical vault", async () => 
 test("keeps local paths and personal authorship out of public vault data", async () => {
   const vaultData = await readFile("website/data/threshold-vault.json", "utf8");
 
-  assert.match(vaultData, /"authorship": "theghost echoroot"/);
+  assert.match(vaultData, /"authorship": "echoroot & theghost"/);
   assert.doesNotMatch(vaultData, /C:\\\\Users\\\\/);
   assert.doesNotMatch(vaultData, /James Romeo/);
 });

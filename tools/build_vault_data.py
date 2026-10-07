@@ -24,7 +24,7 @@ IGNORED_PARTS = {
     "_private",
 }
 WIKILINK_PATTERN = re.compile(r"\[\[([^\]|#]+)")
-PUBLIC_AUTHORSHIP = "theghost echoroot"
+PUBLIC_AUTHORSHIP = "echoroot & theghost"
 PUBLIC_MEDIA_EXTENSIONS = {
     ".avif",
     ".gif",

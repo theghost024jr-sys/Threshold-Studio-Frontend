@@ -12,6 +12,7 @@ const TARGET_IDS = [
 ];
 
 const DEFAULT_ASSET_BASE = "https://cdn.jsdelivr.net/gh/theghost024jr-sys/Threshold-Studio-Assets@main";
+const PUBLIC_AUTHORSHIP = "echoroot & theghost";
 const REMOTE_ASSET_TYPES = new Set(["text", "json", "blob", "arrayBuffer"]);
 
 const BRANCH_IDS = [
@@ -328,7 +329,7 @@ class ThresholdEngine {
         branch: document.body.dataset.thresholdBranch || "",
         weather: "threshold",
         noteTitle: this.vault ? "Vault connected" : "Vault not loaded",
-        notePath: this.vault && this.vault.authorship ? this.vault.authorship : ""
+        notePath: PUBLIC_AUTHORSHIP
       });
 
       window.dispatchEvent(new CustomEvent("threshold:engine-ready", {
@@ -1162,7 +1163,7 @@ class ThresholdEngine {
         '<p class="project-chamber-line"><strong>Branch:</strong> <span data-project-field="branch">--</span></p>',
         '<p class="project-chamber-line"><strong>Route:</strong> <span data-project-field="route">--</span></p>',
         '<p class="project-chamber-line"><strong>Note:</strong> <span data-project-field="note">--</span></p>',
-        '<p class="project-chamber-path" data-project-field="path">--</p>'
+        '<p class="project-chamber-path" data-project-field="path">' + PUBLIC_AUTHORSHIP + '</p>'
       ].join("");
       document.body.appendChild(inspector);
     }
@@ -1206,7 +1207,7 @@ class ThresholdEngine {
     this.inspector.branch.textContent = snapshot.branch || "--";
     this.inspector.route.textContent = snapshot.route || "--";
     this.inspector.note.textContent = snapshot.noteTitle || "--";
-    this.inspector.path.textContent = snapshot.notePath || "--";
+    this.inspector.path.textContent = PUBLIC_AUTHORSHIP;
     this.inspector.node.dataset.channel = snapshot.channel || "threshold";
   }
 
@@ -1352,7 +1353,7 @@ class ThresholdEngine {
       page: options.page || "",
       branch: branch,
       noteTitle: selectedNote && selectedNote.title ? selectedNote.title : "--",
-      notePath: selectedNote && selectedNote.relativePath ? selectedNote.relativePath : "--"
+      notePath: PUBLIC_AUTHORSHIP
     });
 
     this.renderProjectChamber(detail);

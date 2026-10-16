@@ -1,11 +1,8 @@
-const VAULT_DATA_URL = "/data/threshold-vault.json";
+import { chambers } from "../../../data/threshold-vault.json";
 
 export async function fetchArchiveEntries() {
-  const response = await fetch(VAULT_DATA_URL, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Archive request failed: ${response.status}`);
+  if (!Array.isArray(chambers)) {
+    throw new Error("Generated vault data does not contain a chambers list");
   }
-
-  const vault = await response.json();
-  return Array.isArray(vault?.chambers) ? vault.chambers : [];
+  return chambers;
 }

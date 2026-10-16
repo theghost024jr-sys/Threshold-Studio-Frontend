@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown'
 import { useArchive } from '../hooks/useArchive.js'
 
 export default function Archive() {
@@ -17,8 +18,17 @@ export default function Archive() {
           <ul className="archive-list">
             {entries.slice(0, 8).map((entry, index) => (
               <li key={entry.id || entry.relativePath || index}>
-                <span>{entry.title || entry.id || 'Untitled chamber'}</span>
-                <small>{entry.chamber || entry.relativePath || 'Threshold'}</small>
+                <details className="archive-entry">
+                  <summary>
+                    <span>{entry.title || entry.id || 'Untitled chamber'}</span>
+                    <small>{entry.chamber || 'Threshold'}</small>
+                  </summary>
+                  {typeof entry.body === 'string' && entry.body.trim() && (
+                    <div className="archive-body">
+                      <ReactMarkdown>{entry.body}</ReactMarkdown>
+                    </div>
+                  )}
+                </details>
               </li>
             ))}
           </ul>

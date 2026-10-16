@@ -85,6 +85,20 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
   assert.match(mythology, /values\.includes\('mythology'\)/);
 });
 
+test("keeps local vault filesystem paths out of public output", async () => {
+  const vault = JSON.parse(await readFile("website/data/threshold-vault.json", "utf8"));
+  const index = JSON.parse(await readFile("website/data/vault-index.json", "utf8"));
+  const publicData = JSON.stringify({ vault, index });
+  const engine = await readFile("website/threshold-engine.js", "utf8");
+
+  assert.equal("vaultRoot" in vault, false);
+  assert.equal("publishRoot" in vault, false);
+  assert.equal("vaultRoot" in index, false);
+  assert.equal(publicData.includes("C:\\\\Users\\\\"), false);
+  assert.ok(vault.documents.every((document) => document.publish !== false && document.draft !== true));
+  assert.match(engine, /notePath: "thghost & echoroot"/);
+});
+
 test("publishes and renders the four-path glyph archive", async () => {
   const index = JSON.parse(await readFile("website/config/glyphs.json", "utf8"));
   assert.deepEqual(Object.keys(index.glyphs), ["collapse", "expand", "fog", "soil"]);

@@ -304,6 +304,20 @@ def split_frontmatter(source: str) -> tuple[dict[str, Any], str]:
     return metadata, "\n".join(lines[end + 1 :]).strip()
 
 
+def include_in_public_exports(path: Path) -> bool:
+    with path.open(encoding="utf-8-sig", errors="replace") as source:
+        first_line = source.readline()
+        if first_line.strip() != "---":
+            return True
+        frontmatter = [first_line]
+        for line in source:
+            frontmatter.append(line)
+            if line.strip() == "---":
+                break
+    metadata, _ = split_frontmatter("".join(frontmatter))
+    return metadata.get("publish") is not False and metadata.get("draft") is not True
+
+
 def document_kind(relative: str, metadata: dict[str, Any]) -> str:
     normalized = relative.casefold()
     category = str(metadata.get("category", "")).casefold()
@@ -383,6 +397,7 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
     published = [
         public_document(paths.vault_root, path, assets_by_name, asset_output_root)
         for path in markdown_files(publish_root)
+        if include_in_public_exports(path)
     ]
     translations = sorted(
         relative_path(paths.vault_root, path)
@@ -396,6 +411,7 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
             "relativePath": relative_path(paths.vault_root, path),
         }
         for path in vault_files
+        if include_in_public_exports(path)
     ]
     generated_at = datetime.now(timezone.utc).isoformat()
     payload = {

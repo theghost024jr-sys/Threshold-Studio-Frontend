@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
@@ -11,6 +13,8 @@ app.add_middleware(
     allow_origins=[
         "http://127.0.0.1:8000",
         "http://localhost:8000",
+        "http://127.0.0.1:8788",
+        "http://localhost:8788",
         "https://www.thresholdstudiowebsite.org",
         "https://threshold-studio-frontend.pages.dev",
     ],
@@ -18,7 +22,24 @@ app.add_middleware(
     allow_headers=["content-type"],
 )
 
-graph = Graph()
+def load_canonical_node_ids() -> frozenset[str]:
+    registry_path = Path(__file__).resolve().parents[1] / "website" / "data" / "threshold-vault.json"
+    try:
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise RuntimeError(f"unable to load canonical node registry: {registry_path}") from error
+
+    node_ids = frozenset(
+        str(node.get("id", "")).strip()
+        for node in registry.get("nodes", [])
+        if isinstance(node, dict) and str(node.get("id", "")).strip()
+    )
+    if not node_ids:
+        raise RuntimeError(f"canonical node registry contains no node IDs: {registry_path}")
+    return node_ids
+
+
+graph = Graph(load_canonical_node_ids())
 
 
 @app.get("/tick")

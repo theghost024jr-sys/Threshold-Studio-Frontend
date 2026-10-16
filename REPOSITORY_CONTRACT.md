@@ -30,6 +30,38 @@ The build may publish only:
 
 The build must not copy the raw vault, `.obsidian` state, private note bodies, credentials, environment files, or unrelated media into the system or website.
 
+## Engine Interface Boundary
+
+The frontend may send validated user intent and own ephemeral presentation state. It must not send
+authoritative chamber, migration, threshold, volatility, tint, or world-state values. The engine
+remains authoritative for those values and returns state snapshots/events that the frontend renders.
+
+`website/scripts/engine-interface.js` is the browser boundary. It validates outgoing node-input
+intents, validates incoming authoritative state snapshots, emits `threshold:engine-state` for
+accepted snapshots, emits `threshold:engine-intent-accepted` for accepted intents, and emits
+`threshold:engine-rejection` for rejected intents.
+
+An intent may be added only when all of the following are defined:
+
+1. An explicit frontend action schema and validation rule.
+2. An authorized backend behavior that produces an authoritative state change or event.
+3. A user-visible UI consequence rendered from that authoritative result.
+
+Do not add intents that only acknowledge or record arbitrary payloads without those semantics.
+
+The backend authorizes node commands against the generated canonical node registry in
+`website/data/threshold-vault.json`. `node.activate` is the only activation command: it accepts
+a canonical node ID, marks that node active, records the command for the next tick, and rejects
+unknown IDs plus legacy `click` or `active` activation fields.
+
+Frontend node schemas are explicit:
+
+- Selection: `{ "type": "node.input", "nodeId": "<id>", "payload": { "action": "select" } }`
+- Activation: `{ "type": "node.activate", "nodeId": "<canonical-id>" }`
+
+The activation validator requires a canonical registry and rejects IDs outside it. Do not send
+activation through the generic selection-input helper.
+
 ## Generated Products
 
 - `website/data/threshold-vault.json`: public note data and resolved asset metadata

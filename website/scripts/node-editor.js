@@ -1,3 +1,5 @@
+import { createEngineInterface } from "./engine-interface.js";
+
 const UNIT_VALUES = Array.from({ length: 11 }, (_, index) => (index / 10).toFixed(1));
 const PAGE_ACTIONS = ["enter", "physics_change", "weather_change", "character_enter", "character_exit"];
 
@@ -39,7 +41,7 @@ function renderEditor(root, node, nodes) {
     '</div>',
     `<label>Connections<select data-connections multiple size="5">${nodes.filter((candidate) => candidate.id !== node.id).map((candidate) => `<option value="${candidate.id}"${node.connections.includes(candidate.id) ? " selected" : ""}>${candidate.id}</option>`).join("")}</select></label>`,
     `<label>Page activation<select data-page-action>${createOptions(PAGE_ACTIONS, "enter")}</select></label>`,
-    '<button type="button" data-apply-node>Apply node state</button>'
+    '<div class="node-editor-actions"><button type="button" data-apply-node>Apply node state</button><button type="button" data-activate-node>Activate node</button><output data-node-engine-status>Awaiting engine state</output></div>'
   ].join("");
   root.querySelector("[data-node-id]").value = node.id;
 }
@@ -54,6 +56,10 @@ function fieldValues(root, selector, booleanFields) {
 
 async function initialize() {
   const engine = window.threshold;
+  const endpoint = document.body.dataset.engineEndpoint;
+  const engineInterface = endpoint
+    ? createEngineInterface({ endpoint, root: document.body })
+    : null;
   if (!engine) {
     return;
   }
@@ -72,12 +78,60 @@ async function initialize() {
     if (editorNodes.length === 0) {
       return;
     }
+    const canonicalNodeIds = new Set(editorNodes.map((node) => node.id));
+    const updateAuthoritativeNodeState = (state) => {
+      const selectedNodeId = root.querySelector("[data-node-id]")?.value;
+      const node = state.nodes?.[selectedNodeId];
+      const status = root.querySelector("[data-node-engine-status]");
+      const activateButton = root.querySelector("[data-activate-node]");
+      if (!status || !activateButton) {
+        return;
+      }
+      const active = node?.active === true;
+      activateButton.disabled = active;
+      status.textContent = active ? "Active (engine)" : "Inactive (engine)";
+    };
     const showNode = (id) => renderEditor(root, engine.getNode(id) || editorNodes[0], editorNodes);
     showNode(editorNodes[0].id);
 
-    root.addEventListener("change", (event) => {
+    if (engineInterface) {
+      window.addEventListener("threshold:engine-state", (event) => updateAuthoritativeNodeState(event.detail));
+      engineInterface.tick().then(updateAuthoritativeNodeState).catch((error) => {
+        root.querySelector("[data-node-engine-status]").textContent = `Engine unavailable: ${error.message}`;
+      });
+    }
+
+    root.addEventListener("change", async (event) => {
       if (event.target.matches("[data-node-id]")) {
-        showNode(event.target.value);
+        const nodeId = event.target.value;
+        showNode(nodeId);
+        if (!engineInterface) {
+          return;
+        }
+        const status = root.querySelector("[data-node-status]");
+        try {
+          const result = await engineInterface.applyInput(nodeId, { action: "select" });
+          if (result.type === "accepted") {
+            await engineInterface.tick();
+          }
+        } catch (error) {
+          status.textContent = `Engine unavailable: ${error.message}`;
+        }
+      }
+    });
+    root.addEventListener("click", async (event) => {
+      if (!event.target.matches("[data-activate-node]") || !engineInterface) {
+        return;
+      }
+      const nodeId = root.querySelector("[data-node-id]").value;
+      const status = root.querySelector("[data-node-engine-status]");
+      try {
+        const result = await engineInterface.activateNode(nodeId, canonicalNodeIds);
+        if (result.type === "accepted") {
+          await engineInterface.tick();
+        }
+      } catch (error) {
+        status.textContent = `Engine unavailable: ${error.message}`;
       }
     });
     window.addEventListener("threshold:season-changed", () => {

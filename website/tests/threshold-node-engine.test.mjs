@@ -68,3 +68,27 @@ test("returns null without publishing an update when no branch is available", ()
   assert.equal(glyphEngine.glyphInteractWithBranch({ nodeId: "missing", action: "hide" }), null);
   assert.equal(events.length, 0);
 });
+
+test("publishes read-only Echo Lens telemetry for protocol updates", () => {
+  events.length = 0;
+  const branchEngine = new thresholdEngineModule.ThresholdBranchEngine({
+    vault: {},
+    renderBranch() {}
+  });
+  branchEngine.initialize();
+
+  const update = branchEngine.processEchoSignal("home", {
+    pattern: ["branch", "home"],
+    charge: 1,
+    frequency: 1,
+    direction: 0,
+    boundary: ["home"]
+  });
+
+  assert.equal(update.node.phase, "Anchored");
+  assert.equal(update.lens.system.state, "LocalResonance");
+  assert.equal(update.lens.metrics.activeNodeCount, 1);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].type, "threshold:echo-lens-update");
+  assert.deepEqual(events[0].detail, update);
+});

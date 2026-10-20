@@ -63,6 +63,7 @@ website/dist/
 website/build/
 website/.cache/
 website/generated-pages/
+website/echoes/inventory/
 website/_worker.js
 website/portal-dist/
 website/data/vault-render-jobs.json

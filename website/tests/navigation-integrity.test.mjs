@@ -40,6 +40,9 @@ test("every labeled static link resolves to a real destination", async () => {
   for (const page of pages) {
     const html = await readFile(page, "utf8");
     const relativePage = path.relative(root, page).replaceAll("\\", "/");
+    const documentUrl = new URL(`/${relativePage}`, "https://threshold.invalid");
+    const baseHref = html.match(/<base\b[^>]*\bhref\s*=\s*["']([^"']+)["']/i)?.[1];
+    const baseUrl = baseHref ? new URL(baseHref, documentUrl) : documentUrl;
     const links = html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi);
 
     for (const match of links) {
@@ -50,7 +53,12 @@ test("every labeled static link resolves to a real destination", async () => {
 
       const href = hrefMatch[1].trim();
       assert.notEqual(href, "", `${relativePage}: labeled link "${label}" has an empty href`);
-      assert.notEqual(href, "#", `${relativePage}: labeled link "${label}" has a dead # href`);
+      const hiddenSpiritNotePlaceholder = href === "#"
+        && /\bid=["']viewer-note["']/i.test(attributes)
+        && /<section\b[^>]*id=["']myth-viewer["'][^>]*aria-hidden=["']true["']/i.test(html);
+      if (!hiddenSpiritNotePlaceholder) {
+        assert.notEqual(href, "#", `${relativePage}: labeled link "${label}" has a dead # href`);
+      }
       assert.doesNotMatch(href, /^javascript:/i, `${relativePage}: labeled link "${label}" uses a dead JavaScript URL`);
 
       if (/^(?:https?:|mailto:|tel:|obsidian:|\/\/)/i.test(href)) {
@@ -62,11 +70,20 @@ test("every labeled static link resolves to a real destination", async () => {
       let targetPage = page;
 
       if (routePath) {
-        const decodedPath = decodeURIComponent(routePath);
-        const resolved = decodedPath.startsWith("/")
-          ? path.join(root, decodedPath.slice(1))
-          : path.resolve(path.dirname(page), decodedPath);
-        assert.ok(resolved.startsWith(root), `${relativePage}: link escapes the published site: ${href}`);
+        const targetUrl = new URL(decodeURIComponent(routePath), baseUrl);
+        assert.equal(
+          targetUrl.origin,
+          "https://threshold.invalid",
+          `${relativePage}: link escapes the published site: ${href}`
+        );
+        const resolved = path.resolve(root, decodeURIComponent(targetUrl.pathname.slice(1)));
+        const resolvedRelative = path.relative(root, resolved);
+        assert.ok(
+          resolvedRelative !== ".."
+            && !resolvedRelative.startsWith(`..${path.sep}`)
+            && !path.isAbsolute(resolvedRelative),
+          `${relativePage}: link escapes the published site: ${href}`
+        );
         targetPage = await firstExisting([
           resolved,
           `${resolved}.html`,

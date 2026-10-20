@@ -1,3 +1,6 @@
+import { PAGE_ECHOES, resolvePageEchoes } from "./config/page-echoes.js";
+import { EchoNode, EchoProtocolLens } from "./echo-protocol.js";
+
 const TARGET_IDS = [
   "cave",
   "stairs",
@@ -38,12 +41,27 @@ const SEASONAL_MODIFIERS = Object.freeze({
 });
 const GLYPH_CHAMBER_IDS = new Set(["glyph_collapse", "glyph_expand", "glyph_fog", "glyph_soil"]);
 
+function createBranchEchoNode(id) {
+  return new EchoNode({
+    id,
+    pattern: ["branch", id],
+    boundary: "threshold-branch",
+    frequencyBand: [0.1, 10],
+    toleranceBand: 1,
+    flexibility: 0.25,
+    stability: 4,
+    reconfigure: () => true
+  });
+}
+
 class ThresholdBranch {
-  constructor(id, render) {
+  constructor(id, render, echoes = [], echoNode = null) {
     this.id = id;
     this.visible = true;
     this.state = "stable";
     this.payload = null;
+    this.echoes = echoes.filter((echo) => echo.branchId === id);
+    this.echoNode = echoNode;
     this.render = render;
   }
 
@@ -81,6 +99,7 @@ class ThresholdBranchEngine {
   constructor(engine) {
     this.engine = engine;
     this.initialized = false;
+    this.echoLens = new EchoProtocolLens();
   }
 
   initialize() {
@@ -90,9 +109,10 @@ class ThresholdBranchEngine {
 
     const render = this.engine.renderBranch.bind(this.engine);
     this.engine.branches = {};
+    const echoes = resolvePageEchoes(PAGE_ECHOES, this.engine.vault || {});
 
     BRANCH_IDS.forEach((id) => {
-      this.engine.branches[id] = new ThresholdBranch(id, render);
+      this.engine.branches[id] = new ThresholdBranch(id, render, echoes, createBranchEchoNode(id));
       render(this.engine.branches[id]);
     });
 
@@ -115,6 +135,38 @@ class ThresholdBranchEngine {
       : pool[Math.floor(Math.random() * pool.length)];
 
     return this.engine.branches[id] || null;
+  }
+
+  inspectEchoes() {
+    return this.echoLens.inspect(
+      Object.values(this.engine.branches || {}).map((branch) => branch.echoNode)
+    );
+  }
+
+  processEchoSignal(nodeId, signal) {
+    const branch = this.engine.branches && this.engine.branches[nodeId];
+    if (!branch || !branch.echoNode) {
+      throw new RangeError(`Unknown Echo branch "${nodeId}"`);
+    }
+    return this.publishEchoUpdate("signal", branch.echoNode.receiveSignal(signal));
+  }
+
+  advanceEchoNode(nodeId) {
+    const branch = this.engine.branches && this.engine.branches[nodeId];
+    if (!branch || !branch.echoNode) {
+      throw new RangeError(`Unknown Echo branch "${nodeId}"`);
+    }
+    return this.publishEchoUpdate("advance", branch.echoNode.advance());
+  }
+
+  publishEchoUpdate(trigger, node) {
+    const detail = Object.freeze({
+      trigger,
+      node,
+      lens: this.inspectEchoes()
+    });
+    window.dispatchEvent(new CustomEvent("threshold:echo-lens-update", { detail }));
+    return detail;
   }
 }
 
@@ -1231,6 +1283,18 @@ class ThresholdEngine {
     });
   }
 
+  inspectEchoes() {
+    return this.branchEngine.inspectEchoes();
+  }
+
+  processEchoSignal(nodeId, signal) {
+    return this.branchEngine.processEchoSignal(nodeId, signal);
+  }
+
+  advanceEchoNode(nodeId) {
+    return this.branchEngine.advanceEchoNode(nodeId);
+  }
+
   pickSelectedNote(selection) {
     if (!selection || typeof selection !== "object") {
       return null;
@@ -1701,5 +1765,11 @@ if (threshold) {
   });
 }
 
-export { ThresholdBranch, ThresholdBranchEngine, ThresholdEngine, ThresholdGlyphEngine };
+export {
+  EchoProtocolLens,
+  ThresholdBranch,
+  ThresholdBranchEngine,
+  ThresholdEngine,
+  ThresholdGlyphEngine
+};
 export default threshold;

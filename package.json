@@ -9,7 +9,8 @@
   "scripts": {
     "build:data": "python tools/build_vault_data.py && python tools/build_node_bundles.py",
     "build:render-jobs": "python tools/build_page_render_jobs.py",
-    "build:pages": "node website/portal/scripts/generate-vault-pages.mjs",
+    "build:pages": "node website/portal/scripts/generate-vault-pages.mjs && npm run build:inventory-echoes",
+    "build:inventory-echoes": "node scripts/build-inventory-echoes.mjs",
     "build": "npm run build:data && npm run build:render-jobs && npm --prefix website/portal ci && npm run build:pages && npm --prefix website/portal run build:site && node scripts/build-pages.mjs",
     "build:portal": "npm --prefix website/portal ci && npm --prefix website/portal run build",
     "build:ci": "python tools/build_page_render_jobs.py --ci && npm run build:pages && node scripts/build-pages.mjs --static",

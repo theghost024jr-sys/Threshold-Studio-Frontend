@@ -22,6 +22,22 @@ export default function Dashboard() {
         <Mythic />
         <Archive />
       </div>
+      {branch?.echoes.length > 0 && (
+        <section className="page-echoes" aria-label={`${branch.label} page echoes`}>
+          <h2>Page echoes</h2>
+          <ul>
+            {branch.echoes.map((echo) => (
+              <li key={echo.id}>
+                <a href={echo.href}>{echo.label}</a>
+                <small>
+                  {echo.force}-force echo
+                  {echo.markdownMatch && ` · Markdown: ${echo.markdownMatch.title}`}
+                </small>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </main>
   )
 }

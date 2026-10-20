@@ -1,5 +1,6 @@
 import { PAGE_ECHOES, resolvePageEchoes } from "./config/page-echoes.js";
 import { EchoNode, EchoProtocolLens } from "./echo-protocol.js";
+import { createWeatherSnapshot } from "./weather-model.js";
 
 const TARGET_IDS = [
   "cave",
@@ -100,6 +101,7 @@ class ThresholdBranchEngine {
     this.engine = engine;
     this.initialized = false;
     this.echoLens = new EchoProtocolLens();
+    this.weatherStates = new Map();
   }
 
   initialize() {
@@ -148,7 +150,11 @@ class ThresholdBranchEngine {
     if (!branch || !branch.echoNode) {
       throw new RangeError(`Unknown Echo branch "${nodeId}"`);
     }
-    return this.publishEchoUpdate("signal", branch.echoNode.receiveSignal(signal));
+    const node = branch.echoNode.receiveSignal(signal);
+    if (node.accepted) {
+      this.weatherStates.delete(nodeId);
+    }
+    return this.publishEchoUpdate("signal", node);
   }
 
   advanceEchoNode(nodeId) {
@@ -156,12 +162,37 @@ class ThresholdBranchEngine {
     if (!branch || !branch.echoNode) {
       throw new RangeError(`Unknown Echo branch "${nodeId}"`);
     }
+    this.weatherStates.delete(nodeId);
     return this.publishEchoUpdate("advance", branch.echoNode.advance());
+  }
+
+  inspectWeather(nodeId) {
+    if (nodeId === undefined) {
+      return Object.freeze([...this.weatherStates.values()]);
+    }
+    return this.weatherStates.get(String(nodeId)) || null;
+  }
+
+  applyWeatherState(nodeId, weatherInput) {
+    const branch = this.engine.branches && this.engine.branches[nodeId];
+    if (!branch || !branch.echoNode) {
+      throw new RangeError(`Unknown Echo branch "${nodeId}"`);
+    }
+    if (branch.echoNode.substrateState !== "Echo") {
+      throw new Error(`Weather can only adapt on an Echo-active node ("${nodeId}")`);
+    }
+
+    const weather = createWeatherSnapshot({ ...weatherInput, nodeId });
+    this.weatherStates.set(nodeId, weather);
+    const detail = Object.freeze({ nodeId, weather });
+    window.dispatchEvent(new CustomEvent("threshold:weather-update", { detail }));
+    return weather;
   }
 
   resetEchoSystem() {
     const nodes = Object.values(this.engine.branches || {})
       .map((branch) => branch.echoNode.reset());
+    this.weatherStates.clear();
     const detail = Object.freeze({
       trigger: "reset",
       node: null,
@@ -1298,6 +1329,14 @@ class ThresholdEngine {
 
   inspectEchoes() {
     return this.branchEngine.inspectEchoes();
+  }
+
+  inspectWeather(nodeId) {
+    return this.branchEngine.inspectWeather(nodeId);
+  }
+
+  applyWeatherState(nodeId, weatherInput) {
+    return this.branchEngine.applyWeatherState(nodeId, weatherInput);
   }
 
   processEchoSignal(nodeId, signal) {

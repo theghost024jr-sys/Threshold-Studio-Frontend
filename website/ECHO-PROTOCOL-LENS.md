@@ -34,3 +34,7 @@ entanglement.
 The current runtime does not model bundle activation, orbit relevance,
 chamber-driven changes, or ethos influence, so the Lens does not fabricate or
 report those measurements.
+
+The target attribution and multiplayer authority boundary is documented in
+[Echo Event Contract](./ECHO-EVENT-CONTRACT.md). The event contract is not yet
+implemented by the local runtime.

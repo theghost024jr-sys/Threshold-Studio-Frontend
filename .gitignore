@@ -8,6 +8,7 @@ vault/
 !website/assets/vault/
 website/assets/vault/*
 !website/assets/vault/5b8218c41ed2.png
+!website/assets/vault/09cd44a386f0.png
 
 # ============================
 # Cloudflare / Wrangler
@@ -61,8 +62,10 @@ _site/
 website/dist/
 website/build/
 website/.cache/
+website/generated-pages/
 website/_worker.js
 website/portal-dist/
+website/data/vault-render-jobs.json
 
 # ============================
 # Retired local build outputs

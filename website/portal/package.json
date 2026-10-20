@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run sync && vite",
-    "sync": "npm --prefix ../.. run build:data",
-    "build": "npm run sync && vite build && node scripts/copy-portal-shell.mjs",
+    "dev": "npm run sync && node scripts/generate-vault-pages.mjs && vite",
+    "sync": "npm --prefix ../.. run build:data && npm --prefix ../.. run build:render-jobs",
+    "build": "npm run sync && node scripts/generate-vault-pages.mjs && vite build && node scripts/copy-portal-shell.mjs",
     "build:site": "vite build && node scripts/copy-portal-shell.mjs",
     "lint": "eslint .",
     "preview": "vite preview"

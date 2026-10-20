@@ -25,10 +25,13 @@ npm run build:data
   ├─ world/vault-source.json
   └─ node-bundles/
        ↓
-Portal Vite build
-  └─ statically imports chambers from threshold-vault.json
-       ↓
-React Archive renders each Markdown body with react-markdown
+npm run build:render-jobs
+  └─ Website/data/vault-render-jobs.json
+       ├─ Portal Vite build
+       │    └─ statically imports chambers from threshold-vault.json
+       │         └─ React Archive renders Markdown with react-markdown
+       └─ npm run build:pages
+            └─ renders explicitly mapped notes into approved HTML templates
 ```
 
 The exporter is [`tools/build_vault_data.py`](../../../tools/build_vault_data.py).
@@ -59,7 +62,9 @@ first.
 | --- | --- |
 | `Website/data/threshold-vault.json` | Eligible published note records and Markdown bodies; chamber, node, and entity collections; counts and other generated metadata |
 | `Website/data/vault-index.json` | Metadata for visible Markdown notes not marked unpublished or draft: identifiers, titles, and relative paths |
+| `Website/data/vault-render-jobs.json` | Valid `PageRenderJob` records for notes explicitly mapped in `website/page-mapping.json` |
 | `Website/assets/vault/` | Media resolved from references in published notes |
+| `Website/generated-pages/` | Standalone pages generated from mapped notes and approved templates |
 | `world/vault-source.json` and `node-bundles/` | Additional generated products used by the wider Threshold build |
 
 **Content boundary:** Markdown bodies and resolved media are selected from
@@ -86,10 +91,13 @@ Run commands from `C:\Threshold` unless a different working directory is shown.
 | Command | Behavior |
 | --- | --- |
 | `npm run build:data` | Export the configured vault's published data and build node bundles |
-| `npm --prefix website/portal run dev` | Sync data, then start the Portal's Vite development server |
-| `npm --prefix website/portal run build` | Sync data, build the Portal, and copy its static shell |
-| `npm run build` | Export once, build the Portal, then assemble the Pages output |
-| `npm run dev` | Export and build the Portal, then start the local Cloudflare Pages server |
+| `npm run build:render-jobs` | Validate the page mappings and create the Python-to-Node render-job contract after `build:data` |
+| `npm run build:pages` | Render the explicitly mapped notes into standalone HTML pages; run after `build:render-jobs` and Portal dependencies are installed |
+| `npm run build:ci` | Regenerate public render jobs, generate mapped pages, and assemble static Pages output without accessing the canonical vault |
+| `npm --prefix website/portal run dev` | Sync vault data and render jobs, generate mapped pages, then start Vite |
+| `npm --prefix website/portal run build` | Sync vault data and render jobs, generate mapped pages, build the Portal, and copy its static shell |
+| `npm run build` | Export once, generate render jobs and pages, build the Portal, then assemble the Pages output |
+| `npm run dev` | Export data, generate render jobs and pages, build the Portal, then start the local Cloudflare Pages server |
 
 The Portal package also has a `build:site` script for orchestration after the
 root build has already synchronized data; it deliberately does not run the
@@ -101,6 +109,10 @@ export a second time.
   second path source or load credentials from another `.env` file.
 - Keep publishing intentional: put website-ready notes in `_publish` and
   reference only assets intended for publication.
+- Add standalone pages only through explicit entries in `website/page-mapping.json`.
+  Markdown, source HTML, template, and output must use the same exact filename
+  stem. Put approved, marker-bearing template copies under
+  `website/page-templates/`; never edit `html-inventory/`.
 - Do not replace this exporter with a recursive full-vault copy. In particular,
   do not copy `.obsidian`, trash, private notes, or unrelated media into the
   website.
@@ -119,6 +131,9 @@ export a second time.
    `build` script so the sync step creates the generated file first.
 4. **An asset is missing:** confirm the published note references the asset and
    that the exporter can resolve it from the canonical vault.
+5. **A generated page is missing:** confirm an exact-name mapping exists in
+   `website/page-mapping.json`, then run `npm run build:render-jobs` and
+   `npm run build:pages`.
 
 ## Related references
 

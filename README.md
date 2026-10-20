@@ -21,11 +21,14 @@ Local build system and public static frontend for [thresholdstudiowebsite.org](h
 `npm run build` performs this sequence:
 
 1. Read published notes and referenced media from the canonical vault.
-2. Generate `website/data/threshold-vault.json`, `website/data/vault-index.json`, and public referenced media under `website/assets/vault/`.
-3. Generate `world/vault-source.json` and the canonical bundle families under `node-bundles/`.
-4. Validate the static website and canonical source path.
+2. Generate `website/data/threshold-vault.json`, `website/data/vault-index.json`, `world/vault-source.json`, canonical bundles under `node-bundles/`, and public referenced media under `website/assets/vault/`.
+3. Generate the declared `PageRenderJob` records from the exact mappings in `website/page-mapping.json`.
+4. Render mapped notes into approved HTML templates under `website/generated-pages/`.
+5. Build the Portal and assemble the Cloudflare Pages output.
 
 Only note bodies under `_publish` and media explicitly referenced by those notes enter the website. The full vault index contains title and path metadata only. Raw vault contents remain outside `C:\Threshold`.
+
+`html-inventory/` remains read-only. Standalone page generation uses only explicitly mapped notes and approved template copies under `website/page-templates/`.
 
 ## Cloudflare Pages
 
@@ -40,6 +43,7 @@ Only note bodies under `_publish` and media explicitly referenced by those notes
 ```powershell
 npm run build
 npm test
+python -m pytest tests/test_build_vault_data.py tools/test_threshold_paths.py
 ```
 
 Cloudflare serves the public site. Secrets and domain configuration remain managed outside this repository.

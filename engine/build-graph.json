@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "id": "threshold-website-build",
+  "kind": "build-time",
+  "steps": [
+    {
+      "id": "export_vault_data",
+      "command": "npm run build:data",
+      "dependsOn": [],
+      "outputs": [
+        "website/data/threshold-vault.json",
+        "website/data/vault-index.json",
+        "website/assets/vault/",
+        "world/vault-source.json",
+        "node-bundles/"
+      ]
+    },
+    {
+      "id": "generate_page_jobs",
+      "command": "npm run build:render-jobs",
+      "dependsOn": [
+        "export_vault_data"
+      ],
+      "inputs": [
+        "website/data/threshold-vault.json",
+        "website/page-mapping.json",
+        "website/page-templates/"
+      ],
+      "outputs": [
+        "website/data/vault-render-jobs.json"
+      ]
+    },
+    {
+      "id": "install_portal_dependencies",
+      "command": "npm --prefix website/portal ci",
+      "dependsOn": [
+        "generate_page_jobs"
+      ]
+    },
+    {
+      "id": "generate_pages",
+      "command": "npm run build:pages",
+      "dependsOn": [
+        "generate_page_jobs",
+        "install_portal_dependencies"
+      ],
+      "inputs": [
+        "website/data/vault-render-jobs.json",
+        "website/page-templates/"
+      ],
+      "outputs": [
+        "website/generated-pages/"
+      ]
+    },
+    {
+      "id": "vite_build",
+      "command": "npm --prefix website/portal run build:site",
+      "dependsOn": [
+        "export_vault_data",
+        "generate_pages"
+      ],
+      "outputs": [
+        "website/portal-dist/"
+      ]
+    },
+    {
+      "id": "assemble_pages_output",
+      "command": "node scripts/build-pages.mjs",
+      "dependsOn": [
+        "vite_build"
+      ],
+      "outputs": [
+        "website/_worker.js"
+      ]
+    },
+    {
+      "id": "deploy",
+      "owner": "Cloudflare Pages",
+      "kind": "external",
+      "dependsOn": [
+        "assemble_pages_output"
+      ]
+    }
+  ]
+}

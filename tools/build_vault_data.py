@@ -5,13 +5,16 @@ import json
 import re
 import shutil
 from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any
+from pathlib import Path, PurePosixPath
+from typing import TYPE_CHECKING, Any
 
 try:
     from tools.threshold_paths import ThresholdPaths, load_threshold_paths
 except ModuleNotFoundError:
     from threshold_paths import ThresholdPaths, load_threshold_paths
+
+if TYPE_CHECKING:
+    from engine.contracts import PageRenderJob, PageRenderJobs
 
 
 IGNORED_PARTS = {
@@ -49,6 +52,7 @@ SPECIES_SIGNAL_FILES = {
         "default": ("porpois.png", "porpoise.png"),
     },
 }
+
 GLYPH_DEFINITIONS = {
     "collapse": {
         "name": "Collapse",
@@ -384,6 +388,127 @@ def node_record(document: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _mapping_path(value: Any, field: str, suffix: str) -> PurePosixPath:
+    if not isinstance(value, str) or not value or "\\" in value:
+        raise ValueError(f"Page mapping {field} must be a relative POSIX path")
+
+    parts = value.split("/")
+    path = PurePosixPath(value)
+    if (
+        path.is_absolute()
+        or any(part in {"", ".", ".."} for part in parts)
+        or path.suffix.casefold() != suffix
+    ):
+        raise ValueError(f"Page mapping {field} is not a safe {suffix} path: {value}")
+    return path
+
+
+def build_vault_render_jobs(
+    paths: ThresholdPaths,
+    published: list[dict[str, Any]],
+    manifest_data: dict[str, Any] | None = None,
+) -> PageRenderJobs:
+    if manifest_data is None:
+        manifest_data = json.loads(paths.page_mapping_path.read_text(encoding="utf-8"))
+    if manifest_data.get("version") != 1 or not isinstance(manifest_data.get("pages"), list):
+        raise ValueError("Page mapping manifest must have version 1 and a pages array")
+
+    documents_by_path = {document["relativePath"]: document for document in published}
+    seen_notes: set[str] = set()
+    seen_outputs: set[str] = set()
+    jobs: list[PageRenderJob] = []
+
+    for mapping in manifest_data["pages"]:
+        if not isinstance(mapping, dict):
+            raise ValueError("Each page mapping must be an object")
+        note = _mapping_path(mapping.get("note"), "note", ".md")
+        template = _mapping_path(mapping.get("templateId"), "templateId", ".html")
+        output = _mapping_path(mapping.get("output"), "output", ".html")
+
+        if note.parts[0] != "_publish":
+            raise ValueError(f"Mapped note must be under _publish: {note.as_posix()}")
+        if note.stem != template.stem or note.stem != output.stem:
+            raise ValueError(
+                "Mapped Markdown, template, and output must have the exact same filename stem"
+            )
+        if note.as_posix() in seen_notes:
+            raise ValueError(f"Duplicate Markdown page mapping: {note.as_posix()}")
+        if output.as_posix().casefold() in seen_outputs:
+            raise ValueError(f"Duplicate generated page output: {output.as_posix()}")
+        seen_notes.add(note.as_posix())
+        seen_outputs.add(output.as_posix().casefold())
+
+        document = documents_by_path.get(note.as_posix())
+        if document is None:
+            raise ValueError(f"Mapped note is not an eligible published Markdown file: {note.as_posix()}")
+
+        template_path = paths.page_templates_root.joinpath(*template.parts)
+        if not template_path.is_file():
+            raise FileNotFoundError(f"Mapped HTML template is missing: {template_path}")
+        if not template_path.resolve().is_relative_to(paths.page_templates_root.resolve()):
+            raise ValueError(f"Mapped HTML template escapes its directory: {template.as_posix()}")
+
+        template_text = template_path.read_text(encoding="utf-8-sig")
+        begin_marker = "<!-- BEGIN_CONTENT -->"
+        end_marker = "<!-- END_CONTENT -->"
+        if (
+            template_text.count(begin_marker) != 1
+            or template_text.count(end_marker) != 1
+            or template_text.index(begin_marker) >= template_text.index(end_marker)
+        ):
+            raise ValueError(f"Template must contain one ordered content marker pair: {template.as_posix()}")
+
+        resolved_assets = document["assets"]
+        if not isinstance(resolved_assets, list):
+            raise ValueError(f"Mapped note has an invalid resolved-assets collection: {note.as_posix()}")
+        resolved_names = {
+            asset["name"].casefold()
+            for asset in resolved_assets
+            if isinstance(asset, dict) and isinstance(asset.get("name"), str)
+        }
+        for asset in resolved_assets:
+            if not isinstance(asset, dict) or not all(
+                isinstance(asset.get(key), str)
+                for key in ("name", "sourceRelativePath", "webPath")
+            ):
+                raise ValueError(f"Mapped note contains an invalid asset record: {note.as_posix()}")
+            web_path = asset["webPath"]
+            if not web_path.startswith("/assets/vault/"):
+                raise ValueError(f"Mapped note contains a non-vault public asset URL: {web_path}")
+            asset_relative_value = web_path.lstrip("/")
+            asset_suffix = PurePosixPath(asset_relative_value).suffix.casefold()
+            if asset_suffix not in PUBLIC_MEDIA_EXTENSIONS:
+                raise ValueError(f"Mapped note contains an unsupported public asset URL: {web_path}")
+            asset_relative = _mapping_path(asset_relative_value, "asset webPath", asset_suffix)
+            asset_path = paths.website_root.joinpath(*asset_relative.parts)
+            if not asset_path.resolve().is_relative_to(paths.website_root.resolve()):
+                raise ValueError(f"Resolved asset escapes websiteRoot: {web_path}")
+            if not asset_path.is_file():
+                raise FileNotFoundError(f"Resolved public asset is missing: {web_path}")
+        for link in document.get("links", []):
+            asset_name = Path(link.strip()).name
+            if (
+                Path(asset_name).suffix.casefold() in PUBLIC_MEDIA_EXTENSIONS
+                and asset_name.casefold() not in resolved_names
+            ):
+                raise FileNotFoundError(
+                    f"Mapped note references an unresolved public asset: {note.as_posix()} -> {asset_name}"
+                )
+
+        job: PageRenderJob = {
+            "noteId": document["id"],
+            "relativePath": note.as_posix(),
+            "templateId": template.as_posix(),
+            "outputPath": output.as_posix(),
+            "markdownBody": document["body"],
+            "resolvedAssets": resolved_assets,
+            "status": "valid",
+        }
+        jobs.append(job)
+
+    return {"version": 1, "jobs": jobs}
+
+
 def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
     vault_files = markdown_files(paths.vault_root)
     publish_root = paths.vault_root / "_publish"
@@ -437,7 +562,6 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
         "count": len(indexed),
         "documents": indexed,
     }
-
     data_root = paths.website_root / "data"
     data_root.mkdir(parents=True, exist_ok=True)
     (data_root / "threshold-vault.json").write_text(

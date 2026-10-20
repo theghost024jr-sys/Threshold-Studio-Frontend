@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "id": "hub.pages",
+      "label": "Pages",
+      "description": "Generate standalone HTML pages from explicitly mapped published vault notes.",
+      "owner": "website-build-pipeline",
+      "dependsOn": [
+        "vault.exporter",
+        "website.page-mapping"
+      ],
+      "outputs": [
+        "website/generated-pages/"
+      ],
+      "buildGraph": "../../engine/build-graph.json"
+    }
+  ]
+}

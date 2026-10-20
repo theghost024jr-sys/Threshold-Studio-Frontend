@@ -1,4 +1,5 @@
-from tools.build_vault_data import node_record, split_frontmatter
+from tools.build_vault_data import build_vault_render_jobs, node_record, split_frontmatter
+from tools.threshold_paths import ThresholdPaths
 
 
 def test_frontmatter_preserves_public_node_metadata() -> None:
@@ -69,3 +70,116 @@ def test_node_record_uses_nested_page_html_when_top_level_html_is_absent() -> No
     })
 
     assert node["html"] == "/housegarden.html#lagoon"
+
+
+def test_vault_render_jobs_require_exact_note_template_names(tmp_path) -> None:
+    website_root = tmp_path / "website"
+    inventory_root = tmp_path / "html-inventory"
+    template = website_root / "page-templates" / "basin.html"
+    template.parent.mkdir(parents=True)
+    template.write_text(
+        "<!DOCTYPE html><!-- BEGIN_CONTENT --><!-- END_CONTENT --></html>",
+        encoding="utf-8",
+    )
+    paths = ThresholdPaths(
+        vault_root=tmp_path / "vault",
+        glyph_root=tmp_path / "glyphs",
+        system_root=tmp_path,
+        website_root=website_root,
+        html_inventory_root=inventory_root,
+        page_mapping_path=website_root / "page-mapping.json",
+        page_templates_root=website_root / "page-templates",
+        generated_pages_root=website_root / "generated-pages",
+        render_jobs_path=website_root / "data" / "vault-render-jobs.json",
+        world_root=tmp_path / "world",
+        threshold_root=tmp_path / "threshold",
+        node_bundles_root=tmp_path / "node-bundles",
+        scripts_root=tmp_path / "scripts",
+        tools_root=tmp_path / "tools",
+    )
+    manifest = {
+        "version": 1,
+        "pages": [
+            {
+                "note": "_publish/basin.md",
+                "templateId": "basin.html",
+                "output": "basin.html",
+            }
+        ],
+    }
+    documents = [
+        {
+            "id": "basin",
+            "relativePath": "_publish/basin.md",
+            "title": "Basin",
+            "body": "# Basin",
+            "assets": [],
+        }
+    ]
+
+    jobs = build_vault_render_jobs(paths, documents, manifest)
+
+    assert jobs["jobs"] == [
+        {
+            "noteId": "basin",
+            "relativePath": "_publish/basin.md",
+            "templateId": "basin.html",
+            "outputPath": "basin.html",
+            "markdownBody": "# Basin",
+            "resolvedAssets": [],
+            "status": "valid",
+        }
+    ]
+
+
+def test_vault_render_jobs_reject_mismatched_template_names(tmp_path) -> None:
+    website_root = tmp_path / "website"
+    inventory_root = tmp_path / "html-inventory"
+    template = website_root / "page-templates" / "different.html"
+    template.parent.mkdir(parents=True)
+    template.write_text(
+        "<!DOCTYPE html><!-- BEGIN_CONTENT --><!-- END_CONTENT --></html>",
+        encoding="utf-8",
+    )
+    paths = ThresholdPaths(
+        vault_root=tmp_path / "vault",
+        glyph_root=tmp_path / "glyphs",
+        system_root=tmp_path,
+        website_root=website_root,
+        html_inventory_root=inventory_root,
+        page_mapping_path=website_root / "page-mapping.json",
+        page_templates_root=website_root / "page-templates",
+        generated_pages_root=website_root / "generated-pages",
+        render_jobs_path=website_root / "data" / "vault-render-jobs.json",
+        world_root=tmp_path / "world",
+        threshold_root=tmp_path / "threshold",
+        node_bundles_root=tmp_path / "node-bundles",
+        scripts_root=tmp_path / "scripts",
+        tools_root=tmp_path / "tools",
+    )
+    manifest = {
+        "version": 1,
+        "pages": [
+            {
+                "note": "_publish/basin.md",
+                "templateId": "different.html",
+                "output": "basin.html",
+            }
+        ],
+    }
+    documents = [
+        {
+            "id": "basin",
+            "relativePath": "_publish/basin.md",
+            "title": "Basin",
+            "body": "# Basin",
+            "assets": [],
+        }
+    ]
+
+    try:
+        build_vault_render_jobs(paths, documents, manifest)
+    except ValueError as error:
+        assert "exact same filename stem" in str(error)
+    else:
+        raise AssertionError("Expected a filename mismatch to fail")

@@ -96,7 +96,7 @@ test("keeps local vault filesystem paths out of public output", async () => {
   assert.equal("vaultRoot" in index, false);
   assert.equal(publicData.includes("C:\\\\Users\\\\"), false);
   assert.ok(vault.documents.every((document) => document.publish !== false && document.draft !== true));
-  assert.match(engine, /notePath: "thghost & echoroot"/);
+  assert.match(engine, /noteTitle: PUBLIC_AUTHORSHIP/);
 });
 
 test("publishes and renders the four-path glyph archive", async () => {

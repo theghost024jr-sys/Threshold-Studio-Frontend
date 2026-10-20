@@ -159,6 +159,19 @@ class ThresholdBranchEngine {
     return this.publishEchoUpdate("advance", branch.echoNode.advance());
   }
 
+  resetEchoSystem() {
+    const nodes = Object.values(this.engine.branches || {})
+      .map((branch) => branch.echoNode.reset());
+    const detail = Object.freeze({
+      trigger: "reset",
+      node: null,
+      nodes: Object.freeze(nodes),
+      lens: this.inspectEchoes()
+    });
+    window.dispatchEvent(new CustomEvent("threshold:echo-lens-update", { detail }));
+    return detail;
+  }
+
   publishEchoUpdate(trigger, node) {
     const detail = Object.freeze({
       trigger,
@@ -1293,6 +1306,10 @@ class ThresholdEngine {
 
   advanceEchoNode(nodeId) {
     return this.branchEngine.advanceEchoNode(nodeId);
+  }
+
+  resetEchoSystem() {
+    return this.branchEngine.resetEchoSystem();
   }
 
   pickSelectedNote(selection) {

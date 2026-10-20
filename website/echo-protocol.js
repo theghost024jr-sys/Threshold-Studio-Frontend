@@ -96,6 +96,7 @@ export class EchoNode {
   }) {
     this.id = requireNonEmptyString(id, "node.id");
     this.pattern = normalizePattern(pattern, "node.pattern");
+    this.initialPattern = this.pattern;
     this.boundary = requireNonEmptyString(boundary, "node.boundary");
 
     if (!Array.isArray(frequencyBand) || frequencyBand.length !== 2
@@ -124,6 +125,7 @@ export class EchoNode {
     this.collapseThreshold = toleranceBand * stability;
     this.reconfigure = reconfigure;
 
+    this.substrateState = "Argon";
     this.phase = "Idle";
     this.position = 0;
     this.resonanceStrength = 0;
@@ -132,11 +134,7 @@ export class EchoNode {
     this.signalCount = 0;
     this.history = [];
     this.activeSignal = null;
-    this.anchorState = cloneAnchor({
-      pattern: this.pattern,
-      position: this.position,
-      boundary: this.boundary
-    });
+    this.anchorState = null;
   }
 
   receiveSignal(input) {
@@ -182,6 +180,7 @@ export class EchoNode {
       });
     }
 
+    this.substrateState = "Echo";
     this.resonanceStrength = resonanceStrength;
     this.pressure = pressure;
     this.driftVector = pressure * this.flexibility * signal.direction;
@@ -219,9 +218,25 @@ export class EchoNode {
     return this.snapshot({ accepted: true, transitions });
   }
 
+  reset() {
+    this.substrateState = "Argon";
+    this.phase = "Idle";
+    this.pattern = this.initialPattern;
+    this.position = 0;
+    this.resonanceStrength = 0;
+    this.pressure = 0;
+    this.driftVector = 0;
+    this.signalCount = 0;
+    this.history = [];
+    this.activeSignal = null;
+    this.anchorState = null;
+    return this.snapshot({ reset: true, transitions: ["Reset"] });
+  }
+
   snapshot(extra = {}) {
     return Object.freeze({
       id: this.id,
+      substrateState: this.substrateState,
       phase: this.phase,
       pattern: Object.freeze([...this.pattern]),
       boundary: this.boundary,

@@ -29,9 +29,12 @@ function sendSignal(node, overrides = {}) {
 
 test("accepts exact resonance and anchors the node", () => {
   const node = createNode("home");
+  assert.equal(node.substrateState, "Argon");
+  assert.equal(node.anchorState, null);
   const result = sendSignal(node);
 
   assert.equal(result.accepted, true);
+  assert.equal(result.substrateState, "Echo");
   assert.equal(result.phase, "Anchored");
   assert.equal(result.resonanceStrength, 1);
   assert.equal(result.pressure, 0);
@@ -138,6 +141,25 @@ test("failed or invalid reconfiguration leaves the node inert", () => {
   }
 });
 
+test("resets Echo state and adapted pattern back to the inert Argon substrate", () => {
+  const node = createNode("home", { toleranceBand: 1, stability: 1 });
+  sendSignal(node, { pattern: ["branch", "other"], charge: 4, direction: 1 });
+  assert.equal(node.substrateState, "Echo");
+  assert.deepEqual(node.pattern, ["branch", "other"]);
+
+  const reset = node.reset();
+
+  assert.equal(reset.substrateState, "Argon");
+  assert.equal(reset.phase, "Idle");
+  assert.deepEqual(reset.pattern, ["branch", "home"]);
+  assert.equal(reset.resonanceStrength, 0);
+  assert.equal(reset.pressure, 0);
+  assert.equal(reset.driftVector, 0);
+  assert.equal(reset.signalCount, 0);
+  assert.equal(reset.anchorState, null);
+  assert.equal(reset.history.length, 0);
+});
+
 test("resolves matching and complementary anchors as distinct Harmony modes", () => {
   const resonant = [
     createNode("one", { pattern: ["shared", "same"] }),
@@ -183,4 +205,17 @@ test("Echo Protocol Lens reports telemetry without mutating nodes", () => {
   assert.deepEqual(nodes.map((node) => node.snapshot()), before);
   assert.ok(Object.isFrozen(report));
   assert.ok(Object.isFrozen(report.nodes));
+});
+
+test("resolves only nodes that received Echo and leaves other nodes in Argon", () => {
+  const nodes = [createNode("one"), createNode("two")];
+  sendSignal(nodes[0]);
+
+  const system = resolveEchoSystem(nodes);
+
+  assert.deepEqual(system.activeNodeIds, ["one"]);
+  assert.equal(nodes[0].substrateState, "Echo");
+  assert.equal(nodes[1].substrateState, "Argon");
+  assert.equal(nodes[1].signalCount, 0);
+  assert.equal(nodes[1].anchorState, null);
 });

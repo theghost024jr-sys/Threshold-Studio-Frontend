@@ -92,3 +92,29 @@ test("publishes read-only Echo Lens telemetry for protocol updates", () => {
   assert.equal(events[0].type, "threshold:echo-lens-update");
   assert.deepEqual(events[0].detail, update);
 });
+
+test("resets the Echo system to Argon and publishes one system update", () => {
+  events.length = 0;
+  const branchEngine = new thresholdEngineModule.ThresholdBranchEngine({
+    vault: {},
+    renderBranch() {}
+  });
+  branchEngine.initialize();
+  branchEngine.processEchoSignal("home", {
+    pattern: ["branch", "home"],
+    charge: 1,
+    frequency: 1,
+    direction: 0,
+    boundary: ["home"]
+  });
+  events.length = 0;
+
+  const update = branchEngine.resetEchoSystem();
+
+  assert.equal(update.trigger, "reset");
+  assert.equal(update.nodes.length, 11);
+  assert.equal(update.lens.metrics.activeNodeCount, 0);
+  assert.ok(update.nodes.every((node) => node.substrateState === "Argon"));
+  assert.equal(events.length, 1);
+  assert.deepEqual(events[0].detail, update);
+});

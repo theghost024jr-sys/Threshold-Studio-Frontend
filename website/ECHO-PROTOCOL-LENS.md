@@ -9,6 +9,12 @@ pattern `["branch", branchId]`, boundary `threshold-branch`, frequency band
 `[0.1, 10]`, tolerance `1`, flexibility `0.25`, and stability `4`. These are
 simulation defaults, not measurements inferred from vault content.
 
+Every node begins on the inert `Argon` substrate: no received Echo, pressure,
+drift, anchor, or history. A valid targeted signal changes only its recipient
+to the active `Echo` substrate. Nodes that do not receive a signal remain in
+Argon and are excluded from active system resolution. `resetEchoSystem()`
+returns every protocol node to that baseline without changing vault data.
+
 `ThresholdEngine.inspectEchoes()` returns a read-only snapshot of system state,
 node phases, resonance strength, pressure, drift vectors, anchors, and signal
 counts. `processEchoSignal(nodeId, signal)` and `advanceEchoNode(nodeId)` update

@@ -1,3 +1,9 @@
+import {
+  DIAMOND_SPIRAL_CORNERS,
+  diamondCornerEmphasis,
+  diamondCornerPulse
+} from "./diamond-field-model.js";
+
 const TIMING = {
   DEBOUNCE_LOCK: 300,
   FADE_DURATION: 600,
@@ -54,10 +60,12 @@ const logoTriggers = Array.from(document.querySelectorAll(".hub-logo-trigger"));
 const seedLogo = document.querySelector(".hub-seed-logo");
 const spaceLayer = document.getElementById("space-layer");
 const diamondField = document.querySelector(".diamond-field");
-const diamondCornerNE = document.querySelector(".diamond-corner-ne");
-const diamondCornerSE = document.querySelector(".diamond-corner-se");
-const diamondCornerNW = document.querySelector(".diamond-corner-nw");
-const diamondCornerSW = document.querySelector(".diamond-corner-sw");
+const diamondCorners = Object.freeze(Object.fromEntries(
+  DIAMOND_SPIRAL_CORNERS.map(({ position }) => [
+    position,
+    document.querySelector(`.diamond-corner-${position}`)
+  ])
+));
 const strandWake = document.querySelector(".hub-strand-wake");
 const strandFold = document.querySelector(".hub-strand-fold");
 const strandSpire = document.querySelector(".hub-strand-spire");
@@ -373,6 +381,24 @@ function matrixPulse(t) {
   };
 }
 
+function renderDiamondSpiralKey() {
+  const key = document.querySelector("[data-diamond-spiral-key]");
+  if (!key) return;
+
+  key.replaceChildren(...DIAMOND_SPIRAL_CORNERS.map((corner) => {
+    const item = document.createElement("li");
+    item.textContent = `${corner.direction} · ${corner.spiral}`;
+    return item;
+  }));
+
+  DIAMOND_SPIRAL_CORNERS.forEach((corner) => {
+    const element = diamondCorners[corner.position];
+    if (element) {
+      element.dataset.spiral = corner.spiral;
+    }
+  });
+}
+
 function tickDiamondPull(timestamp) {
   if (!diamondField) return;
 
@@ -382,9 +408,9 @@ function tickDiamondPull(timestamp) {
 
   const fieldRect = diamondField.getBoundingClientRect();
   const fieldCenter = centerFromRect(fieldRect);
-  const ne = diamondCornerNE ? centerFromRect(diamondCornerNE.getBoundingClientRect()) : { x: fieldRect.right - fieldRect.width * 0.24, y: fieldRect.top + fieldRect.height * 0.16 };
-  const nw = diamondCornerNW ? centerFromRect(diamondCornerNW.getBoundingClientRect()) : { x: fieldRect.left + fieldRect.width * 0.24, y: fieldRect.top + fieldRect.height * 0.16 };
-  const sw = diamondCornerSW ? centerFromRect(diamondCornerSW.getBoundingClientRect()) : { x: fieldRect.left + fieldRect.width * 0.24, y: fieldRect.bottom - fieldRect.height * 0.16 };
+  const ne = diamondCorners.ne ? centerFromRect(diamondCorners.ne.getBoundingClientRect()) : { x: fieldRect.right - fieldRect.width * 0.24, y: fieldRect.top + fieldRect.height * 0.16 };
+  const nw = diamondCorners.nw ? centerFromRect(diamondCorners.nw.getBoundingClientRect()) : { x: fieldRect.left + fieldRect.width * 0.24, y: fieldRect.top + fieldRect.height * 0.16 };
+  const sw = diamondCorners.sw ? centerFromRect(diamondCorners.sw.getBoundingClientRect()) : { x: fieldRect.left + fieldRect.width * 0.24, y: fieldRect.bottom - fieldRect.height * 0.16 };
 
   const t = timestamp * 0.001;
   const rawPulse = matrixPulse(t);
@@ -461,10 +487,14 @@ function tickDiamondPull(timestamp) {
   applyHubBreath(hubB, pulse.inner, t + 1.3, emphasizedPath === "fold", dt);
   applyHubBreath(hubC, pulse.outer, t + 2.05, emphasizedPath === "spire", dt);
 
-  applyNodeReaction(diamondCornerNW, pulse.inner, t + 0.35, emphasizedPath === "wake" ? 1.18 : 1);
-  applyNodeReaction(diamondCornerNE, pulse.blend, t + 1.1, emphasizedPath === "fold" ? 1.18 : 1);
-  applyNodeReaction(diamondCornerSW, pulse.outer, t + 1.85, emphasizedPath === "spire" ? 1.18 : 1);
-  applyNodeReaction(diamondCornerSE, pulse.blend * 0.82, t + 2.3, 0.88);
+  DIAMOND_SPIRAL_CORNERS.forEach((corner) => {
+    applyNodeReaction(
+      diamondCorners[corner.position],
+      diamondCornerPulse(corner, pulse),
+      t + corner.phaseOffset,
+      diamondCornerEmphasis(corner, emphasizedPath)
+    );
+  });
 
   applyStrandFluctuation(strandWake, t + 0.2, wakeStrand);
   applyStrandFluctuation(strandFold, t + 1.0, foldStrand);
@@ -1099,6 +1129,7 @@ function wireHiddenReset() {
 
 function init() {
   page.dataset.diamonds = "on";
+  renderDiamondSpiralKey();
   wireCalibrationPanel();
   applyTuneFromControls();
   const storedPath = sessionStorage.getItem(PATH_KEY);

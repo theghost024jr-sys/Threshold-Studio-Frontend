@@ -256,7 +256,8 @@ test("[TST-103] rejects non-canonical record fields, identifiers, and lifecycle 
 test("[TST-103] blocks downstream CI work when schema validation fails", async () => {
   assert.match(schemaWorkflow, /schema-validation:/);
   assert.match(schemaWorkflow, /Validate traceability schema and mutations[\s\S]*npm run test:traceability/);
-  assert.match(schemaWorkflow, /build-test-deploy:\s*\n\s+needs: schema-validation/);
+  assert.match(schemaWorkflow, /test:\s*\n\s+name: Full test suite\s*\n\s+needs: schema-validation/);
+  assert.match(schemaWorkflow, /build:\s*\n\s+name: Build publication artifact\s*\n\s+needs:\s*\n\s+- schema-validation\s*\n\s+- test/);
 
   const validResult = await execFileAsync(process.execPath, [schemaCheckScript], {
     cwd: fileURLToPath(repositoryRoot)

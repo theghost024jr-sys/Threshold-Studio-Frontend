@@ -971,6 +971,7 @@
     },
     {
       "id": "GATE-011",
+      "title": "Canonical requirement schema validation",
       "priority": "P0",
       "lifecycle": "planned",
       "enforcement": "none",

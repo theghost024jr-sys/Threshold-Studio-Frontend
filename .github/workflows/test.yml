@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   schema-validation:
+    name: Threshold schema validation
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +25,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "24"
           cache: npm
 
       - name: Install dependencies
@@ -33,12 +34,10 @@ jobs:
       - name: Validate traceability schema and mutations
         run: npm run test:traceability
 
-  build-test-deploy:
+  test:
+    name: Full test suite
     needs: schema-validation
     runs-on: ubuntu-latest
-    env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
     steps:
       - name: Checkout repository
@@ -47,7 +46,40 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "24"
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Python tests
+        run: |
+          python -m pip install pytest
+          python -m pytest tests/test_build_vault_data.py tools/test_threshold_paths.py
+
+      - name: Run full test suite
+        run: npm test
+
+  build:
+    name: Build publication artifact
+    needs:
+      - schema-validation
+      - test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
           cache: npm
 
       - name: Setup Python
@@ -63,14 +95,6 @@ jobs:
 
       - name: Validate frontend build
         run: npm run build:ci
-
-      - name: Run Python tests
-        run: |
-          python -m pip install pytest
-          python -m pytest tests/test_build_vault_data.py tools/test_threshold_paths.py
-
-      - name: Run tests
-        run: npm run test:ci
 
       - name: Upload Cloudflare Pages artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'

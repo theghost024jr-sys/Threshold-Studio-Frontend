@@ -15,6 +15,7 @@
     "build:portal": "npm --prefix website/portal ci && npm --prefix website/portal run build",
     "build:ci": "python tools/build_page_render_jobs.py --ci && npm run build:pages && node scripts/build-pages.mjs --static",
     "test": "node --test website/tests/*.test.mjs",
+    "test:traceability": "node website/scripts/check-invariant-traceability.mjs && node --test website/tests/invariant-traceability.test.mjs website/tests/invariant-traceability-mutations.test.mjs",
     "test:ci": "node --test website/tests/access-flow.test.mjs website/tests/basin-ambience.test.mjs website/tests/deployment-config.test.mjs website/tests/destination-routing.test.mjs website/tests/emotional-engine.test.mjs website/tests/engine-heartbeat.test.mjs website/tests/fibonacci-routing.test.mjs website/tests/garden-portal.test.mjs website/tests/hub-activation.test.mjs website/tests/image-fallback.test.mjs website/tests/link-integrity.test.mjs website/tests/page-complexity.test.mjs website/tests/prime-atom-signals.test.mjs website/tests/vault-page-generation.test.mjs website/tests/worker-observability.test.mjs",
     "dev": "npm run build:data && npm run build:render-jobs && npm run build:pages && npm --prefix website/portal run build:site && wrangler pages dev website"
   }

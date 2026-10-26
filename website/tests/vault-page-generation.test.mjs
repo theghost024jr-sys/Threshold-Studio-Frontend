@@ -179,6 +179,7 @@ test("declares the Pages Hub capability and ordered build-time graph", async () 
     readFile(new URL("engine/build-graph.json", repositoryRoot), "utf8").then(JSON.parse),
   ]);
   const pagesCapability = hubRegistry.capabilities.find(({ id }) => id === "hub.pages");
+  const basinSandbox = hubRegistry.capabilities.find(({ id }) => id === "environment.basin-sandbox");
 
   assert.deepEqual(configuration.pages, {
     mapping: "page-mapping.json",
@@ -188,6 +189,12 @@ test("declares the Pages Hub capability and ordered build-time graph", async () 
   });
   assert.deepEqual(pagesCapability.dependsOn, ["vault.exporter", "website.page-mapping"]);
   assert.equal(pagesCapability.owner, "website-build-pipeline");
+  assert.deepEqual(basinSandbox.dependsOn, [
+    "website.environment.herb-room",
+    "website.environment.basin.audio",
+  ]);
+  assert.deepEqual(basinSandbox.outputs, ["website/environment/basin.html"]);
+  assert.match(basinSandbox.description, /without retrofitting/i);
 
   const stepIds = buildGraph.steps.map(({ id }) => id);
   assert.ok(stepIds.indexOf("export_vault_data") < stepIds.indexOf("generate_page_jobs"));

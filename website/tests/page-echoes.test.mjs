@@ -103,7 +103,7 @@ test("promotes the current inventory website snapshot without importing its hist
 
   const excluded = Object.keys(INVENTORY_ECHO_EXCLUSIONS).sort();
   assert.deepEqual(registered, discovered.filter((source) => !excluded.includes(source)));
-  assert.deepEqual(excluded, ["environment/waterfall.html"]);
+  assert.deepEqual(excluded, []);
   assert.ok(!registered.some((source) => /git-history|prototype|legacy/i.test(source)));
   assert.ok(PAGE_ECHOES.filter((echo) => echo.inventorySource).every(
     (echo) => echo.href === `/echoes/inventory/${echo.inventorySource}`
@@ -249,7 +249,7 @@ test("routes unavailable inventory destinations to live page echoes", () => {
       '<a href="/environment/waterfall.html" class="exit-south">Look South</a>',
       "environment/herbroom.html"
     ),
-    '<span class="exit-south">Look South</span>'
+    '<a href="/environment/waterfall.html" class="exit-south">Look South</a>'
   );
   assert.equal(
     rewriteInventoryLinks('<a href="ledger.html">Ledger</a>', "hub.html"),

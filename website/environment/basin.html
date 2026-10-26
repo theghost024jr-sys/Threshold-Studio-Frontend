@@ -231,7 +231,7 @@
     }
   </style>
 </head>
-<body data-threshold-environment="basin" data-origin-chamber="herbroom">
+<body data-threshold-environment="basin" data-threshold-sandbox="basin" data-origin-chamber="herbroom">
   <img class="basin-world" src="/assets/basin.png" alt="The Basin: a luminous wetland opening beyond the Herb Room" />
   <div class="basin-vignette" aria-hidden="true"></div>
   <button class="sound-toggle" type="button" aria-pressed="false" title="Start the bamboo fountain">Listen</button>
@@ -246,6 +246,7 @@
       <strong>Old Forest</strong>
     </a>
   </nav>
+  <script type="module" src="/scripts/access-flow.js"></script>
   <script>
     const soundToggle = document.querySelector('.sound-toggle');
     let fountain = null;

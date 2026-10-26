@@ -14,6 +14,19 @@
         "website/generated-pages/"
       ],
       "buildGraph": "../../engine/build-graph.json"
+    },
+    {
+      "id": "environment.basin-sandbox",
+      "label": "Basin environment sandbox",
+      "description": "Preserve Basin as the first environmental sandbox: a focused place for user-initiated sound and evidence-led environment experiments without retrofitting those capabilities across Threshold.",
+      "owner": "website-environment",
+      "dependsOn": [
+        "website.environment.herb-room",
+        "website.environment.basin.audio"
+      ],
+      "outputs": [
+        "website/environment/basin.html"
+      ]
     }
   ]
 }

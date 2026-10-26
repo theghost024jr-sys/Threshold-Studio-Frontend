@@ -85,9 +85,9 @@
 .season-portals header p { color: var(--wheel-teal); font-size: .65rem; text-transform: uppercase; }
 .season-portals h2 { margin: 0; font: 500 clamp(1.5rem, 3vw, 2.2rem)/1 "Cinzel", serif; }
 .portal-row { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 24px; }
-.portal-row button { padding: 16px 12px; border: 1px solid var(--wheel-line); border-right: 0; border-radius: 0; color: var(--wheel-ink); background: transparent; cursor: pointer; }
-.portal-row button:last-child { border-right: 1px solid var(--wheel-line); }
-.portal-row button:hover { color: #151109; background: var(--wheel-gold); }
+.portal-row a { display: block; padding: 16px 12px; border: 1px solid var(--wheel-line); border-right: 0; border-radius: 0; color: var(--wheel-ink); background: transparent; cursor: pointer; text-align: center; text-decoration: none; }
+.portal-row a:last-child { border-right: 1px solid var(--wheel-line); }
+.portal-row a:hover { color: #151109; background: var(--wheel-gold); }
 #wheelStatus { margin: 20px 0 0; color: var(--wheel-muted); }
 
 .season-dialog { width: min(620px, calc(100% - 32px)); padding: 34px; border: 1px solid var(--wheel-line); border-radius: 0; color: var(--wheel-ink); background: #0c1118; }
@@ -124,8 +124,8 @@
   .portal-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wheel-readout div:nth-child(2) { border-right: 0; }
   .wheel-readout div:nth-child(-n+2) { border-bottom: 1px solid var(--wheel-line); }
-  .portal-row button:nth-child(2) { border-right: 1px solid var(--wheel-line); }
-  .portal-row button:nth-child(-n+2) { border-bottom: 0; }
+  .portal-row a:nth-child(2) { border-right: 1px solid var(--wheel-line); }
+  .portal-row a:nth-child(-n+2) { border-bottom: 0; }
   .season-portals header,
   .wheel-footer { align-items: flex-start; flex-direction: column; justify-content: center; }
 }

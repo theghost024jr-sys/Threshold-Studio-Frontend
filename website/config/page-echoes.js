@@ -57,6 +57,11 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/destination-page.css",
     "styles/access-flow.css"
   ]),
+  pageEcho("ethos-seed", "ethos", "Ethos Seed", "/pages/ethos-seed.html", "pages/ethos-seed.html", [
+    "styles.css",
+    "styles/complexity-layers.css",
+    "styles/ethos-root.css"
+  ]),
   pageEcho("glyphs", "glyphs", "Glyphs", "/glyphs.html", "glyphs.html", [
     "styles.css",
     "styles/glyphs.css",
@@ -115,7 +120,38 @@ export const PAGE_ECHOES = Object.freeze([
   pageEcho("herbroom", "houseGarden", "Herb Room", "/environment/herbroom.html", "environment/herbroom.html"),
   pageEcho("basin-reference-page", "houseGarden", "Basin", "/environment/basin.html", "environment/basin.html"),
   pageEcho("basin-generated-page", "houseGarden", "Basin (published note)", "/generated-pages/environment/basin.html", null),
+  pageEcho("waterfall", "houseGarden", "Waterfall", "/environment/waterfall.html", "environment/waterfall.html"),
   pageEcho("old-forest", "houseGarden", "Old Forest", "/environment/old-forest.html", "environment/old-forest.html"),
+  pageEcho("living-threshold", "rootSigil", "Threshold Record", "/pages/threshold.html", "pages/threshold.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("living-notes", "home", "Notes", "/pages/notes.html", "pages/notes.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("living-posts", "home", "Posts", "/pages/posts.html", "pages/posts.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("living-projects", "home", "Projects", "/pages/projects.html", "pages/projects.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("living-role-expressions", "home", "Role Expressions", "/pages/role-expressions.html", "pages/role-expressions.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("living-species-signals", "home", "Species Signals", "/pages/species-signals.html", "pages/species-signals.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("learning-spring", "learningWheel", "Sprout Gallery", "/pages/learning-spring.html", "pages/learning-spring.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("learning-summer", "learningWheel", "Shimmer Chamber", "/pages/learning-summer.html", "pages/learning-summer.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("learning-autumn", "learningWheel", "Collapse Lore", "/pages/learning-autumn.html", "pages/learning-autumn.html", [
+    "styles/living-page.css"
+  ]),
+  pageEcho("learning-winter", "learningWheel", "Soil Archive", "/pages/learning-winter.html", "pages/learning-winter.html", [
+    "styles/living-page.css"
+  ]),
   pageEcho("invitation", "invitation", "Invitation", "/invitation.html", "invitation.html", [
     "styles/complexity-layers.css",
     "styles/invitation-sanctuary.css"
@@ -177,6 +213,7 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/destination-page.css",
     "styles/access-flow.css"
   ], "housegarden.html"),
+  pageEcho("inventory-waterfall", "houseGarden", "Waterfall · Inventory", "/echoes/inventory/environment/waterfall.html", null, [], "environment/waterfall.html"),
   pageEcho("inventory-hub", "rootSigil", "Hub · Inventory", "/echoes/inventory/hub.html", null, [
     "styles.css"
   ], "hub.html"),
@@ -292,9 +329,7 @@ export const PAGE_ECHOES = Object.freeze([
   ])
 ]);
 
-export const INVENTORY_ECHO_EXCLUSIONS = Object.freeze({
-  "environment/waterfall.html": "Referenced image is not committed as public media"
-});
+export const INVENTORY_ECHO_EXCLUSIONS = Object.freeze({});
 
 export const PAGE_ECHO_MATCHING = Object.freeze({
   sigma: 0.35,

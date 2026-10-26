@@ -247,7 +247,10 @@ test("roots Ethos in its declaration and mandatory seed triad", async () => {
   assert.match(loader, /content: root\.content/);
   assert.match(page, /Behavior generates gravity/);
   assert.match(page, /class="ethos-orbit"/);
-  assert.doesNotMatch(page, /Threshold Is Not a Brand/);
+  assert.match(page, /Threshold Is Not a Brand/);
+  assert.match(page, /Presence Is the Currency/);
+  assert.match(page, /Myth Is a Living System/);
+  assert.match(page, /We Refuse to Collapse/);
 
   for (const id of ["alignment", "contribution", "presence"]) {
     assert.equal(topology.nodes[id].fib, 5);

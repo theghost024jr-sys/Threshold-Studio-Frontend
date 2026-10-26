@@ -1,6 +1,16 @@
 {
-  "version": 1,
-  "storageKey": "threshold.access.flow.v1",
+  "version": 3,
+  "storageKey": "threshold.access.flow.v3",
+  "legacyStorageKeys": ["threshold.access.flow.v2"],
+  "registeredRoutes": [
+    "/index.html",
+    "/housegarden.html",
+    "/environment/herbroom.html",
+    "/environment/basin.html",
+    "/dialogues.html",
+    "/contact.html",
+    "/invitation.html"
+  ],
   "projects": [
     { "id": "house-garden", "label": "House and Garden", "route": "/housegarden.html" },
     { "id": "ethos", "label": "Ethos", "route": "/ethos.html" },
@@ -13,13 +23,12 @@
     { "id": "contact", "label": "Contact", "route": "/contact.html" }
   ],
   "stages": [
-    { "id": "discovery", "label": "Discovery", "route": "/discover.html", "requires": [], "completion": "visit" },
-    { "id": "dialogue", "label": "Dialogue", "route": "/dialogues.html", "requires": [], "completion": "visit" },
-    { "id": "hub", "label": "Hub Entry", "route": "/index.html", "requires": [], "completion": "visit" },
-    { "id": "invitation", "label": "Invitation", "route": "/invitation.html", "requires": ["discovery", "dialogue", "hub"], "completion": "visit" },
-    { "id": "accept", "label": "Accept", "route": "/invitation.html#accept", "requires": ["invitation"], "completion": "action" },
-    { "id": "engine", "label": "Enter Engine", "route": "/deep-system/engine.html", "requires": ["accept"], "completion": "visit" },
-    { "id": "trunk", "label": "Trunk Assembly", "route": "/mythology.html#trunk-assembly", "requires": ["engine"], "completion": "visit" },
-    { "id": "contact", "label": "Contact", "route": "/contact.html", "requires": ["trunk"], "completion": "visit" }
+    { "id": "hub", "label": "Hub", "route": "/index.html", "requires": [], "completion": "visit", "kind": "hub" },
+    { "id": "house-garden", "label": "House and Garden", "route": "/housegarden.html", "requires": ["hub"], "completion": "visit", "kind": "branch" },
+    { "id": "herb-room", "label": "Herb Room", "route": "/environment/herbroom.html", "requires": ["house-garden"], "completion": "visit", "kind": "branch" },
+    { "id": "basin", "label": "Basin Shimmer", "route": "/environment/basin.html", "requires": ["herb-room"], "completion": "visit", "kind": "branch", "awardsShimmer": true },
+    { "id": "dialogue", "label": "Dialogues", "route": "/dialogues.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" },
+    { "id": "contact", "label": "Contact", "route": "/contact.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" },
+    { "id": "invitation", "label": "Invitation", "route": "/invitation.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" }
   ]
 }

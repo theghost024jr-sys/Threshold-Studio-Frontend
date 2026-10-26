@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://threshold.local/schemas/requirement.schema.json",
+  "title": "Threshold Canonical Requirement Record",
+  "description": "Schema for one materialized Threshold requirement. Allocation alone does not satisfy this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "statement", "priority", "parentInvariantIds", "predecessorRequirementIds", "lifecycle", "enforcement", "testIds", "enforcingGateIds", "supersedesRequirementIds", "supersededByRequirementIds"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^REQ-[0-9]{3}$" },
+    "title": { "type": "string", "minLength": 1 },
+    "statement": { "type": "string", "minLength": 1 },
+    "priority": { "enum": ["P0", "P1", "P2", "P3"] },
+    "architecturePrincipleIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^ASP-[0-9]{3}$" },
+      "default": []
+    },
+    "parentInvariantIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^INV-[0-9]{3}$" }
+    },
+    "predecessorRequirementIds": { "$ref": "#/$defs/requirementIdArray" },
+    "lifecycle": { "enum": ["planned", "active", "superseded", "retired"] },
+    "enforcement": { "enum": ["none", "observed", "enforced"] },
+    "testIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^TST-[0-9]{3}$" }
+    },
+    "enforcingGateIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^GATE-[0-9]{3}$" }
+    },
+    "supersedesRequirementIds": { "$ref": "#/$defs/requirementIdArray" },
+    "supersededByRequirementIds": { "$ref": "#/$defs/requirementIdArray" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "lifecycle": { "const": "planned" } }, "required": ["lifecycle"] },
+      "then": {
+        "properties": {
+          "enforcement": { "const": "none" },
+          "testIds": { "maxItems": 0 },
+          "enforcingGateIds": { "maxItems": 0 },
+          "supersededByRequirementIds": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "lifecycle": { "const": "active" } }, "required": ["lifecycle"] },
+      "then": {
+        "properties": {
+          "enforcement": { "enum": ["observed", "enforced"] },
+          "testIds": { "minItems": 1 },
+          "supersededByRequirementIds": { "maxItems": 0 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "lifecycle": { "const": "active" }, "enforcement": { "const": "observed" } }, "required": ["lifecycle", "enforcement"] },
+      "then": { "properties": { "enforcingGateIds": { "maxItems": 0 } } }
+    },
+    {
+      "if": { "properties": { "lifecycle": { "const": "active" }, "enforcement": { "const": "enforced" } }, "required": ["lifecycle", "enforcement"] },
+      "then": { "properties": { "enforcingGateIds": { "minItems": 1 } } }
+    },
+    {
+      "if": { "properties": { "lifecycle": { "const": "superseded" } }, "required": ["lifecycle"] },
+      "then": {
+        "properties": {
+          "enforcement": { "const": "none" },
+          "enforcingGateIds": { "maxItems": 0 },
+          "supersededByRequirementIds": { "minItems": 1 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "lifecycle": { "const": "retired" } }, "required": ["lifecycle"] },
+      "then": {
+        "properties": {
+          "enforcement": { "const": "none" },
+          "enforcingGateIds": { "maxItems": 0 }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "requirementIdArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^REQ-[0-9]{3}$" }
+    }
+  }
+}

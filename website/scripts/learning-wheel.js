@@ -1,16 +1,9 @@
-import { getCalendarSeason, getSeasonProfile } from "./learning-wheel-state.js";
+import { getCalendarSeason, getSeasonProfile, seasonProfiles } from "./learning-wheel-state.js";
 
 const page = document.body;
 const choices = Array.from(document.querySelectorAll("[data-season-choice]"));
 const portals = Array.from(document.querySelectorAll("[data-season-portal]"));
 const status = document.getElementById("wheelStatus");
-const dialog = document.getElementById("seasonDialog");
-const portalContent = {
-  spring: ["Sprout Gallery", "First forms appear through fog. Nothing is forced into clarity before it is ready."],
-  summer: ["Shimmer Chamber", "Resonance widens through tide, color, and outward motion without abandoning form."],
-  autumn: ["Collapse Lore", "Pressure becomes weather. Fracture is read as information rather than failure."],
-  winter: ["Soil Archive", "The cycle settles. What was carried becomes structure, nourishment, and anchor."]
-};
 
 function activateSeason(season, persist = true) {
   const profile = getSeasonProfile(season);
@@ -30,19 +23,16 @@ function activateSeason(season, persist = true) {
 
 choices.forEach((choice) => choice.addEventListener("click", () => activateSeason(choice.dataset.seasonChoice)));
 portals.forEach((portal) => portal.addEventListener("click", () => {
-  const season = portal.dataset.seasonPortal;
-  const [title, body] = portalContent[season];
-  activateSeason(season);
-  document.getElementById("seasonDialogKicker").textContent = `${getSeasonProfile(season).label} portal`;
-  document.getElementById("seasonDialogTitle").textContent = title;
-  document.getElementById("seasonDialogBody").textContent = body;
-  dialog.showModal();
+  activateSeason(portal.dataset.seasonPortal);
 }));
-document.querySelector(".season-dialog-close").addEventListener("click", () => dialog.close());
 
 let initialSeason = getCalendarSeason();
 try {
   const stored = JSON.parse(localStorage.getItem("threshold.learningWheel.state.v1") || "null");
-  initialSeason = stored?.state?.season || initialSeason;
-} catch {}
+  if (Object.hasOwn(seasonProfiles, stored?.state?.season)) {
+    initialSeason = stored.state.season;
+  }
+} catch (error) {
+  console.warn("Learning Wheel state could not be restored.", error);
+}
 activateSeason(initialSeason, false);

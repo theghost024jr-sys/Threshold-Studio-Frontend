@@ -1,0 +1,1054 @@
+{
+  "version": 1,
+  "idPolicy": {
+    "stableAcrossRenames": true,
+    "retiredIdsMayNotBeReused": true
+  },
+  "principles": [
+    {
+      "id": "ASP-001",
+      "priority": "P0",
+      "title": "The system does not lie to itself"
+    },
+    {
+      "id": "ASP-002",
+      "priority": "P0",
+      "title": "Establish truth before permitting consequence"
+    },
+    {
+      "id": "ASP-003",
+      "priority": "P0",
+      "title": "The system must prove externally visible claims"
+    },
+    {
+      "id": "ASP-004",
+      "priority": "P1",
+      "title": "Absence is valid state"
+    },
+    {
+      "id": "ASP-005",
+      "priority": "P0",
+      "title": "Navigation is ontology"
+    },
+    {
+      "id": "ASP-006",
+      "priority": "P1",
+      "title": "Branches grow from evidence"
+    },
+    {
+      "id": "ASP-007",
+      "priority": "P2",
+      "title": "Complexity follows meaning"
+    },
+    {
+      "id": "ASP-008",
+      "priority": "P2",
+      "title": "Capabilities are learned locally and made available globally"
+    },
+    {
+      "id": "ASP-009",
+      "priority": "P1",
+      "title": "Content and expression remain separate"
+    },
+    {
+      "id": "ASP-010",
+      "priority": "P1",
+      "title": "History is preserved without becoming permanent authority"
+    },
+    {
+      "id": "ASP-011",
+      "priority": "P0",
+      "title": "Player agency changes world state without falsifying history"
+    },
+    {
+      "id": "ASP-012",
+      "priority": "P1",
+      "title": "Chambers share architecture without losing identity"
+    },
+    {
+      "id": "ASP-013",
+      "priority": "P2",
+      "title": "Environments may carry reasoning"
+    },
+    {
+      "id": "ASP-014",
+      "priority": "P0",
+      "title": "Build order follows dependency"
+    },
+    {
+      "id": "ASP-015",
+      "priority": "P1",
+      "title": "Threshold remains capable of becoming"
+    }
+  ],
+  "kernelInvariants": [
+    {
+      "id": "KIN-001",
+      "priority": "P0",
+      "title": "Truth",
+      "failureCategory": "ERR-TRUTH"
+    },
+    {
+      "id": "KIN-002",
+      "priority": "P0",
+      "title": "Causality",
+      "failureCategory": "ERR-CAUSALITY"
+    },
+    {
+      "id": "KIN-003",
+      "priority": "P0",
+      "title": "Continuity",
+      "failureCategory": "ERR-CONTINUITY"
+    }
+  ],
+  "domainInvariants": [
+    {
+      "id": "INV-001",
+      "priority": "P0",
+      "kernelIds": [
+        "KIN-001"
+      ],
+      "failureCode": "TRUTH_CONTRADICTION"
+    },
+    {
+      "id": "INV-002",
+      "priority": "P0",
+      "kernelIds": [
+        "KIN-001"
+      ],
+      "failureCode": "UNSUPPORTED_CLAIM"
+    },
+    {
+      "id": "INV-003",
+      "priority": "P1",
+      "kernelIds": [
+        "KIN-001"
+      ],
+      "failureCode": "FALSE_COMPLETION"
+    },
+    {
+      "id": "INV-004",
+      "priority": "P0",
+      "kernelIds": [
+        "KIN-001"
+      ],
+      "failureCode": "INVALID_EDGE"
+    },
+    {
+      "id": "INV-005",
+      "priority": "P0",
+      "kernelIds": [
+        "KIN-001",
+        "KIN-002"
+      ],
+      "failureCode": "PRESENTATION_AUTHORITY_VIOLATION"
+    },
+    {
+      "id": "INV-006",
+      "priority": "P0",
+      "kernelIds": [
+        "KIN-002"
+      ],
+      "failureCode": "UNEARNED_EFFECT"
+    },
+    {
+      "id": "INV-007",
+      "priority": "P0",
+      "kernelIds": [
+        "KIN-003"
+      ],
+      "failureCode": "HISTORY_ERASURE"
+    },
+    {
+      "id": "INV-008",
+      "priority": "P1",
+      "kernelIds": [
+        "KIN-001",
+        "KIN-003"
+      ],
+      "failureCode": "SOURCE_RENDER_COUPLING"
+    },
+    {
+      "id": "INV-009",
+      "priority": "P2",
+      "kernelIds": [
+        "KIN-002"
+      ],
+      "failureCode": "UNJUSTIFIED_CAPABILITY"
+    },
+    {
+      "id": "INV-010",
+      "priority": "P1",
+      "kernelIds": [
+        "KIN-003"
+      ],
+      "failureCode": "CHAMBER_FLATTENING"
+    },
+    {
+      "id": "INV-011",
+      "priority": "P2",
+      "kernelIds": [
+        "KIN-001",
+        "KIN-002"
+      ],
+      "failureCode": "ENVIRONMENT_AUTHORITY_VIOLATION"
+    },
+    {
+      "id": "INV-012",
+      "priority": "P0",
+      "kernelIds": [
+        "KIN-001",
+        "KIN-002"
+      ],
+      "failureCode": "DEPENDENCY_ORDER_VIOLATION"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-074",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-012"
+      ],
+      "testIds": [
+        "TST-104"
+      ],
+      "title": "Integrity validation must complete successfully before navigation validation begins",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Integrity validation must complete successfully before navigation validation begins",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-004",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-002"
+      ],
+      "testIds": [
+        "TST-004"
+      ],
+      "title": "Published source is required for public routes",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Published source is required for public routes",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-005",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-002"
+      ],
+      "testIds": [
+        "TST-005"
+      ],
+      "title": "Unpublished sources cannot become public routes",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Unpublished sources cannot become public routes",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-006",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-002"
+      ],
+      "testIds": [
+        "TST-006"
+      ],
+      "title": "Draft sources cannot become public routes",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Draft sources cannot become public routes",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-001",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-093"
+      ],
+      "title": "Contradictory canonical claims are rejected",
+      "parentInvariantIds": [
+        "INV-001"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Contradictory canonical claims are rejected",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-017",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Every navigable edge must resolve",
+      "parentInvariantIds": [
+        "INV-004"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Every navigable edge must resolve",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-030",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-080"
+      ],
+      "title": "Locked capabilities reject gated actions",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Locked capabilities reject gated actions",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-032",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-080"
+      ],
+      "title": "Unlocked capabilities allow valid actions",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Unlocked capabilities allow valid actions",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-033",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-080"
+      ],
+      "title": "Consumed one-time actions are idempotent",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Consumed one-time actions are idempotent",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-034",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-080"
+      ],
+      "title": "Shimmer-gated contributions reject when Shimmer is absent",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Shimmer-gated contributions reject when Shimmer is absent",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-039",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Seed acquisition follows a valid contribution",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Seed acquisition follows a valid contribution",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-040",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-080"
+      ],
+      "title": "Duplicate Seed acquisition is idempotent",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Duplicate Seed acquisition is idempotent",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-042",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Hub Seed return requires a carried Seed",
+      "parentInvariantIds": [
+        "INV-006",
+        "INV-007"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Hub Seed return requires a carried Seed",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-044",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079",
+        "TST-080"
+      ],
+      "title": "State transitions append recoverable lineage",
+      "parentInvariantIds": [
+        "INV-007"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "State transitions append recoverable lineage",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-045",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-080"
+      ],
+      "title": "Prior state remains immutable across transitions",
+      "parentInvariantIds": [
+        "INV-007"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Prior state remains immutable across transitions",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-087",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Full-loop execution begins from a valid canonical state",
+      "parentInvariantIds": [
+        "INV-001",
+        "INV-002"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Full-loop execution begins from a valid canonical state",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-091",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Shimmer results only from authoritative conditions",
+      "parentInvariantIds": [
+        "INV-005",
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Shimmer results only from authoritative conditions",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-095",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Seed acquisition follows valid eligible contribution",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Seed acquisition follows valid eligible contribution",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-099",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Hub resolution transitions carried Seed state exactly once",
+      "parentInvariantIds": [
+        "INV-006",
+        "INV-007"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Hub resolution transitions carried Seed state exactly once",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-100",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Resulting Hub state passes canonical validation",
+      "parentInvariantIds": [
+        "INV-001"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Resulting Hub state passes canonical validation",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-101",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-079"
+      ],
+      "title": "Full-loop lineage remains recoverable",
+      "parentInvariantIds": [
+        "INV-007"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Full-loop lineage remains recoverable",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-103",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-080"
+      ],
+      "title": "Repeated one-time full-loop consequences are idempotent",
+      "parentInvariantIds": [
+        "INV-006"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Repeated one-time full-loop consequences are idempotent",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-104",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "testIds": [
+        "TST-093"
+      ],
+      "title": "Failed full-loop attempts preserve the last valid state",
+      "parentInvariantIds": [
+        "INV-007"
+      ],
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Failed full-loop attempts preserve the last valid state",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-141",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-001",
+        "INV-002",
+        "INV-012"
+      ],
+      "testIds": [
+        "TST-100"
+      ],
+      "title": "Enforced contracts require executable coverage and an active enforcing gate",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Enforced contracts require executable coverage and an active enforcing gate",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-142",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-001",
+        "INV-012"
+      ],
+      "testIds": [
+        "TST-101"
+      ],
+      "title": "Observed contracts must not be represented as release-blocking",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Observed contracts must not be represented as release-blocking",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-143",
+      "priority": "P1",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-001"
+      ],
+      "testIds": [
+        "TST-102"
+      ],
+      "title": "Registry reporting distinguishes planned, observed, and enforced coverage",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Registry reporting distinguishes planned, observed, and enforced coverage",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    },
+    {
+      "id": "REQ-144",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "parentInvariantIds": [
+        "INV-001",
+        "INV-002",
+        "INV-012"
+      ],
+      "testIds": [
+        "TST-103"
+      ],
+      "title": "Invalid lifecycle and enforcement states are rejected by mutation tests",
+      "predecessorRequirementIds": [],
+      "enforcingGateIds": [],
+      "statement": "Invalid lifecycle and enforcement states are rejected by mutation tests",
+      "supersedesRequirementIds": [],
+      "supersededByRequirementIds": []
+    }
+  ],
+  "requirementIdAllocation": {
+    "start": "REQ-001",
+    "end": "REQ-145"
+  },
+  "tests": [
+    {
+      "id": "TST-104",
+      "priority": "P0",
+      "source": "website/tests/validation-pipeline.test.mjs",
+      "requirementIds": [
+        "REQ-074"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-004",
+      "priority": "P0",
+      "source": "website/tests/publication-contract.test.mjs",
+      "requirementIds": [
+        "REQ-004"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-005",
+      "priority": "P0",
+      "source": "website/tests/publication-contract.test.mjs",
+      "requirementIds": [
+        "REQ-005"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-006",
+      "priority": "P0",
+      "source": "website/tests/publication-contract.test.mjs",
+      "requirementIds": [
+        "REQ-006"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-079",
+      "priority": "P0",
+      "source": "website/tests/threshold-full-loop.test.mjs",
+      "requirementIds": [
+        "REQ-017",
+        "REQ-039",
+        "REQ-042",
+        "REQ-044",
+        "REQ-087",
+        "REQ-091",
+        "REQ-095",
+        "REQ-099",
+        "REQ-100",
+        "REQ-101"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-080",
+      "priority": "P0",
+      "source": "website/tests/threshold-full-loop.test.mjs",
+      "requirementIds": [
+        "REQ-030",
+        "REQ-032",
+        "REQ-033",
+        "REQ-034",
+        "REQ-040",
+        "REQ-044",
+        "REQ-045",
+        "REQ-103"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-093",
+      "priority": "P0",
+      "source": "website/tests/threshold-full-loop.test.mjs",
+      "requirementIds": [
+        "REQ-001",
+        "REQ-104"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-100",
+      "priority": "P0",
+      "source": "website/tests/invariant-traceability.test.mjs",
+      "requirementIds": [
+        "REQ-141"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-101",
+      "priority": "P0",
+      "source": "website/tests/invariant-traceability.test.mjs",
+      "requirementIds": [
+        "REQ-142"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-102",
+      "priority": "P1",
+      "source": "website/tests/invariant-traceability.test.mjs",
+      "requirementIds": [
+        "REQ-143"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    },
+    {
+      "id": "TST-103",
+      "priority": "P0",
+      "source": "website/tests/invariant-traceability-mutations.test.mjs",
+      "requirementIds": [
+        "REQ-144"
+      ],
+      "lifecycle": "active",
+      "enforcement": "observed"
+    }
+  ],
+  "gates": [
+    {
+      "id": "GATE-001",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [],
+      "testIds": [
+        "TST-001",
+        "TST-016"
+      ]
+    },
+    {
+      "id": "GATE-002",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-001"
+      ],
+      "testIds": [
+        "TST-017",
+        "TST-024"
+      ]
+    },
+    {
+      "id": "GATE-003",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-002"
+      ],
+      "testIds": [
+        "TST-019",
+        "TST-020"
+      ]
+    },
+    {
+      "id": "GATE-004",
+      "priority": "P1",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-003"
+      ],
+      "testIds": [
+        "TST-052",
+        "TST-055"
+      ]
+    },
+    {
+      "id": "GATE-005",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-004"
+      ],
+      "testIds": [
+        "TST-025",
+        "TST-034"
+      ]
+    },
+    {
+      "id": "GATE-006",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-005"
+      ],
+      "testIds": [
+        "TST-036",
+        "TST-038"
+      ]
+    },
+    {
+      "id": "GATE-007",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-006"
+      ],
+      "testIds": [
+        "TST-039",
+        "TST-043"
+      ]
+    },
+    {
+      "id": "GATE-008",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-007"
+      ],
+      "testIds": [
+        "TST-041",
+        "TST-043"
+      ]
+    },
+    {
+      "id": "GATE-009",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-001",
+        "GATE-002",
+        "GATE-003",
+        "GATE-004",
+        "GATE-005",
+        "GATE-006",
+        "GATE-007",
+        "GATE-008"
+      ],
+      "testIds": [
+        "TST-079"
+      ]
+    },
+    {
+      "id": "GATE-010",
+      "priority": "P1",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [
+        "GATE-009"
+      ],
+      "testIds": [
+        "TST-084",
+        "TST-085"
+      ]
+    },
+    {
+      "id": "GATE-011",
+      "priority": "P0",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "dependsOn": [],
+      "testIds": [
+        "TST-100",
+        "TST-101",
+        "TST-102",
+        "TST-103"
+      ]
+    }
+  ],
+  "fullLoops": [
+    {
+      "id": "FLW-001",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "requirementIds": [
+        "REQ-017",
+        "REQ-039",
+        "REQ-042",
+        "REQ-044",
+        "REQ-087",
+        "REQ-091",
+        "REQ-095",
+        "REQ-099",
+        "REQ-100",
+        "REQ-101"
+      ],
+      "testIds": [
+        "TST-079"
+      ]
+    },
+    {
+      "id": "FLW-002",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "requirementIds": [
+        "REQ-030",
+        "REQ-034"
+      ],
+      "testIds": [
+        "TST-080"
+      ]
+    },
+    {
+      "id": "FLW-003",
+      "priority": "P0",
+      "lifecycle": "active",
+      "enforcement": "observed",
+      "requirementIds": [
+        "REQ-042"
+      ],
+      "testIds": [
+        "TST-079"
+      ]
+    },
+    {
+      "id": "FLW-004",
+      "priority": "P1",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "requirementIds": [],
+      "testIds": [
+        "TST-048"
+      ]
+    },
+    {
+      "id": "FLW-005",
+      "priority": "P1",
+      "lifecycle": "planned",
+      "enforcement": "none",
+      "requirementIds": [],
+      "testIds": [
+        "TST-015"
+      ]
+    }
+  ]
+}

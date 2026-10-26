@@ -17,6 +17,34 @@ Agataga is a local reliability system: structured needs are made visible, matche
 
 It is not a marketplace, gig platform, social network, or directory. “Reliability as physics” and “inevitable” are the product thesis, not a verified guarantee about human behavior.
 
+## Threshold projection: Agataga Sense
+
+Threshold may accept `agataga_sense` as a bounded player field-sensitivity
+input in the range `[0, 1]`. It is used only by Threshold physics to determine
+whether a player can perceive and locally interact with field distortions,
+shimmer activation, and Warden boundary fields.
+
+Agataga Sense is distinct from the Agataga reliability score, Wolf gate,
+commitments, and community-trust records. This document does not define a
+conversion from reliability data to `agataga_sense`; any future adapter must
+state its source, ownership, update rules, and privacy boundary explicitly.
+The Threshold engine must not infer or derive Agataga Sense from reliability
+data by default.
+
+For Boundary Elevation, Threshold requires all of the following local
+conditions:
+
+```text
+player_is_in_zone
+AND Warden-player alignment > alignment_threshold
+AND agataga_sense > agataga_threshold
+AND shimmer_level > shimmer_threshold
+```
+
+This projection grants neither a title nor a role. It does not make a player a
+Warden, successor, authority, or guardian, and it has no persistent global
+effect after the player leaves the zone.
+
 ## Proposed system concepts
 
 The architecture draft describes these components. They remain design proposals until the decision log is resolved:

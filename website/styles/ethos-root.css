@@ -293,6 +293,77 @@
   background: rgba(17, 23, 19, 0.88);
 }
 
+.ethos-declarations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid rgba(184, 211, 159, 0.18);
+  background: rgba(184, 211, 159, 0.18);
+}
+
+.ethos-declarations article {
+  min-height: 15rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: rgba(8, 11, 11, 0.9);
+}
+
+.ethos-declarations h2,
+.ethos-seed h1 {
+  margin: 0;
+  color: var(--ethos-leaf);
+  font-family: "Newsreader", serif;
+  font-size: clamp(1.6rem, 3vw, 2.45rem);
+  font-weight: 400;
+}
+
+.ethos-declarations p,
+.ethos-seed__statement {
+  max-width: 46ch;
+  margin: 1rem 0 0;
+  color: var(--ethos-muted);
+  font-family: "Newsreader", serif;
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+.ethos-seed {
+  width: min(46rem, 100%);
+  margin: clamp(4rem, 10vh, 8rem) auto 0;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-left: 2px solid var(--ethos-gold);
+  background: rgba(17, 23, 19, 0.52);
+}
+
+.ethos-seed > p {
+  margin: 0 0 0.7rem;
+  color: var(--ethos-gold);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ethos-seed a {
+  color: var(--ethos-ink);
+  font-family: "Newsreader", serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  text-decoration-color: rgba(214, 171, 99, 0.7);
+  text-underline-offset: 0.25em;
+}
+
+.ethos-seed__page {
+  width: min(46rem, 100%);
+  margin: clamp(6rem, 16vh, 12rem) auto;
+}
+
+.ethos-seed__return {
+  display: inline-block;
+  margin-top: 2rem;
+  color: var(--ethos-leaf);
+  font-size: 0.72rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
 @keyframes ethos-orbit {
   to { rotate: 360deg; }
 }
@@ -305,6 +376,10 @@
   .ethos-orbit {
     width: min(100%, 560px);
     justify-self: center;
+  }
+
+  .ethos-declarations {
+    grid-template-columns: 1fr;
   }
 }
 

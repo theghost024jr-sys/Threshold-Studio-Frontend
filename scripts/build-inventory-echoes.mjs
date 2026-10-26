@@ -50,14 +50,6 @@ export function rewriteInventoryLinks(html, sourcePath) {
       "$1$2/world-map.html$2"
     );
   }
-
-  if (sourcePath === "environment/herbroom.html") {
-    output = output.replace(
-      /<a href="\/environment\/waterfall\.html" class="exit-south">([^<]*)<\/a>/i,
-      '<span class="exit-south">$1</span>'
-    );
-  }
-
   return output;
 }
 

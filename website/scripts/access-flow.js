@@ -1,8 +1,12 @@
 import {
   completeStage,
   createAccessState,
+  contribute,
   lockedRequirements,
-  prerequisitesMet
+  prerequisitesMet,
+  returnSeedToHub,
+  validateAccessFlow,
+  validateAuthoritativeState
 } from "./access-flow-model.js";
 
 const FLOW_URL = "/config/access-flow.json";
@@ -20,10 +24,18 @@ function stageForLocation(stages) {
   }) || null;
 }
 
-function readState(storageKey) {
+function readState(storageKey, flow, legacyStorageKeys = []) {
   try {
-    return createAccessState(JSON.parse(localStorage.getItem(storageKey) || "{}"));
-  } catch {
+    const stored = localStorage.getItem(storageKey)
+      || legacyStorageKeys.map((key) => localStorage.getItem(key)).find(Boolean)
+      || "{}";
+    return validateAuthoritativeState(
+      flow,
+      createAccessState(JSON.parse(stored))
+    );
+  } catch (error) {
+    console.error("Threshold access flow rejected contradictory saved state", error);
+    localStorage.removeItem(storageKey);
     return createAccessState();
   }
 }
@@ -31,8 +43,8 @@ function readState(storageKey) {
 function writeState(storageKey, state) {
   try {
     localStorage.setItem(storageKey, JSON.stringify(state));
-  } catch {
-    // The flow remains navigable when browser storage is unavailable.
+  } catch (error) {
+    console.warn("Threshold access flow could not persist state.", error);
   }
 }
 
@@ -59,7 +71,7 @@ function renderRail(flow, state) {
 
   const heading = document.createElement("div");
   heading.className = "threshold-access-flow__heading";
-  heading.innerHTML = `<strong>${project ? `${project.label} Chamber` : "Threshold Graft"}</strong><span>${state.completed.length}/${flow.stages.length} passages</span>`;
+  heading.innerHTML = `<strong>${project ? `${project.label} Chamber` : "Threshold Graft"}</strong><span>${state.shimmer ? "Shimmer held" : "Find Shimmer"} · ${state.returnedSeeds.length} Seeds returned</span>`;
 
   const steps = document.createElement("ol");
   steps.className = "threshold-access-flow__steps";
@@ -100,20 +112,23 @@ function renderGate(stage, stages, state) {
 }
 
 function bindAcceptance(flow, state) {
-  const acceptStage = flow.stages.find((stage) => stage.id === "accept");
-  const button = document.querySelector("[data-threshold-accept]");
-  if (!acceptStage || !button || !prerequisitesMet(acceptStage, state)) return;
+  const stage = stageForLocation(flow.stages);
+  const button = document.querySelector("[data-threshold-contribution]");
+  if (!stage || stage.kind !== "contribution" || !button || !prerequisitesMet(stage, state)) return;
   button.addEventListener("click", () => {
-    const nextState = completeStage(acceptStage, readState(flow.storageKey));
+    const nextState = contribute(
+      stage,
+      readState(flow.storageKey, flow, flow.legacyStorageKeys)
+    );
     writeState(flow.storageKey, nextState);
-    button.textContent = "Invitation Accepted";
+    button.textContent = "Seed received";
     button.disabled = true;
     renderRail(flow, nextState);
-    const engine = document.createElement("a");
-    engine.className = "threshold-access-flow__continue";
-    engine.href = "/deep-system/engine.html";
-    engine.textContent = "Enter Engine";
-    button.insertAdjacentElement("afterend", engine);
+    const hub = document.createElement("a");
+    hub.className = "threshold-access-flow__continue";
+    hub.href = "/index.html";
+    hub.textContent = "Return Seed to Hub";
+    button.insertAdjacentElement("afterend", hub);
   });
 }
 
@@ -121,8 +136,8 @@ async function initializeAccessFlow() {
   addStylesheet();
   const response = await fetch(FLOW_URL, { cache: "no-store" });
   if (!response.ok) throw new Error(`Access flow unavailable (${response.status})`);
-  const flow = await response.json();
-  let state = readState(flow.storageKey);
+  const flow = validateAccessFlow(await response.json());
+  let state = readState(flow.storageKey, flow, flow.legacyStorageKeys);
   const currentStage = stageForLocation(flow.stages);
 
   if (currentStage && !prerequisitesMet(currentStage, state)) {
@@ -132,8 +147,11 @@ async function initializeAccessFlow() {
   }
   if (currentStage?.completion === "visit") {
     state = completeStage(currentStage, state);
-    writeState(flow.storageKey, state);
   }
+  if (currentStage?.id === "hub") {
+    state = returnSeedToHub(currentStage, state);
+  }
+  writeState(flow.storageKey, state);
 
   renderRail(flow, state);
   bindAcceptance(flow, state);

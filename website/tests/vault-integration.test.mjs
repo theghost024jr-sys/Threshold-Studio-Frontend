@@ -53,7 +53,7 @@ test("keeps local paths and personal authorship out of public vault data", async
   assert.doesNotMatch(vaultData, /James Romeo/);
 });
 
-test("keeps Basin as the first environment beyond the Herb Room chamber", async () => {
+test("keeps Basin east of Herb Room while restoring the south Waterfall exit", async () => {
   const vault = JSON.parse(await readFile("website/data/threshold-vault.json", "utf8"));
   const basinDocument = vault.documents.find((document) => document.id === "basin");
   const oldForestDocument = vault.chambers.find((chamber) => chamber.id === "old-forest");
@@ -67,12 +67,13 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
   const herbRoom = await readFile("website/environment/herbroom.html", "utf8");
   const basin = await readFile("website/environment/basin.html", "utf8");
   const oldForest = await readFile("website/environment/old-forest.html", "utf8");
+  const waterfall = await readFile("website/environment/waterfall.html", "utf8");
   const mythology = await readFile("website/mythology.html", "utf8");
   assert.match(basin, /data-threshold-environment="basin"/);
   assert.match(basin, /data-origin-chamber="herbroom"/);
   assert.match(basin, /src="\/assets\/basin\.png"/);
-  assert.match(herbRoom, /href="\/environment\/basin\.html"/);
-  assert.doesNotMatch(herbRoom, /href="\/environment\/waterfall\.html"/);
+  assert.match(herbRoom, /east-threshold__cue" href="\/environment\/basin\.html"/);
+  assert.match(herbRoom, /href="\/environment\/waterfall\.html" class="exit-south">Look South/);
   assert.match(basin, /href="\/environment\/herbroom\.html"/);
   assert.match(basin, /href="\/environment\/old-forest\.html"/);
   assert.match(oldForest, /data-branch="old-forest"/);
@@ -81,6 +82,10 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
   assert.ok(oldForestDocument, "expected Old Forest to be a published chamber");
   assert.equal(oldForestDocument.route, "/environment/old-forest");
   assert.match(oldForestDocument.body, /The Old Forest is an environment defined by ancient memory/);
+  assert.match(waterfall, /<a href="\/environment\/herbroom\.html">[\s\S]*?Return North/);
+  assert.match(waterfall, /src="\/assets\/images\/Waterfall\.jpg"/);
+  assert.match(waterfall, /into the Forest biome/);
+  await access("website/assets/images/Waterfall.jpg");
   assert.ok(!vault.chambers.some((chamber) => chamber.id === "waterfall"));
   assert.match(mythology, /values\.includes\('mythology'\)/);
 });

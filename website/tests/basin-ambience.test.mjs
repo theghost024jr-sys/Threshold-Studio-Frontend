@@ -7,6 +7,7 @@ const basinUrl = new URL("../environment/basin.html", import.meta.url);
 test("Basin uses a user-initiated procedural bamboo fountain", async () => {
   const source = await readFile(basinUrl, "utf8");
   assert.match(source, /data-threshold-environment="basin"/);
+  assert.match(source, /data-threshold-sandbox="basin"/);
   assert.match(source, /data-origin-chamber="herbroom"/);
   assert.match(source, /class="basin-world" src="\/assets\/basin\.png"/);
   assert.match(source, /Continue into Threshold/);

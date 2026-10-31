@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Dashboard from './pages/Dashboard.jsx'
 import Home from './pages/Home.jsx'
+import Shimmer from './pages/Shimmer.jsx'
 import { WorldMap } from '../../world/WorldMap.jsx'
 import {
   ChambersIndexPage,
@@ -18,6 +19,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/shimmer" element={<Shimmer />} />
         <Route path="/branches/:branchId" element={<Dashboard />} />
         <Route path="/world" element={<WorldMap />} />
         <Route path="/world/map" element={<WorldMap />} />

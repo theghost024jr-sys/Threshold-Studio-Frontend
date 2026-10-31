@@ -110,6 +110,72 @@ function renderNavigation(page) {
   });
 }
 
+function initializeLearningGlyph() {
+  const glyph = document.body.dataset.learningGlyph;
+  const pageRoot = document.querySelector(".living-page");
+  if (!glyph || !pageRoot) {
+    return;
+  }
+
+  const storageKey = "threshold.learningWheel.glyphReturns.v1";
+  let progress = { glyphs: [], rareEvent: false };
+  try {
+    const stored = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (stored && Array.isArray(stored.glyphs)) {
+      progress = {
+        glyphs: stored.glyphs.filter((entry) => typeof entry === "string"),
+        rareEvent: stored.rareEvent === true
+      };
+    }
+  } catch (error) {
+    console.warn("Learning glyph returns could not be restored.", error);
+  }
+
+  const returnField = document.createElement("section");
+  returnField.className = "learning-glyph-return";
+  const returnLabel = document.createElement("p");
+  returnLabel.className = "living-page__eyebrow";
+  returnLabel.textContent = "Glyph return";
+  const returnStatus = document.createElement("p");
+  returnStatus.dataset.glyphReturnStatus = "";
+  returnField.append(returnLabel, returnStatus);
+  const stormLink = document.createElement("a");
+  stormLink.href = "/learningwheel.html?node=storm-cabinet&fib=3&trail=learning-wheel,seasonal-alcove";
+  stormLink.textContent = "Open Storm Cabinet";
+  stormLink.hidden = true;
+  returnField.appendChild(stormLink);
+  pageRoot.appendChild(returnField);
+
+  function updateReturnField() {
+    const hasTwoGlyphs = new Set(progress.glyphs).size >= 2;
+    const isReady = hasTwoGlyphs && progress.rareEvent;
+    stormLink.hidden = !isReady;
+    if (isReady) {
+      returnStatus.textContent = "Two glyph returns and a rare event have aligned.";
+    } else if (hasTwoGlyphs) {
+      returnStatus.textContent = "Two glyph returns recognized. The rare event has not arrived.";
+    } else {
+      returnStatus.textContent = "Double-click this glyph chamber to return its signal.";
+    }
+  }
+
+  pageRoot.addEventListener("dblclick", function (event) {
+    if (event.target.closest("a")) {
+      return;
+    }
+    if (!progress.glyphs.includes(glyph)) {
+      progress.glyphs.push(glyph);
+    }
+    if (!progress.rareEvent && Math.random() < 0.25) {
+      progress.rareEvent = true;
+    }
+    localStorage.setItem(storageKey, JSON.stringify(progress));
+    updateReturnField();
+  });
+
+  updateReturnField();
+}
+
 async function initializeLivingPage() {
   const noteId = document.body.dataset.vaultNoteId;
   const status = document.querySelector("[data-living-page-status]");
@@ -148,6 +214,7 @@ async function initializeLivingPage() {
     });
   }
   renderNavigation(page);
+  initializeLearningGlyph();
   status.textContent = "Published vault note";
 }
 

@@ -118,7 +118,7 @@ test("resets the Echo system to Argon and publishes one system update", () => {
   const update = branchEngine.resetEchoSystem();
 
   assert.equal(update.trigger, "reset");
-  assert.equal(update.nodes.length, 11);
+  assert.equal(update.nodes.length, 12);
   assert.equal(update.lens.metrics.activeNodeCount, 0);
   assert.ok(update.nodes.every((node) => node.substrateState === "Argon"));
   assert.equal(branchEngine.inspectWeather("home"), null);

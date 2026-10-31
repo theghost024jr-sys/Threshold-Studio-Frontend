@@ -150,7 +150,7 @@ test("keeps page echoes passive on their existing Engine branches", () => {
   const portalBranches = new Set(BRANCHES.map((branch) => branch.engineId));
   const resolved = resolvePageEchoes(PAGE_ECHOES, vaultIndex);
 
-  assert.equal(Object.keys(engine.branches).length, 11);
+  assert.equal(Object.keys(engine.branches).length, 12);
   for (const echo of PAGE_ECHOES) {
     assert.ok(engine.branches[echo.branchId], `${echo.id} has an Engine parent`);
     assert.ok(portalBranches.has(echo.branchId), `${echo.id} has a Portal parent`);

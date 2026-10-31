@@ -57,13 +57,11 @@
     <section id="room-list" aria-label="Enter the Rooms">
       <h2>Enter the Rooms</h2>
       <nav class="garden-navigation" aria-label="Garden navigation">
+        <a class="garden-navigation__link" href="garden.html">Garden</a>
         <a class="garden-navigation__link" href="environment/herbroom.html">Herb Room</a>
-        <button type="button" id="nav-greenhouse" data-biome-entry="greenhouse" data-room-index="1">Greenhouse</button>
-        <button type="button" id="nav-lagoon" data-biome-entry="lagoon" data-room-index="2">Lagoon</button>
-        <button type="button" id="nav-cave">Cave Corridor</button>
-        <button type="button" id="nav-meadow">Meadow</button>
-        <button type="button" id="nav-shore">Shore</button>
-        <button type="button" id="nav-camp" data-biome-entry="camp" data-room-index="6">Camp</button>
+        <a class="garden-navigation__link" href="environment/basin.html">Basin</a>
+        <a class="garden-navigation__link" href="environment/waterfall.html">Waterfall</a>
+        <a class="garden-navigation__link" href="environment/old-forest.html">Old Forest</a>
       </nav>
     </section>
     <div id="garden-portal" class="garden-portal" data-garden-portal data-revealed="false" aria-hidden="true">
@@ -75,40 +73,39 @@
     <header class="garden-scene__header">
       <p class="flower-eyebrow">The Flower opens</p>
       <h2 id="garden-scene-title">You can begin here.</h2>
-      <p>The Fog Overlay breathes as you enter, a warm membrane that melts uncertainty into soil.</p>
+      <p>These are the House-and-Garden destinations currently authored and published.</p>
     </header>
 
     <div class="garden-scene__path">
       <article class="garden-scene__moment garden-scene__moment--meadow">
-        <p class="garden-scene__index">01 · Warmth</p>
+        <p class="garden-scene__index">01 · Garden</p>
+        <h3>Garden</h3>
+        <p>The existing Garden threshold.</p>
+        <a class="garden-scene__room-link" href="garden.html">Enter Garden</a>
+      </article>
+
+      <article class="garden-scene__moment garden-scene__moment--meadow">
+        <p class="garden-scene__index">02 · Herb Room</p>
         <h3>Herb Room</h3>
-        <p>Terracotta pots hum with memory. Rosemary, mint, and basil move with the <strong>Meadow pulse</strong>, a green resonance rising from the floor like breath.</p>
-        <p>An open book shifts its pages as you pass. Fireflies sketch paths above the wood grain, then dissolve before they can become instructions.</p>
         <a class="garden-scene__room-link" href="environment/herbroom.html">Enter Herb Room</a>
       </article>
 
       <article class="garden-scene__moment garden-scene__moment--growth">
-        <p class="garden-scene__index">02 · Formation</p>
-        <h3>Greenhouse</h3>
-        <p>Humidity gathers on the glass. Each droplet vibrates with <strong>seed-precursor resonance</strong> while pollen rises into clusters that pulse once, then fade.</p>
-        <p>Something is forming here. Not a seed yet, but the idea of one.</p>
-        <button type="button" data-biome-entry="greenhouse" data-room-index="1">Enter Greenhouse</button>
+        <p class="garden-scene__index">03 · Basin</p>
+        <h3>Basin</h3>
+        <a class="garden-scene__room-link" href="environment/basin.html">Enter Basin</a>
       </article>
 
       <article class="garden-scene__moment garden-scene__moment--shore">
-        <p class="garden-scene__index">03 · Clarity</p>
-        <h3>Lagoon</h3>
-        <p>Still water reflects the ceiling beams. <strong>Shore pulse</strong> carries each ripple inward, softening motion and returning it as orientation.</p>
-        <p>Fog dissolves. Memory aligns. Your pulse steadies.</p>
-        <button type="button" data-biome-entry="lagoon" data-room-index="2">Enter Lagoon</button>
+        <p class="garden-scene__index">04 · Waterfall</p>
+        <h3>Waterfall</h3>
+        <a class="garden-scene__room-link" href="environment/waterfall.html">Enter Waterfall</a>
       </article>
 
       <article class="garden-scene__moment garden-scene__moment--ember">
-        <p class="garden-scene__index">04 · Orientation</p>
-        <h3>Camp</h3>
-        <p>A low fire holds its shape inside a ring of stones. Fireflies drift like almost-letters while the embers answer with <strong>orientation heat</strong>.</p>
-        <p>A glow rises in the Greenhouse. Meadow calls; Shore answers. The Garden Seed coheres between them and waits to be carried home.</p>
-        <button type="button" data-biome-entry="camp" data-room-index="6">Enter Camp</button>
+        <p class="garden-scene__index">05 · Old Forest</p>
+        <h3>Old Forest</h3>
+        <a class="garden-scene__room-link" href="environment/old-forest.html">Enter Old Forest</a>
       </article>
     </div>
 
@@ -330,13 +327,11 @@
       outline: none;
     }
   </style>
-  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/node-runtime.js?v=local-preview-activation-1" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script type="module" src="scripts/destination-page.js?v=reveal-3"></script>
 </body>
 </html>
-
-
 
 
 

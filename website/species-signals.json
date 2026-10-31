@@ -6,5 +6,11 @@
   },
   "porpoise": {
     "default": "/vault/assets/porpoise.png"
+  },
+  "whisperhawk": {
+    "default": "/assets/vault/91e7eef79b90.png"
+  },
+  "owl": {
+    "default": "/assets/vault/77b52cc4227e.png"
   }
 }

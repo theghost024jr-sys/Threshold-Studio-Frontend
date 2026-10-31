@@ -84,6 +84,178 @@ as normalized. Demand is hunger, not force; it must first become charge.
 Pass its outputs to `advance_metabolism()` to establish the full
 alignment-to-slit-to-intake-to-charge-to-pressure path.
 
+### Circuit Mirror
+
+`engine.circuit_mirror` implements evidence-backed local reflection. It emits
+an immutable `MirrorOutput` with unique reflection identity, node-local
+sequence, simulation tick, prior/resulting states, an explicit transition,
+evidence provenance, discrepancy, optional demand, and optional auditable
+model revision. `EXPOSED` is a transient evaluation phase and is never
+persisted; durable states are `dormant`, `seeking`, `resonant`, `coherent`,
+`dissonant`, and `fractured`.
+
+The output contains normalized demand, resonance, coherence delta,
+contradiction, novelty, and confidence. It validates that meaningful
+conclusions have evidence, demand has discrepancy and remains unresolved,
+fracture cannot emit arbitrary attraction demand, and model revisions preserve
+the claims and demands they supersede. The Mirror neither stores nor generates
+pressure, and it cannot anchor, migrate, or collapse a node. Those remain
+explicit downstream Fib Flower physics decisions.
+
+### Pressure evaluation
+
+`engine.pressure.evaluate_pressure()` is a pure downstream evaluator. It
+consumes one ordered `MirrorOutput` and a prior node-local `PressureState`,
+then returns a provenance-preserving `PressureResult`. Unresolved demand adds
+dimensional raw load according to explicit accumulation policy; raw load is
+unbounded while exposed pressure uses `1 - exp(-raw_load)`. Decay and active
+resolution relief are distinct explicit operations. Decay retains more load
+when its persistence and confidence are corroborated. Opposing pressure
+polarities remain separate components, so equal attraction and repulsion do
+not falsely erase structural load; cancellation requires a configured
+dimension-specific policy.
+
+The evaluator rejects stale or duplicate reflections, does not reinterpret
+Mirror evidence, and emits neither force nor motion, topology, anchoring,
+migration, or collapse decisions.
+
+### Force evaluation
+
+`engine.force.evaluate_force()` is a pure Field-supported evaluator. It turns
+each pressure component into a vector only when a valid candidate supplies a
+dimension-matching spatial relationship. It retains pressure with no valid
+target as undirected load rather than inventing movement. It separately reports
+gross force, resultant force, directional bias, tension, and bounded
+field-resistance, but it does not update position, velocity, orbit, anchoring,
+migration, or collapse.
+
+### Structural evaluation
+
+`engine.structural.evaluate_structure()` interprets persisted pressure, force,
+motion, relationship, and Flower observations into structural regimes and
+evidence-backed proposals. It can propose Anchor strengthening, relationship
+weakening, orbit change, capture, fracture propagation, or collapse candidacy;
+it never mutates topology itself.
+
+### Topology authority
+
+`engine.topology.evaluate_topology()` is the sole topology writer. It consumes
+batched structural proposals, validates their legality against an immutable
+versioned state, defers ambiguous conflicts, validates resulting global
+invariants, and commits only atomic successor states with immutable events.
+
+### Return-loop contracts
+
+The return loop defines the only permitted route from observed contact to
+authoritative world change:
+
+```text
+Contact -> Circuit Mirror -> MirrorOutput -> Demand -> Pressure -> Force
+-> Node Physics -> Structural Evaluation -> Topology Authority
+-> Authoritative World State
+```
+
+[`tests/test_return_loop.py`](tests/test_return_loop.py) establishes three
+canonical system-level contracts.
+
+#### Insufficient evidence is quiescent
+
+An insufficient Mirror result is an honest no-vote, not a failure or an
+implicit resolution. It creates no demand, pressure contribution or relief,
+force contribution, induced motion, structural proposal, topology event, or
+topology mutation. A successfully evaluated zero force is valid; recovery
+must never substitute a zero force for unavailable force data.
+
+#### Supported evidence propagates with provenance
+
+Supported, unresolved evidence may create a discrepancy and demand. Pressure
+must preserve that demand's identity, and force may arise only from a valid
+dimension-matching Field relationship while retaining the same demand
+provenance. Physics may then create motion and Structural Evaluation may
+observe it. A single supported tick does not itself require an Anchor,
+capture, Collapse, or other topology transition.
+
+#### Persistent evidence may become structure
+
+Structural truth requires more than a meaningful reflection or physical
+motion. Mutual resolution and relationship conditions must persist through the
+structural window before an Anchor proposal is eligible. That proposal is not
+an Anchor until `Topology Authority` independently validates it and atomically
+commits the successor state.
+
+#### Recovery preserves causality
+
+Recovery restores Threshold's ability to evaluate; it does not establish the
+answer that a failed evaluation could not establish. A `ThresholdError` is not
+evidence, a failed evaluator is not negative evidence, a missing result is not
+a zero result, and a historical result is not a current observation.
+
+No-votes remain honest uncertainty and defer without blind retries. Actual
+failures stop at the narrowest boundary that preserves integrity: a local
+evaluation may abort, declared derived state may rebuild from a trustworthy
+checkpoint, an isolatable branch may quarantine, an invalid topology candidate
+may abort atomically, and untrustworthy authoritative state halts world
+advancement.
+
+Recovery may reevaluate from a trustworthy checkpoint but never rewrites an
+upstream cause to obtain a desired downstream result. Deterministic contract,
+input, state, and topology failures are not retried unless material inputs or
+conditions change. Rebuilds must be deterministic from immutable causal
+history, evaluator version, and policy version.
+
+Quarantine is operational distrust, not structural failure: it neither
+collapses a node nor severs relationships. Before a topology commit, a
+candidate may be discarded. After commit, authoritative history is append-only;
+recovery may append a correction but never rewrite committed events. If no
+trustworthy authoritative world can be constructed, Threshold halts new
+authoritative transitions rather than choosing an arbitrary world state.
+
+The governing recovery invariants are:
+
+```text
+Failure != evidence
+Unavailable != zero
+Historical truth != current observation
+Downstream need cannot rewrite upstream cause
+Failed topology transaction -> zero authoritative mutation
+Cannot construct a trustworthy world -> do not advance the world
+```
+
+Together these contracts enforce:
+
+```text
+No evidence -> no invention
+Supported evidence -> traceable physical consequence
+Supported + persistent + authorized evidence -> structural truth
+Failure -> preserve causality
+```
+
+### Failure taxonomy
+
+`engine.errors` supplies immutable `ThresholdError`, `NoVote`, and
+`EvaluationDiagnostics` records. No-votes remain honest uncertainty rather
+than errors; error codes separately declare severity and disposition so failures
+reject, defer, abort evaluation/transaction, or halt at the narrowest safe
+boundary without fabricating world state.
+
+### Error recovery
+
+`engine.recovery.recover()` maps diagnostics to immutable recovery decisions.
+It defers no-votes, rejects invalid input, retries only bounded transient
+failures, rebuilds only declared derived state, aborts uncommitted topology
+transactions atomically, quarantines isolatable branches, and halts when
+authoritative integrity cannot be trusted.
+
+### Node physics
+
+`engine.node_physics.integrate_node()` is a deterministic semi-implicit Euler
+integrator. It converts a `ForceResult` into bounded acceleration, velocity,
+and position while keeping mass, mobility, and damping independent. Constraints
+can limit actual displacement without rewriting the source force. The
+integrator reports `resting`, `micro_motion`, or observed `drifting`, plus
+constraint hits and motion frustration; it does not decide anchors, Flowers,
+migration, or collapse.
+
 ### Resonance propagation
 
 `emit_resonance_wave()` emits a directed wave only when the absolute pressure

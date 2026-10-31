@@ -53,27 +53,40 @@
       throw new Error("No activation endpoint configured for " + spokeId);
     }
 
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        spoke: spokeId,
-        activation: token,
-        pulse: options && options.pulse ? options.pulse : null
-      })
-    });
-    if (!response.ok) {
-      let message = "Node activation failed (" + response.status + ")";
-      try {
-        const payload = await response.json();
-        message = payload && payload.error ? String(payload.error) : message;
-      } catch {
-        // Keep the status-based fallback when the response is not JSON.
+    const request = {
+      spoke: spokeId,
+      activation: token,
+      pulse: options && options.pulse ? options.pulse : null
+    };
+    const localPreview = window.location.hostname === "127.0.0.1" ||
+      window.location.hostname === "localhost";
+    let node;
+
+    if (localPreview) {
+      node = Object.freeze({
+        ...request,
+        mode: "local-preview",
+        activatedAt: Date.now()
+      });
+    } else {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(request)
+      });
+      if (!response.ok) {
+        let message = "Node activation failed (" + response.status + ")";
+        try {
+          const payload = await response.json();
+          message = payload && payload.error ? String(payload.error) : message;
+        } catch {
+          // Keep the status-based fallback when the response is not JSON.
+        }
+        throw new Error(message);
       }
-      throw new Error(message);
+      node = await response.json();
     }
 
-    const node = await response.json();
     activeNode = node;
     window.dispatchEvent(new CustomEvent("threshold:node-activated", {
       detail: { spoke: spoke, node: node }

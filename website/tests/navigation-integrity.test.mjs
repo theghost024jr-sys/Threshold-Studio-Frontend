@@ -110,3 +110,52 @@ test("shared chamber navigation exposes only implemented paths", async () => {
   assert.match(tabs, /href="index\.html">Return to Hub/);
   assert.doesNotMatch(tabs, /data-seed-gate|data-seed-action|\/api\//);
 });
+
+async function collectSourceFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = await Promise.all(entries.map(async (entry) => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      return collectSourceFiles(entryPath);
+    }
+    return entry.name.endsWith(".jsx") ? [entryPath] : [];
+  }));
+  return files.flat();
+}
+
+test("every literal Portal navigation route is registered", async () => {
+  const portalRoot = path.join(root, "portal", "src");
+  const app = await readFile(path.join(portalRoot, "App.jsx"), "utf8");
+  const registered = new Set(
+    Array.from(app.matchAll(/<Route\s+path=["']([^"']+)["']/g), (match) => match[1])
+  );
+  const sources = await collectSourceFiles(portalRoot);
+  const routes = new Set();
+
+  for (const source of sources) {
+    const contents = await readFile(source, "utf8");
+    for (const match of contents.matchAll(/<Link\s+to=["'](\/[^"']+)["']/g)) {
+      routes.add(match[1]);
+    }
+    for (const match of contents.matchAll(/href:\s*["'](\/[^"']+)["']/g)) {
+      routes.add(match[1]);
+    }
+    for (const match of contents.matchAll(/destination:\s*["'](\/[^"']+)["']/g)) {
+      routes.add(match[1]);
+    }
+  }
+
+  for (const route of routes) {
+    if (route.endsWith(".html")) {
+      await access(path.join(root, route.slice(1)));
+      continue;
+    }
+    assert.ok(registered.has(route), `Portal navigation points to an unregistered route: ${route}`);
+  }
+
+  assert.doesNotMatch(
+    app,
+    /destination:\s*["']\/hub\.html["']/,
+    "Portal Motion must return internally instead of linking to the static-only Hub route"
+  );
+});

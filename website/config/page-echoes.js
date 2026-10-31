@@ -17,6 +17,7 @@ export const PAGE_ECHOES = Object.freeze([
   pageEcho("hub", "rootSigil", "Hub", "/hub.html", "hub.html", [
     "styles/complexity-layers.css",
     "styles/hub-interaction.css",
+    "styles/hub-public.css",
     "styles/pulse.css",
     "styles/styles.css"
   ]),
@@ -93,6 +94,70 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/spoke-tabs.css",
     "styles/destination-page.css",
     "styles/access-flow.css"
+  ]),
+  pageEcho("cindervox-canyon", "mythology", "Cindervox Canyon", "/portal/canyon", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("shore-threshold", "mythology", "Shore Threshold", "/portal/beach", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("ocean-beyond-mountains", "mythology", "Ocean Beyond the Mountains", "/portal/ocean", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("deepwater-pressure-field", "mythology", "Deepwater Pressure Field", "/portal/deepwater", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("first-door", "mythology", "The First Door", "/portal/first-door", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("motion-field", "mythology", "Motion Field", "/portal/motion", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("ruins-of-velin", "mythology", "Ruins of Velin", "/portal/ruins", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("quiet-grove", "mythology", "Quiet Grove", "/portal/quiet-grove", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("spiral-grove", "mythology", "Spiral Grove", "/portal/spiral-grove", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("doug", "mythology", "Doug", "/portal/doug", "portal/index.html", [
+    "portal/src/App.css",
+    "portal/src/index.css"
+  ]),
+  pageEcho("drift-systems", "mythology", "Drift Systems", "/portal/drift-systems", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
+  ]),
+  pageEcho("drift-chamber", "mythology", "Drift Chamber", "/portal/drift-chamber", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
+  ]),
+  pageEcho("collapse-chamber", "mythology", "Collapse Chamber", "/portal/collapse-chamber", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
+  ]),
+  pageEcho("rava", "mythology", "Rava, the Stone-Mover", "/portal/rava", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
+  ]),
+  pageEcho("cabin-of-moss", "oldForest", "Cabin of Moss", "/portal/cabin-of-moss", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
+  ]),
+  pageEcho("lanternroot-conservatory", "oldForest", "Lanternroot Conservatory", "/portal/lanternroot-conservatory", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
+  ]),
+  pageEcho("old-forest-trek", "oldForest", "Old Forest Trek", "/portal/old-forest-trek", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
+  ]),
+  pageEcho("snail-band-clearing", "oldForest", "Snail Band Clearing", "/portal/snail-band-clearing", "portal/index.html", [
+    "portal/src/App.css", "portal/src/index.css"
   ]),
   pageEcho("beyond-gateway", "mythology", "Beyond", "/pages/beyond/beyond.html", "pages/beyond/beyond.html", [
     "styles/complexity-layers.css",

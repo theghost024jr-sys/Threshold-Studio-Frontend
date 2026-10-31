@@ -8,6 +8,8 @@ export default function Home() {
       <h1>Portal</h1>
       <p className="lead">A live index of the Threshold archive, atmosphere, and active branches.</p>
       <Link className="primary-link" to="/dashboard">Enter dashboard</Link>
+      <Link className="primary-link" to="/ethos">Ethos</Link>
+      <Link className="primary-link" to="/canyon">Cindervox Canyon</Link>
       <Link className="primary-link" to="/shimmer">Shimmer</Link>
       <Branches />
     </main>

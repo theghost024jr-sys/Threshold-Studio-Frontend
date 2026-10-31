@@ -80,6 +80,196 @@
 .wheel-readout span { display: block; margin-bottom: 8px; color: var(--wheel-muted); font-size: .62rem; text-transform: uppercase; }
 .wheel-readout strong { color: var(--wheel-gold); font: 500 1rem/1 "Cinzel", serif; }
 
+.season-threshold {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 28px;
+  align-items: end;
+  margin-top: 24px;
+  padding: clamp(24px, 4vw, 46px);
+  border: 1px solid var(--wheel-line);
+  background:
+    linear-gradient(110deg, rgba(7, 11, 18, 0.94), rgba(15, 23, 35, 0.68)),
+    radial-gradient(circle at 82% 30%, var(--wheel-field), transparent 34%);
+  transition: background 700ms ease;
+}
+
+.learning-wheel-page[data-season="spring"] { --wheel-field: rgba(185, 225, 209, 0.34); }
+.learning-wheel-page[data-season="summer"] { --wheel-field: rgba(108, 189, 225, 0.38); }
+.learning-wheel-page[data-season="autumn"] { --wheel-field: rgba(220, 99, 111, 0.34); }
+.learning-wheel-page[data-season="winter"] { --wheel-field: rgba(164, 112, 67, 0.4); }
+
+.season-threshold > p:first-child {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--wheel-teal);
+  font-size: .65rem;
+  text-transform: uppercase;
+}
+
+.season-threshold h2 {
+  margin: 0;
+  color: var(--wheel-ink);
+  font: 500 clamp(1.7rem, 3.5vw, 3.2rem)/.95 "Cinzel", serif;
+}
+
+.season-threshold #wheelVector {
+  grid-column: 1 / -1;
+  max-width: 52ch;
+  margin: 0;
+  color: var(--wheel-muted);
+  line-height: 1.6;
+}
+
+.season-threshold .wheel-memory {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--wheel-teal);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.season-threshold a {
+  align-self: center;
+  border: 1px solid var(--wheel-gold);
+  color: var(--wheel-ink);
+  font-size: .72rem;
+  padding: .8rem 1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.season-threshold a:hover,
+.season-threshold a:focus-visible {
+  color: #151109;
+  background: var(--wheel-gold);
+  outline: none;
+}
+
+.season-threshold .seasonal-alcove-link {
+  grid-column: 1 / -1;
+  justify-self: start;
+  border-color: var(--wheel-teal);
+  color: var(--wheel-teal);
+}
+
+.season-threshold .seasonal-alcove-link:hover,
+.season-threshold .seasonal-alcove-link:focus-visible {
+  color: #0b1115;
+  background: var(--wheel-teal);
+}
+
+.seasonal-alcove-panel {
+  margin-top: 24px;
+  padding: clamp(24px, 4vw, 46px);
+  border: 1px solid var(--wheel-teal);
+  background:
+    radial-gradient(circle at 8% 12%, rgba(183, 226, 212, 0.18), transparent 25%),
+    radial-gradient(circle at 85% 22%, rgba(102, 184, 224, 0.2), transparent 25%),
+    radial-gradient(circle at 72% 82%, rgba(210, 94, 105, 0.16), transparent 27%),
+    radial-gradient(circle at 18% 84%, rgba(164, 112, 67, 0.22), transparent 28%),
+    #0a1015;
+}
+
+.seasonal-alcove-panel > p:first-child {
+  margin: 0;
+  color: var(--wheel-teal);
+  font-size: .65rem;
+  text-transform: uppercase;
+}
+
+.seasonal-alcove-panel h2 {
+  margin: .55rem 0 0;
+  font: 500 clamp(2rem, 4vw, 4rem)/.95 "Cinzel", serif;
+}
+
+.seasonal-alcove-panel > p:not(:first-child) {
+  max-width: 52ch;
+  color: var(--wheel-muted);
+  line-height: 1.6;
+}
+
+.alcove-paths {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 24px;
+}
+
+.alcove-paths a {
+  border: 1px solid var(--wheel-line);
+  border-right: 0;
+  color: var(--wheel-ink);
+  padding: 18px 12px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.alcove-paths a:last-child {
+  border-right: 1px solid var(--wheel-line);
+}
+
+.alcove-paths a:hover,
+.alcove-paths a:focus-visible {
+  color: #0b1115;
+  background: var(--wheel-teal);
+  outline: none;
+}
+
+.seasonal-alcove-panel .alcove-lock {
+  border-left: 1px solid var(--wheel-gold);
+  padding-left: 14px;
+}
+
+.storm-cabinet-panel {
+  margin-top: 24px;
+  padding: clamp(24px, 4vw, 46px);
+  border: 1px solid rgba(220, 99, 111, 0.62);
+  background:
+    linear-gradient(135deg, rgba(76, 25, 45, 0.46), rgba(11, 14, 25, 0.94)),
+    radial-gradient(circle at 75% 10%, rgba(220, 99, 111, 0.22), transparent 30%);
+}
+
+.storm-cabinet-panel > p:first-child {
+  margin: 0;
+  color: #e58b98;
+  font-size: .65rem;
+  text-transform: uppercase;
+}
+
+.storm-cabinet-panel h2 {
+  margin: .55rem 0 0;
+  font: 500 clamp(2rem, 4vw, 4rem)/.95 "Cinzel", serif;
+}
+
+.storm-cabinet-panel > p:not(:first-child) {
+  max-width: 52ch;
+  color: var(--wheel-muted);
+  line-height: 1.6;
+}
+
+.storm-cabinet-paths {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.storm-cabinet-paths a {
+  border: 1px solid rgba(229, 139, 152, 0.64);
+  color: var(--wheel-ink);
+  padding: .8rem 1rem;
+  text-decoration: none;
+}
+
+.storm-cabinet-paths a:hover,
+.storm-cabinet-paths a:focus-visible {
+  color: #150b12;
+  background: #e58b98;
+  outline: none;
+}
+
 .season-portals { margin-top: 24px; padding: 28px; border: 1px solid var(--wheel-line); background: rgba(9,12,17,.68); }
 .season-portals header { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
 .season-portals header p { color: var(--wheel-teal); font-size: .65rem; text-transform: uppercase; }
@@ -88,6 +278,7 @@
 .portal-row a { display: block; padding: 16px 12px; border: 1px solid var(--wheel-line); border-right: 0; border-radius: 0; color: var(--wheel-ink); background: transparent; cursor: pointer; text-align: center; text-decoration: none; }
 .portal-row a:last-child { border-right: 1px solid var(--wheel-line); }
 .portal-row a:hover { color: #151109; background: var(--wheel-gold); }
+.portal-row a[aria-current="true"] { border-color: var(--wheel-gold); color: var(--wheel-gold); }
 #wheelStatus { margin: 20px 0 0; color: var(--wheel-muted); }
 
 .season-dialog { width: min(620px, calc(100% - 32px)); padding: 34px; border: 1px solid var(--wheel-line); border-radius: 0; color: var(--wheel-ink); background: #0c1118; }
@@ -103,6 +294,9 @@
   .learning-wheel { width: min(84vw, 560px); order: 1; }
   .season-notes { grid-template-columns: 1fr 1fr; }
   .season-notes-left { order: 2; }
+  .alcove-paths { grid-template-columns: repeat(2, 1fr); }
+  .alcove-paths a:nth-child(2) { border-right: 1px solid var(--wheel-line); }
+  .alcove-paths a:nth-child(n + 3) { border-top: 0; }
   .season-notes-right { order: 3; }
 }
 

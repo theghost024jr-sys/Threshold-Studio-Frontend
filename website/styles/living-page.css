@@ -70,3 +70,29 @@ body {
   color: #c8e3b4;
   outline: none;
 }
+
+.learning-glyph-return {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid rgb(154 201 172 / 36%);
+  background: rgb(26 55 42 / 28%);
+}
+
+.learning-glyph-return > p:last-of-type {
+  color: #c8e3b4;
+  line-height: 1.55;
+}
+
+.learning-glyph-return a {
+  display: inline-block;
+  border-bottom: 1px solid #9ac9ac;
+  color: #e7f0e5;
+  padding-bottom: 0.25rem;
+  text-decoration: none;
+}
+
+.learning-glyph-return a:hover,
+.learning-glyph-return a:focus-visible {
+  color: #c8e3b4;
+  outline: none;
+}

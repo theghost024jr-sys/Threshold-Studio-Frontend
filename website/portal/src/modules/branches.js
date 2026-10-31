@@ -12,6 +12,7 @@ export const BRANCHES = [
   { id: "rootSigil", label: "Hub", channel: "threshold", engineId: "rootSigil" },
   { id: "home", label: "World", channel: "threshold", engineId: "home" },
   { id: "glyphs", label: "Glyphs", channel: "soil", engineId: "glyphs" },
+  { id: "old-forest", label: "Old Forest", channel: "soil", engineId: "oldForest" },
   { id: "dialogues", label: "Dialogues", channel: "fog", engineId: "dialogues" },
   { id: "contact", label: "Contact", channel: "expand", engineId: "contact" },
 ].map((branch) => ({

@@ -102,6 +102,43 @@ test("logs sanitized node activation failures without a LOG binding", async () =
   }
 });
 
+test("Doug routes grounded help requests to a relevant portal seam", async () => {
+  const response = await worker.fetch(
+    new Request("https://threshold.example/api/doug/help", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ query: "I am lost in the spiral", path: "/spiral-grove" })
+    }),
+    {}
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    version: VERSION,
+    label: "Doug’s desk",
+    answer: "I can start from where you are and make the next seam less sharp.",
+    href: "/portal/motion",
+    action: "Enter Motion"
+  });
+});
+
+test("Doug requires a readable help question", async () => {
+  const response = await worker.fetch(
+    new Request("https://threshold.example/api/doug/help", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ query: "" })
+    }),
+    {}
+  );
+
+  assert.equal(response.status, 400);
+  assert.deepEqual(await response.json(), {
+    version: VERSION,
+    error: "Doug needs a question before he can find the right form."
+  });
+});
+
 test("caches chamber assets by limit without dropping group-specific matches", async () => {
   const logs = captureLogs();
   let assetFetches = 0;

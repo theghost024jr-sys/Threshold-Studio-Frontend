@@ -931,6 +931,27 @@
       <span class="trunk-summary" id="trunkSummary">Awaiting contribution</span>
     </section>
 
+    <section id="fracture-pedal-chamber" class="fracture-pedal-chamber vault-chamber-surface vault-chamber-border" hidden aria-labelledby="fracture-pedal-title">
+      <p class="fracture-pedal-index">Fib 5 / Mythology return</p>
+      <h2 id="fracture-pedal-title">Fracture Pedal</h2>
+      <p>The Mythology path into remapped fracture lore.</p>
+      <p id="fracture-pedal-trace" class="fracture-pedal-trace">The wheel has not returned a seasonal trace.</p>
+      <section class="fracture-pedal-prompt" aria-labelledby="fracture-pedal-prompt-title">
+        <p>Threshold prompt</p>
+        <h3 id="fracture-pedal-prompt-title">The remapped path is in front of you. What is your movement?</h3>
+        <div class="fracture-pedal-choices">
+          <button type="button" data-fracture-stance="hold">Hold steady</button>
+          <button type="button" data-fracture-stance="cross">Step through</button>
+          <button type="button" data-fracture-stance="wait">Wait and listen</button>
+        </div>
+        <p id="fracture-pedal-consequence" class="fracture-pedal-consequence" aria-live="polite">A stance opens a consequence field. Waiting remains available.</p>
+      </section>
+      <nav class="fracture-pedal-paths" aria-label="Fracture Pedal paths">
+        <a href="/learningwheel.html?node=storm-cabinet&fib=3&trail=learning-wheel,seasonal-alcove">Return to Storm Cabinet</a>
+        <a href="/mythology.html">Enter Mythology</a>
+      </nav>
+    </section>
+
     <section class="grid" aria-label="Elemental archetypes">
       <article class="chamber mythology-entry" data-fade-section data-archetype="fire" data-spirit="cindervox" data-element="Fire" aria-expanded="false">
         <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Fire Â· Cindervox">
@@ -995,6 +1016,65 @@
           <button type="button" class="viewer-btn" data-species-intent="signal" aria-pressed="false">Signal</button>
           <span id="viewer-index" class="viewer-index">default</span>
         </div>
+        <section id="cindervox-encounter" class="cindervox-encounter" hidden aria-labelledby="cindervox-encounter-title">
+          <p class="cindervox-encounter-label">Canyon threshold</p>
+          <h4 id="cindervox-encounter-title">Cindervox leads you to the burn line.</h4>
+          <p id="cindervox-encounter-copy">The boundary hums. What is your movement?</p>
+          <div class="cindervox-choices">
+            <button type="button" data-cindervox-choice="hold">Hold steady</button>
+            <button type="button" data-cindervox-choice="cross">Step through</button>
+            <button type="button" data-cindervox-choice="wait">Wait and listen</button>
+          </div>
+          <p id="cindervox-consequence" class="cindervox-consequence" aria-live="polite">A choice opens a consequence field. Waiting remains available.</p>
+          <a id="cindervox-canyon-link" class="cindervox-canyon-link" href="/portal/canyon" hidden>Enter the canyon</a>
+        </section>
+        <section id="whisperhawk-signal" class="whisperhawk-signal" hidden aria-labelledby="whisperhawk-signal-title">
+          <p class="whisperhawk-signal-label">Air signal · early warning</p>
+          <h4 id="whisperhawk-signal-title">The signal arrives from an angle.</h4>
+          <div class="whisperhawk-trace" aria-hidden="true">
+            <span class="whisperhawk-eye"></span>
+            <span class="whisperhawk-line"></span>
+            <span class="whisperhawk-arrow"></span>
+          </div>
+          <p id="whisperhawk-signal-copy">A faint streak scans across the layers before its meaning resolves.</p>
+          <button type="button" class="whisperhawk-scan" data-whisperhawk-scan="true">Trace the shift</button>
+          <p id="whisperhawk-consequence" class="whisperhawk-consequence" aria-live="polite">The pattern is still forming.</p>
+          <ol class="whisperhawk-chain" aria-label="Whisperhawk signal chain">
+            <li><span>Origin</span><strong>Whisperhawk</strong></li>
+            <li><span>Transmission</span><strong>Angled arc</strong></li>
+            <li><span>Interpretation</span><strong>Pattern scan</strong></li>
+            <li><span>Resonance</span><strong>Early warning</strong></li>
+          </ol>
+          <section id="whisper-map" class="whisper-map" hidden aria-labelledby="whisper-map-title">
+            <p>Whisper Map</p>
+            <h5 id="whisper-map-title">The shift is a signal, not the event.</h5>
+            <dl>
+              <div><dt>Classification</dt><dd>Soft signal · early drift</dd></div>
+              <div><dt>Layer resonance</dt><dd>Air · pattern and motion</dd></div>
+              <div><dt>Direction</dt><dd>Pre-manifest shift detected</dd></div>
+              <div><dt>Routing note</dt><dd>Read through context before movement.</dd></div>
+            </dl>
+            <button type="button" class="whisperhawk-stillwatch" data-whisperhawk-stillwatch="true">Hold the signal · Owl Stillwatch</button>
+          </section>
+        </section>
+        <section id="owl-stillwatch" class="owl-stillwatch" hidden aria-labelledby="owl-stillwatch-title">
+          <p>Ethyl signal · Stillwatch</p>
+          <h4 id="owl-stillwatch-title">Be still. The pattern will reveal itself.</h4>
+          <div class="owl-gaze" aria-hidden="true"><span></span><span></span></div>
+          <p>Owl does not chase the warning. It holds quiet vigilance, geometric clarity, and a pause before action.</p>
+          <button type="button" data-owl-return="true">Return to Whisperhawk</button>
+        </section>
+        <section id="circuit-mirror" class="circuit-mirror" hidden aria-labelledby="circuit-mirror-title">
+          <p>Circuit Mirror</p>
+          <h4 id="circuit-mirror-title">The signal meets the node.</h4>
+          <dl>
+            <div><dt>Input</dt><dd id="mirror-input"></dd></div>
+            <div><dt>Reflection</dt><dd id="mirror-reflection"></dd></div>
+            <div><dt>Difference</dt><dd id="mirror-difference"></dd></div>
+            <div><dt>Demand</dt><dd id="mirror-demand"></dd></div>
+            <div><dt>Pressure</dt><dd id="mirror-pressure"></dd></div>
+          </dl>
+        </section>
       </article>
     </section>
 
@@ -1569,6 +1649,63 @@ loadMythology().catch(function () {
 });
 
   </script>
+  <script>
+    (function () {
+      if (new URLSearchParams(window.location.search).get("node") !== "fracture-pedal") {
+        return;
+      }
+
+      const chamber = document.getElementById("fracture-pedal-chamber");
+      const trace = document.getElementById("fracture-pedal-trace");
+      if (!chamber || !trace) {
+        return;
+      }
+
+      let seasons = [];
+      let glyphs = [];
+      try {
+        const wheelState = JSON.parse(localStorage.getItem("threshold.learningWheel.state.v1") || "null");
+        const glyphReturns = JSON.parse(localStorage.getItem("threshold.learningWheel.glyphReturns.v1") || "null");
+        seasons = Array.isArray(wheelState?.visitedSeasons) ? wheelState.visitedSeasons : [];
+        glyphs = Array.isArray(glyphReturns?.glyphs) ? glyphReturns.glyphs : [];
+      } catch (error) {
+        console.warn("Seasonal trace could not be restored.", error);
+      }
+
+      const seasonalTrace = [...new Set(seasons)].map(function (season) {
+        return season.charAt(0).toUpperCase() + season.slice(1);
+      });
+      const glyphTrace = [...new Set(glyphs)].map(function (glyph) {
+        return glyph.charAt(0).toUpperCase() + glyph.slice(1);
+      });
+      const fragments = [];
+      if (seasonalTrace.length) fragments.push("Seasons: " + seasonalTrace.join(", "));
+      if (glyphTrace.length) fragments.push("Returned glyphs: " + glyphTrace.join(", "));
+      trace.textContent = fragments.length
+        ? fragments.join(". ") + "."
+        : "The wheel has not returned a seasonal trace.";
+      const consequence = document.getElementById("fracture-pedal-consequence");
+      const paths = document.querySelectorAll("[data-fracture-stance]");
+      paths.forEach(function (path) {
+        path.addEventListener("click", function () {
+          const stance = path.dataset.fractureStance;
+          localStorage.setItem("threshold.mythology.fractureStance.v1", stance);
+          paths.forEach(function (button) {
+            button.setAttribute("aria-pressed", String(button === path));
+          });
+          if (stance === "hold") {
+            consequence.textContent = "The Cabinet remains in view. The fracture is witnessed before it is crossed.";
+          } else if (stance === "cross") {
+            consequence.textContent = "The seasonal trace enters Mythology. The path is available to cross.";
+          } else {
+            consequence.textContent = "No vector is fixed. The remapped path remains open.";
+          }
+        });
+      });
+      chamber.hidden = false;
+      chamber.scrollIntoView({ behavior: "smooth", block: "center" });
+    })();
+  </script>
   <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
   <style>
     .engine-architecture-link {
@@ -1594,21 +1731,10 @@ loadMythology().catch(function () {
       outline: none;
     }
   </style>
-  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/node-runtime.js?v=local-preview-activation-1" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script src="scripts/emotional-engine.js"></script>
-  <script src="scripts/species-signals.js"></script>
+  <script src="scripts/species-signals.js?v=owl-stillwatch-2"></script>
   <script type="module" src="scripts/destination-page.js?v=reveal-3"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

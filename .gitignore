@@ -84,8 +84,3 @@ vault-index.json
 !.env.example
 *.local
 cloudflareapi.txt
-
-# Microsoft Office temporary lock files
-~$*.docx
-~$*.xlsx
-~$*.pptx

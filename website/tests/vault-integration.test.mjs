@@ -85,9 +85,9 @@ test("keeps Basin east of Herb Room while restoring the south Waterfall exit", a
   assert.equal(oldForestDocument.route, "/environment/old-forest");
   assert.match(oldForestDocument.body, /The Old Forest is an environment defined by ancient memory/);
   assert.match(waterfall, /<a href="\/environment\/herbroom\.html">[\s\S]*?Return North/);
-  assert.match(waterfall, /src="\/assets\/images\/Waterfall\.jpg"/);
+  assert.match(waterfall, /src="\/assets\/images\/drift-falls-panorama\.png"/);
   assert.match(waterfall, /into the Forest biome/);
-  await access("website/assets/images/Waterfall.jpg");
+  await access("website/assets/images/drift-falls-panorama.png");
   assert.ok(!vault.chambers.some((chamber) => chamber.id === "waterfall"));
   assert.match(mythology, /values\.includes\('mythology'\)/);
 });

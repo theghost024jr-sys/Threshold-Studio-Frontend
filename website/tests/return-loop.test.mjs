@@ -19,8 +19,13 @@ test("House and Garden restores the Herb Room paths and its archived exits", asy
   assert.match(herbRoom, /src="\/scripts\/access-flow\.js"/);
   assert.match(basin, /src="\/scripts\/access-flow\.js"/);
   assert.match(waterfall, /<title>The Drift Falls — Threshold Studio<\/title>/);
-  assert.match(waterfall, /src="\/assets\/images\/Waterfall\.jpg"/);
-  assert.match(waterfall, /Where the House &amp; Garden band yields to the deep Forest biome/);
+  assert.match(waterfall, /src="\/assets\/images\/drift-falls-panorama\.png"/);
+  assert.match(waterfall, /class="falls-viewport"/);
+  assert.match(waterfall, /function moveDistance/);
+  assert.match(waterfall, /function beginPan/);
+  assert.match(waterfall, /const panThreshold = 8|Math\.hypot\(horizontal, vertical\) < 8/);
+  assert.match(waterfall, /href="\/portal\/shimmer">Behind the falls/);
+  assert.match(waterfall, /href="\/portal\/old-forest-trek">Past the falls/);
   assert.match(waterfall, /href="\/environment\/herbroom\.html"/);
 });
 

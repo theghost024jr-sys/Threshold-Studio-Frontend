@@ -234,6 +234,281 @@
       .lore { padding: 4rem 1.25rem 5rem; }
       .lore-inner { gap: 0 1.5rem; grid-template-columns: 3px 1fr; }
     }
+
+    .falls-viewport {
+      --falls-distance: 0;
+      --falls-pan-x: 0px;
+      --falls-pan-y: 0px;
+      background: #04100f;
+      color: #e8f5e9;
+      height: 100svh;
+      isolation: isolate;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .falls-scene,
+    .falls-backdrop,
+    .falls-veil,
+    .falls-mist,
+    .falls-spray {
+      inset: 0;
+      position: absolute;
+    }
+
+    .falls-scene {
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .falls-viewport.is-panning .falls-scene {
+      cursor: grabbing;
+      user-select: none;
+    }
+
+    .falls-backdrop {
+      height: 100%;
+      object-fit: cover;
+      transform: scale(calc(1.04 + var(--falls-distance) * .27)) translate3d(
+        calc(var(--falls-pan-x) * .12),
+        calc(var(--falls-pan-y) * .12),
+        0
+      );
+      transition: transform 450ms cubic-bezier(.16, 1, .3, 1), filter 600ms ease;
+      width: 100%;
+    }
+
+    .falls-veil {
+      background:
+        radial-gradient(ellipse at 50% 55%, transparent 16%, rgba(3, 14, 14, .78) 82%),
+        linear-gradient(180deg, rgba(1, 10, 10, .68), transparent 30%, rgba(1, 9, 10, .52));
+      opacity: .42;
+      pointer-events: none;
+      transition: opacity 500ms ease;
+      z-index: 1;
+    }
+
+    .falls-viewport.is-near .falls-veil { opacity: .74; }
+
+    .falls-mist {
+      background:
+        radial-gradient(ellipse at 30% 94%, rgba(202, 249, 242, .38), transparent 37%),
+        radial-gradient(ellipse at 75% 82%, rgba(164, 232, 224, .3), transparent 43%);
+      filter: blur(2px);
+      opacity: calc(.42 + var(--falls-distance) * .5);
+      pointer-events: none;
+      transform: translate3d(calc(var(--falls-pan-x) * .82), calc(4vh + var(--falls-pan-y) * .82), 0) scale(calc(1.02 + var(--falls-distance) * .48));
+      transition: transform 360ms ease-out, opacity 500ms ease;
+      z-index: 2;
+    }
+
+    .falls-spray {
+      background: repeating-linear-gradient(102deg, transparent 0 2.4rem, rgba(223, 255, 250, .18) 2.55rem 2.62rem, transparent 2.75rem 5.2rem);
+      mix-blend-mode: screen;
+      opacity: calc(.04 + var(--falls-distance) * .38);
+      pointer-events: none;
+      transform: translate3d(calc(var(--falls-pan-x) * .58), calc(var(--falls-pan-y) * .58), 0) scale(calc(1 + var(--falls-distance) * .24));
+      z-index: 3;
+    }
+
+    .falls-title {
+      left: 50%;
+      max-width: min(36rem, 80vw);
+      pointer-events: none;
+      position: absolute;
+      text-align: center;
+      top: 39%;
+      transform: translate(-50%, calc(-50% - var(--falls-distance) * 9rem));
+      transition: opacity 450ms ease, transform 700ms cubic-bezier(.16, 1, .3, 1);
+      z-index: 4;
+    }
+
+    .falls-title p {
+      color: #9fd9cd;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      margin: 0 0 .8rem;
+      text-transform: uppercase;
+    }
+
+    .falls-title h1 {
+      color: #f0fff9;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.4rem, 7vw, 5.7rem);
+      font-weight: 400;
+      line-height: .96;
+      text-shadow: 0 2px 2rem rgba(0, 0, 0, .8);
+    }
+
+    .falls-viewport.is-moving .falls-title {
+      opacity: 0;
+      transform: translate(-50%, calc(-50% - 12rem));
+    }
+
+    .falls-tree,
+    .falls-ascent,
+    .falls-behind-route,
+    .falls-past-route {
+      position: absolute;
+      z-index: 5;
+    }
+
+    .falls-tree {
+      background: transparent;
+      border: 0;
+      bottom: 17%;
+      color: transparent;
+      cursor: pointer;
+      height: 54%;
+      left: 0;
+      padding: 0;
+      transform: translate3d(calc(var(--falls-pan-x) * .7), calc(var(--falls-pan-y) * .7), 0);
+      width: 32%;
+    }
+
+    .falls-tree::before {
+      background: radial-gradient(ellipse at 34% 55%, rgba(173, 235, 209, .54), transparent 8%), linear-gradient(110deg, transparent 45%, rgba(140, 212, 184, .38) 50%, transparent 55%);
+      content: "";
+      inset: 8% 4%;
+      opacity: 0;
+      position: absolute;
+      transition: opacity 500ms ease, transform 700ms ease;
+    }
+
+    .falls-tree:hover::before,
+    .falls-tree:focus-visible::before,
+    .falls-tree.is-awake::before {
+      opacity: 1;
+      transform: rotate(4deg) scale(1.06);
+    }
+
+    .falls-tree:focus-visible,
+    .falls-ascent:focus-visible,
+    .falls-behind-route:focus-visible,
+    .falls-past-route:focus-visible,
+    .falls-sound:focus-visible,
+    .falls-accessible a:focus-visible {
+      outline: 2px solid #d8fff6;
+      outline-offset: 4px;
+    }
+
+    .falls-ascent {
+      bottom: 12%;
+      height: 65%;
+      right: 0;
+      transform: translate3d(calc(var(--falls-pan-x) * .54), calc(var(--falls-pan-y) * .54), 0);
+      width: 28%;
+    }
+
+    .falls-behind-route,
+    .falls-past-route {
+      color: #e8fff8;
+      font-size: .67rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      opacity: 0;
+      padding: .8rem;
+      pointer-events: none;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: opacity 500ms ease, text-shadow 250ms ease;
+    }
+
+    .falls-behind-route { bottom: 28%; left: 9%; }
+    .falls-past-route { bottom: 31%; right: 8%; }
+    .falls-tree.is-open + .falls-ascent + .falls-behind-route,
+    .falls-viewport.is-past-visible .falls-past-route {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .falls-behind-route:hover,
+    .falls-past-route:hover { text-shadow: 0 0 1.4rem #a8fff0; }
+
+    .falls-boundary {
+      bottom: 5%;
+      color: rgba(224, 255, 248, .7);
+      font-size: .62rem;
+      left: 50%;
+      letter-spacing: .16em;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      transition: opacity 400ms ease;
+      z-index: 5;
+    }
+
+    .falls-viewport.is-near .falls-boundary { opacity: 1; }
+
+    .falls-sound {
+      background: rgba(3, 18, 18, .64);
+      border: 1px solid rgba(168, 255, 240, .44);
+      color: #d7fff5;
+      cursor: pointer;
+      font: 600 .62rem/1 "Source Sans 3", sans-serif;
+      letter-spacing: .14em;
+      padding: .65rem .82rem;
+      position: absolute;
+      right: 1.5rem;
+      text-transform: uppercase;
+      top: 1.5rem;
+      z-index: 7;
+    }
+
+    .falls-hint {
+      bottom: 2rem;
+      color: rgba(221, 255, 247, .78);
+      font-size: .62rem;
+      left: 50%;
+      letter-spacing: .16em;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      transition: opacity 350ms ease;
+      z-index: 6;
+    }
+
+    .falls-hint.is-visible { opacity: 1; }
+
+    .falls-accessible {
+      bottom: 1.25rem;
+      display: flex;
+      gap: .75rem;
+      left: 1.5rem;
+      position: absolute;
+      z-index: 7;
+    }
+
+    .falls-accessible a {
+      color: #d5f6ea;
+      font-size: .62rem;
+      letter-spacing: .11em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .falls-status {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .falls-backdrop,
+      .falls-mist,
+      .falls-spray,
+      .falls-tree,
+      .falls-ascent { transition: none; transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -244,23 +519,26 @@
     </a>
   </nav>
 
-  <section class="hero">
-    <img
-      class="hero-img"
-      src="/assets/images/Waterfall.jpg"
-      alt="The Drift Falls cascading through a moss-covered gorge into heavy mist"
-      width="1500"
-      height="809"
-      loading="eager"
-      decoding="async"
-    />
-    <div class="hero-content">
-      <h1 class="hero-title">The Drift Falls</h1>
-      <p class="hero-subtitle">Where the House &amp; Garden band yields to the deep Forest biome.</p>
+  <section class="falls-viewport" aria-label="The Drift Falls exploration scene">
+    <div class="falls-scene">
+      <img class="falls-backdrop" src="/assets/images/drift-falls-panorama.png" alt="The Drift Falls cascade through a moss-dark gorge, with a rooted tree to the left and stone stairs on the right." width="1536" height="1024" loading="eager" decoding="async" />
+      <div class="falls-veil" aria-hidden="true"></div>
+      <div class="falls-mist" aria-hidden="true"></div>
+      <div class="falls-spray" aria-hidden="true"></div>
+      <div class="falls-title" aria-hidden="true"><p>Forest boundary</p><h1>The Drift Falls</h1></div>
+      <button class="falls-tree" type="button" aria-label="Attend to the rooted tree"></button>
+      <div class="falls-ascent" aria-hidden="true"></div>
+      <a class="falls-behind-route" href="/portal/shimmer">Behind the falls</a>
+      <a class="falls-past-route" href="/portal/old-forest-trek">Past the falls</a>
+      <p class="falls-boundary" aria-hidden="true">The water resists a hurried crossing.</p>
+      <p class="falls-hint" aria-hidden="true">Drag to look</p>
     </div>
-    <div class="scroll-arrow" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-    </div>
+    <button class="falls-sound" type="button" aria-pressed="false">Listen to the falls</button>
+    <nav class="falls-accessible" aria-label="Drift Falls routes">
+      <a href="/portal/shimmer">Behind the falls</a>
+      <a href="/portal/old-forest-trek">Past the falls</a>
+    </nav>
+    <p class="falls-status" aria-live="polite"></p>
   </section>
 
   <section class="lore">
@@ -283,5 +561,236 @@
   <footer>
     Generated with Drift &nbsp;·&nbsp; &copy; 2026 Threshold Studio
   </footer>
+  <script>
+    const viewport = document.querySelector('.falls-viewport');
+    const scene = document.querySelector('.falls-scene');
+    const tree = document.querySelector('.falls-tree');
+    const soundControl = document.querySelector('.falls-sound');
+    const hint = document.querySelector('.falls-hint');
+    const status = document.querySelector('.falls-status');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let distance = 0;
+    let panX = 0;
+    let panY = 0;
+    let panState = null;
+    let suppressNextClick = false;
+    let hintShown = false;
+    let treeFocusTimer = null;
+    let audioContext;
+    let waterGain;
+    let waterFilter;
+    let waterPanner;
+    let soundMuted = true;
+
+    function clamp(value, minimum, maximum) {
+      return Math.max(minimum, Math.min(maximum, value));
+    }
+
+    function updateScene(message) {
+      viewport.style.setProperty('--falls-distance', distance.toFixed(3));
+      viewport.style.setProperty('--falls-pan-x', `${panX}px`);
+      viewport.style.setProperty('--falls-pan-y', `${panY}px`);
+      viewport.classList.toggle('is-moving', distance > 0.02);
+      viewport.classList.toggle('is-near', distance >= 0.78);
+      viewport.classList.toggle('is-past-visible', distance >= 0.28 && panX >= 28);
+      updateSoundMix();
+      if (message) status.textContent = message;
+    }
+
+    function moveDistance(delta) {
+      const resistance = delta > 0 ? 1 - distance * 0.68 : 1;
+      distance = clamp(distance + delta * resistance, 0, 1);
+      updateScene(
+        distance >= 0.78
+          ? 'The water boundary is close. You can turn toward the tree, the ascent, or withdraw.'
+          : distance > 0.1
+            ? 'The falls draw nearer. Spray and water presence increase.'
+            : 'The falls settle back into a distant boundary.'
+      );
+    }
+
+    function createWaterSound() {
+      if (audioContext) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) {
+        status.textContent = 'Water sound is unavailable in this browser.';
+        return;
+      }
+
+      audioContext = new AudioContext();
+      const buffer = audioContext.createBuffer(1, audioContext.sampleRate * 2, audioContext.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let index = 0; index < data.length; index += 1) {
+        data[index] = Math.random() * 2 - 1;
+      }
+      const source = audioContext.createBufferSource();
+      waterFilter = audioContext.createBiquadFilter();
+      waterGain = audioContext.createGain();
+      source.buffer = buffer;
+      source.loop = true;
+      waterFilter.type = 'lowpass';
+      waterFilter.Q.value = 0.7;
+      waterGain.gain.value = 0;
+      source.connect(waterFilter);
+      if (audioContext.createStereoPanner) {
+        waterPanner = audioContext.createStereoPanner();
+        waterFilter.connect(waterPanner);
+        waterPanner.connect(waterGain);
+      } else {
+        waterFilter.connect(waterGain);
+      }
+      waterGain.connect(audioContext.destination);
+      source.start();
+    }
+
+    function updateSoundMix() {
+      if (!audioContext || !waterGain || !waterFilter) return;
+      const intensity = reducedMotion.matches ? 0.55 : 1;
+      const targetGain = soundMuted ? 0 : (0.012 + distance * 0.062) * intensity;
+      waterGain.gain.setTargetAtTime(targetGain, audioContext.currentTime, 0.16);
+      waterFilter.frequency.setTargetAtTime(460 + distance * 2650, audioContext.currentTime, 0.16);
+      if (waterPanner) {
+        waterPanner.pan.setTargetAtTime(clamp(panX / 180, -0.5, 0.5), audioContext.currentTime, 0.16);
+      }
+    }
+
+    function beginSound() {
+      createWaterSound();
+      if (!audioContext) return;
+      soundMuted = false;
+      soundControl.setAttribute('aria-pressed', 'true');
+      soundControl.textContent = 'Quiet the falls';
+      void audioContext.resume();
+      updateSoundMix();
+    }
+
+    soundControl.addEventListener('click', () => {
+      if (soundMuted) {
+        beginSound();
+        status.textContent = 'Water sound is now responding to distance.';
+      } else {
+        soundMuted = true;
+        soundControl.setAttribute('aria-pressed', 'false');
+        soundControl.textContent = 'Listen to the falls';
+        updateSoundMix();
+      }
+    });
+
+    scene.addEventListener('wheel', (event) => {
+      if (Math.abs(event.deltaY) < 4) return;
+      event.preventDefault();
+      beginSound();
+      moveDistance(Math.sign(event.deltaY) * 0.075);
+    }, { passive: false });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+        event.preventDefault();
+        beginSound();
+        moveDistance(0.08);
+      }
+      if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        event.preventDefault();
+        moveDistance(-0.1);
+      }
+    });
+
+    function openTreeRoute() {
+      tree.classList.add('is-awake', 'is-open');
+      status.textContent = 'The rooted tree has made a narrow way behind the falls visible.';
+    }
+
+    tree.addEventListener('pointerenter', () => {
+      tree.classList.add('is-awake');
+      treeFocusTimer = window.setTimeout(openTreeRoute, 900);
+    });
+    tree.addEventListener('pointerleave', () => {
+      window.clearTimeout(treeFocusTimer);
+      if (!tree.classList.contains('is-open')) tree.classList.remove('is-awake');
+    });
+    tree.addEventListener('focus', () => {
+      tree.classList.add('is-awake');
+      treeFocusTimer = window.setTimeout(openTreeRoute, 900);
+    });
+    tree.addEventListener('blur', () => window.clearTimeout(treeFocusTimer));
+    tree.addEventListener('click', () => {
+      tree.classList.add('is-awake');
+      status.textContent = 'The tree answers attention without opening the passage yet.';
+    });
+    tree.addEventListener('dblclick', openTreeRoute);
+
+    function hideHint() {
+      hint.classList.remove('is-visible');
+      hint.setAttribute('aria-hidden', 'true');
+    }
+
+    function beginPan(event) {
+      if (event.button !== 0) return;
+      panState = {
+        pointerId: event.pointerId,
+        pointerType: event.pointerType,
+        startX: event.clientX,
+        startY: event.clientY,
+        originX: panX,
+        originY: panY,
+        moved: false
+      };
+      if (!hintShown) {
+        window.setTimeout(() => {
+          if (panState && !panState.moved) {
+            hint.classList.add('is-visible');
+            hint.setAttribute('aria-hidden', 'false');
+          }
+        }, 360);
+      }
+    }
+
+    function movePan(event) {
+      const mouseFallback = panState?.pointerType === 'mouse' && event.type === 'mousemove';
+      if (!panState || (!mouseFallback && event.pointerId !== panState.pointerId)) return;
+      const horizontal = event.clientX - panState.startX;
+      const vertical = event.clientY - panState.startY;
+      if (!panState.moved && Math.hypot(horizontal, vertical) < 8) return;
+      panState.moved = true;
+      hintShown = true;
+      hideHint();
+      viewport.classList.add('is-panning');
+      panX = clamp(panState.originX + horizontal, -180, 180);
+      panY = clamp(panState.originY + vertical, -120, 120);
+      updateScene(panX >= 28 && distance >= 0.28 ? 'The stone ascent becomes readable past the falls.' : null);
+      event.preventDefault();
+    }
+
+    function finishPan(event) {
+      const mouseFallback = panState?.pointerType === 'mouse' && event.type === 'mouseup';
+      if (!panState || (!mouseFallback && event.pointerId !== panState.pointerId)) return;
+      const moved = panState.moved;
+      panState = null;
+      viewport.classList.remove('is-panning');
+      hideHint();
+      if (moved) suppressNextClick = true;
+    }
+
+    scene.addEventListener('pointerdown', beginPan);
+    window.addEventListener('pointermove', movePan);
+    window.addEventListener('pointerup', finishPan);
+    window.addEventListener('pointercancel', finishPan);
+    window.addEventListener('mousemove', movePan);
+    window.addEventListener('mouseup', finishPan);
+    scene.addEventListener('click', (event) => {
+      if (!suppressNextClick) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      suppressNextClick = false;
+    }, true);
+
+    document.querySelectorAll('a[href^="/portal/"]').forEach((link) => {
+      if (window.location.port === '8789') {
+        link.href = `http://${window.location.hostname}:4173${link.getAttribute('href')}`;
+      }
+    });
+    reducedMotion.addEventListener('change', updateSoundMix);
+    updateScene();
+  </script>
 </body>
 </html>

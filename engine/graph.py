@@ -17,7 +17,7 @@ class Graph:
         self._nodes: dict[str, dict[str, Any]] = {}
         self._pending_inputs: list[dict[str, Any]] = []
 
-    def apply_input(self, node_id: str, data: dict[str, Any]) -> None:
+    def apply_input(self, node_id: str, data: dict[str, Any]) -> dict[str, Any]:
         normalized_id = node_id.strip()
         if not normalized_id:
             raise ValueError("node_id must not be empty")
@@ -32,14 +32,22 @@ class Graph:
                 normalized_id,
                 {"id": normalized_id, "active": False, "inputCount": 0},
             )
-            if data.get("type") == "node.activate":
+            responded = False
+            if data.get("type") == "node.activate" and node["active"] is not True:
                 node["active"] = True
+                responded = True
             node["inputCount"] += 1
             node["lastInput"] = deepcopy(data)
             node["updatedAt"] = received_at
             self._pending_inputs.append(
                 {"nodeId": normalized_id, "data": deepcopy(data), "receivedAt": received_at}
             )
+            return {
+                "status": "ok",
+                "recorded": True,
+                "responded": responded,
+                "reason": "state-changed" if responded else "recorded-only",
+            }
 
     @property
     def canonical_node_ids(self) -> frozenset[str]:

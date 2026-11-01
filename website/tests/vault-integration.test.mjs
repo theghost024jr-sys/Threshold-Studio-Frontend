@@ -36,6 +36,8 @@ test("publishes Cindervox intent signals from the canonical vault", async () => 
   assert.match(controller, /window\.openCindervox/);
   assert.match(controller, /window\.openPorpoise/);
   assert.match(controller, /button\.hidden = !variants/);
+  assert.match(controller, /Archive image available for this orientation\./);
+  assert.doesNotMatch(controller, /viewerPath\) viewerPath\.textContent = imagePath/);
   assert.match(controller, /function variantsFor\(speciesKey\)/);
   for (const species of ["cindervox", "porpoise", "whisperhawk", "stonecat", "lumenstag"]) {
     assert.match(controller, new RegExp(`${species}: ["']\/`));

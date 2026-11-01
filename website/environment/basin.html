@@ -335,25 +335,42 @@
     async function startFountain() {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) {
-        soundToggle.textContent = 'Unavailable';
+        soundToggle.textContent = 'Sound unavailable';
+        soundToggle.title = 'Environmental sound is unavailable in this browser';
+        soundToggle.setAttribute('aria-pressed', 'false');
         soundToggle.disabled = true;
         return;
       }
 
-      const context = new AudioContextClass();
-      const master = context.createGain();
-      const water = createWaterSource(context);
-      master.gain.setValueAtTime(0, context.currentTime);
-      master.gain.linearRampToValueAtTime(0.22, context.currentTime + 1.4);
-      water.output.connect(master).connect(context.destination);
-      water.source.start();
+      let context;
+      try {
+        context = new AudioContextClass();
+        const master = context.createGain();
+        const water = createWaterSource(context);
+        master.gain.setValueAtTime(0, context.currentTime);
+        master.gain.linearRampToValueAtTime(0.22, context.currentTime + 1.4);
+        water.output.connect(master).connect(context.destination);
+        water.source.start();
 
-      fountain = { context, master, source: water.source, timer: 0, returnTimer: 0 };
-      await context.resume();
-      scheduleBamboo(fountain, 1800);
-      soundToggle.textContent = 'Quiet';
-      soundToggle.title = 'Stop the bamboo fountain';
-      soundToggle.setAttribute('aria-pressed', 'true');
+        fountain = { context, master, source: water.source, timer: 0, returnTimer: 0 };
+        await context.resume();
+        scheduleBamboo(fountain, 1800);
+        soundToggle.textContent = 'Quiet';
+        soundToggle.title = 'Stop the bamboo fountain';
+        soundToggle.setAttribute('aria-pressed', 'true');
+      } catch (error) {
+        console.warn('Basin environmental sound is unavailable.', error);
+        fountain = null;
+        if (context) {
+          context.close().catch((closeError) => {
+            console.warn('Basin audio context could not close cleanly.', closeError);
+          });
+        }
+        soundToggle.textContent = 'Sound unavailable';
+        soundToggle.title = 'Environmental sound is unavailable; the Basin remains open.';
+        soundToggle.setAttribute('aria-pressed', 'false');
+        soundToggle.disabled = true;
+      }
     }
 
     function stopFountain() {
@@ -396,5 +413,6 @@
 
     window.addEventListener('pagehide', stopFountain);
   </script>
+  <script type="module" src="/scripts/canonical-path.js"></script>
 </body>
 </html>

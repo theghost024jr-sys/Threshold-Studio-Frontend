@@ -3,9 +3,11 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("preserves Ethos declarations and keeps the new principle as an independent seed", async () => {
-  const [ethos, seed, vault] = await Promise.all([
+  const [ethos, seed, seedScript, seedStyles, vault] = await Promise.all([
     readFile(new URL("../ethos.html", import.meta.url), "utf8"),
     readFile(new URL("../pages/ethos-seed.html", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/ethos-seed.js", import.meta.url), "utf8"),
+    readFile(new URL("../styles/ethos-root.css", import.meta.url), "utf8"),
     readFile(new URL("../data/threshold-vault.json", import.meta.url), "utf8")
   ]);
   for (const declaration of [
@@ -19,6 +21,15 @@ test("preserves Ethos declarations and keeps the new principle as an independent
   assert.match(ethos, /href="pages\/ethos-seed\.html"/);
   assert.match(seed, /Never knowingly distort what we have learned in order to preserve what we currently believe\./);
   assert.match(seed, /href="\/ethos\.html">Return to Ethos/);
+  assert.match(seed, /data-ethos-seed-node/);
+  assert.match(seed, /scripts\/ethos-seed\.js/);
+  assert.match(seedScript, /arrivedFromEthos/);
+  assert.match(seedScript, /prefers-reduced-motion/);
+  assert.match(seedScript, /Reorienting toward Ethos/);
+  assert.match(seedStyles, /ethos-seed-breath/);
+  assert.match(seedStyles, /is-return-axis/);
+  assert.match(seedStyles, /prefers-reduced-motion/);
+  assert.doesNotMatch(seedScript, /accepted|authorized|canonical node/i);
   assert.doesNotMatch(ethos, /Guardrails\.md|Cohesion Under Pressure/);
   assert.doesNotMatch(vault, /"id":\s*"(?:guardrails|invariant00-cohesion-under-pressure)"/);
 });

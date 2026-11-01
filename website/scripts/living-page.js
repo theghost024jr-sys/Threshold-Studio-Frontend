@@ -2,6 +2,8 @@ import { validateLivingPagePublication } from "./living-page-contract.js";
 
 const CONFIG_URL = "/config/living-pages.json";
 const VAULT_URL = "/data/threshold-vault.json";
+const CACHE_VERSION = 1;
+const CACHE_PREFIX = "threshold.livingPage.publication.";
 
 function requireOk(response, label) {
   if (!response.ok) {
@@ -102,12 +104,78 @@ function appendMarkdown(target, body, assets, routes) {
 
 function renderNavigation(page) {
   const navigation = document.querySelector("[data-living-page-navigation]");
+  navigation.replaceChildren();
   (page.branches || []).forEach((branch) => {
     const link = document.createElement("a");
     link.href = branch.route;
     link.textContent = branch.label;
     navigation.appendChild(link);
   });
+}
+
+function cacheKey(noteId) {
+  return `${CACHE_PREFIX}${noteId}`;
+}
+
+function cachePublication(noteId, configuration, page, note) {
+  const publication = {
+    version: CACHE_VERSION,
+    configuration: { pages: configuration.pages },
+    page,
+    note
+  };
+  try {
+    sessionStorage.setItem(cacheKey(noteId), JSON.stringify(publication));
+  } catch (error) {
+    console.warn("Living page publication could not be cached.", error);
+  }
+}
+
+function readCachedPublication(noteId) {
+  try {
+    const stored = sessionStorage.getItem(cacheKey(noteId));
+    if (!stored) {
+      return null;
+    }
+    const publication = JSON.parse(stored);
+    if (
+      publication?.version !== CACHE_VERSION ||
+      !Array.isArray(publication.configuration?.pages) ||
+      !publication.page ||
+      !publication.note
+    ) {
+      sessionStorage.removeItem(cacheKey(noteId));
+      return null;
+    }
+    return publication;
+  } catch (error) {
+    console.warn("Living page publication cache could not be restored.", error);
+    return null;
+  }
+}
+
+function renderPublication(configuration, page, note) {
+  const content = document.querySelector("[data-living-page-content]");
+  content.replaceChildren();
+  const routes = new Map(configuration.pages.flatMap((candidate) => [
+    [candidate.noteId.toLowerCase(), candidate.route],
+    ...(candidate.aliases || []).map((alias) => [alias.toLowerCase(), candidate.route])
+  ]));
+
+  document.title = `${note.title} · Threshold`;
+  document.querySelector("[data-living-page-title]").textContent = note.title;
+  document.querySelector("[data-living-page-source]").textContent = note.relativePath;
+  appendMarkdown(content, note.body, assetByName(note), routes);
+  if (page.includeAssets) {
+    const bodyAssets = new Set([...content.querySelectorAll("img")].map((image) => image.src));
+    (note.assets || []).forEach((asset) => {
+      if (!bodyAssets.has(new URL(asset.webPath, location.origin).href)) {
+        appendImage(content, asset.webPath, asset.name);
+      }
+    });
+  }
+  renderNavigation(page);
+  initializeLearningGlyph();
 }
 
 function initializeLearningGlyph() {
@@ -184,44 +252,44 @@ async function initializeLivingPage() {
     throw new Error("Living page is missing its required scaffold elements.");
   }
 
-  const [configuration, vault] = await Promise.all([
-    fetch(CONFIG_URL, { cache: "no-store" }).then((response) => requireOk(response, "Living page configuration")),
-    fetch(VAULT_URL, { cache: "no-store" }).then((response) => requireOk(response, "Vault data"))
-  ]);
-  const page = configuration.pages.find((candidate) => candidate.noteId === noteId);
-  const note = vault.documents.find((candidate) => candidate.id === noteId);
-  validateLivingPagePublication({
-    noteId,
-    page,
-    note,
-    route: location.pathname
-  });
-  const routes = new Map(configuration.pages.flatMap((candidate) => [
-    [candidate.noteId.toLowerCase(), candidate.route],
-    ...(candidate.aliases || []).map((alias) => [alias.toLowerCase(), candidate.route])
-  ]));
-
-  document.title = `${note.title} · Threshold`;
-  document.querySelector("[data-living-page-title]").textContent = note.title;
-  document.querySelector("[data-living-page-source]").textContent = note.relativePath;
-  appendMarkdown(content, note.body, assetByName(note), routes);
-  if (page.includeAssets) {
-    const bodyAssets = new Set([...content.querySelectorAll("img")].map((image) => image.src));
-    (note.assets || []).forEach((asset) => {
-      if (!bodyAssets.has(new URL(asset.webPath, location.origin).href)) {
-        appendImage(content, asset.webPath, asset.name);
-      }
+  try {
+    const [configuration, vault] = await Promise.all([
+      fetch(CONFIG_URL, { cache: "no-store" }).then((response) => requireOk(response, "Living page configuration")),
+      fetch(VAULT_URL, { cache: "no-store" }).then((response) => requireOk(response, "Vault data"))
+    ]);
+    const page = configuration.pages.find((candidate) => candidate.noteId === noteId);
+    const note = vault.documents.find((candidate) => candidate.id === noteId);
+    validateLivingPagePublication({
+      noteId,
+      page,
+      note,
+      route: location.pathname
     });
+    renderPublication(configuration, page, note);
+    cachePublication(noteId, configuration, page, note);
+    status.textContent = "Published vault note";
+  } catch (error) {
+    console.error("Living page live publication failed to load", error);
+    const cached = readCachedPublication(noteId);
+    if (cached) {
+      try {
+        validateLivingPagePublication({
+          noteId,
+          page: cached.page,
+          note: cached.note,
+          route: location.pathname
+        });
+        renderPublication(cached.configuration, cached.page, cached.note);
+        status.textContent = "Last published copy; live update unavailable.";
+        return;
+      } catch (cacheError) {
+        console.error("Living page cached publication is invalid", cacheError);
+      }
+    }
+    status.textContent = "The published record is unavailable. Return to the Hub and try again later.";
   }
-  renderNavigation(page);
-  initializeLearningGlyph();
-  status.textContent = "Published vault note";
 }
 
 initializeLivingPage().catch((error) => {
-  console.error("Living page failed to initialize", error);
-  const status = document.querySelector("[data-living-page-status]");
-  if (status) {
-    status.textContent = error instanceof Error ? error.message : "Living page unavailable.";
-  }
+  console.error("Living page scaffold could not be initialized", error);
 });

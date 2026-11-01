@@ -44,6 +44,10 @@
 }
 
 .threshold-access-flow__steps [data-state="complete"] { border-color: rgb(139 228 213 / 62%); color: #8be4d5; }
+.threshold-access-flow__steps [data-threshold-state="shimmer"] { box-shadow: 0 0 14px rgb(139 228 213 / 28%); }
+.threshold-access-flow__steps [data-threshold-state="seed-available"] { border-color: rgb(243 190 99 / 62%); }
+.threshold-access-flow__steps [data-threshold-state="seed-carried"] { border-color: rgb(255 227 144 / 76%); }
+.threshold-access-flow__steps [data-threshold-state="seed-returned"] { border-color: rgb(177 210 255 / 62%); }
 .threshold-access-flow__steps [data-state="available"]:hover,
 .threshold-access-flow__steps [data-state="available"]:focus-visible { border-color: #f3be63; outline: none; }
 .threshold-access-flow__steps [data-state="locked"] { opacity: 0.38; }

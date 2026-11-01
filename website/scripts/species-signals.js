@@ -200,7 +200,7 @@
     viewerImage.alt = speciesName(speciesKey) + " " + intent;
     if (viewerTitle) viewerTitle.textContent = speciesName(speciesKey);
     if (viewerMeta) viewerMeta.textContent = intent.charAt(0).toUpperCase() + intent.slice(1) + " intent";
-    if (viewerPath) viewerPath.textContent = imagePath;
+    if (viewerPath) viewerPath.textContent = "Archive image available for this orientation.";
     if (viewerIndex) viewerIndex.textContent = intent;
     updateCindervoxEncounter(speciesKey);
     updateWhisperhawkSignal(speciesKey);

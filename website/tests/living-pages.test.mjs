@@ -60,5 +60,10 @@ test("renders authored vault links only through declared living routes", async (
   assert.match(contract, /has no declared branch destination/);
   assert.match(source, /Published media .* is not available/);
   assert.match(source, /document\.createElement\("a"\)/);
+  assert.match(source, /threshold\.livingPage\.publication\./);
+  assert.match(source, /Last published copy; live update unavailable\./);
+  assert.match(source, /The published record is unavailable\. Return to the Hub and try again later\./);
+  assert.match(source, /validateLivingPagePublication\(\{\s*noteId,\s*page: cached\.page/s);
+  assert.doesNotMatch(source, /error instanceof Error \? error\.message/);
   assert.doesNotMatch(source, /\.innerHTML\s*=/);
 });

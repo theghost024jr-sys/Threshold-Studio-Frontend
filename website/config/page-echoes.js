@@ -21,6 +21,10 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/pulse.css",
     "styles/styles.css"
   ]),
+  pageEcho("node-field", "rootSigil", "Node Field", "/node-field.html", "node-field.html", [
+    "styles/complexity-layers.css",
+    "styles/node-field.css"
+  ]),
   pageEcho("engine", "rootSigil", "Engine", "/deep-system/engine.html", "deep-system/engine.html", [
     "styles/styles.css",
     "styles/hub-interaction.css",

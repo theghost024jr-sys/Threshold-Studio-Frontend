@@ -75,32 +75,56 @@ function loadReturnedSeeds() {
   }
 }
 
-function renderReturnedSeeds() {
+function appendLegacySeed(seed) {
+  const state = seed && seed.state || {};
+  const item = document.createElement("li");
+  const fib = document.createElement("span");
+  const version = document.createElement("span");
+  const memory = document.createElement("span");
+  fib.className = "entry-seed-fib";
+  version.className = "entry-seed-version";
+  memory.className = "entry-seed-memory";
+  fib.textContent = "Fib " + String(seed.fromFib || "?");
+  version.textContent = title(state.version);
+  memory.textContent = "Returned with " + title(state.choice)
+    + " · " + String(Number(state.stays || 0)) + " stays";
+  item.append(fib, version, memory);
+  seedList.appendChild(item);
+}
+
+function appendAwaitingSeed(chamber) {
+  const item = document.createElement("li");
+  const fib = document.createElement("span");
+  const version = document.createElement("span");
+  const memory = document.createElement("span");
+  fib.className = "entry-seed-fib";
+  version.className = "entry-seed-version";
+  memory.className = "entry-seed-memory";
+  fib.textContent = "Return";
+  version.textContent = title(chamber);
+  memory.textContent = "Returned to the Hub · awaiting validation";
+  item.append(fib, version, memory);
+  seedList.appendChild(item);
+}
+
+function renderReturnedSeeds(accessState = null) {
   if (!seedArchive || !seedList) {
     return;
   }
   const seeds = loadReturnedSeeds();
+  const returnedChambers = Array.isArray(accessState?.returnedSeeds)
+    ? accessState.returnedSeeds.filter((chamber) => typeof chamber === "string")
+    : [];
   seedList.replaceChildren();
-  seeds.forEach((seed) => {
-    const state = seed && seed.state || {};
-    const item = document.createElement("li");
-    const fib = document.createElement("span");
-    const version = document.createElement("span");
-    const memory = document.createElement("span");
-    fib.className = "entry-seed-fib";
-    version.className = "entry-seed-version";
-    memory.className = "entry-seed-memory";
-    fib.textContent = "Fib " + String(seed.fromFib || "?");
-    version.textContent = title(state.version);
-    memory.textContent = "Returned with " + title(state.choice)
-      + " · " + String(Number(state.stays || 0)) + " stays";
-    item.append(fib, version, memory);
-    seedList.appendChild(item);
-  });
-  seedArchive.hidden = seeds.length === 0;
+  seeds.forEach(appendLegacySeed);
+  returnedChambers.forEach(appendAwaitingSeed);
+  seedArchive.hidden = seeds.length + returnedChambers.length === 0;
 }
 
 renderReturnedSeeds();
+window.addEventListener("threshold:access-flow-ready", (event) => {
+  renderReturnedSeeds(event.detail?.state || null);
+});
 
 function initializeHubReactor() {
   if (!hubWheel || !hubReceptor || !hubNodeField || !engineCore) {

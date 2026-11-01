@@ -36,7 +36,10 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /hub-atmosphere-parallax 140s linear infinite/);
   assert.match(hub, /\.hub-cosmic-rotation::after/);
   assert.match(hub, /hub-heliosphere-parallax 100s linear infinite/);
-  assert.match(hub, /animation: hub-oort-parallax 60s linear infinite/);
+  assert.match(hub, /inset: -145%/);
+  assert.match(hub, /transform-style: preserve-3d/);
+  assert.match(hub, /data-oort-state="collapse"/);
+  assert.doesNotMatch(hub, /hub-oort-parallax|hub-oort-drift/);
   assert.match(hub, /animation: void-field-rotation 240s linear infinite/);
   assert.match(hub, /html::after/);
   assert.match(hub, /animation: threshold-wind 48s cubic-bezier/);
@@ -50,11 +53,37 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /font-size: clamp\(0\.82rem, 1\.2vw, 1\.25rem\)/);
   assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(8px\)/);
   assert.match(hub, /src=["']\/scripts\/entry-warmth\.js["']/);
-  assert.match(warmth, /const oortPositions/);
+  assert.match(warmth, /const oortNodes/);
   assert.match(warmth, /function addOortCloud\(\)/);
   assert.match(warmth, /querySelector\("\.hub-oort-field"\)/);
+  assert.match(warmth, /threshold:hub-signal/);
+  assert.match(warmth, /threshold:engine-event/);
+  assert.match(warmth, /type === "flicker"/);
+  assert.match(warmth, /pointermove/);
+  assert.match(warmth, /focusRoute\(route, title/);
+  assert.match(warmth, /relationshipNode\(route\)/);
+  assert.match(warmth, /relationshipNode\?\.getBoundingClientRect/);
+  assert.match(hub, /\.hub-constellation::after/);
+  assert.match(warmth, /approachInfluence/);
+  assert.match(warmth, /hub-oort-approach/);
+  assert.match(hub, /hub-route-approach/);
+  assert.match(hub, /data-route-approach/);
+  assert.doesNotMatch(warmth, /localStorage|sessionStorage|dispatchEvent/);
   assert.match(warmth, /function addMicroComets\(\)/);
-  assert.match(warmth, /function wireRouteConstellations\(\)/);
+  assert.match(warmth, /function wireRouteConstellations\(oortCloud\)/);
+  assert.match(hub, /data-hub-topology/);
+  assert.match(warmth, /const routeTopology/);
+  assert.match(warmth, /const updateTopology = \(route\)/);
+  assert.match(warmth, /"house and garden": \{/);
+  assert.match(warmth, /"House & Garden · tending inward"/);
+});
+
+test("keeps the World Map holding node attached to the canonical Fib 13 Hub", async () => {
+  const map = await readFile(new URL("../world-map.html", import.meta.url), "utf8");
+
+  assert.match(map, /world-map-node--holding" href="index\.html"/);
+  assert.match(map, /<strong>Threshold Hub<\/strong>/);
+  assert.doesNotMatch(map, /world-map-node--holding" href="hub\.html"/);
 });
 
 test("boots the public Hub from a real engine entry control", async () => {
@@ -176,7 +205,8 @@ test("destination loader reconstructs and renders node children", async () => {
   assert.match(loader, /renderChildren\(view, node/);
   assert.match(loader, /renderParent\(view, topology, spoke, node\)/);
   assert.match(loader, /choice\.fib/);
-  assert.match(loader, /Authored links remain available/);
+  assert.match(loader, /Live node enrichment is unavailable\. Authored links remain available\./);
+  assert.doesNotMatch(loader, /activationError\.message/);
   assert.match(loader, /prefers-reduced-motion: reduce/);
   assert.match(loader, /threshold-reveal-arrival-layer/);
   assert.match(loader, /renderDestinationContent\(view\.content, node\)/);

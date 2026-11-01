@@ -137,18 +137,33 @@
 
     .hub-constellation {
       position: absolute;
-      z-index: 0;
+      z-index: 1;
       height: 1px;
       transform-origin: left center;
       background: linear-gradient(90deg, rgba(255, 220, 166, 0), rgba(255, 220, 166, 0.58), rgba(255, 220, 166, 0));
+      background-size: 220% 100%;
       box-shadow: 0 0 8px rgba(255, 210, 138, 0.35);
       opacity: 0;
       pointer-events: none;
       transition: opacity 500ms ease;
     }
 
+    .hub-constellation::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -3px;
+      width: 6px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(139, 228, 213, 0.9);
+      box-shadow: 0 0 12px rgba(139, 228, 213, 0.88);
+      transform: translateY(-50%);
+    }
+
     .hub-constellation.is-visible {
       opacity: 1;
+      animation: hub-route-approach 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .hub-comet {
@@ -162,6 +177,19 @@
       pointer-events: none;
       animation: hub-comet 27s ease-in-out infinite;
       animation-delay: var(--hub-comet-delay, 0s);
+    }
+
+    .hub-oort-approach {
+      position: absolute;
+      z-index: 2;
+      max-width: 13rem;
+      color: rgba(209, 240, 233, 0.9);
+      font: 700 0.56rem/1.3 "Manrope", sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
+      transform: translate(0.8rem, -50%);
+      pointer-events: none;
     }
 
     @media (min-width: 1100px) {
@@ -337,11 +365,30 @@
       animation: hub-pulse 4s ease-in-out infinite;
     }
 
+    .entry-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 14%;
+      z-index: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(
+        circle at calc(50% + var(--route-approach-x, 0%)) calc(50% + var(--route-approach-y, 0%)),
+        rgba(139, 228, 213, 0.22),
+        transparent 44%
+      );
+      transition: opacity 420ms ease;
+    }
+
+    .entry-orbit[data-route-approach]::after {
+      opacity: 1;
+    }
+
     .hub-cosmic-rotation {
       position: absolute;
-      inset: 0;
-      z-index: 1;
-      border-radius: 50%;
+      inset: -145%;
+      z-index: 0;
       pointer-events: none;
     }
 
@@ -349,8 +396,8 @@
       position: absolute;
       inset: 0;
       z-index: 1;
-      border-radius: 50%;
-      animation: hub-oort-parallax 60s linear infinite;
+      transform-style: preserve-3d;
+      transition: opacity 700ms ease, filter 700ms ease;
     }
 
     .hub-cosmic-rotation::after {
@@ -394,16 +441,31 @@
     .hub-oort {
       position: absolute;
       z-index: 1;
-      width: 14px;
-      height: 14px;
+      width: var(--hub-oort-size, 4px);
+      height: var(--hub-oort-size, 4px);
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(204, 136, 153, 0.9), rgba(204, 136, 153, 0));
-      animation: hub-oort-drift 18s ease-in-out infinite;
-      animation-delay: var(--hub-oort-delay, 0s);
+      background: radial-gradient(circle, rgba(255, 232, 188, 0.94), rgba(175, 206, 255, 0.32) 34%, rgba(175, 206, 255, 0));
+      opacity: var(--hub-oort-opacity, 0.22);
       pointer-events: none;
       mix-blend-mode: screen;
+      transition:
+        left 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        top 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        width 700ms ease,
+        height 700ms ease,
+        opacity 700ms ease,
+        filter 700ms ease;
     }
 
+    .hub-oort[data-depth="far"] { filter: blur(1.3px); }
+    .hub-oort[data-depth="near"] { filter: drop-shadow(0 0 5px rgba(201, 225, 255, 0.5)); }
+    .hub-oort.is-related {
+      filter: drop-shadow(0 0 10px rgba(139, 228, 213, 0.9));
+      opacity: min(0.9, calc(var(--hub-oort-opacity, 0.22) + 0.22));
+    }
+
+    .hub-oort-field[data-oort-state="collapse"] { filter: brightness(0.68) saturate(0.55); }
+    .hub-oort-field[data-oort-state="anchoring"] { filter: brightness(1.14); }
     .entry-orbit > img {
       animation: hub-orbit-shimmer 12s linear infinite;
     }
@@ -748,6 +810,54 @@
       box-shadow: 0 0 20px rgba(255, 200, 150, 0.9);
     }
 
+    .hub-topology {
+      margin-top: 1.15rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(243, 190, 99, 0.2);
+    }
+
+    .hub-topology__eyebrow {
+      margin: 0;
+      color: rgba(255, 225, 178, 0.72);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hub-topology h3 {
+      margin: 0.45rem 0 0;
+      color: #ffe9c7;
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .hub-topology__reading {
+      margin: 0.4rem 0 0;
+      color: rgba(255, 235, 204, 0.78);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .hub-topology__seams {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.8rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hub-topology__seams li {
+      border: 1px solid rgba(243, 190, 99, 0.25);
+      border-radius: 999px;
+      color: rgba(255, 238, 210, 0.8);
+      font-size: 0.72rem;
+      padding: 0.22rem 0.52rem;
+    }
+
     .entry-copy h1,
     .entry-nav h2 {
       letter-spacing: 0.5px;
@@ -791,6 +901,7 @@
 
     .entry-seed-version { color: var(--ink); font-size: 0.78rem; }
     .entry-seed-memory { grid-column: 2; color: var(--ink-soft); font-size: 0.7rem; }
+    .entry-seed-status { margin: 0 0 0.5rem; color: var(--ink-soft); font-size: 0.72rem; }
 
     @keyframes void-field-rotation {
       from { transform: rotate(0deg); }
@@ -807,6 +918,11 @@
     @keyframes hub-pulse {
       0%, 100% { transform: scale(1); opacity: 0.9; }
       50% { transform: scale(1.03); opacity: 1; }
+    }
+
+    @keyframes hub-route-approach {
+      from { background-position: 100% 0; }
+      to { background-position: 0 0; }
     }
 
     @keyframes hub-solar-wind {
@@ -835,11 +951,6 @@
       to { rotate: -360deg; }
     }
 
-    @keyframes hub-oort-parallax {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
     @keyframes hub-lens-pulse {
       0%, 100% { transform: scale(1); opacity: 0.25; }
       50% { transform: scale(1.12); opacity: 0.45; }
@@ -853,11 +964,6 @@
     @keyframes hub-heliosphere {
       0%, 100% { opacity: 0.3; transform: scale(1); }
       50% { opacity: 0.6; transform: scale(1.1); }
-    }
-
-    @keyframes hub-oort-drift {
-      0%, 100% { transform: translate(0, 0) scale(0.8); opacity: 0.4; }
-      50% { transform: translate(80px, -120px) scale(1.3); opacity: 0.9; }
     }
 
     @keyframes hub-orbit-shimmer {
@@ -965,6 +1071,8 @@
       .hub-lens,
       .entry-orbit > img,
       .hub-oort,
+      .hub-oort-approach,
+      .hub-constellation,
       .entry-shell::before,
       .entry-shell::after,
       .hub-comet,
@@ -1071,9 +1179,20 @@
           <a href="dialogues.html">Dialogues</a>
           <a href="contact.html">Contact</a>
         </nav>
+        <section class="hub-topology" data-hub-topology aria-live="polite" aria-labelledby="hub-topology-title">
+          <p class="hub-topology__eyebrow">Spatial relation</p>
+          <h3 id="hub-topology-title" data-hub-topology-title>Hub · Fib 13</h3>
+          <p class="hub-topology__reading" data-hub-topology-reading>Choose a route to see the relationship it holds in the world.</p>
+          <ul class="hub-topology__seams" data-hub-topology-seams>
+            <li>World Map</li>
+            <li>Entry</li>
+            <li>Return</li>
+          </ul>
+        </section>
         <a class="entry-engine" data-prime-door data-door-state="sealed" href="deep-system/engine.html" aria-label="Enter the next Engine ring">Enter Engine</a>
         <section class="entry-archive" data-hub-seed-archive hidden aria-labelledby="returned-seeds-title">
           <h2 id="returned-seeds-title">Returned Seeds</h2>
+          <p class="entry-seed-status">Returns remain awaiting validation.</p>
           <ol class="entry-archive-list" data-hub-seed-list></ol>
         </section>
       </aside>
@@ -1083,5 +1202,6 @@
   <script type="module" src="/scripts/access-flow.js"></script>
   <script type="module" src="/threshold-engine.js"></script>
   <script type="module" src="/scripts/entry-warmth.js"></script>
+  <script type="module" src="/scripts/canonical-path.js"></script>
 </body>
 </html>

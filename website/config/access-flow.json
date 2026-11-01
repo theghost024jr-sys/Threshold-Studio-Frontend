@@ -23,12 +23,12 @@
     { "id": "contact", "label": "Contact", "route": "/contact.html" }
   ],
   "stages": [
-    { "id": "hub", "label": "Hub", "route": "/index.html", "requires": [], "completion": "visit", "kind": "hub" },
-    { "id": "house-garden", "label": "House and Garden", "route": "/housegarden.html", "requires": ["hub"], "completion": "visit", "kind": "branch" },
-    { "id": "herb-room", "label": "Herb Room", "route": "/environment/herbroom.html", "requires": ["house-garden"], "completion": "visit", "kind": "branch" },
-    { "id": "basin", "label": "Basin Shimmer", "route": "/environment/basin.html", "requires": ["herb-room"], "completion": "visit", "kind": "branch", "awardsShimmer": true },
-    { "id": "dialogue", "label": "Dialogues", "route": "/dialogues.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" },
-    { "id": "contact", "label": "Contact", "route": "/contact.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" },
-    { "id": "invitation", "label": "Invitation", "route": "/invitation.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" }
+    { "id": "hub", "topologyId": "entry-hub", "label": "Hub", "route": "/index.html", "requires": [], "completion": "visit", "kind": "hub" },
+    { "id": "house-garden", "topologyId": "house-garden", "label": "House and Garden", "route": "/housegarden.html", "requires": ["hub"], "completion": "visit", "kind": "branch" },
+    { "id": "herb-room", "topologyId": "herb-room", "label": "Herb Room", "route": "/environment/herbroom.html", "requires": ["house-garden"], "completion": "visit", "kind": "branch" },
+    { "id": "basin", "topologyId": "basin", "label": "Basin Shimmer", "route": "/environment/basin.html", "requires": ["herb-room"], "completion": "visit", "kind": "branch", "awardsShimmer": true },
+    { "id": "dialogue", "topologyId": "dialogues", "label": "Dialogues", "route": "/dialogues.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" },
+    { "id": "contact", "topologyId": "contact", "label": "Contact", "route": "/contact.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" },
+    { "id": "invitation", "topologyId": "invitation", "label": "Invitation", "route": "/invitation.html", "requires": [], "requiresShimmer": true, "completion": "action", "kind": "contribution" }
   ]
 }

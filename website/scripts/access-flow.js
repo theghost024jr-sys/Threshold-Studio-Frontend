@@ -71,7 +71,14 @@ function renderRail(flow, state) {
 
   const heading = document.createElement("div");
   heading.className = "threshold-access-flow__heading";
-  heading.innerHTML = `<strong>${project ? `${project.label} Chamber` : "Threshold Graft"}</strong><span>${state.shimmer ? "Shimmer held" : "Find Shimmer"} · ${state.returnedSeeds.length} Seeds returned</span>`;
+  const journeyState = state.seed
+    ? "A Seed is carried toward the Hub"
+    : state.returnedSeeds.length > 0
+      ? "A Seed has returned · awaiting validation"
+      : state.shimmer
+        ? "Shimmer held"
+        : "Find Shimmer";
+  heading.innerHTML = `<strong>${project ? `${project.label} Chamber` : "Threshold Graft"}</strong><span>${journeyState}</span>`;
 
   const steps = document.createElement("ol");
   steps.className = "threshold-access-flow__steps";
@@ -82,6 +89,15 @@ function renderRail(flow, state) {
     const control = document.createElement(unlocked ? "a" : "span");
     control.textContent = stage.label;
     control.dataset.state = completed.has(stage.id) ? "complete" : unlocked ? "available" : "locked";
+    if (stage.awardsShimmer === true && completed.has(stage.id)) {
+      control.dataset.thresholdState = "shimmer";
+    } else if (stage.kind === "contribution" && unlocked && !state.seed && !state.returnedSeeds.includes(stage.id)) {
+      control.dataset.thresholdState = "seed-available";
+    } else if (state.seed?.chamber === stage.id) {
+      control.dataset.thresholdState = "seed-carried";
+    } else if (state.returnedSeeds.includes(stage.id)) {
+      control.dataset.thresholdState = "seed-returned";
+    }
     if (unlocked) control.href = stage.route;
     if (!unlocked) control.title = `Requires ${lockedRequirements(stage, state).join(", ")}`;
     item.appendChild(control);
@@ -90,25 +106,6 @@ function renderRail(flow, state) {
 
   rail.append(heading, steps);
   document.body.appendChild(rail);
-}
-
-function renderGate(stage, stages, state) {
-  const missing = lockedRequirements(stage, state);
-  const firstRequired = stages.find((candidate) => candidate.id === missing[0]);
-  const gate = document.createElement("section");
-  gate.className = "threshold-access-gate";
-  gate.setAttribute("role", "dialog");
-  gate.setAttribute("aria-modal", "true");
-  gate.setAttribute("aria-labelledby", "threshold-access-gate-title");
-  gate.innerHTML = `
-    <div class="threshold-access-gate__panel">
-      <p>Passage held</p>
-      <h1 id="threshold-access-gate-title">${stage.label}</h1>
-      <p>Complete ${missing.join(", ")} before entering this passage.</p>
-      <a href="${firstRequired?.route || "/index.html"}">Return to ${firstRequired?.label || "Hub Entry"}</a>
-    </div>`;
-  document.body.dataset.accessLocked = "true";
-  document.body.appendChild(gate);
 }
 
 function bindAcceptance(flow, state) {
@@ -121,13 +118,14 @@ function bindAcceptance(flow, state) {
       readState(flow.storageKey, flow, flow.legacyStorageKeys)
     );
     writeState(flow.storageKey, nextState);
-    button.textContent = "Seed received";
+    button.textContent = "The Seed is carried";
+    button.dataset.seedState = "carried";
     button.disabled = true;
     renderRail(flow, nextState);
     const hub = document.createElement("a");
     hub.className = "threshold-access-flow__continue";
     hub.href = "/index.html";
-    hub.textContent = "Return Seed to Hub";
+    hub.textContent = "Carry this return toward the Hub";
     button.insertAdjacentElement("afterend", hub);
   });
 }
@@ -142,7 +140,7 @@ async function initializeAccessFlow() {
 
   if (currentStage && !prerequisitesMet(currentStage, state)) {
     renderRail(flow, state);
-    renderGate(currentStage, flow.stages, state);
+    window.dispatchEvent(new CustomEvent("threshold:access-flow-ready", { detail: { flow, state } }));
     return;
   }
   if (currentStage?.completion === "visit") {

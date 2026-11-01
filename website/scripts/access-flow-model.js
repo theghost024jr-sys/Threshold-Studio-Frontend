@@ -138,6 +138,11 @@ export function validateAccessFlow(flow) {
       `${stage.id} has no registered route.`,
       { stage: stage.id, route: stage.route }
     );
+    requireSupportedClaim(
+      typeof stage.topologyId === "string" && stage.topologyId.length > 0,
+      `${stage.id} has no topology identity.`,
+      { stage: stage.id, topologyId: stage.topologyId }
+    );
     requireEarnedEffect(
       stage.kind !== "contribution"
         || (stage.requiresShimmer === true && stage.completion === "action"),

@@ -117,6 +117,25 @@
       pointer-events: auto;
     }
 
+    .east-threshold:focus-within {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .east-threshold:focus-within::before,
+    .east-threshold:focus-within .east-threshold__growth {
+      transform: translateX(0);
+    }
+
+    .east-threshold:focus-within .east-threshold__water {
+      transform: translateY(0);
+    }
+
+    .east-threshold:focus-within .east-threshold__cue {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     @media (prefers-reduced-motion: no-preference) {
       body > img,
       .east-threshold,
@@ -130,10 +149,10 @@
 </head>
 <body>
   <img src="/assets/weather/weather-038-herbroom.png" alt="Herb Room" />
-  <div class="east-threshold" aria-hidden="true">
+  <div class="east-threshold" aria-hidden="false">
     <div class="east-threshold__water"></div>
     <div class="east-threshold__growth"></div>
-    <a class="east-threshold__cue" href="/environment/basin.html" tabindex="-1">Step through.</a>
+    <a class="east-threshold__cue" href="/environment/basin.html">Step through.</a>
   </div>
   <div class="chamber-controls" aria-label="Chamber exits">
     <a href="/environment/waterfall.html" class="exit-south">Look South</a>
@@ -155,14 +174,15 @@
       chamber.style.setProperty('--interior-saturation', (1 - progress * 0.1).toFixed(3));
       const isAvailable = progress >= 0.9;
       eastThreshold.style.pointerEvents = isAvailable ? 'auto' : 'none';
-      eastThreshold.setAttribute('aria-hidden', String(!isAvailable));
       eastCue.classList.toggle('is-available', isAvailable);
-      eastCue.tabIndex = isAvailable ? 0 : -1;
     };
 
     window.addEventListener('pointermove', (event) => revealEast(event.clientX), { passive: true });
     window.addEventListener('pointerleave', () => revealEast(0));
+    eastCue.addEventListener('focus', () => revealEast(window.innerWidth));
+    eastCue.addEventListener('blur', () => revealEast(0));
   </script>
   <script type="module" src="/scripts/access-flow.js"></script>
+  <script type="module" src="/scripts/canonical-path.js"></script>
 </body>
 </html>

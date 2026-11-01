@@ -361,11 +361,14 @@ async function loadDestination() {
     renderParent(view, topology, spoke, node);
     renderChildren(view, node, fib, version);
     if (activationError) {
-      view.status.textContent += ` Authored links remain available; ${activationError.message}`;
+      console.warn("Threshold node enrichment is unavailable", activationError);
+      view.layer.dataset.enrichment = "unavailable";
+      view.status.textContent += " Live node enrichment is unavailable. Authored links remain available.";
     }
   } catch (error) {
+    console.error("Threshold destination could not be reconstructed", error);
     view.title.textContent = "Node unavailable";
-    view.status.textContent = error instanceof Error ? error.message : "Unable to reconstruct this node.";
+    view.status.textContent = "This destination cannot be reconstructed right now. Return to the parent chamber and try again later.";
   }
 }
 

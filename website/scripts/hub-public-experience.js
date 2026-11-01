@@ -8,11 +8,15 @@ const orbitSystem = document.querySelector(".hub-orbit-system");
 const strandLayer = document.querySelector(".hub-strands");
 const routeNodes = [...document.querySelectorAll(".hub-route")];
 const glyphNodes = [...document.querySelectorAll(".hub-glyph")];
+const dragHint = document.querySelector(".hub-drag-hint");
 const returnStateKey = "threshold-return-state";
 let selectedRoute = null;
 let selectedGlyph = null;
 let glyphDwellTimer = null;
 let oortParticles = [];
+let panState = null;
+let suppressNextClick = false;
+let dragHintShown = false;
 
 const returnStates = [
   "Motion returns as vector. The field begins to turn with you.",
@@ -314,6 +318,91 @@ function nextSeamFor(state) {
   };
 }
 
+function bindPanGesture() {
+  if (!orbitSystem) return;
+
+  const panLimit = 180;
+  const panThreshold = 8;
+  let hintTimer = null;
+
+  const hideDragHint = () => {
+    window.clearTimeout(hintTimer);
+    dragHint?.classList.remove("is-visible");
+    dragHint?.setAttribute("aria-hidden", "true");
+  };
+
+  const renderPan = () => {
+    page.style.setProperty("--hub-pan-x", `${panState.x}px`);
+    page.style.setProperty("--hub-pan-y", `${panState.y}px`);
+    if (selectedRoute) renderStrand(selectedRoute);
+    if (selectedGlyph) renderGlyphStrand(selectedGlyph);
+  };
+
+  orbitSystem.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) return;
+    panState = {
+      pointerId: event.pointerId,
+      pointerType: event.pointerType,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: Number.parseFloat(getComputedStyle(page).getPropertyValue("--hub-pan-x")) || 0,
+      originY: Number.parseFloat(getComputedStyle(page).getPropertyValue("--hub-pan-y")) || 0,
+      x: 0,
+      y: 0,
+      moved: false,
+    };
+    if (!dragHintShown) {
+      hintTimer = window.setTimeout(() => {
+        if (panState && !panState.moved) {
+          dragHint?.classList.add("is-visible");
+          dragHint?.setAttribute("aria-hidden", "false");
+        }
+      }, 360);
+    }
+  });
+
+  const movePan = (event) => {
+    const isMouseFallback = panState?.pointerType === "mouse" && event.type === "mousemove";
+    if (!panState || (!isMouseFallback && event.pointerId !== panState.pointerId)) return;
+    const horizontal = event.clientX - panState.startX;
+    const vertical = event.clientY - panState.startY;
+    if (!panState.moved && Math.hypot(horizontal, vertical) < panThreshold) return;
+
+    if (!panState.moved) {
+      panState.moved = true;
+      dragHintShown = true;
+      hideDragHint();
+      page.classList.add("hub-is-panning");
+    }
+    event.preventDefault();
+    panState.x = Math.max(-panLimit, Math.min(panLimit, panState.originX + horizontal));
+    panState.y = Math.max(-panLimit, Math.min(panLimit, panState.originY + vertical));
+    renderPan();
+  };
+
+  const finishPan = (event) => {
+    const isMouseFallback = panState?.pointerType === "mouse" && event.type === "mouseup";
+    if (!panState || (!isMouseFallback && event.pointerId !== panState.pointerId)) return;
+    const moved = panState.moved;
+    panState = null;
+    page.classList.remove("hub-is-panning");
+    hideDragHint();
+    if (moved) suppressNextClick = true;
+  };
+
+  window.addEventListener("pointermove", movePan);
+  window.addEventListener("pointerup", finishPan);
+  window.addEventListener("pointercancel", finishPan);
+  window.addEventListener("mousemove", movePan);
+  window.addEventListener("mouseup", finishPan);
+  orbitSystem.addEventListener("click", (event) => {
+    if (!suppressNextClick) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    suppressNextClick = false;
+  }, true);
+}
+
 core?.addEventListener("click", () => {
   const awakened = page.classList.toggle("hub-is-awake");
   core.setAttribute("aria-pressed", String(awakened));
@@ -331,4 +420,5 @@ addOortField();
 bindRouteNodes();
 bindGlyphNodes();
 bindDepthGesture();
+bindPanGesture();
 renderReturnState();

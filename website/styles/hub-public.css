@@ -1,6 +1,8 @@
 .hub-public {
   --hub-pointer-x: 0;
   --hub-pointer-y: 0;
+  --hub-pan-x: 0px;
+  --hub-pan-y: 0px;
   background:
     radial-gradient(circle at 50% 50%, rgba(25, 88, 98, 0.2), transparent 18%),
     radial-gradient(circle at 50% 50%, #06111b 0, #02070d 42%, #000204 84%);
@@ -145,7 +147,11 @@
   opacity: 0.92;
   pointer-events: none;
   position: absolute;
-  transform: translate3d(calc(var(--hub-pointer-x) * -18px), calc(var(--hub-pointer-y) * -18px), 0);
+  transform: translate3d(
+    calc(var(--hub-pointer-x) * -18px + var(--hub-pan-x) * 0.12),
+    calc(var(--hub-pointer-y) * -18px + var(--hub-pan-y) * 0.12),
+    0
+  );
   transition: transform 280ms ease-out;
 }
 
@@ -193,7 +199,27 @@
   inset: 4%;
   pointer-events: none;
   position: absolute;
-  transform: translate3d(calc(var(--hub-pointer-x) * -8px), calc(var(--hub-pointer-y) * -8px), 0);
+  transform: translate3d(
+    calc(var(--hub-pointer-x) * -8px + var(--hub-pan-x) * 0.28),
+    calc(var(--hub-pointer-y) * -8px + var(--hub-pan-y) * 0.28),
+    0
+  );
+}
+
+.hub-pan-layer {
+  inset: 0;
+  position: absolute;
+}
+
+.hub-pan-structure {
+  pointer-events: none;
+  transform: translate3d(calc(var(--hub-pan-x) * 0.42), calc(var(--hub-pan-y) * 0.42), 0);
+  transition: transform 110ms ease-out;
+}
+
+.hub-pan-foreground {
+  transform: translate3d(calc(var(--hub-pan-x) * 0.64), calc(var(--hub-pan-y) * 0.64), 0);
+  transition: transform 110ms ease-out;
 }
 
 .hub-mosslights i {
@@ -568,6 +594,37 @@
   transform: scale(1.14);
 }
 
+.hub-orbit-system {
+  cursor: grab;
+  touch-action: none;
+}
+
+.hub-is-panning .hub-orbit-system {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.hub-drag-hint {
+  color: rgba(209, 250, 244, 0);
+  font-family: Manrope, sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  left: 50%;
+  letter-spacing: 0.18em;
+  margin: 0;
+  pointer-events: none;
+  position: absolute;
+  text-transform: uppercase;
+  top: 10%;
+  transform: translate(-50%, -50%);
+  transition: color 420ms ease, opacity 420ms ease;
+  z-index: 4;
+}
+
+.hub-drag-hint.is-visible {
+  color: rgba(209, 250, 244, 0.78);
+}
+
 @keyframes hub-mosslight {
   0%,
   100% {
@@ -658,7 +715,8 @@
   .hub-core,
   .hub-route,
   .hub-glyph,
-  .hub-starfield {
+  .hub-starfield,
+  .hub-pan-layer {
     transition: none;
     transform: none;
   }

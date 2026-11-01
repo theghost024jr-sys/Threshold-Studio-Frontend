@@ -110,10 +110,17 @@ test("teaches Hub interaction through environmental response rather than an over
   assert.match(experience, /window\.location\.assign\("\/glyph-archive-node\.html"\)/);
   assert.match(experience, /function bindDepthGesture/);
   assert.match(experience, /orbitSystem\.addEventListener\("wheel"/);
+  assert.match(experience, /function bindPanGesture/);
+  assert.match(experience, /const panThreshold = 8/);
+  assert.match(experience, /suppressNextClick = true/);
+  assert.match(experience, /event\.stopImmediatePropagation\(\)/);
   assert.doesNotMatch(experience, /tutorial|onboarding|checklist/i);
   assert.match(styles, /\.hub-is-attended \.hub-oort-field/);
   assert.match(styles, /\.hub-orbit-system\[data-hub-depth="3"\]/);
   assert.match(styles, /\.hub-glyph\.is-selected/);
+  assert.match(styles, /\.hub-pan-structure/);
+  assert.match(styles, /\.hub-pan-foreground/);
+  assert.match(styles, /\.hub-is-panning \.hub-orbit-system/);
 });
 
 test("ships the Fib 13 Hub reactor interaction contract", async () => {

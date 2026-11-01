@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/styles/hub-interaction.css">
   <link rel="stylesheet" href="/styles/pulse.css">
   <link rel="stylesheet" href="/styles/styles.css">
-  <link rel="stylesheet" href="/styles/hub-public.css?v=flagship-fib13-3">
+  <link rel="stylesheet" href="/styles/hub-public.css?v=flagship-fib13-4">
 </head>
 <body class="hub-public" data-threshold-spoke="hub">
   <header class="hub-public-nav">
@@ -34,26 +34,31 @@
       <div class="hub-oort-field" aria-hidden="true"></div>
       <div class="hub-strands" aria-hidden="true"></div>
       <div class="hub-mosslights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="hub-orbit hub-orbit-outer" aria-hidden="true"></div>
-      <div class="hub-orbit hub-orbit-middle" aria-hidden="true"></div>
-      <div class="hub-orbit hub-orbit-inner" aria-hidden="true"></div>
-      <button id="hub-awaken" class="hub-core" type="button" aria-pressed="false">
-        <span class="hub-core-eye" aria-hidden="true"></span>
-        <span class="hub-core-kicker">Threshold Hub</span>
-        <span class="hub-core-label">Fib 13 / awaken</span>
-      </button>
-      <button class="hub-glyph hub-glyph-one" type="button" aria-label="Distant glyph signal">
-        <span aria-hidden="true">⌁</span>
-      </button>
-      <button class="hub-glyph hub-glyph-two" type="button" aria-label="Distant glyph signal">
-        <span aria-hidden="true">◈</span>
-      </button>
-      <button class="hub-glyph hub-glyph-three" type="button" aria-label="Distant glyph signal">
-        <span aria-hidden="true">⌇</span>
-      </button>
-      <a class="hub-route hub-petal hub-route-motion" href="/portal/motion"><span>Motion</span><small>world / vector</small></a>
-      <a class="hub-route hub-petal hub-route-ocean" href="/portal/ocean"><span>Ocean</span><small>depth / pressure</small></a>
-      <a class="hub-route hub-petal hub-route-door" href="/portal/first-door"><span>First Door</span><small>stance / seam</small></a>
+      <div class="hub-pan-layer hub-pan-structure" aria-hidden="true">
+        <div class="hub-orbit hub-orbit-outer"></div>
+        <div class="hub-orbit hub-orbit-middle"></div>
+        <div class="hub-orbit hub-orbit-inner"></div>
+      </div>
+      <div class="hub-pan-layer hub-pan-foreground">
+        <button id="hub-awaken" class="hub-core" type="button" aria-pressed="false">
+          <span class="hub-core-eye" aria-hidden="true"></span>
+          <span class="hub-core-kicker">Threshold Hub</span>
+          <span class="hub-core-label">Fib 13 / awaken</span>
+        </button>
+        <button class="hub-glyph hub-glyph-one" type="button" aria-label="Distant glyph signal">
+          <span aria-hidden="true">⌁</span>
+        </button>
+        <button class="hub-glyph hub-glyph-two" type="button" aria-label="Distant glyph signal">
+          <span aria-hidden="true">◈</span>
+        </button>
+        <button class="hub-glyph hub-glyph-three" type="button" aria-label="Distant glyph signal">
+          <span aria-hidden="true">⌇</span>
+        </button>
+        <a class="hub-route hub-petal hub-route-motion" href="/portal/motion"><span>Motion</span><small>world / vector</small></a>
+        <a class="hub-route hub-petal hub-route-ocean" href="/portal/ocean"><span>Ocean</span><small>depth / pressure</small></a>
+        <a class="hub-route hub-petal hub-route-door" href="/portal/first-door"><span>First Door</span><small>stance / seam</small></a>
+      </div>
+      <p class="hub-drag-hint" aria-live="polite" aria-hidden="true">Drag to look</p>
     </section>
 
     <section class="hub-public-status" aria-labelledby="hub-status-title">
@@ -87,6 +92,6 @@
     }
   </script>
   <script type="module" src="/scripts/hub-public-runtime.js?v=portal-link-bridge-1"></script>
-  <script type="module" src="/scripts/hub-public-experience.js?v=flagship-fib13-2"></script>
+  <script type="module" src="/scripts/hub-public-experience.js?v=flagship-fib13-5"></script>
 </body>
 </html>

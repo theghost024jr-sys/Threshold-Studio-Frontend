@@ -61,9 +61,9 @@ export default function BasinFalls() {
           <span>movement at the waterworks</span>
         </button>
         <div className="basin-falls__stairs" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /></div>
-        <Link className="basin-falls__porch-route" to="/cabin-of-moss">
+        <Link className="basin-falls__porch-route" to="/shimmer">
           <span>Recovered stairs</span>
-          <small>Climb to the porch</small>
+          <small>Follow the lights uphill</small>
         </Link>
         <div className="basin-falls__forest-seam" aria-hidden="true" />
         <div className="basin-falls__cabin-light" aria-hidden="true" />
@@ -100,7 +100,7 @@ export default function BasinFalls() {
       </section>
 
       <nav className="basin-falls__nav">
-        <Link to="/cabin-of-moss">Climb to the porch</Link>
+        <Link to="/shimmer">Follow the lights uphill</Link>
         <Link to="/old-forest-trek">Continue into the Old Forest</Link>
         <Link to="/basin">Return to the Basin view</Link>
       </nav>

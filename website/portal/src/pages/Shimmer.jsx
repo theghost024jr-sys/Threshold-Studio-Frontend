@@ -117,6 +117,14 @@ export default function Shimmer() {
           <p className="shimmer-direction">Scroll toward the Cabin</p>
         </div>
         <p className="shimmer-arrival">The lights are already on. You can rest here.</p>
+        <section className="shimmer-cabin-reading" aria-label="Cabin resolving">
+          <p>Cabin resolving</p>
+          <div>
+            <article><strong>Moss</strong><span>Memory becomes visible.</span></article>
+            <article><strong>Porch</strong><span>Distance becomes legible.</span></article>
+            <article><strong>Torches</strong><span>Attention gathers without demand.</span></article>
+          </div>
+        </section>
         <Link className="shimmer-enter" to="/cabin-of-moss">Enter the Cabin</Link>
       </section>
       <Link className="back-link shimmer-return" to="/">Portal home</Link>

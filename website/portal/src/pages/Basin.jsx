@@ -91,11 +91,16 @@ export default function Basin() {
   const pageRef = useRef(null)
   const canvasRef = useRef(null)
   const soundRef = useRef(null)
+  const ambienceStartingRef = useRef(false)
   const journeyProgressRef = useRef(0)
   const [relationship, setRelationship] = useState(null)
+  const [directionsRevealed, setDirectionsRevealed] = useState(false)
   const [soundPlaying, setSoundPlaying] = useState(false)
   const [soundError, setSoundError] = useState('')
   const response = relationships.find((choice) => choice.id === relationship)
+  const localStaticOrigin = window.location.port === '4173' ? 'http://127.0.0.1:8789' : ''
+  const herbRoomHref = `${localStaticOrigin}/environment/herbroom.html`
+  const nodeFieldHref = `${localStaticOrigin}/node-field.html`
 
   useEffect(() => {
     const page = pageRef.current
@@ -234,6 +239,36 @@ export default function Basin() {
     birds.position.set(-3.6, terrainHeight(-3.6, 11) + 6.4, 11)
     scene.add(birds)
 
+    const skyRocks = new THREE.Group()
+    const skyRockMaterial = new THREE.MeshStandardMaterial({ color: '#728d8a', roughness: 0.9, metalness: 0.08 })
+    for (let index = 0; index < 8; index += 1) {
+      const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(0.35 + (index % 3) * 0.16, 0), skyRockMaterial)
+      const angle = (Math.PI * 2 * index) / 8
+      rock.position.set(Math.cos(angle) * (8 + (index % 2) * 3), 5 + (index % 4) * 1.5, Math.sin(angle) * 8 - 3)
+      rock.rotation.set(index * 0.7, index * 0.45, index * 0.22)
+      skyRocks.add(rock)
+    }
+    scene.add(skyRocks)
+
+    const spaceFlowers = new THREE.Group()
+    const flowerMaterials = []
+    for (let index = 0; index < 10; index += 1) {
+      const flower = new THREE.Group()
+      const material = new THREE.MeshStandardMaterial({ color: '#89c8d4', emissive: '#16373c', emissiveIntensity: 0.45, roughness: 0.55 })
+      flowerMaterials.push(material)
+      for (let petalIndex = 0; petalIndex < 5; petalIndex += 1) {
+        const petal = new THREE.Mesh(new THREE.SphereGeometry(0.16, 8, 6), material)
+        const angle = (Math.PI * 2 * petalIndex) / 5
+        petal.position.set(Math.cos(angle) * 0.22, 0, Math.sin(angle) * 0.22)
+        petal.scale.set(0.72, 0.24, 1.3)
+        flower.add(petal)
+      }
+      flower.position.set(-7 + (index % 5) * 3.2, 1.5 + Math.floor(index / 5) * 2.2, 7 - Math.floor(index / 5) * 5)
+      flower.userData.phase = index * 0.9
+      spaceFlowers.add(flower)
+    }
+    scene.add(spaceFlowers)
+
     const cabinLight = new THREE.PointLight('#d99a51', 28, 20, 2)
     cabinLight.position.set(1.7, plateauY + 4.5, -15.8)
     scene.add(cabinLight)
@@ -291,9 +326,16 @@ export default function Basin() {
       if (!active) return
       const delta = clock.getDelta()
       const elapsed = clock.elapsedTime
+      const scrollProgress = THREE.MathUtils.clamp(
+        window.scrollY / Math.max(1, page.offsetHeight - window.innerHeight),
+        0,
+        1
+      )
+      journeyProgressRef.current = scrollProgress
+      page.style.setProperty('--basin-journey', scrollProgress.toFixed(3))
       displayedProgress = reducedMotion
-        ? journeyProgressRef.current
-        : THREE.MathUtils.damp(displayedProgress, journeyProgressRef.current, 6, delta)
+        ? scrollProgress
+        : THREE.MathUtils.damp(displayedProgress, scrollProgress, 6, delta)
       const pathProgress = THREE.MathUtils.smootherstep(displayedProgress, 0, 1)
       if (!reducedMotion) {
         wheel.rotation.z = -elapsed * 0.42
@@ -301,7 +343,22 @@ export default function Basin() {
         waterGlints.rotation.z = elapsed * 0.06
         birds.position.x = -3.6 + Math.sin(elapsed * 0.18) * 1.8
         birds.position.z = 11 + Math.cos(elapsed * 0.18) * 1.2
+        skyRocks.rotation.y = elapsed * 0.08 + pathProgress * Math.PI * 0.35
+        skyRocks.rotation.x = Math.sin(elapsed * 0.12) * 0.08
+        skyRocks.children.forEach((rock, index) => {
+          rock.rotation.x += delta * (0.12 + index * 0.018)
+          rock.rotation.z += delta * (0.08 + index * 0.012)
+        })
+        spaceFlowers.rotation.y = -elapsed * 0.1 - pathProgress * 0.48
+        spaceFlowers.children.forEach((flower, index) => {
+          flower.rotation.z = Math.sin(elapsed * 1.1 + flower.userData.phase) * 0.28
+          flower.position.y = 1.5 + Math.floor(index / 5) * 2.2 + Math.sin(elapsed * 0.8 + flower.userData.phase) * 0.2
+          flowerMaterials[index].color.setHSL(0.53 + pathProgress * 0.34 + (index % 3) * 0.025, 0.58, 0.58)
+          flowerMaterials[index].emissive.setHSL(0.5 + pathProgress * 0.28, 0.42, 0.12)
+        })
       }
+      camera.fov = 54 - Math.sin(pathProgress * Math.PI) * 11
+      camera.updateProjectionMatrix()
       camera.position.copy(cameraPath.getPointAt(pathProgress))
       camera.lookAt(targetPath.getPointAt(pathProgress))
       renderer.render(scene, camera)
@@ -318,8 +375,11 @@ export default function Basin() {
     }
   }, [])
 
-  useEffect(() => () => {
-    stopAmbience()
+  useEffect(() => {
+    void startAmbience(true)
+    return () => {
+      stopAmbience()
+    }
   }, [])
 
   function stopAmbience() {
@@ -332,15 +392,14 @@ export default function Basin() {
     setSoundPlaying(false)
   }
 
-  async function toggleAmbience() {
-    if (soundRef.current) {
-      stopAmbience()
-      return
-    }
+  async function startAmbience(fromAutoplay = false) {
+    if (soundRef.current || ambienceStartingRef.current) return
+    ambienceStartingRef.current = true
 
     const AudioContext = window.AudioContext || window.webkitAudioContext
     if (!AudioContext) {
       setSoundError('This browser does not support Basin ambience.')
+      ambienceStartingRef.current = false
       return
     }
 
@@ -352,6 +411,13 @@ export default function Basin() {
     const waterMotionRange = context.createGain()
     const wheel = context.createOscillator()
     const wheelGain = context.createGain()
+    const air = context.createBufferSource()
+    const airFilter = context.createBiquadFilter()
+    const airGain = context.createGain()
+    const drip = context.createOscillator()
+    const dripGain = context.createGain()
+    const dripMotion = context.createOscillator()
+    const dripRange = context.createGain()
     const noiseBuffer = context.createBuffer(1, context.sampleRate * 2, context.sampleRate)
     const noiseData = noiseBuffer.getChannelData(0)
 
@@ -359,7 +425,7 @@ export default function Basin() {
       noiseData[index] = Math.random() * 2 - 1
     }
 
-    master.gain.value = 0.05
+    master.gain.value = 0.055
     water.buffer = noiseBuffer
     water.loop = true
     waterFilter.type = 'bandpass'
@@ -371,6 +437,17 @@ export default function Basin() {
     wheel.type = 'triangle'
     wheel.frequency.value = 46
     wheelGain.gain.value = 0.012
+    air.buffer = noiseBuffer
+    air.loop = true
+    airFilter.type = 'lowpass'
+    airFilter.frequency.value = 250
+    airGain.gain.value = 0.018
+    drip.type = 'sine'
+    drip.frequency.value = 1120
+    dripGain.gain.value = 0.001
+    dripMotion.type = 'sine'
+    dripMotion.frequency.value = 0.17
+    dripRange.gain.value = 0.008
 
     waterMotion.connect(waterMotionRange)
     waterMotionRange.connect(waterFilter.frequency)
@@ -378,23 +455,49 @@ export default function Basin() {
     waterFilter.connect(master)
     wheel.connect(wheelGain)
     wheelGain.connect(master)
+    air.connect(airFilter)
+    airFilter.connect(airGain)
+    airGain.connect(master)
+    dripMotion.connect(dripRange)
+    dripRange.connect(dripGain.gain)
+    drip.connect(dripGain)
+    dripGain.connect(master)
     master.connect(context.destination)
 
     try {
       await context.resume()
+      if (context.state !== 'running') {
+        throw new Error('Audio context remains suspended.')
+      }
     } catch (error) {
-      console.error('Basin ambience could not begin.', error)
+      if (!fromAutoplay) console.error('Basin ambience could not begin.', error)
       void context.close()
-      setSoundError('Basin ambience could not begin in this browser.')
+      setSoundError(fromAutoplay
+        ? 'Basin ambience is ready. Your browser needs one interaction before it can begin.'
+        : 'Basin ambience could not begin in this browser.')
+      ambienceStartingRef.current = false
       return
     }
 
     water.start()
     waterMotion.start()
     wheel.start()
-    soundRef.current = { context, sources: [water, waterMotion, wheel] }
+    air.start()
+    drip.start()
+    dripMotion.start()
+    soundRef.current = { context, sources: [water, waterMotion, wheel, air, drip, dripMotion] }
     setSoundError('')
     setSoundPlaying(true)
+    ambienceStartingRef.current = false
+  }
+
+  function toggleAmbience() {
+    if (soundRef.current) {
+      stopAmbience()
+      return
+    }
+
+    void startAmbience()
   }
 
   return (
@@ -445,6 +548,16 @@ export default function Basin() {
         </button>
         {soundError && <p className="basin-sound-error" role="alert">{soundError}</p>}
       </aside>
+      <nav className={`basin-directions${directionsRevealed ? ' basin-directions--revealed' : ''}`} aria-label="Basin directions">
+        <p>Matrix lattice / Basin crossings</p>
+        <a className="basin-directions__west" href={herbRoomHref}>West <span>Herb Room</span></a>
+        <Link className="basin-directions__east" to="/old-forest-trek">East <span>Old Forest</span></Link>
+        {directionsRevealed ? <>
+          <Link className="basin-directions__north" to="/shimmer">North <span>Cabin lights</span></Link>
+          <Link className="basin-directions__south" to="/basin-falls">South <span>Lower works</span></Link>
+        </> : <button type="button" className="basin-directions__reveal" onClick={() => setDirectionsRevealed(true)}>Let the vertical crossings resolve</button>}
+        <a className="basin-directions__core" href={nodeFieldHref}>Matrix lattice</a>
+      </nav>
       <div className="basin-controls">
         <span>Scroll to trace the Basin’s crossing paths</span>
         <Link to="/basin-falls">Enter the Basin of the Falls</Link>

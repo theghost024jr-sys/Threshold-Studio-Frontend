@@ -67,7 +67,14 @@
     </section>
   </main>
   <script type="module" src="/threshold-engine.js"></script>
-  <script type="module" src="/scripts/hub-public-runtime.js"></script>
+  <script>
+    if (window.location.port === "8789") {
+      document.querySelectorAll('a[href^="/portal/"]').forEach((link) => {
+        link.href = `http://${window.location.hostname}:4173${link.getAttribute("href")}`;
+      });
+    }
+  </script>
+  <script type="module" src="/scripts/hub-public-runtime.js?v=portal-link-bridge-1"></script>
   <script type="module" src="/scripts/hub-public-experience.js?v=oort-field-1"></script>
 </body>
 </html>

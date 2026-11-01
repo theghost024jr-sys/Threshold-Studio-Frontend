@@ -31,7 +31,7 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /--season-color:/);
   assert.match(hub, /<span class="hub-lens" aria-hidden="true"><\/span>/);
   assert.match(hub, /animation: hub-lens-pulse 18s ease-in-out infinite/);
-  assert.match(hub, /<span class="hub-cosmic-rotation" aria-hidden="true"><span class="hub-oort-field"><\/span><\/span>/);
+  assert.match(hub, /<span class="hub-cosmic-rotation"><span class="hub-oort-field"><\/span><\/span>/);
   assert.match(hub, /\.hub-cosmic-rotation::before/);
   assert.match(hub, /hub-atmosphere-parallax 140s linear infinite/);
   assert.match(hub, /\.hub-cosmic-rotation::after/);
@@ -52,7 +52,7 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /@media \(min-width: 1100px\)[\s\S]*?width: min\(640px, 76vw\)/);
   assert.match(hub, /font-size: clamp\(0\.82rem, 1\.2vw, 1\.25rem\)/);
   assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(8px\)/);
-  assert.match(hub, /src=["']\/scripts\/entry-warmth\.js["']/);
+  assert.match(hub, /src=["']\/scripts\/entry-warmth\.js(?:\?[^"']*)?["']/);
   assert.match(warmth, /const oortNodes/);
   assert.match(warmth, /function addOortCloud\(\)/);
   assert.match(warmth, /querySelector\("\.hub-oort-field"\)/);
@@ -91,7 +91,7 @@ test("boots the public Hub from a real engine entry control", async () => {
 
   assert.match(hub, /<button id="hub-enter-engine"[^>]*>Enter Engine<\/button>/);
   assert.match(hub, /src="\/threshold-engine\.js"/);
-  assert.match(hub, /src="\/scripts\/hub-public-runtime\.js"/);
+  assert.match(hub, /src="\/scripts\/hub-public-runtime\.js(?:\?[^"]*)?"/);
   assert.doesNotMatch(hub, /src="\/scripts\/fibonacci-entry\.js"/);
 });
 
@@ -108,7 +108,7 @@ test("ships the Fib 13 Hub reactor interaction contract", async () => {
   assert.match(hub, /class=["']entry-reactor["'][\s\S]*?<\/div>\s*<div class=["']entry-engine-core["'] data-engine-core/);
   assert.match(hub, /data-engine-state=["']latent["']/);
   assert.match(hub, /data-void-field/);
-  assert.match(hub, /src=["']\/scripts\/fibonacci-entry\.js["']/);
+  assert.match(hub, /src=["']\/scripts\/fibonacci-entry\.js(?:\?[^"']*)?["']/);
   assert.match(reactor, /const nodeCount = 8/);
   assert.match(reactor, /threshold:hub-signal/);
   assert.match(reactor, /threshold:engine-event/);

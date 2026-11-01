@@ -61,6 +61,10 @@ export default function BasinFalls() {
           <span>movement at the waterworks</span>
         </button>
         <div className="basin-falls__stairs" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /></div>
+        <Link className="basin-falls__porch-route" to="/cabin-of-moss">
+          <span>Recovered stairs</span>
+          <small>Climb to the porch</small>
+        </Link>
         <div className="basin-falls__forest-seam" aria-hidden="true" />
         <div className="basin-falls__cabin-light" aria-hidden="true" />
       </section>

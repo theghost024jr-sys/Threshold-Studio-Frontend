@@ -966,6 +966,36 @@
   height: 0.55rem;
 }
 
+.basin-falls__porch-route {
+  color: #f0dfab;
+  display: grid;
+  gap: 0.22rem;
+  left: 48%;
+  padding: 1rem;
+  position: absolute;
+  text-decoration: none;
+  top: 21%;
+  z-index: 1;
+}
+
+.basin-falls__porch-route span {
+  font: 0.64rem/1 Consolas, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.basin-falls__porch-route small {
+  color: rgba(240, 223, 171, 0.76);
+  font: italic 0.95rem/1.2 Georgia, serif;
+}
+
+.basin-falls__porch-route:hover,
+.basin-falls__porch-route:focus-visible {
+  color: #fff3cc;
+  outline: none;
+  text-shadow: 0 0 1.2rem rgba(255, 222, 137, 0.78);
+}
+
 .basin-falls__forest-seam {
   background: repeating-linear-gradient(86deg, transparent 0 2.1rem, rgba(24, 57, 41, 0.84) 2.2rem 2.75rem);
   height: 36vh;

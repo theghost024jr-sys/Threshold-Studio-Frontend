@@ -4,7 +4,11 @@ const reading = document.getElementById("hub-return-reading");
 const continueRoute = document.getElementById("hub-continue-route");
 const continueLabel = document.getElementById("hub-continue-label");
 const continueDetail = document.getElementById("hub-continue-detail");
+const orbitSystem = document.querySelector(".hub-orbit-system");
+const strandLayer = document.querySelector(".hub-strands");
+const routeNodes = [...document.querySelectorAll(".hub-route")];
 const returnStateKey = "threshold-return-state";
+let selectedRoute = null;
 
 const returnStates = [
   "Motion returns as vector. The field begins to turn with you.",
@@ -16,9 +20,9 @@ function addOortField() {
   const field = document.querySelector(".hub-oort-field");
   if (!field || field.childElementCount > 0) return;
 
-  const particles = Array.from({ length: 42 }, (_, index) => {
+  const particles = Array.from({ length: 180 }, (_, index) => {
     const angle = index * 2.399963229728653;
-    const radius = Math.sqrt((index + 0.5) / 42) * 47;
+    const radius = Math.sqrt((index + 0.5) / 180) * 49;
     const depth = ((index * 17) % 29) / 28;
     const particle = document.createElement("i");
     particle.className = "hub-oort";
@@ -33,6 +37,73 @@ function addOortField() {
   });
 
   return particles;
+}
+
+function routeName(route) {
+  return route.querySelector("span")?.textContent.trim() || "this route";
+}
+
+function renderStrand(route) {
+  if (!orbitSystem || !strandLayer || !route) return;
+
+  const systemBounds = orbitSystem.getBoundingClientRect();
+  const routeBounds = route.getBoundingClientRect();
+  const startX = systemBounds.width / 2;
+  const startY = systemBounds.height / 2;
+  const endX = routeBounds.left + routeBounds.width / 2 - systemBounds.left;
+  const endY = routeBounds.top + routeBounds.height / 2 - systemBounds.top;
+  const strand = document.createElement("i");
+  strand.className = "hub-strand";
+  strand.style.width = `${Math.hypot(endX - startX, endY - startY)}px`;
+  strand.style.left = `${startX}px`;
+  strand.style.top = `${startY}px`;
+  strand.style.transform = `rotate(${Math.atan2(endY - startY, endX - startX)}rad)`;
+  strandLayer.replaceChildren(strand);
+}
+
+function focusRoute(route, held = false) {
+  const name = routeName(route);
+  const detail = route.querySelector("small")?.textContent.trim() || "relationship / unresolved";
+  document.body.dataset.hubRoute = name.toLowerCase().replaceAll(" ", "-");
+  routeNodes.forEach((node) => {
+    node.classList.toggle("is-awake", node === route);
+    node.classList.toggle("is-selected", held && node === route);
+  });
+  renderStrand(route);
+  reading.textContent = held
+    ? `${name} is held in the field. Its relationship has become the nearest seam.`
+    : `${name} wakes at the edge of the Hub. Its orbit shifts without becoming a command.`;
+  continueRoute.href = route.href;
+  continueLabel.textContent = `Enter ${name}`;
+  continueDetail.textContent = `Current condition: ${detail}. Enter only when this relation is the one you mean to follow.`;
+}
+
+function clearRouteFocus() {
+  if (selectedRoute) {
+    focusRoute(selectedRoute, true);
+    return;
+  }
+  delete document.body.dataset.hubRoute;
+  strandLayer?.replaceChildren();
+  routeNodes.forEach((node) => node.classList.remove("is-awake", "is-selected"));
+}
+
+function bindRouteNodes() {
+  routeNodes.forEach((route) => {
+    route.addEventListener("pointerenter", () => focusRoute(route));
+    route.addEventListener("focus", () => focusRoute(route));
+    route.addEventListener("pointerleave", clearRouteFocus);
+    route.addEventListener("blur", clearRouteFocus);
+    route.addEventListener("click", (event) => {
+      event.preventDefault();
+      selectedRoute = route;
+      focusRoute(route, true);
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (selectedRoute) renderStrand(selectedRoute);
+  });
 }
 
 function updateParallax(event) {
@@ -138,7 +209,7 @@ function nextSeamFor(state) {
 core?.addEventListener("click", () => {
   const awakened = page.classList.toggle("hub-is-awake");
   core.setAttribute("aria-pressed", String(awakened));
-  core.querySelector(".hub-core-label").textContent = awakened ? "The Hub is listening" : "Awaken the Hub";
+  core.querySelector(".hub-core-label").textContent = awakened ? "Fib 13 / listening" : "Fib 13 / awaken";
   if (awakened) {
     renderReturnState();
     if (!currentReturnState()) reading.textContent = returnStates[Math.floor(Math.random() * returnStates.length)];
@@ -149,4 +220,5 @@ core?.addEventListener("click", () => {
 
 window.addEventListener("pointermove", updateParallax, { passive: true });
 addOortField();
+bindRouteNodes();
 renderReturnState();

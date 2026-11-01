@@ -62,6 +62,9 @@ jobs:
           python -m pip install pytest
           python -m pytest tests/test_build_vault_data.py tools/test_threshold_paths.py
 
+      - name: Build generated vault data
+        run: npm run build:data
+
       - name: Run full test suite
         run: npm test
 

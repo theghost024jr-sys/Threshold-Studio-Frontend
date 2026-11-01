@@ -23,6 +23,7 @@
     </section>
     <section class="node-field-space" data-node-field-space aria-label="Node field">
       <p class="node-field-loading" data-node-field-loading>Resolving the field.</p>
+      <svg class="node-field-links" data-node-field-links aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
       <div class="node-field-nodes" data-node-field-nodes></div>
     </section>
     <section class="node-field-reading" data-node-field-reading aria-live="polite" aria-labelledby="node-field-reading-title">
@@ -32,6 +33,13 @@
       <button type="button" data-node-field-contact disabled>Contact unavailable</button>
       <p class="node-field-status" data-node-field-status>Engine contact is not configured.</p>
     </section>
+    <aside class="node-field-vault" data-node-field-vault hidden aria-live="polite">
+      <p class="node-field-kicker">Vault reading</p>
+      <h3 data-node-field-vault-title></h3>
+      <p data-node-field-vault-summary></p>
+      <dl data-node-field-vault-facets></dl>
+      <p class="node-field-vault-source" data-node-field-vault-source></p>
+    </aside>
   </main>
   <script type="module" src="/threshold-engine.js"></script>
   <script type="module" src="/scripts/node-field.js"></script>

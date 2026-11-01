@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "source": "glyph-corpus placement audit",
+  "counts": {
+    "records": 15,
+    "placed": 6,
+    "missingPlacement": 7
+  },
+  "records": [
+    {
+      "id": "eba855241c9f",
+      "title": "Collapse Glyph",
+      "sourceRelativePath": "_publish/glyph_collapse.md",
+      "kind": "archive-reference",
+      "assetReferences": [],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [
+        {
+          "surface": "HTML Glyph Archive",
+          "route": "/glyphs.html#glyph-collapse",
+          "asset": "/vault/glyphs/collapse.png",
+          "interaction": "explicit Archive path",
+          "evidence": "website/config/glyphs.json"
+        },
+        {
+          "surface": "Learning Wheel seasonal page",
+          "route": "/pages/learning-autumn.html",
+          "asset": "/vault/glyphs/collapse.png",
+          "interaction": "double-click glyph return",
+          "evidence": "website/config/living-pages.json; website/scripts/living-page.js"
+        }
+      ],
+      "missingPlacement": false
+    },
+    {
+      "id": "b0ebc26211e3",
+      "title": "Comet Glyph",
+      "sourceRelativePath": "09 - Threshold/11 - Threshold Map/Symbolic Substrate/Species Resonance Maps/Comet Glyph.md",
+      "kind": "glyph",
+      "assetReferences": [
+        "cometglyph.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": true
+    },
+    {
+      "id": "d1b03dcfdbaa",
+      "title": "Comet Glyph – JAIMEE (Oort Cloud)",
+      "sourceRelativePath": "09 - Threshold/11 - Threshold Map/Symbolic Substrate/Oort Jaimee.md",
+      "kind": "glyph",
+      "assetReferences": [
+        "oortjamie.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": true
+    },
+    {
+      "id": "9fc7235aa0e5",
+      "title": "Echo Glyph",
+      "sourceRelativePath": "08 - Signals/Echo Glyph.md",
+      "kind": "glyph",
+      "assetReferences": [
+        "echoglyph.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": true
+    },
+    {
+      "id": "59e2b75e0766",
+      "title": "Expand Glyph",
+      "sourceRelativePath": "_publish/glyph_expand.md",
+      "kind": "archive-reference",
+      "assetReferences": [],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [
+        {
+          "surface": "HTML Glyph Archive",
+          "route": "/glyphs.html#glyph-expand",
+          "asset": "/vault/glyphs/expand.png",
+          "interaction": "explicit Archive path",
+          "evidence": "website/config/glyphs.json"
+        },
+        {
+          "surface": "Learning Wheel seasonal page",
+          "route": "/pages/learning-summer.html",
+          "asset": "/vault/glyphs/expand.png",
+          "interaction": "double-click glyph return",
+          "evidence": "website/config/living-pages.json; website/scripts/living-page.js"
+        }
+      ],
+      "missingPlacement": false
+    },
+    {
+      "id": "3d844391bfd3",
+      "title": "Fog Glyph",
+      "sourceRelativePath": "_publish/glyph_fog.md",
+      "kind": "archive-reference",
+      "assetReferences": [],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [
+        {
+          "surface": "HTML Glyph Archive",
+          "route": "/glyphs.html#glyph-fog",
+          "asset": "/vault/glyphs/fog.png",
+          "interaction": "explicit Archive path",
+          "evidence": "website/config/glyphs.json"
+        },
+        {
+          "surface": "Learning Wheel seasonal page",
+          "route": "/pages/learning-spring.html",
+          "asset": "/vault/glyphs/fog.png",
+          "interaction": "double-click glyph return",
+          "evidence": "website/config/living-pages.json; website/scripts/living-page.js"
+        }
+      ],
+      "missingPlacement": false
+    },
+    {
+      "id": "46029f48f4ab",
+      "title": "Glyph Archive",
+      "sourceRelativePath": "_publish/glyph_archive.md",
+      "kind": "archive",
+      "assetReferences": [],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": false
+    },
+    {
+      "id": "72e50e424652",
+      "title": "Glyphs",
+      "sourceRelativePath": "01 - System/Scaffolding/Glyphs.md",
+      "kind": "catalog",
+      "assetReferences": [],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [
+        {
+          "surface": "Portal GlyphArchive",
+          "route": "/portal/glyphs",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/GlyphArchive.jsx"
+        },
+        {
+          "surface": "Portal Rohg",
+          "route": "/portal/rohg",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/Rohg.jsx"
+        },
+        {
+          "surface": "Portal Rava",
+          "route": "/portal/rava",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/Rava.jsx"
+        }
+      ],
+      "missingPlacement": false
+    },
+    {
+      "id": "e58bc55bec6f",
+      "title": "Hourglass Glyph",
+      "sourceRelativePath": "01 - System/Scaffolding/04 - Signals/Environmental Signals/Hourglass Glyph.md",
+      "kind": "glyph",
+      "assetReferences": [],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [
+        {
+          "surface": "Portal Motion",
+          "route": "/portal/motion",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/Motion.jsx"
+        },
+        {
+          "surface": "Portal HourglassGlyph",
+          "route": "/portal/glyphs/hourglass",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/HourglassGlyph.jsx"
+        },
+        {
+          "surface": "Portal GlyphArchive",
+          "route": "/portal/glyphs",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/GlyphArchive.jsx"
+        }
+      ],
+      "missingPlacement": false
+    },
+    {
+      "id": "258e92fab613",
+      "title": "Proceed Glyph",
+      "sourceRelativePath": "01 - System/Scaffolding/03 - Rituals & Artifacts/Artifacts/Proceed Glyph.md",
+      "kind": "glyph",
+      "assetReferences": [
+        "proceedglyph.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": true
+    },
+    {
+      "id": "b999c491e1ad",
+      "title": "Siph Glyph",
+      "sourceRelativePath": "08 - Signals/Siph Glyph.md",
+      "kind": "glyph",
+      "assetReferences": [
+        "siphglyph.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": true
+    },
+    {
+      "id": "16471eb78a10",
+      "title": "Soil Glyph",
+      "sourceRelativePath": "_publish/glyph_soil.md",
+      "kind": "archive-reference",
+      "assetReferences": [],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [
+        {
+          "surface": "HTML Glyph Archive",
+          "route": "/glyphs.html#glyph-soil",
+          "asset": "/vault/glyphs/soil.png",
+          "interaction": "explicit Archive path",
+          "evidence": "website/config/glyphs.json"
+        },
+        {
+          "surface": "Learning Wheel seasonal page",
+          "route": "/pages/learning-winter.html",
+          "asset": "/vault/glyphs/soil.png",
+          "interaction": "double-click glyph return",
+          "evidence": "website/config/living-pages.json; website/scripts/living-page.js"
+        }
+      ],
+      "missingPlacement": false
+    },
+    {
+      "id": "ad84cd14b63d",
+      "title": "Still Glyph",
+      "sourceRelativePath": "09 - Threshold/11 - Threshold Map/Symbolic Substrate/Invocation Glyphs/Still Glyph.md",
+      "kind": "glyph",
+      "assetReferences": [
+        "stillglyph.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": true
+    },
+    {
+      "id": "3326b35dfb9c",
+      "title": "Symbolic Glyph",
+      "sourceRelativePath": "09 - Threshold/11 - Threshold Map/Symbolic Substrate/Species Resonance Maps/Symbolic Glyph.md",
+      "kind": "glyph",
+      "assetReferences": [
+        "A symbolic glyph spi.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": true
+    },
+    {
+      "id": "d76e1b982de3",
+      "title": "Virellion Glyph Map",
+      "sourceRelativePath": "09 - Threshold/11 - Threshold Map/Symbolic Substrate/Species Resonance Maps/Virellion Glyph Map.md",
+      "kind": "map",
+      "assetReferences": [
+        "virellionglyph map.png"
+      ],
+      "primitives": {
+        "category": null,
+        "strokes": [],
+        "orientation": null,
+        "spacing": null,
+        "scale": null,
+        "layers": [],
+        "context": [],
+        "repetition": null
+      },
+      "placements": [],
+      "missingPlacement": false
+    }
+  ]
+}

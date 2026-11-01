@@ -7,7 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "build:data": "python tools/build_vault_data.py && python tools/build_node_bundles.py",
+    "build:data": "python tools/build_vault_data.py && python tools/build_glyph_corpus.py && python tools/build_glyph_placement_inventory.py && python tools/build_node_bundles.py",
     "build:render-jobs": "python tools/build_page_render_jobs.py",
     "build:pages": "node website/portal/scripts/generate-vault-pages.mjs && npm run build:inventory-echoes",
     "build:inventory-echoes": "node scripts/build-inventory-echoes.mjs",

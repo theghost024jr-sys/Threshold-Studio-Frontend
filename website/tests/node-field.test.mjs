@@ -54,6 +54,11 @@ test("ships a first-level node field without inventing interaction authority", a
   assert.match(page, /data-node-field-contact/);
   assert.match(page, /scripts\/node-field\.js/);
   assert.match(script, /createNodeFieldLayout/);
+  assert.match(script, /--node-x", `\$\{position\.anchor\.x\}`/);
+  assert.match(script, /--node-y", `\$\{position\.anchor\.y\}`/);
+  assert.match(script, /--node-z", `\$\{position\.anchor\.z\}`/);
+  assert.match(script, /--node-scale", `\$\{position\.anchor\.scale\}`/);
+  assert.match(script, /--node-opacity", `\$\{position\.anchor\.opacity\}`/);
   assert.match(script, /applyInput\(approachedNode\.id, \{ action: "select" \}\)/);
   assert.match(script, /await engineInterface\.tick\(\)/);
   assert.match(script, /settleField/);

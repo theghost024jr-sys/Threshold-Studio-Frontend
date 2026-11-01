@@ -3,6 +3,26 @@ import { Link } from 'react-router-dom'
 import cabinImage from '../assets/cabin.png'
 import quiverbrightHawk from '../assets/quiverbright-hawk.png'
 
+const sceneLayers = {
+  cabinComposite: { anchorDepth: -80, presentationDepth: -80, authority: 'authored' },
+  cabinLight: { anchorDepth: 10, presentationDepth: 10, authority: 'presentation' },
+  fogFar: { anchorDepth: 20, presentationDepth: 20, authority: 'presentation' },
+  fogNear: { anchorDepth: 90, presentationDepth: 90, authority: 'presentation' },
+  quiverbright: { anchorDepth: 130, presentationDepth: 130, authority: 'authored' }
+}
+
+function layerProps(name) {
+  const layer = sceneLayers[name]
+  return {
+    'data-scene-layer': name,
+    'data-layer-authority': layer.authority,
+    style: {
+      '--anchor-depth': `${layer.anchorDepth}px`,
+      '--presentation-depth': `${layer.presentationDepth}px`
+    }
+  }
+}
+
 export default function Shimmer() {
   const sceneRef = useRef(null)
 
@@ -84,18 +104,20 @@ export default function Shimmer() {
         onPointerLeave={resetPerspective}
         onPointerMove={handlePointerMove}
       >
-        <img className="shimmer-cabin" src={cabinImage} alt="A moss-covered cabin beside a water engine" />
-        <div className="shimmer-fog shimmer-fog-near" />
-        <div className="shimmer-fog shimmer-fog-far" />
-        <div className="shimmer-bird" role="img" aria-label="Quiverbright crossing the clearing">
+        <img className="shimmer-cabin" {...layerProps('cabinComposite')} src={cabinImage} alt="A moss-covered cabin beside a water engine" />
+        <div className="shimmer-lights" {...layerProps('cabinLight')} aria-hidden="true" />
+        <div className="shimmer-fog shimmer-fog-near" {...layerProps('fogNear')} />
+        <div className="shimmer-fog shimmer-fog-far" {...layerProps('fogFar')} />
+        <div className="shimmer-bird" {...layerProps('quiverbright')} role="img" aria-label="Quiverbright crossing the clearing">
           <img src={quiverbrightHawk} alt="" />
         </div>
         <div className="shimmer-veil" />
         <div className="shimmer-copy">
-          <p className="shimmer-phrase">Once I remember I created shimmer</p>
-          <p className="shimmer-direction">Scroll toward the cabin</p>
+          <p className="shimmer-phrase">The construction is familiar. Its making is not.</p>
+          <p className="shimmer-direction">Scroll toward the Cabin</p>
         </div>
-        <p className="shimmer-arrival">The lights were already on</p>
+        <p className="shimmer-arrival">The lights are already on. You can rest here.</p>
+        <Link className="shimmer-enter" to="/cabin-of-moss">Enter the Cabin</Link>
       </section>
       <Link className="back-link shimmer-return" to="/">Portal home</Link>
     </main>

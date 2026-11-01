@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useSlitNavigation } from './SlitNavigationContext.js'
 
 const routeHelp = {
   '/beach': { label: 'Shore Threshold', answer: 'The shore asks for a stance. Choose mountain, raft, or ocean, then carry that return trace forward.', href: '/ocean', action: 'Face the Ocean' },
@@ -33,7 +34,7 @@ function localReply(query, path) {
 
 export default function DougHelpDesk() {
   const location = useLocation()
-  const navigate = useNavigate()
+  const { requestPassage } = useSlitNavigation()
   const [open, setOpen] = useState(false)
   const [question, setQuestion] = useState('')
   const [reply, setReply] = useState(null)
@@ -94,7 +95,7 @@ export default function DougHelpDesk() {
             <section className="doug-help-reply" aria-live="polite">
               <strong>{reply.label}</strong>
               <p>{reply.answer}</p>
-              <button type="button" onClick={() => { navigate(reply.href); setOpen(false) }}>{reply.action}</button>
+              <button type="button" onClick={() => { requestPassage(reply.href); setOpen(false) }}>{reply.action}</button>
             </section>
           )}
           <button type="button" className="doug-help-close" onClick={() => setOpen(false)}>Close desk</button>

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
@@ -589,7 +590,49 @@ def build_vault_data(paths: ThresholdPaths) -> dict[str, Any]:
     return payload
 
 
+def build_vault_index_from_public_data(website_root: Path) -> dict[str, Any]:
+    vault_path = website_root / "data" / "threshold-vault.json"
+    vault = json.loads(vault_path.read_text(encoding="utf-8"))
+    documents = vault.get("documents")
+    if not isinstance(documents, list):
+        raise ValueError(f"Committed public vault data has no documents array: {vault_path}")
+
+    index = {
+        "version": 1,
+        "generatedAt": vault.get("generatedAt"),
+        "count": len(documents),
+        "documents": [
+            {
+                "id": document["id"],
+                "title": document["title"],
+                "relativePath": document["relativePath"],
+            }
+            for document in documents
+            if all(isinstance(document.get(key), str) and document[key] for key in ("id", "title", "relativePath"))
+        ],
+    }
+    if index["count"] != len(index["documents"]):
+        raise ValueError(f"Committed public vault data contains incomplete document records: {vault_path}")
+
+    output_path = website_root / "data" / "vault-index.json"
+    output_path.write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return index
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--from-public-data",
+        action="store_true",
+        help="Build only the ignored vault index from committed public vault data.",
+    )
+    arguments = parser.parse_args()
+    if arguments.from_public_data:
+        website_root = Path(__file__).resolve().parent.parent / "website"
+        index = build_vault_index_from_public_data(website_root)
+        print(f"Vault index built from committed public data with {index['count']} documents")
+        return 0
+
     paths = load_threshold_paths()
     payload = build_vault_data(paths)
     print(f"Vault data built for {payload['authorship']} authorship")

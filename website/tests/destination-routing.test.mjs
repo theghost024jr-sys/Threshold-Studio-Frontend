@@ -90,9 +90,30 @@ test("boots the public Hub from a real engine entry control", async () => {
   const hub = await readFile(new URL("../hub.html", import.meta.url), "utf8");
 
   assert.match(hub, /<button id="hub-enter-engine"[^>]*>Enter Engine<\/button>/);
+  assert.match(hub, /class="hub-glyph hub-glyph-one"/);
+  assert.match(hub, /class="hub-glyph hub-glyph-two"/);
+  assert.match(hub, /class="hub-glyph hub-glyph-three"/);
   assert.match(hub, /src="\/threshold-engine\.js"/);
   assert.match(hub, /src="\/scripts\/hub-public-runtime\.js(?:\?[^"]*)?"/);
   assert.doesNotMatch(hub, /src="\/scripts\/fibonacci-entry\.js"/);
+});
+
+test("teaches Hub interaction through environmental response rather than an overlay", async () => {
+  const [experience, styles] = await Promise.all([
+    readFile(new URL("../scripts/hub-public-experience.js", import.meta.url), "utf8"),
+    readFile(new URL("../styles/hub-public.css", import.meta.url), "utf8")
+  ]);
+
+  assert.match(experience, /function updateOortProximity/);
+  assert.match(experience, /function bindGlyphNodes/);
+  assert.match(experience, /glyph\.addEventListener\("dblclick"/);
+  assert.match(experience, /window\.location\.assign\("\/glyph-archive-node\.html"\)/);
+  assert.match(experience, /function bindDepthGesture/);
+  assert.match(experience, /orbitSystem\.addEventListener\("wheel"/);
+  assert.doesNotMatch(experience, /tutorial|onboarding|checklist/i);
+  assert.match(styles, /\.hub-is-attended \.hub-oort-field/);
+  assert.match(styles, /\.hub-orbit-system\[data-hub-depth="3"\]/);
+  assert.match(styles, /\.hub-glyph\.is-selected/);
 });
 
 test("ships the Fib 13 Hub reactor interaction contract", async () => {

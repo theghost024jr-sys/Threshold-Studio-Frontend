@@ -7,8 +7,12 @@ const continueDetail = document.getElementById("hub-continue-detail");
 const orbitSystem = document.querySelector(".hub-orbit-system");
 const strandLayer = document.querySelector(".hub-strands");
 const routeNodes = [...document.querySelectorAll(".hub-route")];
+const glyphNodes = [...document.querySelectorAll(".hub-glyph")];
 const returnStateKey = "threshold-return-state";
 let selectedRoute = null;
+let selectedGlyph = null;
+let glyphDwellTimer = null;
+let oortParticles = [];
 
 const returnStates = [
   "Motion returns as vector. The field begins to turn with you.",
@@ -32,10 +36,13 @@ function addOortField() {
     particle.style.setProperty("--oort-size", `${(1.5 + depth * 4.5).toFixed(2)}px`);
     particle.style.setProperty("--oort-opacity", (0.12 + depth * 0.46).toFixed(2));
     particle.style.setProperty("--oort-delay", `${-(index * 0.43).toFixed(2)}s`);
+    particle.dataset.x = String(50 + Math.cos(angle) * radius);
+    particle.dataset.y = String(50 + Math.sin(angle) * radius);
     field.appendChild(particle);
     return particle;
   });
 
+  oortParticles = particles;
   return particles;
 }
 
@@ -61,7 +68,27 @@ function renderStrand(route) {
   strandLayer.replaceChildren(strand);
 }
 
+function renderGlyphStrand(glyph) {
+  if (!orbitSystem || !strandLayer || !glyph) return;
+
+  const systemBounds = orbitSystem.getBoundingClientRect();
+  const glyphBounds = glyph.getBoundingClientRect();
+  const startX = systemBounds.width / 2;
+  const startY = systemBounds.height / 2;
+  const endX = glyphBounds.left + glyphBounds.width / 2 - systemBounds.left;
+  const endY = glyphBounds.top + glyphBounds.height / 2 - systemBounds.top;
+  const strand = document.createElement("i");
+  strand.className = "hub-strand hub-glyph-strand";
+  strand.style.width = `${Math.hypot(endX - startX, endY - startY)}px`;
+  strand.style.left = `${startX}px`;
+  strand.style.top = `${startY}px`;
+  strand.style.transform = `rotate(${Math.atan2(endY - startY, endX - startX)}rad)`;
+  strandLayer.replaceChildren(strand);
+}
+
 function focusRoute(route, held = false) {
+  selectedGlyph = null;
+  glyphNodes.forEach((glyph) => glyph.classList.remove("is-awake", "is-selected"));
   const name = routeName(route);
   const detail = route.querySelector("small")?.textContent.trim() || "relationship / unresolved";
   document.body.dataset.hubRoute = name.toLowerCase().replaceAll(" ", "-");
@@ -88,6 +115,33 @@ function clearRouteFocus() {
   routeNodes.forEach((node) => node.classList.remove("is-awake", "is-selected"));
 }
 
+function focusGlyph(glyph, held = false) {
+  selectedRoute = null;
+  routeNodes.forEach((node) => node.classList.remove("is-awake", "is-selected"));
+  glyphNodes.forEach((node) => {
+    node.classList.toggle("is-awake", node === glyph);
+    node.classList.toggle("is-selected", held && node === glyph);
+  });
+  page.dataset.hubGlyph = "signal";
+  renderGlyphStrand(glyph);
+  reading.textContent = held
+    ? "The signal holds open a small aperture in the field."
+    : "A distant glyph changes shape under attention.";
+  continueRoute.href = "/glyph-archive-node.html";
+  continueLabel.textContent = "Enter the Glyph Archive";
+  continueDetail.textContent = "A visible signal has opened a non-authoritative archive seam.";
+}
+
+function clearGlyphFocus() {
+  if (selectedGlyph) {
+    focusGlyph(selectedGlyph, true);
+    return;
+  }
+  delete page.dataset.hubGlyph;
+  strandLayer?.replaceChildren();
+  glyphNodes.forEach((node) => node.classList.remove("is-awake", "is-selected"));
+}
+
 function bindRouteNodes() {
   routeNodes.forEach((route) => {
     route.addEventListener("pointerenter", () => focusRoute(route));
@@ -103,6 +157,45 @@ function bindRouteNodes() {
 
   window.addEventListener("resize", () => {
     if (selectedRoute) renderStrand(selectedRoute);
+    if (selectedGlyph) renderGlyphStrand(selectedGlyph);
+  });
+}
+
+function bindGlyphNodes() {
+  glyphNodes.forEach((glyph) => {
+    glyph.addEventListener("pointerenter", () => {
+      glyphDwellTimer = window.setTimeout(() => focusGlyph(glyph), 620);
+      glyph.classList.add("is-near");
+    });
+    glyph.addEventListener("focus", () => focusGlyph(glyph));
+    glyph.addEventListener("pointerleave", () => {
+      window.clearTimeout(glyphDwellTimer);
+      glyph.classList.remove("is-near");
+      clearGlyphFocus();
+    });
+    glyph.addEventListener("blur", clearGlyphFocus);
+    glyph.addEventListener("click", () => {
+      selectedGlyph = glyph;
+      focusGlyph(glyph, true);
+    });
+    glyph.addEventListener("dblclick", () => {
+      window.location.assign("/glyph-archive-node.html");
+    });
+  });
+}
+
+function updateOortProximity(event) {
+  if (!orbitSystem || oortParticles.length === 0) return;
+  const bounds = orbitSystem.getBoundingClientRect();
+  const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+  const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+  const isNear = x > -14 && x < 114 && y > -14 && y < 114;
+  page.classList.toggle("hub-is-attended", isNear);
+  if (!isNear) return;
+
+  oortParticles.forEach((particle) => {
+    const distance = Math.hypot(x - Number(particle.dataset.x), y - Number(particle.dataset.y));
+    particle.style.setProperty("--oort-nearness", Math.max(0, 1 - distance / 17).toFixed(2));
   });
 }
 
@@ -111,6 +204,21 @@ function updateParallax(event) {
   const vertical = (event.clientY / window.innerHeight - 0.5) * 2;
   page.style.setProperty("--hub-pointer-x", horizontal.toFixed(3));
   page.style.setProperty("--hub-pointer-y", vertical.toFixed(3));
+  updateOortProximity(event);
+}
+
+function bindDepthGesture() {
+  if (!orbitSystem) return;
+  let depth = 0;
+  orbitSystem.addEventListener("wheel", (event) => {
+    if (Math.abs(event.deltaY) < 8) return;
+    event.preventDefault();
+    depth = Math.max(0, Math.min(3, depth + Math.sign(event.deltaY)));
+    orbitSystem.dataset.hubDepth = String(depth);
+    reading.textContent = depth === 0
+      ? "The field settles back into its original orbit."
+      : `The orbital field draws ${["nearer", "closer", "through its next layer"][depth - 1]}.`;
+  }, { passive: false });
 }
 
 function currentReturnState() {
@@ -221,4 +329,6 @@ core?.addEventListener("click", () => {
 window.addEventListener("pointermove", updateParallax, { passive: true });
 addOortField();
 bindRouteNodes();
+bindGlyphNodes();
+bindDepthGesture();
 renderReturnState();

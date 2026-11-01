@@ -1,4 +1,11 @@
-from tools.build_vault_data import build_vault_render_jobs, node_record, split_frontmatter
+import json
+
+from tools.build_vault_data import (
+    build_vault_index_from_public_data,
+    build_vault_render_jobs,
+    node_record,
+    split_frontmatter,
+)
 from tools.threshold_paths import ThresholdPaths
 
 
@@ -70,6 +77,33 @@ def test_node_record_uses_nested_page_html_when_top_level_html_is_absent() -> No
     })
 
     assert node["html"] == "/housegarden.html#lagoon"
+
+
+def test_builds_ci_vault_index_from_committed_public_data(tmp_path) -> None:
+    website_root = tmp_path / "website"
+    data_root = website_root / "data"
+    data_root.mkdir(parents=True)
+    (data_root / "threshold-vault.json").write_text(
+        json.dumps(
+            {
+                "generatedAt": "2026-11-01T00:00:00+00:00",
+                "documents": [
+                    {"id": "basin", "title": "Basin", "relativePath": "_publish/basin.md"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    index = build_vault_index_from_public_data(website_root)
+
+    assert index == {
+        "version": 1,
+        "generatedAt": "2026-11-01T00:00:00+00:00",
+        "count": 1,
+        "documents": [{"id": "basin", "title": "Basin", "relativePath": "_publish/basin.md"}],
+    }
+    assert json.loads((data_root / "vault-index.json").read_text(encoding="utf-8")) == index
 
 
 def test_vault_render_jobs_require_exact_note_template_names(tmp_path) -> None:

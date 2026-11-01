@@ -12,6 +12,29 @@ const returnStates = [
   "A stance has reached the core. The next seam is visible because you are."
 ];
 
+function addOortField() {
+  const field = document.querySelector(".hub-oort-field");
+  if (!field || field.childElementCount > 0) return;
+
+  const particles = Array.from({ length: 42 }, (_, index) => {
+    const angle = index * 2.399963229728653;
+    const radius = Math.sqrt((index + 0.5) / 42) * 47;
+    const depth = ((index * 17) % 29) / 28;
+    const particle = document.createElement("i");
+    particle.className = "hub-oort";
+    particle.dataset.depth = depth > 0.66 ? "near" : depth < 0.33 ? "far" : "middle";
+    particle.style.setProperty("--oort-x", `${50 + Math.cos(angle) * radius}%`);
+    particle.style.setProperty("--oort-y", `${50 + Math.sin(angle) * radius}%`);
+    particle.style.setProperty("--oort-size", `${(1.5 + depth * 4.5).toFixed(2)}px`);
+    particle.style.setProperty("--oort-opacity", (0.12 + depth * 0.46).toFixed(2));
+    particle.style.setProperty("--oort-delay", `${-(index * 0.43).toFixed(2)}s`);
+    field.appendChild(particle);
+    return particle;
+  });
+
+  return particles;
+}
+
 function updateParallax(event) {
   const horizontal = (event.clientX / window.innerWidth - 0.5) * 2;
   const vertical = (event.clientY / window.innerHeight - 0.5) * 2;
@@ -125,4 +148,5 @@ core?.addEventListener("click", () => {
 });
 
 window.addEventListener("pointermove", updateParallax, { passive: true });
+addOortField();
 renderReturnState();

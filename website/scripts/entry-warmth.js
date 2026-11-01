@@ -29,6 +29,12 @@ const cometPositions = Object.freeze([
   ["56%", "24%", "-21s"]
 ]);
 
+const glyphSignalPositions = Object.freeze([
+  { x: 17, y: 29, delay: "-1.2s" },
+  { x: 82, y: 36, delay: "-3.6s" },
+  { x: 62, y: 82, delay: "-2.4s" }
+]);
+
 const routeTopology = Object.freeze({
   "house and garden": {
     title: "House & Garden · tending inward",
@@ -214,6 +220,62 @@ function addOortCloud() {
   };
 }
 
+async function addGlyphSignals() {
+  const oortField = document.querySelector(".hub-oort-field");
+  const reading = document.querySelector("[data-hub-glyph-reading]");
+  const title = document.querySelector("#hub-glyph-title");
+  const text = document.querySelector("[data-hub-glyph-text]");
+  const link = document.querySelector("[data-hub-glyph-link]");
+  if (!oortField || !reading || !title || !text || !link || oortField.querySelector(".hub-glyph-signal")) {
+    return;
+  }
+
+  try {
+    const response = await fetch("/config/glyphs.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`glyph index request failed (${response.status})`);
+    const data = await response.json();
+    const glyphs = Object.values(data?.glyphs || {}).filter((glyph) => glyph?.id && glyph?.name && glyph?.text && glyph?.asset);
+    if (glyphs.length === 0) throw new Error("glyph index contains no displayable glyphs");
+
+    const selected = [...glyphs].sort(() => Math.random() - 0.5).slice(0, Math.min(3, glyphs.length));
+    const reveal = (glyph, held = false) => {
+      title.textContent = glyph.name;
+      text.textContent = glyph.text;
+      link.href = `glyphs.html#glyph-${encodeURIComponent(glyph.id)}`;
+      link.hidden = !held;
+      link.textContent = held ? `Follow ${glyph.name}` : "Hold the signal to follow it";
+      reading.classList.add("is-visible");
+      oortField.querySelectorAll(".hub-glyph-signal").forEach((signal) => {
+        signal.classList.toggle("is-held", held && signal.dataset.glyph === glyph.id);
+      });
+    };
+
+    selected.forEach((glyph, index) => {
+      const position = glyphSignalPositions[index];
+      const signal = document.createElement("button");
+      const image = document.createElement("img");
+      signal.className = "hub-glyph-signal";
+      signal.type = "button";
+      signal.dataset.glyph = glyph.id;
+      signal.style.left = `${position.x}%`;
+      signal.style.top = `${position.y}%`;
+      signal.style.setProperty("--hub-glyph-delay", position.delay);
+      signal.setAttribute("aria-label", `Encounter ${glyph.name}`);
+      image.src = glyph.asset;
+      image.alt = "";
+      signal.appendChild(image);
+      signal.addEventListener("pointerenter", () => reveal(glyph));
+      signal.addEventListener("focus", () => reveal(glyph));
+      signal.addEventListener("click", () => reveal(glyph, true));
+      oortField.appendChild(signal);
+    });
+  } catch (error) {
+    console.error("Hub glyph signals could not be loaded.", error);
+    text.textContent = "The Oort signals are quiet until the glyph index can be reached.";
+    reading.classList.add("is-visible");
+  }
+}
+
 function addMicroComets() {
   const shell = document.querySelector(".entry-shell");
   if (!shell || shell.querySelector(".hub-comet")) {
@@ -312,6 +374,7 @@ function wireRouteConstellations(oortCloud) {
 
 async function initializeEntryWarmth() {
   const oortCloud = addOortCloud();
+  await addGlyphSignals();
   addMicroComets();
   wireRouteConstellations(oortCloud);
   const engine = window.threshold;

@@ -464,6 +464,85 @@
       opacity: min(0.9, calc(var(--hub-oort-opacity, 0.22) + 0.22));
     }
 
+    .hub-glyph-signal {
+      position: absolute;
+      z-index: 3;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      border: 1px solid rgba(139, 228, 213, 0.34);
+      border-radius: 50%;
+      background: rgba(8, 15, 30, 0.54);
+      box-shadow: 0 0 14px rgba(139, 228, 213, 0.24);
+      cursor: pointer;
+      opacity: 0.6;
+      transform: translate(-50%, -50%);
+      transition: opacity 220ms ease, transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      animation: hub-glyph-signal-pulse 4.8s ease-in-out infinite;
+      animation-delay: var(--hub-glyph-delay, 0s);
+    }
+
+    .hub-glyph-signal:hover,
+    .hub-glyph-signal:focus-visible,
+    .hub-glyph-signal.is-held {
+      border-color: rgba(227, 255, 247, 0.9);
+      box-shadow: 0 0 24px rgba(139, 228, 213, 0.7);
+      opacity: 1;
+      outline: none;
+      transform: translate(-50%, -50%) scale(1.22);
+    }
+
+    .hub-glyph-signal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 5px rgba(214, 249, 239, 0.66));
+    }
+
+    .hub-glyph-reading {
+      max-width: 32rem;
+      margin: 0.9rem auto 0;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(139, 228, 213, 0.24);
+      background: rgba(4, 10, 22, 0.48);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 260ms ease, transform 260ms ease;
+    }
+
+    .hub-glyph-reading.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hub-glyph-reading__eyebrow {
+      margin: 0;
+      color: rgba(139, 228, 213, 0.88);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hub-glyph-reading h2 {
+      margin: 0.3rem 0;
+      font-size: 1.05rem;
+    }
+
+    .hub-glyph-reading p {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+    .hub-glyph-reading a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: var(--teal);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     .hub-oort-field[data-oort-state="collapse"] { filter: brightness(0.68) saturate(0.55); }
     .hub-oort-field[data-oort-state="anchoring"] { filter: brightness(1.14); }
     .entry-orbit > img {
@@ -1056,6 +1135,11 @@
       50% { opacity: 0.78; filter: brightness(0.72) contrast(1.18); }
     }
 
+    @keyframes hub-glyph-signal-pulse {
+      0%, 100% { opacity: 0.48; }
+      50% { opacity: 0.84; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html::after,
       body::before,
@@ -1072,6 +1156,7 @@
       .entry-orbit > img,
       .hub-oort,
       .hub-oort-approach,
+      .hub-glyph-signal,
       .hub-constellation,
       .entry-shell::before,
       .entry-shell::after,
@@ -1146,9 +1231,9 @@
             <span class="entry-spoke entry-spoke-b"></span>
             <span class="entry-spoke entry-spoke-c"></span>
           </div>
-          <div class="entry-orbit" data-hub-wheel data-prime-atom role="img" aria-label="Prime Atom, the living threshold between the Hub and Engine">
+          <div class="entry-orbit" data-hub-wheel data-prime-atom aria-label="Prime Atom, the living threshold between the Hub and Engine">
             <span class="hub-lens" aria-hidden="true"></span>
-            <span class="hub-cosmic-rotation" aria-hidden="true"><span class="hub-oort-field"></span></span>
+            <span class="hub-cosmic-rotation"><span class="hub-oort-field"></span></span>
             <img class="prime-atom-logo-field" src="/assets/entry/threshold-logo.svg" alt="" aria-hidden="true" />
             <span class="entry-signal-ring"></span>
             <div class="entry-rotor">
@@ -1163,6 +1248,12 @@
           <span class="entry-receptor" data-hub-receptor></span>
         </div>
         <div class="entry-engine-core" data-engine-core data-engine-state="latent" aria-hidden="true"></div>
+        <section class="hub-glyph-reading" data-hub-glyph-reading aria-live="polite" aria-labelledby="hub-glyph-title">
+          <p class="hub-glyph-reading__eyebrow">Oort signal</p>
+          <h2 id="hub-glyph-title">Something is moving at the edge.</h2>
+          <p data-hub-glyph-text>Hover or focus one of the quiet glyph signals in the field.</p>
+          <a data-hub-glyph-link href="glyphs.html" hidden>Follow this glyph</a>
+        </section>
       </div>
 
       <aside class="entry-nav" aria-label="Hub routes">
@@ -1198,10 +1289,10 @@
       </aside>
     </section>
   </main>
-  <script type="module" src="/scripts/fibonacci-entry.js"></script>
+  <script type="module" src="/scripts/fibonacci-entry.js?v=no-hub-double-click-1"></script>
   <script type="module" src="/scripts/access-flow.js"></script>
   <script type="module" src="/threshold-engine.js"></script>
-  <script type="module" src="/scripts/entry-warmth.js"></script>
+  <script type="module" src="/scripts/entry-warmth.js?v=oort-glyph-signals-1"></script>
   <script type="module" src="/scripts/canonical-path.js"></script>
 </body>
 </html>

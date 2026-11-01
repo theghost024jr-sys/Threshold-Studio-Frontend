@@ -11,9 +11,10 @@
     :root { --ink:#f7ecdb; --mist:#b7d8d5; --poppy:#df654f; --gold:#f3c677; --night:#0b1521; }
     * { box-sizing:border-box; }
     body { min-height:100svh; margin:0; overflow-x:hidden; color:var(--ink); background:var(--night); font-family:"DM Mono", monospace; }
-    .field { --tilt-x:0deg; --tilt-y:0deg; --shift-x:0px; --shift-y:0px; position:relative; isolation:isolate; min-height:100svh; overflow:hidden; perspective:1100px; background:linear-gradient(180deg,#80b9ce 0%,#d1d1b3 43%,#4b7053 100%); }
-    .field::before { content:""; position:absolute; inset:-5%; z-index:-2; background:url("/assets/wildflower-drift.png") center/cover; filter:saturate(.88) contrast(1.04); opacity:.88; transform:translate3d(var(--shift-x),var(--shift-y),-80px) scale(1.1) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:filter 900ms ease, transform 220ms ease-out; }
-    .field::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(8,20,34,.5),transparent 38%,rgba(9,24,20,.48)); }
+    .drift-journey { min-height:240svh; background:#0b1521; }
+    .field { --tilt-x:0deg; --tilt-y:0deg; --shift-x:0px; --shift-y:0px; --scroll-progress:0; position:sticky; top:0; isolation:isolate; height:100svh; min-height:100svh; overflow:hidden; perspective:1100px; background:linear-gradient(180deg,#80b9ce 0%,#d1d1b3 43%,#4b7053 100%); }
+    .field::before { content:""; position:absolute; inset:-5%; z-index:-2; background:url("/assets/wildflower-drift.png") center/cover; filter:saturate(.88) contrast(1.04); opacity:calc(.88 - var(--scroll-progress) * .48); transform:translate3d(var(--shift-x),calc(var(--shift-y) - var(--scroll-progress) * 70px),-80px) scale(calc(1.1 + var(--scroll-progress) * .24)) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:filter 900ms ease, transform 220ms ease-out; }
+    .field::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(8,20,34,.5),transparent 38%,rgba(9,24,20,.48)); opacity:calc(1 - var(--scroll-progress) * .7); }
     .field[data-reading="silence"]::before { filter:saturate(.42) brightness(.75); transform:scale(1.1); }
     .field[data-reading="drift"]::before { filter:saturate(1.12) brightness(1.08); transform:scale(1.06) translateX(-.6%); }
     .topbar { display:flex; justify-content:space-between; gap:1rem; padding:1.4rem clamp(1.25rem,4vw,4rem); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; }
@@ -40,6 +41,17 @@
     .blossom i:nth-child(1){transform:translate(-50%,-100%) rotate(0deg) translateZ(8px)}.blossom i:nth-child(2){transform:translate(-50%,-100%) rotate(72deg) translateZ(1px)}.blossom i:nth-child(3){transform:translate(-50%,-100%) rotate(144deg) translateZ(6px)}.blossom i:nth-child(4){transform:translate(-50%,-100%) rotate(216deg) translateZ(2px)}.blossom i:nth-child(5){transform:translate(-50%,-100%) rotate(288deg) translateZ(5px)}
     .blossom b { position:absolute; top:50%; left:50%; width:24%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffe8a3,#6e2730 65%); box-shadow:0 0 8px rgba(255,205,126,.66); transform:translate(-50%,-50%) translateZ(12px); }
     .field[data-reading="drift"] .blossom { animation-duration:calc(var(--sway-duration) * .62); }
+    .mist-seam { position:absolute; z-index:3; top:5.7rem; left:clamp(1.25rem,4vw,4rem); width:clamp(5rem,12vw,10rem); aspect-ratio:1; display:grid; place-items:center; border:1px dashed rgba(255,244,218,.35); border-radius:50%; color:rgba(255,244,218,.45); font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; pointer-events:none; transition:box-shadow .8s ease,border-color .8s ease,color .8s ease; }
+    .field[data-seam-found="true"] .mist-seam { border-color:var(--gold); color:var(--gold); box-shadow:0 0 3rem rgba(243,198,119,.62),inset 0 0 2rem rgba(243,198,119,.2); }
+    .field-starfish { position:absolute; z-index:4; left:78%; top:76%; width:4rem; aspect-ratio:1; border:0; clip-path:polygon(50% 0%,61% 34%,98% 38%,69% 59%,79% 95%,50% 73%,21% 95%,31% 59%,2% 38%,39% 34%); background:var(--poppy); cursor:grab; filter:drop-shadow(0 10px 12px rgba(11,21,33,.52)); touch-action:none; }
+    .field-starfish:active { cursor:grabbing; }.field-starfish:focus-visible { outline:2px solid var(--gold); outline-offset:6px; }
+    .seam-answer { position:absolute; z-index:3; top:calc(5.7rem + clamp(5rem,12vw,10rem) + .75rem); left:clamp(1.25rem,4vw,4rem); width:14rem; margin:0; color:var(--gold); font:.86rem/1.35 "Newsreader",Georgia,serif; opacity:0; transform:translateY(-.5rem); transition:opacity .7s ease,transform .7s ease; pointer-events:none; }
+    .field[data-seam-found="true"] .seam-answer { opacity:1; transform:none; }
+    .scroll-cue { position:absolute; right:clamp(1.25rem,4vw,4rem); bottom:1.75rem; z-index:3; margin:0; color:rgba(255,244,218,.75); font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; animation:float 3s ease-in-out infinite; }
+    .transition-landing { position:relative; z-index:2; min-height:100svh; margin-top:40svh; padding:clamp(2rem,7vw,8rem); display:grid; align-content:center; background:linear-gradient(145deg,rgba(11,21,33,.88),rgba(36,61,65,.92) 58%,rgba(116,109,91,.94)); clip-path:polygon(0 11%,100% 0,100% 100%,0 100%); }
+    .transition-landing p { max-width:32rem; margin:0; color:var(--gold); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; }
+    .transition-landing h2 { max-width:10ch; margin:.8rem 0 1.2rem; font:600 clamp(3.5rem,10vw,8rem)/.82 "Newsreader",Georgia,serif; letter-spacing:-.07em; }
+    .transition-landing div { max-width:32rem; font:1.18rem/1.55 "Newsreader",Georgia,serif; }
     .source { margin:1.4rem 0 0; color:rgba(247,236,219,.7); font-size:.62rem; letter-spacing:.08em; }
     @keyframes float { 50% { transform:translate(2rem,-3rem); opacity:.18; } }
     @keyframes drift-across { from { transform:translate3d(0,0,var(--depth)) rotate(0deg); } 55% { transform:translate3d(64vw,-4rem,var(--depth)) rotate(160deg); } to { transform:translate3d(118vw,2rem,var(--depth)) rotate(340deg); } }
@@ -49,10 +61,15 @@
   </style>
 </head>
 <body>
+  <div class="drift-journey">
   <div class="field" data-field>
     <span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span>
     <div class="drift-stream" data-drift-stream aria-hidden="true"></div>
     <div class="blossom-layer" data-blossom-layer aria-hidden="true"></div>
+    <div class="mist-seam" aria-hidden="true">mist seam</div>
+    <button class="field-starfish" type="button" aria-label="Drag the starfish to the mist seam"></button>
+    <p class="seam-answer" aria-live="polite">The field remembers a sea it never was.</p>
+    <p class="scroll-cue">Scroll through the boundary</p>
     <header class="topbar"><a href="index.html">Return to Hub</a><span>Ephemeral Field · Mist / Air boundary</span></header>
     <main>
       <section class="hero">
@@ -68,10 +85,19 @@
       </section>
     </main>
   </div>
+  <section class="transition-landing">
+    <p>After the drift</p>
+    <h2>Nothing was taken from the field.</h2>
+    <div>The flowers are still there. The mist simply changes the distance from which they can be understood.</div>
+  </section>
+  </div>
   <script>
     const field = document.querySelector("[data-field]");
     const stream = document.querySelector("[data-drift-stream]");
     const blossomLayer = document.querySelector("[data-blossom-layer]");
+    const starfish = document.querySelector(".field-starfish");
+    let draggingStarfish = false;
+    let starfishPosition = { x: 78, y: 76 };
     for (let index = 0; index < 18; index += 1) {
       const mote = document.createElement("span");
       mote.className = "drift-mote";
@@ -98,6 +124,38 @@
       field.dataset.reading = button.dataset.reading;
       document.querySelectorAll("[data-reading]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
     }));
+    const updateScrollPassage = () => {
+      field.style.setProperty("--scroll-progress", String(Math.min(1, Math.max(0, window.scrollY / window.innerHeight))));
+    };
+    updateScrollPassage();
+    window.addEventListener("scroll", updateScrollPassage, { passive:true });
+    const beginStarfishDrag = (event) => {
+      draggingStarfish = true;
+      event.preventDefault();
+    };
+    const moveStarfish = (event) => {
+      if (!draggingStarfish || field.dataset.seamFound === "true") return;
+      const bounds = field.getBoundingClientRect();
+      const x = Math.max(2, Math.min(94, ((event.clientX - bounds.left) / bounds.width) * 100));
+      const y = Math.max(2, Math.min(92, ((event.clientY - bounds.top) / bounds.height) * 100));
+      starfishPosition = { x, y };
+      starfish.style.left = `${x}%`;
+      starfish.style.top = `${y}%`;
+    };
+    const placeStarfish = () => {
+      if (!draggingStarfish) return;
+      draggingStarfish = false;
+      if (starfishPosition.x < 19 && starfishPosition.y < 24) {
+        field.dataset.seamFound = "true";
+        starfish.remove();
+      }
+    };
+    starfish.addEventListener("pointerdown", beginStarfishDrag);
+    starfish.addEventListener("mousedown", beginStarfishDrag);
+    document.addEventListener("pointermove", moveStarfish);
+    document.addEventListener("mousemove", moveStarfish);
+    document.addEventListener("pointerup", placeStarfish);
+    document.addEventListener("mouseup", placeStarfish);
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       field.addEventListener("pointermove", (event) => {
         const x = (event.clientX / window.innerWidth - 0.5);

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import WorldThread from '../components/WorldThread.jsx'
 
@@ -22,17 +22,46 @@ const relationships = {
 
 export default function BasinFalls() {
   const [relationship, setRelationship] = useState(null)
+  const [waterworksNoticed, setWaterworksNoticed] = useState(false)
+  const sceneRef = useRef(null)
   const current = relationship ? relationships[relationship] : null
 
+  useEffect(() => {
+    const scene = sceneRef.current
+    if (!scene) return undefined
+
+    const updateTravel = () => {
+      const bounds = scene.parentElement.getBoundingClientRect()
+      const travelDistance = Math.max(1, bounds.height - window.innerHeight)
+      const progress = Math.min(1, Math.max(0, -bounds.top / travelDistance))
+      scene.style.setProperty('--basin-progress', progress.toFixed(3))
+    }
+
+    updateTravel()
+    window.addEventListener('scroll', updateTravel, { passive: true })
+    window.addEventListener('resize', updateTravel)
+    return () => {
+      window.removeEventListener('scroll', updateTravel)
+      window.removeEventListener('resize', updateTravel)
+    }
+  }, [])
+
   return (
-    <main className={`basin-falls${relationship ? ` basin-falls--${relationship}` : ''}`}>
+    <main className={`basin-falls${relationship ? ` basin-falls--${relationship}` : ''}${waterworksNoticed ? ' basin-falls--waterworks-noticed' : ''}`}>
       <WorldThread active="basin" />
-      <section className="basin-falls__scene" aria-label="Basin of the Falls waterworks">
+      <section className="basin-falls__scene" ref={sceneRef} aria-label="Basin of the Falls waterworks">
         <div className="basin-falls__falls" aria-hidden="true"><i /><i /><i /></div>
         <div className="basin-falls__aqueduct" aria-hidden="true"><i /><i /><i /><i /></div>
         <div className="basin-falls__wheel" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /></div>
         <div className="basin-falls__pond" aria-hidden="true" />
+        <div className="basin-falls__wet-stone" aria-hidden="true" />
+        <div className="basin-falls__water-glint" aria-hidden="true" />
+        <div className="basin-falls__warden" aria-hidden="true"><i /><i /></div>
+        <button className="basin-falls__waterworks-cue" type="button" onClick={() => setWaterworksNoticed(true)} aria-pressed={waterworksNoticed}>
+          <span>movement at the waterworks</span>
+        </button>
         <div className="basin-falls__stairs" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /></div>
+        <div className="basin-falls__forest-seam" aria-hidden="true" />
         <div className="basin-falls__cabin-light" aria-hidden="true" />
       </section>
 
@@ -41,6 +70,7 @@ export default function BasinFalls() {
         <h1>The system is already working.</h1>
         <p>The Warden is occupied with the falls, collected water, aqueduct, wheel, and outflow. There is no question waiting for an answer.</p>
         <blockquote>The water has not always run this way.</blockquote>
+        {waterworksNoticed && <p className="basin-falls__notice" aria-live="polite">The waterworks become easier to read. Nothing asks you to remain.</p>}
       </section>
 
       <section className="basin-falls__contact" aria-labelledby="basin-contact-title">

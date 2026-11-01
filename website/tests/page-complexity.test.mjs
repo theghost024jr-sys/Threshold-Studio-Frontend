@@ -61,8 +61,8 @@ test("binds the Prime Atom to the logo, Engine, reveal, and hidden door contract
   assert.match(script, /advanceHeartbeatClock/);
   assert.match(script, /ring-descent/);
   assert.match(script, /setPrimeState\("descending"\)/);
-  assert.match(script, /hubWheel\.addEventListener\("dblclick"/);
-  assert.match(script, /new URL\("\/hub\.html"/);
+  assert.doesNotMatch(script, /hubWheel\.addEventListener\("dblclick"/);
+  assert.doesNotMatch(script, /new URL\("\/hub\.html"/);
   assert.doesNotMatch(html, /(?:engine-core-heartbeat|receptor-heartbeat|reactor-breathe|reactor-flicker)\s+\d+s/);
 });
 

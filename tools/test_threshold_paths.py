@@ -9,7 +9,7 @@ from tools.threshold_paths import load_threshold_paths
 
 class ThresholdPathTests(unittest.TestCase):
     def test_loads_final_canonical_layout(self) -> None:
-        paths = load_threshold_paths()
+        paths = load_threshold_paths(require_sources=os.name == "nt")
 
         self.assertEqual(
             paths.vault_root,

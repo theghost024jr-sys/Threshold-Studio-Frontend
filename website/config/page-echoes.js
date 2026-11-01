@@ -75,6 +75,9 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/destination-page.css",
     "styles/access-flow.css"
   ]),
+  pageEcho("glyph-archive-node", "glyphs", "Glyph Archive", "/glyph-archive-node.html", "glyph-archive-node.html", [
+    "styles/glyph-archive-node.css"
+  ]),
   pageEcho("learning-wheel", "learningWheel", "Learning Wheel", "/learningwheel.html", "learningwheel.html", [
     "styles/styles.css",
     "styles/learning-wheel.css",
@@ -191,6 +194,7 @@ export const PAGE_ECHOES = Object.freeze([
   pageEcho("basin-generated-page", "houseGarden", "Basin (published note)", "/generated-pages/environment/basin.html", null),
   pageEcho("waterfall", "houseGarden", "Waterfall", "/environment/waterfall.html", "environment/waterfall.html"),
   pageEcho("old-forest", "houseGarden", "Old Forest", "/environment/old-forest.html", "environment/old-forest.html"),
+  pageEcho("wildflower-drift", "home", "Wildflower Drift", "/wildflower-drift.html", "wildflower-drift.html"),
   pageEcho("living-threshold", "rootSigil", "Threshold Record", "/pages/threshold.html", "pages/threshold.html", [
     "styles/living-page.css"
   ]),

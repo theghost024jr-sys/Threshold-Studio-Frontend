@@ -29,11 +29,16 @@ test("keeps the Herb Room east threshold as an authored environmental reveal", a
   assert.match(herbRoom, /function enableRoomSound/);
   assert.match(herbRoom, /function playRoomCue/);
   assert.match(herbRoom, /function playWindChimes/);
+  assert.match(herbRoom, /class="book-sit-cue"/);
+  assert.match(herbRoom, /class="book-read-cue"/);
+  assert.match(herbRoom, /is-book-attended/);
+  assert.match(herbRoom, /publishedBooks\.get\(watered \? 'index-0002' : 'index-0001'\)/);
+  assert.doesNotMatch(herbRoom, /class="wind-chimes"/);
   assert.match(herbRoom, /is-wind-light/);
   assert.match(herbRoom, /is-wind-moderate/);
   assert.match(herbRoom, /is-wind-strong/);
   assert.match(herbRoom, /roomAudio\.close\(\)/);
-  assert.match(herbRoom, /publishedBook = vault\.documents\.find/);
+  assert.match(herbRoom, /publishedBooks\.set\(note\.id, note\)/);
   assert.match(herbRoom, /is-watered/);
   assert.match(herbRoom, /is-book-ready/);
 });

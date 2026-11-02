@@ -349,6 +349,7 @@
       transform: translate(-50%, calc(-50% - 12rem));
     }
 
+    .falls-watcher,
     .falls-tree,
     .falls-ascent,
     .falls-behind-route,
@@ -357,21 +358,77 @@
       z-index: 5;
     }
 
+    .falls-watcher {
+      background: transparent;
+      border: 0;
+      bottom: 19%;
+      cursor: pointer;
+      height: 34%;
+      left: 13%;
+      opacity: .16;
+      padding: 0;
+      transform: translate3d(calc(var(--falls-pan-x) * .9), calc(var(--falls-pan-y) * .72), 0);
+      transition: opacity 700ms ease, transform 1100ms ease;
+      width: 13%;
+    }
+
+    .falls-watcher::before,
+    .falls-watcher::after {
+      content: "";
+      left: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+    }
+
+    .falls-watcher::before {
+      background:
+        radial-gradient(circle at 50% 12%, rgba(196, 226, 211, .68) 0 7%, transparent 8%),
+        linear-gradient(90deg, transparent 31%, rgba(8, 24, 21, .94) 39% 61%, transparent 69%);
+      bottom: 0;
+      height: 100%;
+      width: 74%;
+    }
+
+    .falls-watcher::after {
+      background: radial-gradient(ellipse at 50% 50%, rgba(208, 247, 226, .42), transparent 68%);
+      bottom: 35%;
+      height: 26%;
+      opacity: 0;
+      transition: opacity 600ms ease;
+      width: 72%;
+    }
+
+    .falls-viewport.is-watcher-noticed .falls-watcher {
+      opacity: .42;
+    }
+
+    .falls-viewport.is-watcher-attended .falls-watcher::after {
+      opacity: .8;
+    }
+
+    .falls-viewport.is-watcher-approached .falls-watcher {
+      opacity: .78;
+      transform: translate3d(calc(-1.6rem + var(--falls-pan-x) * .9), calc(-.5rem + var(--falls-pan-y) * .72), 0);
+    }
+
     .falls-tree {
       background: transparent;
       border: 0;
-      bottom: 17%;
+      bottom: 13%;
       color: transparent;
       cursor: pointer;
-      height: 54%;
-      left: 0;
+      height: 57%;
+      left: auto;
       padding: 0;
-      transform: translate3d(calc(var(--falls-pan-x) * .7), calc(var(--falls-pan-y) * .7), 0);
-      width: 32%;
+      right: 3%;
+      transform: translate3d(calc(var(--falls-pan-x) * .54), calc(var(--falls-pan-y) * .54), 0);
+      width: 25%;
     }
 
     .falls-tree::before {
-      background: radial-gradient(ellipse at 34% 55%, rgba(173, 235, 209, .54), transparent 8%), linear-gradient(110deg, transparent 45%, rgba(140, 212, 184, .38) 50%, transparent 55%);
+      background:
+        radial-gradient(ellipse at 65% 58%, rgba(173, 235, 209, .46), transparent 9%),
+        linear-gradient(122deg, transparent 37%, rgba(140, 212, 184, .3) 49%, transparent 55%);
       content: "";
       inset: 8% 4%;
       opacity: 0;
@@ -387,6 +444,7 @@
     }
 
     .falls-tree:focus-visible,
+    .falls-watcher:focus-visible,
     .falls-ascent:focus-visible,
     .falls-behind-route:focus-visible,
     .falls-past-route:focus-visible,
@@ -420,7 +478,7 @@
 
     .falls-behind-route { bottom: 28%; left: 9%; }
     .falls-past-route { bottom: 31%; right: 8%; }
-    .falls-tree.is-open + .falls-ascent + .falls-behind-route,
+    .falls-viewport.is-watcher-approached .falls-behind-route,
     .falls-viewport.is-past-visible .falls-past-route {
       opacity: 1;
       pointer-events: auto;
@@ -509,6 +567,7 @@
       .falls-backdrop,
       .falls-mist,
       .falls-spray,
+      .falls-watcher,
       .falls-tree,
       .falls-ascent { transition: none; transform: none; }
     }
@@ -529,7 +588,8 @@
       <div class="falls-mist" aria-hidden="true"></div>
       <div class="falls-spray" aria-hidden="true"></div>
       <div class="falls-title" aria-hidden="true"><p>Forest boundary</p><h1>The Drift Falls</h1></div>
-      <button class="falls-tree" type="button" aria-label="Attend to the rooted tree"></button>
+      <button class="falls-watcher" type="button" aria-label="Attend to the presence among the roots"></button>
+      <button class="falls-tree" type="button" aria-label="Attend to the moving tree"></button>
       <div class="falls-ascent" aria-hidden="true"></div>
       <a class="falls-behind-route" href="/portal/shimmer">Behind the falls</a>
       <a class="falls-past-route" href="/portal/old-forest-trek">Past the falls</a>
@@ -567,6 +627,7 @@
   <script>
     const viewport = document.querySelector('.falls-viewport');
     const scene = document.querySelector('.falls-scene');
+    const watcher = document.querySelector('.falls-watcher');
     const tree = document.querySelector('.falls-tree');
     const soundControl = document.querySelector('.falls-sound');
     const hint = document.querySelector('.falls-hint');
@@ -578,7 +639,8 @@
     let panState = null;
     let suppressNextClick = false;
     let hintShown = false;
-    let treeFocusTimer = null;
+    let watcherHasTurned = false;
+    let treeAttended = false;
     let audioContext;
     let waterGain;
     let waterFilter;
@@ -597,9 +659,24 @@
       viewport.style.setProperty('--falls-pan-y', `${panY}px`);
       viewport.classList.toggle('is-moving', distance > 0.02);
       viewport.classList.toggle('is-near', distance >= 0.78);
-      viewport.classList.toggle('is-past-visible', distance >= 0.28 && panX >= 28);
+      const watcherNoticed = distance >= 0.24 && panX <= -20;
+      const watcherApproached = distance >= 0.52 && panX <= -62;
+      const treeApproached = distance >= 0.34 && panX >= 34;
+      let watcherTurned = false;
+      viewport.classList.toggle('is-watcher-noticed', watcherNoticed);
+      viewport.classList.toggle('is-watcher-approached', watcherApproached);
+      viewport.classList.toggle('is-past-visible', treeApproached);
+      tree.classList.toggle('is-awake', treeApproached || treeAttended);
+      if (watcherApproached && !watcherHasTurned) {
+        watcherHasTurned = true;
+        watcherTurned = true;
+        playWatcherSignal(.018);
+        status.textContent = 'Something among the roots turns toward the concealed passage, then moves away.';
+      } else if (!watcherApproached) {
+        watcherHasTurned = false;
+      }
       updateSoundMix();
-      if (message) status.textContent = message;
+      if (message && !watcherTurned) status.textContent = message;
     }
 
     function moveDistance(delta) {
@@ -607,7 +684,7 @@
       distance = clamp(distance + delta * resistance, 0, 1);
       updateScene(
         distance >= 0.78
-          ? 'The water boundary is close. You can turn toward the tree, the ascent, or withdraw.'
+          ? 'The water boundary is close. You can turn toward a presence, the moving tree, or withdraw.'
           : distance > 0.1
             ? 'The falls draw nearer. Spray and water presence increase.'
             : 'The falls settle back into a distant boundary.'
@@ -736,29 +813,61 @@
       }
     });
 
-    function openTreeRoute() {
-      tree.classList.add('is-awake', 'is-open');
-      status.textContent = 'The rooted tree has made a narrow way behind the falls visible.';
+    function playWatcherSignal(volume = .012) {
+      if (!audioContext || audioContext.state !== 'running' || soundMuted) return;
+      const tone = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      tone.frequency.value = 312;
+      tone.type = 'sine';
+      gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(volume, audioContext.currentTime + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.65);
+      tone.connect(gain);
+      gain.connect(audioContext.destination);
+      tone.start();
+      tone.stop(audioContext.currentTime + 0.68);
     }
 
+    watcher.addEventListener('pointerenter', () => {
+      viewport.classList.add('is-watcher-attended');
+      playWatcherSignal();
+      status.textContent = 'Mist briefly loosens around the still shape among the roots.';
+    });
+    watcher.addEventListener('pointerleave', () => {
+      viewport.classList.remove('is-watcher-attended');
+    });
+    watcher.addEventListener('focus', () => {
+      viewport.classList.add('is-watcher-attended');
+      playWatcherSignal();
+    });
+    watcher.addEventListener('blur', () => {
+      viewport.classList.remove('is-watcher-attended');
+    });
+    watcher.addEventListener('dblclick', () => {
+      status.textContent = 'The presence notices the direct attention, then becomes still again.';
+    });
+
     tree.addEventListener('pointerenter', () => {
-      tree.classList.add('is-awake');
-      treeFocusTimer = window.setTimeout(openTreeRoute, 900);
+      treeAttended = true;
+      updateScene();
     });
     tree.addEventListener('pointerleave', () => {
-      window.clearTimeout(treeFocusTimer);
-      if (!tree.classList.contains('is-open')) tree.classList.remove('is-awake');
+      treeAttended = false;
+      updateScene();
     });
     tree.addEventListener('focus', () => {
-      tree.classList.add('is-awake');
-      treeFocusTimer = window.setTimeout(openTreeRoute, 900);
+      treeAttended = true;
+      updateScene();
     });
-    tree.addEventListener('blur', () => window.clearTimeout(treeFocusTimer));
+    tree.addEventListener('blur', () => {
+      treeAttended = false;
+      updateScene();
+    });
     tree.addEventListener('click', () => {
-      tree.classList.add('is-awake');
-      status.textContent = 'The tree answers attention without opening the passage yet.';
+      treeAttended = true;
+      updateScene();
+      status.textContent = 'The tree moves against the spray. The ascent remains ahead and to the right.';
     });
-    tree.addEventListener('dblclick', openTreeRoute);
 
     function hideHint() {
       hint.classList.remove('is-visible');

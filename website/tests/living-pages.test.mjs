@@ -27,6 +27,12 @@ test("keeps the Herb Room east threshold as an authored environmental reveal", a
   assert.match(herbRoom, /class="garden-window"/);
   assert.match(herbRoom, /function scheduleGardenWind/);
   assert.match(herbRoom, /function playGardenAir/);
+  assert.match(herbRoom, /function selectGardenProjection/);
+  assert.match(herbRoom, /note\.publish \|\| note\.draft/);
+  assert.match(herbRoom, /_publish\\\/housegarden/);
+  assert.match(herbRoom, /has-garden-flora/);
+  assert.match(herbRoom, /has-garden-pollinator/);
+  assert.doesNotMatch(herbRoom, /butterfly\.png/i);
   assert.match(herbRoom, /is-garden-observing/);
   assert.match(herbRoom, /The sill holds the Garden at a distance\./);
   assert.doesNotMatch(herbRoom, /garden-window[^>]*href=/);

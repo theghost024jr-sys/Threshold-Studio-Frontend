@@ -303,9 +303,12 @@
     }
 
     .falls-spray {
-      background: repeating-linear-gradient(102deg, transparent 0 2.4rem, rgba(223, 255, 250, .18) 2.55rem 2.62rem, transparent 2.75rem 5.2rem);
-      mix-blend-mode: screen;
-      opacity: calc(.04 + var(--falls-distance) * .38);
+      background:
+        radial-gradient(ellipse at 28% 42%, rgba(223, 255, 250, .22), transparent 16%),
+        radial-gradient(ellipse at 72% 61%, rgba(223, 255, 250, .18), transparent 20%),
+        radial-gradient(ellipse at 52% 80%, rgba(223, 255, 250, .16), transparent 24%);
+      filter: blur(1.5rem);
+      opacity: calc(.03 + var(--falls-distance) * .3);
       pointer-events: none;
       transform: translate3d(calc(var(--falls-pan-x) * .58), calc(var(--falls-pan-y) * .58), 0) scale(calc(1 + var(--falls-distance) * .24));
       z-index: 3;
@@ -579,7 +582,9 @@
     let audioContext;
     let waterGain;
     let waterFilter;
+    let waterSprayFilter;
     let waterPanner;
+    let waterRumbleGain;
     let soundMuted = true;
 
     function clamp(value, minimum, maximum) {
@@ -624,52 +629,88 @@
         data[index] = Math.random() * 2 - 1;
       }
       const source = audioContext.createBufferSource();
+      const rumble = audioContext.createOscillator();
       waterFilter = audioContext.createBiquadFilter();
+      waterSprayFilter = audioContext.createBiquadFilter();
       waterGain = audioContext.createGain();
+      waterRumbleGain = audioContext.createGain();
       source.buffer = buffer;
       source.loop = true;
       waterFilter.type = 'lowpass';
       waterFilter.Q.value = 0.7;
+      waterSprayFilter.type = 'highpass';
+      waterSprayFilter.Q.value = 0.35;
+      waterSprayFilter.frequency.value = 920;
       waterGain.gain.value = 0;
+      waterRumbleGain.gain.value = 0;
+      rumble.type = 'sine';
+      rumble.frequency.value = 48;
       source.connect(waterFilter);
+      source.connect(waterSprayFilter);
+      rumble.connect(waterRumbleGain);
+      waterRumbleGain.connect(waterFilter);
       if (audioContext.createStereoPanner) {
         waterPanner = audioContext.createStereoPanner();
         waterFilter.connect(waterPanner);
+        waterSprayFilter.connect(waterPanner);
         waterPanner.connect(waterGain);
       } else {
         waterFilter.connect(waterGain);
+        waterSprayFilter.connect(waterGain);
       }
       waterGain.connect(audioContext.destination);
       source.start();
+      rumble.start();
     }
 
     function updateSoundMix() {
       if (!audioContext || !waterGain || !waterFilter) return;
       const intensity = reducedMotion.matches ? 0.55 : 1;
-      const targetGain = soundMuted ? 0 : (0.012 + distance * 0.062) * intensity;
+      const targetGain = soundMuted ? 0 : (0.045 + distance * 0.115) * intensity;
       waterGain.gain.setTargetAtTime(targetGain, audioContext.currentTime, 0.16);
       waterFilter.frequency.setTargetAtTime(460 + distance * 2650, audioContext.currentTime, 0.16);
+      waterRumbleGain.gain.setTargetAtTime(
+        soundMuted ? 0 : (0.008 + distance * 0.022) * intensity,
+        audioContext.currentTime,
+        0.16
+      );
       if (waterPanner) {
         waterPanner.pan.setTargetAtTime(clamp(panX / 180, -0.5, 0.5), audioContext.currentTime, 0.16);
       }
     }
 
-    function beginSound() {
+    async function beginSound() {
       createWaterSound();
-      if (!audioContext) return;
+      if (!audioContext) return false;
+      if (audioContext.state !== 'running') {
+        try {
+          await audioContext.resume();
+        } catch (error) {
+          console.error('Unable to start Drift Falls sound.', error);
+          soundMuted = true;
+          viewport.dataset.sound = 'blocked';
+          soundControl.setAttribute('aria-pressed', 'false');
+          soundControl.textContent = 'Listen to the falls';
+          status.textContent = 'The browser blocked sound. Press Listen to the falls again.';
+          return false;
+        }
+      }
       soundMuted = false;
+      viewport.dataset.sound = 'playing';
       soundControl.setAttribute('aria-pressed', 'true');
       soundControl.textContent = 'Quiet the falls';
-      void audioContext.resume();
       updateSoundMix();
+      return true;
     }
 
-    soundControl.addEventListener('click', () => {
+    soundControl.addEventListener('click', async () => {
       if (soundMuted) {
-        beginSound();
-        status.textContent = 'Water sound is now responding to distance.';
+        if (await beginSound()) {
+          status.textContent = 'Water sound is now responding to distance.';
+        }
       } else {
         soundMuted = true;
+        viewport.dataset.sound = 'muted';
         soundControl.setAttribute('aria-pressed', 'false');
         soundControl.textContent = 'Listen to the falls';
         updateSoundMix();
@@ -679,14 +720,14 @@
     scene.addEventListener('wheel', (event) => {
       if (Math.abs(event.deltaY) < 4) return;
       event.preventDefault();
-      beginSound();
+      void beginSound();
       moveDistance(Math.sign(event.deltaY) * 0.075);
     }, { passive: false });
 
     window.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowDown' || event.key === 'PageDown') {
         event.preventDefault();
-        beginSound();
+        void beginSound();
         moveDistance(0.08);
       }
       if (event.key === 'ArrowUp' || event.key === 'PageUp') {
@@ -790,6 +831,7 @@
       }
     });
     reducedMotion.addEventListener('change', updateSoundMix);
+    viewport.dataset.sound = 'muted';
     updateScene();
   </script>
 </body>

@@ -24,6 +24,9 @@ test("House and Garden restores the Herb Room paths and its archived exits", asy
   assert.match(waterfall, /function moveDistance/);
   assert.match(waterfall, /function beginPan/);
   assert.match(waterfall, /const panThreshold = 8|Math\.hypot\(horizontal, vertical\) < 8/);
+  assert.doesNotMatch(waterfall, /repeating-linear-gradient/);
+  assert.match(waterfall, /await audioContext\.resume\(\)/);
+  assert.match(waterfall, /viewport\.dataset\.sound = 'playing'/);
   assert.match(waterfall, /href="\/portal\/shimmer">Behind the falls/);
   assert.match(waterfall, /href="\/portal\/old-forest-trek">Past the falls/);
   assert.match(waterfall, /href="\/environment\/herbroom\.html"/);

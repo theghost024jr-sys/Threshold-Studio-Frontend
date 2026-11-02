@@ -28,6 +28,10 @@ test("keeps the Herb Room east threshold as an authored environmental reveal", a
   assert.match(herbRoom, /function renderPublishedBook/);
   assert.match(herbRoom, /function enableRoomSound/);
   assert.match(herbRoom, /function playRoomCue/);
+  assert.match(herbRoom, /function playWindChimes/);
+  assert.match(herbRoom, /is-wind-light/);
+  assert.match(herbRoom, /is-wind-moderate/);
+  assert.match(herbRoom, /is-wind-strong/);
   assert.match(herbRoom, /roomAudio\.close\(\)/);
   assert.match(herbRoom, /publishedBook = vault\.documents\.find/);
   assert.match(herbRoom, /is-watered/);

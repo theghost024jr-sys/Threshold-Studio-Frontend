@@ -5,182 +5,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Herb Room</title>
   <style>
-    html,
+    :root { color-scheme: dark; }
+    html, body { height: 100%; margin: 0; background: #10150f; }
     body {
-      min-height: 100%;
-      margin: 0;
-      background: #10150f;
+      --east-reveal: 0; --east-shift: 38%; --water-shift: 32%; --growth-shift: 24%; --cue-reveal: 0;
+      --room-distance: 0; --room-pan-x: 0px; --room-pan-y: 0px;
+      font-family: Georgia, serif; overflow: hidden;
     }
-
-    body {
-      position: relative;
-      min-height: 100vh;
-      overflow: hidden;
-      --east-reveal: 0;
-      --east-shift: 38%;
-      --water-shift: 32%;
-      --growth-shift: 24%;
-      --cue-reveal: 0;
-      --interior-brightness: 1;
-      --interior-saturation: 1;
-    }
-
-    body > img {
-      position: absolute;
-      inset: 0;
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(var(--interior-brightness)) saturate(var(--interior-saturation));
-    }
-
-    .chamber-controls a {
-      position: absolute;
-      z-index: 1;
-      padding: 0.7rem 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      background: rgba(8, 12, 8, 0.72);
-      color: #fff;
-      font: 600 0.85rem/1 sans-serif;
-      text-decoration: none;
-    }
-
-    .exit-south {
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .east-threshold {
-      position: absolute;
-      inset: 0 0 0 auto;
-      width: min(48vw, 680px);
-      overflow: hidden;
-      opacity: var(--east-reveal);
-      pointer-events: none;
-    }
-
-    .east-threshold::before {
-      position: absolute;
-      inset: -8% -18% -8% 4%;
-      border-radius: 52% 0 0 48%;
-      background:
-        radial-gradient(ellipse at 88% 18%, rgba(187, 220, 234, 0.98) 0 20%, rgba(127, 176, 189, 0.76) 46%, transparent 72%),
-        linear-gradient(145deg, rgba(239, 244, 209, 0.08), rgba(151, 201, 177, 0.82));
-      box-shadow: inset 40px 0 70px rgba(224, 241, 196, 0.18), -18px 0 55px rgba(222, 239, 185, 0.24);
-      content: "";
-      transform: translateX(var(--east-shift));
-    }
-
-    .east-threshold__water {
-      position: absolute;
-      right: -4%;
-      bottom: 0;
-      width: 92%;
-      height: 34%;
-      background:
-        repeating-linear-gradient(174deg, rgba(230, 246, 232, 0.38) 0 2px, transparent 2px 16px),
-        linear-gradient(180deg, rgba(118, 176, 170, 0.1), rgba(56, 112, 110, 0.74));
-      clip-path: ellipse(76% 66% at 74% 100%);
-      transform: translateY(var(--water-shift));
-    }
-
-    .east-threshold__growth {
-      position: absolute;
-      inset: 36% 0 0 18%;
-      background:
-        radial-gradient(ellipse at 92% 42%, rgba(78, 132, 68, 0.94) 0 9%, transparent 10%),
-        radial-gradient(ellipse at 76% 55%, rgba(99, 151, 77, 0.9) 0 12%, transparent 13%),
-        radial-gradient(ellipse at 88% 72%, rgba(49, 104, 57, 0.92) 0 15%, transparent 16%),
-        radial-gradient(ellipse at 60% 85%, rgba(92, 145, 73, 0.84) 0 12%, transparent 13%);
-      transform: translateX(var(--growth-shift));
-    }
-
-    .east-threshold__cue {
-      position: absolute;
-      top: 50%;
-      right: 34px;
-      z-index: 2;
-      margin: 0;
-      color: rgba(255, 255, 244, 0.96);
-      font: 500 1rem/1.2 Georgia, serif;
-      letter-spacing: 0.08em;
-      opacity: var(--cue-reveal);
-      pointer-events: none;
-      text-decoration: none;
-      text-shadow: 0 2px 18px rgba(18, 35, 24, 0.9);
-      transform: translateY(-50%);
-    }
-
-    .east-threshold__cue.is-available {
-      pointer-events: auto;
-    }
-
-    .east-threshold:focus-within {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .east-threshold:focus-within::before,
-    .east-threshold:focus-within .east-threshold__growth {
-      transform: translateX(0);
-    }
-
-    .east-threshold:focus-within .east-threshold__water {
-      transform: translateY(0);
-    }
-
-    .east-threshold:focus-within .east-threshold__cue {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      body > img,
-      .east-threshold,
-      .east-threshold::before,
-      .east-threshold__water,
-      .east-threshold__growth {
-        transition: filter 180ms ease-out, opacity 180ms ease-out, transform 180ms ease-out;
-      }
-    }
+    .herb-viewport { height: 100svh; isolation: isolate; overflow: hidden; position: relative; }
+    .room-backdrop { height: 100%; object-fit: cover; transform: scale(calc(1.02 + var(--room-distance) * .14)) translate3d(calc(var(--room-pan-x) * .12), calc(var(--room-pan-y) * .12), 0); transition: transform 500ms ease, filter 400ms ease; width: 100%; }
+    .room-scene, .room-air, .east-threshold { inset: 0; position: absolute; }
+    .room-scene { cursor: grab; touch-action: none; z-index: 2; }
+    .herb-viewport.is-panning .room-scene { cursor: grabbing; user-select: none; }
+    .room-air { background: linear-gradient(105deg, transparent 20%, rgba(245, 248, 210, .08) 47%, transparent 70%); opacity: 0; pointer-events: none; transform: translateX(-18%); z-index: 1; }
+    .herb-viewport.is-wind .room-air { animation: air-cross 1.5s ease-out; }
+    @keyframes air-cross { 15% { opacity: .8; } 100% { opacity: 0; transform: translateX(24%); } }
+    .herb-motion { border: 0; background: transparent; opacity: 0; padding: 0; pointer-events: none; position: absolute; }
+    .herb-motion::after { background: radial-gradient(ellipse, rgba(174, 226, 145, .22), transparent 68%); content: ""; inset: 0; position: absolute; }
+    .herb-motion--window { height: 36%; left: 28%; top: 14%; width: 42%; }
+    .herb-motion--left { bottom: 18%; height: 30%; left: 1%; width: 26%; }
+    .herb-motion--right { bottom: 18%; height: 35%; right: 1%; width: 28%; }
+    .herb-viewport.is-wind .herb-motion { opacity: 1; }
+    .herb-viewport.is-wind .herb-motion--window { animation: herb-shift 900ms ease-in-out; }
+    .herb-viewport.is-wind .herb-motion--left { animation: herb-shift 1.25s 100ms ease-in-out; }
+    .herb-viewport.is-wind .herb-motion--right { animation: herb-shift 1.05s 250ms ease-in-out; }
+    @keyframes herb-shift { 45% { transform: translateX(1.1rem) rotate(1deg); } }
+    .room-object { background: transparent; border: 0; cursor: pointer; padding: 0; position: absolute; z-index: 4; }
+    .room-object:focus-visible, .chamber-controls a:focus-visible, .book-reader button:focus-visible { outline: 2px solid #fff4bf; outline-offset: 4px; }
+    .room-object::after { content: ""; inset: 8%; opacity: 0; position: absolute; transition: opacity 250ms ease; }
+    .room-object:hover::after, .room-object:focus-visible::after { opacity: 1; }
+    .herb-chair { bottom: 25%; height: 23%; left: 32%; width: 28%; }
+    .herb-chair::after { border-radius: 48%; box-shadow: 0 0 1.5rem rgba(255, 243, 198, .32); }
+    .herb-bottle { bottom: 16%; height: 19%; left: 35%; width: 15%; }
+    .herb-bottle::after { background: radial-gradient(ellipse, rgba(215, 246, 235, .34), transparent 68%); }
+    .herb-dry-plant { bottom: 12%; height: 25%; left: 54%; width: 18%; }
+    .herb-dry-plant::after { background: radial-gradient(ellipse, rgba(193, 214, 124, .34), transparent 68%); }
+    .herb-book { bottom: 7%; height: 20%; right: 3%; width: 29%; }
+    .herb-book::before { background: linear-gradient(125deg, rgba(237, 223, 176, .48), rgba(92, 63, 35, .22)); box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .35); content: ""; inset: 24% 10%; opacity: .2; position: absolute; transform: rotate(-4deg); transition: opacity 400ms ease, transform 700ms ease; }
+    .herb-book::after { background: radial-gradient(ellipse, rgba(255, 244, 191, .52), transparent 70%); }
+    .herb-viewport.is-book-ready .herb-book::before { opacity: .84; transform: rotate(-1deg) translateY(-.3rem); }
+    .herb-viewport.is-bottle-held .herb-bottle::after { opacity: 1; }
+    .herb-viewport.is-watered .herb-dry-plant::before { background: radial-gradient(ellipse, rgba(116, 178, 98, .5), transparent 70%); content: ""; inset: 6%; position: absolute; }
+    .herb-viewport.is-seated .room-backdrop { filter: brightness(.92) saturate(.9); transform: scale(1.18) translate3d(calc(var(--room-pan-x) * .06), calc(5% + var(--room-pan-y) * .06), 0); }
+    .herb-viewport.is-seated .herb-book::before { opacity: 1; }
+    .east-threshold { inset: 0 0 0 auto; opacity: var(--east-reveal); overflow: hidden; pointer-events: none; width: min(48vw, 680px); z-index: 3; }
+    .east-threshold::before { background: radial-gradient(ellipse at 88% 18%, rgba(187,220,234,.98) 0 20%, rgba(127,176,189,.76) 46%, transparent 72%), linear-gradient(145deg, rgba(239,244,209,.08), rgba(151,201,177,.82)); border-radius: 52% 0 0 48%; box-shadow: inset 40px 0 70px rgba(224,241,196,.18), -18px 0 55px rgba(222,239,185,.24); content: ""; inset: -8% -18% -8% 4%; position: absolute; transform: translateX(var(--east-shift)); }
+    .east-threshold__water { background: repeating-linear-gradient(174deg, rgba(230,246,232,.38) 0 2px, transparent 2px 16px), linear-gradient(180deg, rgba(118,176,170,.1), rgba(56,112,110,.74)); bottom: 0; clip-path: ellipse(76% 66% at 74% 100%); height: 34%; position: absolute; right: -4%; transform: translateY(var(--water-shift)); width: 92%; }
+    .east-threshold__growth { background: radial-gradient(ellipse at 92% 42%, rgba(78,132,68,.94) 0 9%, transparent 10%), radial-gradient(ellipse at 76% 55%, rgba(99,151,77,.9) 0 12%, transparent 13%), radial-gradient(ellipse at 88% 72%, rgba(49,104,57,.92) 0 15%, transparent 16%); inset: 36% 0 0 18%; position: absolute; transform: translateX(var(--growth-shift)); }
+    .east-threshold__cue { color: #fffff4; font: 500 1rem/1.2 Georgia, serif; letter-spacing: .08em; margin: 0; opacity: var(--cue-reveal); pointer-events: none; position: absolute; right: 34px; text-decoration: none; text-shadow: 0 2px 18px rgba(18,35,24,.9); top: 50%; transform: translateY(-50%); z-index: 2; }
+    .east-threshold__cue.is-available { pointer-events: auto; }
+    .chamber-controls, .herb-accessible { display: flex; gap: .75rem; position: absolute; z-index: 8; }
+    .chamber-controls { bottom: 1.25rem; left: 1.25rem; }
+    .herb-accessible { right: 1.25rem; top: 1.25rem; }
+    .chamber-controls a, .herb-accessible button { background: rgba(8,12,8,.72); border: 1px solid rgba(255,255,255,.65); color: #fff; cursor: pointer; font: 600 .72rem/1 sans-serif; letter-spacing: .08em; padding: .7rem .85rem; text-decoration: none; text-transform: uppercase; }
+    .book-reader { background: rgba(15, 21, 14, .94); border: 1px solid rgba(244, 231, 178, .62); box-shadow: 0 1rem 4rem rgba(0,0,0,.7); color: #f5efd2; left: 50%; max-height: min(72svh, 42rem); max-width: min(38rem, 86vw); opacity: 0; overflow: auto; padding: 2rem; pointer-events: none; position: absolute; top: 50%; transform: translate(-50%, -46%); transition: opacity 250ms ease, transform 250ms ease; width: 100%; z-index: 10; }
+    .book-reader.is-open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+    .book-reader h2 { font-weight: normal; margin-top: 0; }
+    .book-reader p { line-height: 1.6; white-space: pre-line; }
+    .book-reader button { background: transparent; border: 1px solid rgba(244,231,178,.6); color: inherit; cursor: pointer; padding: .5rem .75rem; }
+    .herb-status { clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; width: 1px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
-  <img src="/assets/weather/weather-038-herbroom.png" alt="Herb Room" />
-  <div class="east-threshold" aria-hidden="false">
-    <div class="east-threshold__water"></div>
-    <div class="east-threshold__growth"></div>
-    <a class="east-threshold__cue" href="/environment/basin.html">Step through.</a>
-  </div>
-  <div class="chamber-controls" aria-label="Chamber exits">
-    <a href="/environment/waterfall.html" class="exit-south">Look South</a>
-  </div>
+  <main class="herb-viewport" aria-label="Herb Room interaction chamber">
+    <img class="room-backdrop" src="/assets/weather/weather-038-herbroom.png" alt="A herb-filled room with a bright window, table, open book, clear bottle, and wooden chair." width="1024" height="1536" />
+    <div class="room-air" aria-hidden="true"></div>
+    <div class="room-scene">
+      <div class="herb-motion herb-motion--window" aria-hidden="true"></div><div class="herb-motion herb-motion--left" aria-hidden="true"></div><div class="herb-motion herb-motion--right" aria-hidden="true"></div>
+      <button class="room-object herb-chair" type="button" aria-label="Sit in the chair"></button>
+      <button class="room-object herb-bottle" type="button" aria-label="Pick up the clear bottle"></button>
+      <button class="room-object herb-dry-plant" type="button" aria-label="Attend to the lowered herb"></button>
+      <button class="room-object herb-book" type="button" aria-label="Attend to the open book"></button>
+      <div class="east-threshold" aria-hidden="false"><div class="east-threshold__water"></div><div class="east-threshold__growth"></div><a class="east-threshold__cue" href="/environment/basin.html">Step through.</a></div>
+    </div>
+    <div class="chamber-controls" aria-label="Chamber exits"><a href="/environment/waterfall.html" class="exit-south">Look South</a></div>
+    <div class="herb-accessible" aria-label="Herb Room actions"><button type="button" data-action="sit">Sit</button><button type="button" data-action="book">Read</button></div>
+    <aside class="book-reader" aria-labelledby="book-title" aria-modal="true" role="dialog"><button type="button" data-action="close-book">Close</button><h2 id="book-title">The open page</h2><div class="book-content"></div></aside>
+    <p class="herb-status" aria-live="polite"></p>
+  </main>
   <script>
-    const chamber = document.body;
-    const eastThreshold = document.querySelector('.east-threshold');
-    const eastCue = document.querySelector('.east-threshold__cue');
-
-    const revealEast = (clientX) => {
-      const start = window.innerWidth * 0.52;
-      const progress = Math.max(0, Math.min(1, (clientX - start) / (window.innerWidth - start)));
-      chamber.style.setProperty('--east-reveal', progress.toFixed(3));
-      chamber.style.setProperty('--east-shift', `${((1 - progress) * 38).toFixed(2)}%`);
-      chamber.style.setProperty('--water-shift', `${((1 - progress) * 32).toFixed(2)}%`);
-      chamber.style.setProperty('--growth-shift', `${((1 - progress) * 24).toFixed(2)}%`);
-      chamber.style.setProperty('--cue-reveal', Math.max(0, Math.min(1, (progress - 0.68) * 4)).toFixed(3));
-      chamber.style.setProperty('--interior-brightness', (1 - progress * 0.16).toFixed(3));
-      chamber.style.setProperty('--interior-saturation', (1 - progress * 0.1).toFixed(3));
-      const isAvailable = progress >= 0.9;
-      eastThreshold.style.pointerEvents = isAvailable ? 'auto' : 'none';
-      eastCue.classList.toggle('is-available', isAvailable);
-    };
-
-    window.addEventListener('pointermove', (event) => revealEast(event.clientX), { passive: true });
-    window.addEventListener('pointerleave', () => revealEast(0));
-    eastCue.addEventListener('focus', () => revealEast(window.innerWidth));
-    eastCue.addEventListener('blur', () => revealEast(0));
+    const chamber = document.body, viewport = document.querySelector('.herb-viewport'), scene = document.querySelector('.room-scene');
+    const eastThreshold = document.querySelector('.east-threshold'), eastCue = document.querySelector('.east-threshold__cue');
+    const chair = document.querySelector('.herb-chair'), bottle = document.querySelector('.herb-bottle'), plant = document.querySelector('.herb-dry-plant'), book = document.querySelector('.herb-book');
+    const reader = document.querySelector('.book-reader'), bookContent = document.querySelector('.book-content'), status = document.querySelector('.herb-status');
+    let distance = 0, panX = 0, panY = 0, panState = null, bottleHeld = false, watered = false, bookReady = false, seated = false, publishedBook = null, windTimer, roomAudio;
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+    const updateRoom = () => { viewport.style.setProperty('--room-distance', distance.toFixed(3)); viewport.style.setProperty('--room-pan-x', `${panX}px`); viewport.style.setProperty('--room-pan-y', `${panY}px`); viewport.classList.toggle('is-seated', seated); viewport.classList.toggle('is-bottle-held', bottleHeld); viewport.classList.toggle('is-watered', watered); viewport.classList.toggle('is-book-ready', bookReady); };
+    const revealEast = (clientX) => { const start = innerWidth * .52, progress = clamp((clientX - start) / (innerWidth - start), 0, 1); chamber.style.setProperty('--east-reveal', progress.toFixed(3)); chamber.style.setProperty('--east-shift', `${((1 - progress) * 38).toFixed(2)}%`); chamber.style.setProperty('--water-shift', `${((1 - progress) * 32).toFixed(2)}%`); chamber.style.setProperty('--growth-shift', `${((1 - progress) * 24).toFixed(2)}%`); chamber.style.setProperty('--cue-reveal', clamp((progress - .68) * 4, 0, 1).toFixed(3)); eastThreshold.style.pointerEvents = progress >= .9 ? 'auto' : 'none'; eastCue.classList.toggle('is-available', progress >= .9); };
+    async function loadPublishedBook() { try { const response = await fetch('/data/threshold-vault.json', { cache: 'no-store' }); if (!response.ok) throw new Error(`Vault response ${response.status}`); const vault = await response.json(); publishedBook = vault.documents.find((note) => note.publish && !note.draft && note.title === 'Herb Room' && typeof note.body === 'string') || null; } catch (error) { console.error('Unable to load Herb Room book source.', error); publishedBook = null; } }
+    async function enableRoomSound() { const AudioContext = window.AudioContext || window.webkitAudioContext; if (!AudioContext) return; if (!roomAudio || roomAudio.state === 'closed') roomAudio = new AudioContext(); if (roomAudio.state !== 'running') { try { await roomAudio.resume(); } catch (error) { console.error('Unable to start Herb Room sound.', error); } } }
+    function playRoomCue(frequency, duration, volume) { if (!roomAudio || roomAudio.state !== 'running') return; const tone = roomAudio.createOscillator(), gain = roomAudio.createGain(); tone.frequency.value = frequency; tone.type = 'sine'; gain.gain.setValueAtTime(.0001, roomAudio.currentTime); gain.gain.exponentialRampToValueAtTime(volume, roomAudio.currentTime + .025); gain.gain.exponentialRampToValueAtTime(.0001, roomAudio.currentTime + duration); tone.connect(gain); gain.connect(roomAudio.destination); tone.start(); tone.stop(roomAudio.currentTime + duration + .02); }
+    function windEvent() { viewport.classList.add('is-wind'); playRoomCue(720, .28, .008); window.setTimeout(() => viewport.classList.remove('is-wind'), 1500); if (watered && !bookReady && publishedBook) { bookReady = true; updateRoom(); playRoomCue(640, .18, .012); status.textContent = 'A page settles across the table.'; } windTimer = window.setTimeout(windEvent, 5000 + Math.random() * 6500); }
+    function sit() { void enableRoomSound(); seated = true; updateRoom(); playRoomCue(180, .12, .018); status.textContent = 'The room settles around the chair.'; }
+    function getUp() { seated = false; updateRoom(); }
+    function renderPublishedBook(markdown) {
+      bookContent.replaceChildren();
+      for (const line of markdown.split(/\r?\n/)) {
+        const text = line.trim();
+        if (!text) continue;
+        const heading = text.match(/^#{1,3}\s+(.+)$/);
+        const element = document.createElement(heading ? 'h3' : 'p');
+        element.textContent = (heading ? heading[1] : text).replace(/\[\[([^|\]#]+)(?:\|([^\]]+))?\]\]/g, (_match, target, label) => (label || target).trim());
+        bookContent.append(element);
+      }
+    }
+    function openBook() { if (!bookReady || !publishedBook) { status.textContent = 'The open pages lift, then settle without a readable mark.'; return; } renderPublishedBook(publishedBook.body); reader.classList.add('is-open'); }
+    function closeBook() { reader.classList.remove('is-open'); }
+    chair.addEventListener('click', sit);
+    bottle.addEventListener('click', () => { void enableRoomSound(); bottleHeld = !bottleHeld; updateRoom(); playRoomCue(420, .1, .012); status.textContent = bottleHeld ? 'The bottle has a quiet weight in your hand.' : 'The bottle returns to the table.'; });
+    plant.addEventListener('click', () => { void enableRoomSound(); if (!bottleHeld || watered) { status.textContent = watered ? 'The soil remains dark and receptive.' : 'The lowered leaves remain still.'; return; } watered = true; bottleHeld = false; updateRoom(); playRoomCue(250, .24, .025); status.textContent = 'Water darkens the soil and disappears.'; });
+    book.addEventListener('click', openBook); book.addEventListener('dblclick', openBook);
+    document.querySelector('[data-action="sit"]').addEventListener('click', sit); document.querySelector('[data-action="book"]').addEventListener('click', openBook); document.querySelector('[data-action="close-book"]').addEventListener('click', closeBook);
+    scene.addEventListener('wheel', (event) => { event.preventDefault(); if (event.deltaY < 0 && seated) getUp(); distance = clamp(distance + Math.sign(event.deltaY) * .08, 0, 1); updateRoom(); }, { passive: false });
+    scene.addEventListener('pointerdown', (event) => { if (event.button !== 0) return; panState = { x: event.clientX, y: event.clientY, panX, panY, moved: false }; });
+    window.addEventListener('pointermove', (event) => { if (!panState) { revealEast(event.clientX); return; } const dx = event.clientX - panState.x, dy = event.clientY - panState.y; if (Math.hypot(dx, dy) < 8 && !panState.moved) return; panState.moved = true; panX = clamp(panState.panX + dx, -180, 180); panY = clamp(panState.panY + dy, -110, 110); viewport.classList.add('is-panning'); updateRoom(); });
+    window.addEventListener('pointerup', () => { if (!panState) return; panState = null; viewport.classList.remove('is-panning'); });
+    window.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeBook(); getUp(); } });
+    window.addEventListener('pagehide', () => { window.clearTimeout(windTimer); if (roomAudio && roomAudio.state !== 'closed') void roomAudio.close().catch((error) => console.error('Unable to close Herb Room sound.', error)); });
+    loadPublishedBook(); updateRoom(); windTimer = window.setTimeout(windEvent, 2500);
   </script>
   <script type="module" src="/scripts/access-flow.js"></script>
   <script type="module" src="/scripts/canonical-path.js"></script>

@@ -24,6 +24,14 @@ test("keeps the Herb Room east threshold as an authored environmental reveal", a
   assert.ok(!configuration.pages.some((page) => page.noteId === "herbroom-threshold-east"));
   assert.match(herbRoom, /east-threshold__cue" href="\/environment\/basin\.html"/);
   assert.match(herbRoom, /const revealEast = \(clientX\)/);
+  assert.match(herbRoom, /function windEvent/);
+  assert.match(herbRoom, /function renderPublishedBook/);
+  assert.match(herbRoom, /function enableRoomSound/);
+  assert.match(herbRoom, /function playRoomCue/);
+  assert.match(herbRoom, /roomAudio\.close\(\)/);
+  assert.match(herbRoom, /publishedBook = vault\.documents\.find/);
+  assert.match(herbRoom, /is-watered/);
+  assert.match(herbRoom, /is-book-ready/);
 });
 
 test("binds every living scaffold route to one publishable vault note", async () => {

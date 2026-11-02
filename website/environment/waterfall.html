@@ -349,7 +349,7 @@
       transform: translate(-50%, calc(-50% - 12rem));
     }
 
-    .falls-watcher,
+    .falls-velin,
     .falls-tree,
     .falls-ascent,
     .falls-behind-route,
@@ -358,7 +358,7 @@
       z-index: 5;
     }
 
-    .falls-watcher {
+    .falls-velin {
       background: transparent;
       border: 0;
       bottom: 19%;
@@ -366,47 +366,52 @@
       height: 34%;
       left: 13%;
       opacity: .16;
+      overflow: hidden;
       padding: 0;
       transform: translate3d(calc(var(--falls-pan-x) * .9), calc(var(--falls-pan-y) * .72), 0);
       transition: opacity 700ms ease, transform 1100ms ease;
       width: 13%;
     }
 
-    .falls-watcher::before,
-    .falls-watcher::after {
-      content: "";
-      left: 50%;
-      position: absolute;
-      transform: translateX(-50%);
-    }
-
-    .falls-watcher::before {
-      background:
-        radial-gradient(circle at 50% 12%, rgba(196, 226, 211, .68) 0 7%, transparent 8%),
-        linear-gradient(90deg, transparent 31%, rgba(8, 24, 21, .94) 39% 61%, transparent 69%);
-      bottom: 0;
+    .falls-velin-image {
+      filter: brightness(.58) saturate(.62);
       height: 100%;
-      width: 74%;
+      mask-image: radial-gradient(ellipse at 50% 52%, #000 32%, transparent 72%);
+      object-fit: cover;
+      object-position: center;
+      position: absolute;
+      inset: 0;
+      transition: filter 700ms ease;
+      width: 100%;
     }
 
-    .falls-watcher::after {
-      background: radial-gradient(ellipse at 50% 50%, rgba(208, 247, 226, .42), transparent 68%);
-      bottom: 35%;
-      height: 26%;
+    .falls-velin::after {
+      background: radial-gradient(circle, rgba(255, 224, 142, .88) 0 5%, rgba(234, 177, 82, .34) 18%, transparent 62%);
+      content: "";
+      height: 38%;
+      left: 48%;
       opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 28%;
       transition: opacity 600ms ease;
-      width: 72%;
+      transform: translate(-50%, -50%);
+      width: 48%;
     }
 
-    .falls-viewport.is-watcher-noticed .falls-watcher {
+    .falls-viewport.is-velin-noticed .falls-velin {
       opacity: .42;
     }
 
-    .falls-viewport.is-watcher-attended .falls-watcher::after {
+    .falls-viewport.is-velin-noticed .falls-velin-image {
+      filter: brightness(.72) saturate(.78);
+    }
+
+    .falls-viewport.is-velin-attended .falls-velin::after {
       opacity: .8;
     }
 
-    .falls-viewport.is-watcher-approached .falls-watcher {
+    .falls-viewport.is-velin-approached .falls-velin {
       opacity: .78;
       transform: translate3d(calc(-1.6rem + var(--falls-pan-x) * .9), calc(-.5rem + var(--falls-pan-y) * .72), 0);
     }
@@ -444,7 +449,7 @@
     }
 
     .falls-tree:focus-visible,
-    .falls-watcher:focus-visible,
+    .falls-velin:focus-visible,
     .falls-ascent:focus-visible,
     .falls-behind-route:focus-visible,
     .falls-past-route:focus-visible,
@@ -478,7 +483,7 @@
 
     .falls-behind-route { bottom: 28%; left: 9%; }
     .falls-past-route { bottom: 31%; right: 8%; }
-    .falls-viewport.is-watcher-approached .falls-behind-route,
+    .falls-viewport.is-velin-approached .falls-behind-route,
     .falls-viewport.is-past-visible .falls-past-route {
       opacity: 1;
       pointer-events: auto;
@@ -567,7 +572,7 @@
       .falls-backdrop,
       .falls-mist,
       .falls-spray,
-      .falls-watcher,
+      .falls-velin,
       .falls-tree,
       .falls-ascent { transition: none; transform: none; }
     }
@@ -588,7 +593,9 @@
       <div class="falls-mist" aria-hidden="true"></div>
       <div class="falls-spray" aria-hidden="true"></div>
       <div class="falls-title" aria-hidden="true"><p>Forest boundary</p><h1>The Drift Falls</h1></div>
-      <button class="falls-watcher" type="button" aria-label="Attend to the presence among the roots"></button>
+      <button class="falls-velin" type="button" aria-label="Attend to the lantern-bearing figure among the roots">
+        <img class="falls-velin-image" src="/assets/vault/velinsignalobject.png" alt="" width="1024" height="1024" loading="eager" decoding="async" />
+      </button>
       <button class="falls-tree" type="button" aria-label="Attend to the moving tree"></button>
       <div class="falls-ascent" aria-hidden="true"></div>
       <a class="falls-behind-route" href="/portal/shimmer">Behind the falls</a>
@@ -627,7 +634,7 @@
   <script>
     const viewport = document.querySelector('.falls-viewport');
     const scene = document.querySelector('.falls-scene');
-    const watcher = document.querySelector('.falls-watcher');
+    const velin = document.querySelector('.falls-velin');
     const tree = document.querySelector('.falls-tree');
     const soundControl = document.querySelector('.falls-sound');
     const hint = document.querySelector('.falls-hint');
@@ -639,7 +646,7 @@
     let panState = null;
     let suppressNextClick = false;
     let hintShown = false;
-    let watcherHasTurned = false;
+    let velinHasDeparted = false;
     let treeAttended = false;
     let audioContext;
     let waterGain;
@@ -659,24 +666,24 @@
       viewport.style.setProperty('--falls-pan-y', `${panY}px`);
       viewport.classList.toggle('is-moving', distance > 0.02);
       viewport.classList.toggle('is-near', distance >= 0.78);
-      const watcherNoticed = distance >= 0.24 && panX <= -20;
-      const watcherApproached = distance >= 0.52 && panX <= -62;
+      const velinNoticed = distance >= 0.24 && panX <= -20;
+      const velinApproached = distance >= 0.52 && panX <= -62;
       const treeApproached = distance >= 0.34 && panX >= 34;
-      let watcherTurned = false;
-      viewport.classList.toggle('is-watcher-noticed', watcherNoticed);
-      viewport.classList.toggle('is-watcher-approached', watcherApproached);
+      let velinDeparted = false;
+      viewport.classList.toggle('is-velin-noticed', velinNoticed);
+      viewport.classList.toggle('is-velin-approached', velinApproached);
       viewport.classList.toggle('is-past-visible', treeApproached);
       tree.classList.toggle('is-awake', treeApproached || treeAttended);
-      if (watcherApproached && !watcherHasTurned) {
-        watcherHasTurned = true;
-        watcherTurned = true;
-        playWatcherSignal(.018);
-        status.textContent = 'Something among the roots turns toward the concealed passage, then moves away.';
-      } else if (!watcherApproached) {
-        watcherHasTurned = false;
+      if (velinApproached && !velinHasDeparted) {
+        velinHasDeparted = true;
+        velinDeparted = true;
+        playVelinSignal(.014);
+        status.textContent = 'The lantern-bearing figure turns toward the concealed passage, then moves away.';
+      } else if (!velinApproached) {
+        velinHasDeparted = false;
       }
       updateSoundMix();
-      if (message && !watcherTurned) status.textContent = message;
+      if (message && !velinDeparted) status.textContent = message;
     }
 
     function moveDistance(delta) {
@@ -684,7 +691,7 @@
       distance = clamp(distance + delta * resistance, 0, 1);
       updateScene(
         distance >= 0.78
-          ? 'The water boundary is close. You can turn toward a presence, the moving tree, or withdraw.'
+          ? 'The water boundary is close. A lantern and the moving tree remain at the edges of view.'
           : distance > 0.1
             ? 'The falls draw nearer. Spray and water presence increase.'
             : 'The falls settle back into a distant boundary.'
@@ -813,38 +820,45 @@
       }
     });
 
-    function playWatcherSignal(volume = .012) {
+    function playVelinSignal(volume = .009) {
       if (!audioContext || audioContext.state !== 'running' || soundMuted) return;
       const tone = audioContext.createOscillator();
       const gain = audioContext.createGain();
-      tone.frequency.value = 312;
+      const panner = audioContext.createStereoPanner?.();
+      tone.frequency.value = 468;
       tone.type = 'sine';
       gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(volume, audioContext.currentTime + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.65);
+      gain.gain.exponentialRampToValueAtTime(volume, audioContext.currentTime + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.9);
       tone.connect(gain);
-      gain.connect(audioContext.destination);
+      if (panner) {
+        panner.pan.value = -0.55;
+        gain.connect(panner);
+        panner.connect(audioContext.destination);
+      } else {
+        gain.connect(audioContext.destination);
+      }
       tone.start();
-      tone.stop(audioContext.currentTime + 0.68);
+      tone.stop(audioContext.currentTime + 0.95);
     }
 
-    watcher.addEventListener('pointerenter', () => {
-      viewport.classList.add('is-watcher-attended');
-      playWatcherSignal();
-      status.textContent = 'Mist briefly loosens around the still shape among the roots.';
+    velin.addEventListener('pointerenter', () => {
+      viewport.classList.add('is-velin-attended');
+      playVelinSignal();
+      status.textContent = 'Mist briefly loosens around the lantern-bearing figure.';
     });
-    watcher.addEventListener('pointerleave', () => {
-      viewport.classList.remove('is-watcher-attended');
+    velin.addEventListener('pointerleave', () => {
+      viewport.classList.remove('is-velin-attended');
     });
-    watcher.addEventListener('focus', () => {
-      viewport.classList.add('is-watcher-attended');
-      playWatcherSignal();
+    velin.addEventListener('focus', () => {
+      viewport.classList.add('is-velin-attended');
+      playVelinSignal();
     });
-    watcher.addEventListener('blur', () => {
-      viewport.classList.remove('is-watcher-attended');
+    velin.addEventListener('blur', () => {
+      viewport.classList.remove('is-velin-attended');
     });
-    watcher.addEventListener('dblclick', () => {
-      status.textContent = 'The presence notices the direct attention, then becomes still again.';
+    velin.addEventListener('dblclick', () => {
+      status.textContent = 'The figure acknowledges the direct attention, then becomes still again.';
     });
 
     tree.addEventListener('pointerenter', () => {

@@ -27,12 +27,13 @@ test("House and Garden restores the Herb Room paths and its archived exits", asy
   assert.doesNotMatch(waterfall, /repeating-linear-gradient/);
   assert.match(waterfall, /await audioContext\.resume\(\)/);
   assert.match(waterfall, /viewport\.dataset\.sound = 'playing'/);
-  assert.match(waterfall, /class="falls-watcher"/);
-  assert.match(waterfall, /is-watcher-noticed/);
-  assert.match(waterfall, /is-watcher-approached/);
+  assert.match(waterfall, /class="falls-velin"/);
+  assert.match(waterfall, /velinsignalobject\.png/);
+  assert.match(waterfall, /is-velin-noticed/);
+  assert.match(waterfall, /is-velin-approached/);
   assert.match(waterfall, /const treeApproached = distance >= 0\.34 && panX >= 34/);
-  assert.match(waterfall, /function playWatcherSignal/);
-  assert.match(waterfall, /The presence notices the direct attention, then becomes still again\./);
+  assert.match(waterfall, /function playVelinSignal/);
+  assert.match(waterfall, /The figure acknowledges the direct attention, then becomes still again\./);
   assert.match(waterfall, /href="\/portal\/shimmer">Behind the falls/);
   assert.match(waterfall, /href="\/portal\/old-forest-trek">Past the falls/);
   assert.match(waterfall, /href="\/environment\/herbroom\.html"/);

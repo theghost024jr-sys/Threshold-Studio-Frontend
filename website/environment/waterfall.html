@@ -801,6 +801,29 @@
       }
     });
 
+    function stopWaterSound() {
+      soundMuted = true;
+      viewport.dataset.sound = 'muted';
+      soundControl.setAttribute('aria-pressed', 'false');
+      soundControl.textContent = 'Listen to the falls';
+
+      const activeContext = audioContext;
+      audioContext = undefined;
+      waterGain = undefined;
+      waterFilter = undefined;
+      waterSprayFilter = undefined;
+      waterPanner = undefined;
+      waterRumbleGain = undefined;
+
+      if (activeContext && activeContext.state !== 'closed') {
+        void activeContext.close().catch((error) => {
+          console.error('Unable to close Drift Falls sound.', error);
+        });
+      }
+    }
+
+    window.addEventListener('pagehide', stopWaterSound);
+
     scene.addEventListener('wheel', (event) => {
       if (Math.abs(event.deltaY) < 4) return;
       event.preventDefault();

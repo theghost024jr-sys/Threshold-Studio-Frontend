@@ -24,6 +24,12 @@ test("keeps the Herb Room east threshold as an authored environmental reveal", a
   assert.ok(!configuration.pages.some((page) => page.noteId === "herbroom-threshold-east"));
   assert.match(herbRoom, /east-threshold__cue" href="\/environment\/basin\.html"/);
   assert.match(herbRoom, /const revealEast = \(clientX\)/);
+  assert.match(herbRoom, /class="garden-window"/);
+  assert.match(herbRoom, /function scheduleGardenWind/);
+  assert.match(herbRoom, /function playGardenAir/);
+  assert.match(herbRoom, /is-garden-observing/);
+  assert.match(herbRoom, /The sill holds the Garden at a distance\./);
+  assert.doesNotMatch(herbRoom, /garden-window[^>]*href=/);
   assert.match(herbRoom, /function windEvent/);
   assert.match(herbRoom, /function renderPublishedBook/);
   assert.match(herbRoom, /function enableRoomSound/);

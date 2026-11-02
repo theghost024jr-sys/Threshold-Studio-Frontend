@@ -257,6 +257,7 @@ async function addGlyphSignals() {
       signal.className = "hub-glyph-signal";
       signal.type = "button";
       signal.dataset.glyph = glyph.id;
+      signal.dataset.glyphOrder = String(index + 1);
       signal.style.left = `${position.x}%`;
       signal.style.top = `${position.y}%`;
       signal.style.setProperty("--hub-glyph-delay", position.delay);

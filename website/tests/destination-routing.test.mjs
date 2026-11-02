@@ -95,6 +95,12 @@ test("keeps panoramic main-Hub gestures separate from the return Hub", async () 
   assert.match(experience, /orbit\.addEventListener\("pointerdown"/);
   assert.match(experience, /function enableSpatialSound/);
   assert.match(experience, /function playPanCue/);
+  assert.match(experience, /const discoveryOrder/);
+  assert.match(experience, /function advanceDiscovery/);
+  assert.match(experience, /advanceDiscovery\("space"\)/);
+  assert.match(experience, /advanceDiscovery\("depth"\)/);
+  assert.match(mainHub, /data-main-hub-discovery="arrival"/);
+  assert.match(mainHub, /data-glyph-order="2"/);
   assert.match(mainHub, /filter: none;/);
 });
 

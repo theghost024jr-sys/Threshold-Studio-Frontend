@@ -8,6 +8,15 @@ let panX = 0;
 let panY = 0;
 let audio;
 let lastCueAt = 0;
+let glyphAttentionTimer;
+let discovery = "arrival";
+
+const discoveryOrder = Object.freeze({
+  arrival: 0,
+  space: 1,
+  depth: 2,
+  glyph: 3
+});
 
 function clamp(value, minimum, maximum) {
   return Math.min(maximum, Math.max(minimum, value));
@@ -18,6 +27,12 @@ function renderView(panX, panY) {
   document.body.style.setProperty("--main-hub-pan-y", `${panY}px`);
   document.body.style.setProperty("--main-hub-depth", depth.toFixed(2));
   orbit.dataset.mainHubDepth = String(Math.round(depth * 3));
+}
+
+function advanceDiscovery(next) {
+  if (discoveryOrder[next] <= discoveryOrder[discovery]) return;
+  discovery = next;
+  document.body.dataset.mainHubDiscovery = discovery;
 }
 
 async function enableSpatialSound() {
@@ -72,6 +87,7 @@ function bindMainHubPan() {
     panX = clamp(event.clientX - drag.x + drag.panX, -220, 220);
     panY = clamp(event.clientY - drag.y + drag.panY, -140, 140);
     if (Math.hypot(panX, panY) >= 8) drag.moved = true;
+    if (drag.moved) advanceDiscovery("space");
     document.body.classList.toggle("is-main-hub-panning", drag.moved);
     renderView(panX, panY);
     playPanCue(panX);
@@ -87,12 +103,25 @@ function bindMainHubPan() {
   orbit.addEventListener("wheel", (event) => {
     event.preventDefault();
     depth = clamp(depth + Math.sign(event.deltaY) * 0.17, 0, 1);
+    if (depth >= 0.34) advanceDiscovery("depth");
     renderView(panX, panY);
   }, { passive: false });
+
+  orbit.addEventListener("pointerover", (event) => {
+    if (!event.target.closest(".hub-glyph-signal")) return;
+    window.clearTimeout(glyphAttentionTimer);
+    glyphAttentionTimer = window.setTimeout(() => advanceDiscovery("glyph"), 620);
+  });
+
+  orbit.addEventListener("pointerout", (event) => {
+    if (!event.target.closest(".hub-glyph-signal")) return;
+    window.clearTimeout(glyphAttentionTimer);
+  });
 }
 
 bindMainHubPan();
 renderView(panX, panY);
+document.body.dataset.mainHubDiscovery = discovery;
 
 window.addEventListener("pagehide", () => {
   if (audio && audio.state !== "closed") {

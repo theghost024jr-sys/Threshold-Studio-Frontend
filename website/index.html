@@ -490,6 +490,14 @@
       animation-delay: var(--hub-glyph-delay, 0s);
     }
 
+    body[data-main-hub-discovery="arrival"] .hub-glyph-signal[data-glyph-order="2"],
+    body[data-main-hub-discovery="arrival"] .hub-glyph-signal[data-glyph-order="3"],
+    body[data-main-hub-discovery="space"] .hub-glyph-signal[data-glyph-order="3"] {
+      animation: none;
+      opacity: 0;
+      pointer-events: none;
+    }
+
     .hub-glyph-signal:hover,
     .hub-glyph-signal:focus-visible,
     .hub-glyph-signal.is-held {

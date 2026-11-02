@@ -9,6 +9,7 @@ let panY = 0;
 let audio;
 let lastCueAt = 0;
 let glyphAttentionTimer;
+let slitTimer;
 let discovery = "arrival";
 
 const discoveryOrder = Object.freeze({
@@ -33,6 +34,28 @@ function advanceDiscovery(next) {
   if (discoveryOrder[next] <= discoveryOrder[discovery]) return;
   discovery = next;
   document.body.dataset.mainHubDiscovery = discovery;
+}
+
+function updateSlit() {
+  const canApproach = depth >= 0.5 && panX >= 92;
+  if (!canApproach) {
+    window.clearTimeout(slitTimer);
+    delete orbit.dataset.slitState;
+    return;
+  }
+
+  orbit.dataset.slitState = "near";
+  if (drag?.moved) {
+    window.clearTimeout(slitTimer);
+    return;
+  }
+
+  window.clearTimeout(slitTimer);
+  slitTimer = window.setTimeout(() => {
+    if (depth >= 0.5 && panX >= 92 && !drag) {
+      orbit.dataset.slitState = "open";
+    }
+  }, 820);
 }
 
 async function enableSpatialSound() {
@@ -90,12 +113,14 @@ function bindMainHubPan() {
     if (drag.moved) advanceDiscovery("space");
     document.body.classList.toggle("is-main-hub-panning", drag.moved);
     renderView(panX, panY);
+    updateSlit();
     playPanCue(panX);
   });
 
   const endDrag = () => {
     drag = null;
     document.body.classList.remove("is-main-hub-panning");
+    updateSlit();
   };
   orbit.addEventListener("pointerup", endDrag);
   orbit.addEventListener("pointercancel", endDrag);
@@ -105,6 +130,7 @@ function bindMainHubPan() {
     depth = clamp(depth + Math.sign(event.deltaY) * 0.17, 0, 1);
     if (depth >= 0.34) advanceDiscovery("depth");
     renderView(panX, panY);
+    updateSlit();
   }, { passive: false });
 
   orbit.addEventListener("pointerover", (event) => {
@@ -124,6 +150,7 @@ renderView(panX, panY);
 document.body.dataset.mainHubDiscovery = discovery;
 
 window.addEventListener("pagehide", () => {
+  window.clearTimeout(slitTimer);
   if (audio && audio.state !== "closed") {
     void audio.close().catch((error) => console.error("Unable to close main Hub spatial sound.", error));
   }

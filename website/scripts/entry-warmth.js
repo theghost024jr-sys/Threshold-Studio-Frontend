@@ -267,6 +267,7 @@ async function addGlyphSignals() {
       signal.addEventListener("pointerenter", () => reveal(glyph));
       signal.addEventListener("focus", () => reveal(glyph));
       signal.addEventListener("click", () => reveal(glyph, true));
+      signal.addEventListener("dblclick", () => window.location.assign(link.href));
       oortField.appendChild(signal);
     });
   } catch (error) {

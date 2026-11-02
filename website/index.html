@@ -71,8 +71,8 @@
     }
 
     body::after {
-      opacity: 0.16;
-      filter: blur(46px);
+      opacity: 0.05;
+      filter: none;
       animation-duration: 320s;
       animation-direction: reverse;
     }
@@ -133,6 +133,8 @@
       grid-template-columns: 1.1fr 0.9fr;
       gap: clamp(1.25rem, 3.2vw, 3.5rem);
       position: relative;
+      transform: translate3d(calc(var(--main-hub-pan-x, 0px) * 0.08), calc(var(--main-hub-pan-y, 0px) * 0.08), 0);
+      transition: transform 180ms ease-out;
     }
 
     .hub-constellation {
@@ -363,7 +365,13 @@
       perspective: 700px;
       isolation: isolate;
       animation: hub-pulse 4s ease-in-out infinite;
+      cursor: grab;
+      transform: translate3d(calc(var(--main-hub-pan-x, 0px) * 0.48), calc(var(--main-hub-pan-y, 0px) * 0.48), 0) scale(calc(1 + var(--main-hub-depth, 0) * 0.16));
+      transition: transform 180ms ease-out, filter 420ms ease;
     }
+
+    body.is-main-hub-panning .entry-orbit { cursor: grabbing; }
+    .entry-orbit[data-main-hub-depth="3"] { filter: brightness(1.16) saturate(1.08); }
 
     .entry-orbit::after {
       content: "";
@@ -407,7 +415,7 @@
       z-index: -1;
       border-radius: 50%;
       background: var(--season-color);
-      filter: blur(80px);
+      filter: none;
       scale: 0.96 1.04;
       animation: hub-heliosphere 14s ease-in-out infinite, hub-heliosphere-parallax 100s linear infinite;
       pointer-events: none;
@@ -420,7 +428,7 @@
       z-index: -2;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255, 240, 220, 0.25), rgba(255, 240, 220, 0) 70%);
-      filter: blur(40px);
+      filter: none;
       scale: 1.04 0.96;
       animation: hub-atmosphere 10s ease-in-out infinite, hub-atmosphere-parallax 140s linear infinite;
       pointer-events: none;
@@ -457,7 +465,7 @@
         filter 700ms ease;
     }
 
-    .hub-oort[data-depth="far"] { filter: blur(1.3px); }
+    .hub-oort[data-depth="far"] {     filter: opacity(0.65); }
     .hub-oort[data-depth="near"] { filter: drop-shadow(0 0 5px rgba(201, 225, 255, 0.5)); }
     .hub-oort.is-related {
       filter: drop-shadow(0 0 10px rgba(139, 228, 213, 0.9));
@@ -1292,7 +1300,8 @@
   <script type="module" src="/scripts/fibonacci-entry.js?v=no-hub-double-click-1"></script>
   <script type="module" src="/scripts/access-flow.js"></script>
   <script type="module" src="/threshold-engine.js"></script>
-  <script type="module" src="/scripts/entry-warmth.js?v=oort-glyph-signals-1"></script>
+  <script type="module" src="/scripts/entry-warmth.js?v=oort-glyph-signals-2"></script>
+  <script type="module" src="/scripts/main-hub-experience.js"></script>
   <script type="module" src="/scripts/canonical-path.js"></script>
 </body>
 </html>

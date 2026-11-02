@@ -53,6 +53,7 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /font-size: clamp\(0\.82rem, 1\.2vw, 1\.25rem\)/);
   assert.match(hub, /\.entry-actions a:hover,[\s\S]*?translateX\(8px\)/);
   assert.match(hub, /src=["']\/scripts\/entry-warmth\.js(?:\?[^"']*)?["']/);
+  assert.match(hub, /src=["']\/scripts\/main-hub-experience\.js["']/);
   assert.match(warmth, /const oortNodes/);
   assert.match(warmth, /function addOortCloud\(\)/);
   assert.match(warmth, /querySelector\("\.hub-oort-field"\)/);
@@ -70,12 +71,31 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(hub, /data-route-approach/);
   assert.doesNotMatch(warmth, /localStorage|sessionStorage|dispatchEvent/);
   assert.match(warmth, /function addMicroComets\(\)/);
+  assert.match(warmth, /signal\.addEventListener\("dblclick"/);
+  assert.match(warmth, /window\.location\.assign\(link\.href\)/);
   assert.match(warmth, /function wireRouteConstellations\(oortCloud\)/);
   assert.match(hub, /data-hub-topology/);
   assert.match(warmth, /const routeTopology/);
   assert.match(warmth, /const updateTopology = \(route\)/);
   assert.match(warmth, /"house and garden": \{/);
   assert.match(warmth, /"House & Garden · tending inward"/);
+});
+
+test("keeps panoramic main-Hub gestures separate from the return Hub", async () => {
+  const [mainHub, returnHub, experience] = await Promise.all([
+    readFile(new URL("../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../hub.html", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/main-hub-experience.js", import.meta.url), "utf8")
+  ]);
+
+  assert.match(mainHub, /main-hub-experience\.js/);
+  assert.doesNotMatch(returnHub, /main-hub-experience\.js/);
+  assert.match(experience, /function bindMainHubPan/);
+  assert.match(experience, /orbit\.addEventListener\("wheel"/);
+  assert.match(experience, /orbit\.addEventListener\("pointerdown"/);
+  assert.match(experience, /function enableSpatialSound/);
+  assert.match(experience, /function playPanCue/);
+  assert.match(mainHub, /filter: none;/);
 });
 
 test("keeps the World Map holding node attached to the canonical Fib 13 Hub", async () => {

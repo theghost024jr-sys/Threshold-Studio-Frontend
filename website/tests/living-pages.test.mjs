@@ -43,6 +43,11 @@ test("keeps the Herb Room east threshold as an authored environmental reveal", a
   assert.match(herbRoom, /function playWindChimes/);
   assert.match(herbRoom, /function updateHeldBottle/);
   assert.match(herbRoom, /function waterPlant/);
+  assert.match(herbRoom, /function smashBottle/);
+  assert.match(herbRoom, /is-bottle-broken/);
+  assert.match(herbRoom, /east-threshold\.is-failed/);
+  assert.match(herbRoom, /bottle\.addEventListener\('dblclick'/);
+  assert.match(herbRoom, /if \(smashed\) \{/);
   assert.match(herbRoom, /is-bottle-dragging/);
   assert.match(herbRoom, /is-pouring/);
   assert.match(herbRoom, /class="book-sit-cue"/);

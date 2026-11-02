@@ -36,6 +36,10 @@ function escapePattern(value) {
 
 test("every labeled static link resolves to a real destination", async () => {
   const pages = await collectHtmlFiles();
+  const portalApp = await readFile(path.join(root, "portal", "src", "App.jsx"), "utf8");
+  const portalRoutes = new Set(
+    Array.from(portalApp.matchAll(/<Route\s+path=["']([^"']+)["']/g), (match) => match[1])
+  );
 
   for (const page of pages) {
     const html = await readFile(page, "utf8");
@@ -67,6 +71,14 @@ test("every labeled static link resolves to a real destination", async () => {
 
       const [pathAndQuery, fragment = ""] = href.split("#", 2);
       const routePath = pathAndQuery.split("?", 1)[0];
+      if (routePath.startsWith("/portal/")) {
+        const portalRoute = `/${routePath.slice("/portal/".length)}`;
+        assert.ok(
+          portalRoutes.has(portalRoute),
+          `${relativePage}: Portal link "${label}" has no registered route: ${href}`
+        );
+        continue;
+      }
       let targetPage = page;
 
       if (routePath) {

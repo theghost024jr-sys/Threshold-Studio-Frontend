@@ -35,6 +35,19 @@ const glyphSignalPositions = Object.freeze([
   { x: 62, y: 82, delay: "-2.4s" }
 ]);
 
+const routeDestinations = Object.freeze({
+  "house and garden": "housegarden.html",
+  "threshold record": "pages/threshold.html",
+  ethos: "ethos.html",
+  "learning wheel": "learningwheel.html",
+  discover: "discover.html",
+  invitation: "invitation.html",
+  mythology: "mythology.html",
+  glyphs: "glyphs.html",
+  dialogues: "dialogues.html",
+  contact: "contact.html"
+});
+
 const routeTopology = Object.freeze({
   "house and garden": {
     title: "House & Garden · tending inward",
@@ -112,8 +125,34 @@ function addOortCloud() {
     viewY: 0
   };
   const particles = oortNodes.map((node) => {
-    const particle = document.createElement("span");
-    particle.className = "hub-oort";
+    const destination = routeDestinations[node.route];
+    const particle = document.createElement(destination ? "a" : "span");
+    particle.className = `hub-oort${destination ? " hub-oort--route" : ""}`;
+    if (destination) {
+      particle.href = destination;
+      particle.setAttribute("aria-label", `Approach ${routeTopology[node.route].title}`);
+      const approach = () => {
+        state.relatedRoute = node.route;
+        state.approach = { route: node.route, title: routeTopology[node.route].title };
+        render();
+      };
+      particle.addEventListener("pointerenter", approach);
+      particle.addEventListener("focus", approach);
+      particle.addEventListener("pointerleave", () => {
+        if (state.approach?.route === node.route) {
+          state.relatedRoute = "";
+          state.approach = null;
+          render();
+        }
+      });
+      particle.addEventListener("blur", () => {
+        if (state.approach?.route === node.route) {
+          state.relatedRoute = "";
+          state.approach = null;
+          render();
+        }
+      });
+    }
     oortField.appendChild(particle);
     return { node, particle };
   });
@@ -147,8 +186,8 @@ function addOortCloud() {
       const opacity = Math.max(0.08, 0.16 + depth * 0.42 - state.collapse * node.decay * 0.2);
       particle.dataset.depth = depth > 0.67 ? "near" : depth < 0.33 ? "far" : "middle";
       particle.classList.toggle("is-related", relationship === 1);
-      particle.style.left = `${50 + x * 41}%`;
-      particle.style.top = `${50 + y * 41}%`;
+      particle.style.left = `${50 + x * 12}%`;
+      particle.style.top = `${50 + y * 12}%`;
       particle.style.setProperty("--hub-oort-size", `${size}px`);
       particle.style.setProperty("--hub-oort-opacity", opacity.toFixed(2));
     });
@@ -199,6 +238,16 @@ function addOortCloud() {
     render();
   });
 
+  window.addEventListener("threshold:engine-state", (event) => {
+    const houseAndGarden = event.detail?.nodes?.housegarden;
+    if (!houseAndGarden) {
+      return;
+    }
+    state.anchor = houseAndGarden.active === true ? 1 : 0;
+    state.pressure = Math.min(1, Math.max(0.08, Number(houseAndGarden.inputCount || 0) * 0.16));
+    render();
+  });
+
   if (!reducedMotion.matches) {
     window.addEventListener("pointermove", (event) => {
       state.viewX = event.clientX / window.innerWidth - 0.5;
@@ -221,12 +270,13 @@ function addOortCloud() {
 }
 
 async function addGlyphSignals() {
+  const orbit = document.querySelector(".entry-orbit");
   const oortField = document.querySelector(".hub-oort-field");
   const reading = document.querySelector("[data-hub-glyph-reading]");
   const title = document.querySelector("#hub-glyph-title");
   const text = document.querySelector("[data-hub-glyph-text]");
   const link = document.querySelector("[data-hub-glyph-link]");
-  if (!oortField || !reading || !title || !text || !link || oortField.querySelector(".hub-glyph-signal")) {
+  if (!orbit || !oortField || !reading || !title || !text || !link || orbit.querySelector(".hub-glyph-signal")) {
     return;
   }
 
@@ -245,7 +295,7 @@ async function addGlyphSignals() {
       link.hidden = !held;
       link.textContent = held ? `Follow ${glyph.name}` : "Hold the signal to follow it";
       reading.classList.add("is-visible");
-      oortField.querySelectorAll(".hub-glyph-signal").forEach((signal) => {
+      orbit.querySelectorAll(".hub-glyph-signal").forEach((signal) => {
         signal.classList.toggle("is-held", held && signal.dataset.glyph === glyph.id);
       });
     };
@@ -269,7 +319,7 @@ async function addGlyphSignals() {
       signal.addEventListener("focus", () => reveal(glyph));
       signal.addEventListener("click", () => reveal(glyph, true));
       signal.addEventListener("dblclick", () => window.location.assign(link.href));
-      oortField.appendChild(signal);
+      orbit.appendChild(signal);
     });
   } catch (error) {
     console.error("Hub glyph signals could not be loaded.", error);

@@ -48,6 +48,11 @@
     .book-sit-cue { bottom: 30%; left: 42%; } .book-read-cue { bottom: 21%; right: 12%; }
     .herb-viewport.is-book-attended .book-sit-cue, .herb-viewport.is-seated.is-book-ready .book-read-cue { opacity: 1; pointer-events: auto; }
     .herb-viewport.is-bottle-held .herb-bottle::after { opacity: 1; }
+    .drag-bottle { background: linear-gradient(90deg, rgba(214, 242, 238, .32), rgba(255,255,255,.72), rgba(151, 196, 190, .34)); border: 1px solid rgba(233, 255, 249, .8); border-radius: .55rem .55rem .8rem .8rem; box-shadow: 0 .45rem 1.2rem rgba(0,0,0,.32); height: 5.4rem; left: var(--bottle-x, -12rem); opacity: 0; pointer-events: none; position: absolute; top: var(--bottle-y, -12rem); transform: translate(-50%, -68%); transition: opacity 120ms ease, transform 180ms ease; width: 2.4rem; z-index: 9; }
+    .drag-bottle::after { background: linear-gradient(180deg, rgba(172, 223, 236, .72), rgba(172, 223, 236, .08)); bottom: .4rem; content: ""; height: 38%; left: .3rem; position: absolute; width: 1.75rem; }
+    .herb-viewport.is-bottle-dragging .drag-bottle, .herb-viewport.is-pouring .drag-bottle { opacity: .94; }
+    .herb-viewport.is-pouring .drag-bottle { transform: translate(-50%, -68%) rotate(54deg); }
+    .herb-viewport.is-pouring .drag-bottle::before { background: linear-gradient(rgba(185, 231, 236, .86), transparent); content: ""; height: 4.5rem; left: 2.15rem; position: absolute; top: 3.8rem; width: .18rem; }
     .herb-viewport.is-watered .herb-dry-plant::before { background: radial-gradient(ellipse, rgba(116, 178, 98, .5), transparent 70%); content: ""; inset: 6%; position: absolute; }
     .herb-viewport.is-seated .room-backdrop { filter: brightness(.92) saturate(.9); transform: scale(1.18) translate3d(calc(var(--room-pan-x) * .06), calc(5% + var(--room-pan-y) * .06), 0); }
     .herb-viewport.is-seated .herb-book::before { opacity: 1; }
@@ -74,6 +79,7 @@
   <main class="herb-viewport" aria-label="Herb Room interaction chamber">
     <img class="room-backdrop" src="/assets/weather/weather-038-herbroom.png" alt="A herb-filled room with a bright window, table, open book, clear bottle, and wooden chair." width="1024" height="1536" />
     <div class="room-air" aria-hidden="true"></div>
+    <div class="drag-bottle" aria-hidden="true"></div>
     <div class="room-scene">
       <div class="herb-motion herb-motion--window" aria-hidden="true"></div><div class="herb-motion herb-motion--left" aria-hidden="true"></div><div class="herb-motion herb-motion--right" aria-hidden="true"></div>
       <button class="room-object herb-chair" type="button" aria-label="Sit in the chair"></button>
@@ -92,9 +98,9 @@
     const eastThreshold = document.querySelector('.east-threshold'), eastCue = document.querySelector('.east-threshold__cue');
     const chair = document.querySelector('.herb-chair'), bottle = document.querySelector('.herb-bottle'), plant = document.querySelector('.herb-dry-plant'), book = document.querySelector('.herb-book');
     const reader = document.querySelector('.book-reader'), bookContent = document.querySelector('.book-content'), status = document.querySelector('.herb-status');
-    let distance = 0, panX = 0, panY = 0, panState = null, bottleHeld = false, watered = false, bookReady = false, seated = false, publishedBooks = new Map(), windTimer, roomAudio;
+    let distance = 0, panX = 0, panY = 0, panState = null, bottleHeld = false, bottleDragging = false, watered = false, bookReady = false, seated = false, publishedBooks = new Map(), windTimer, roomAudio;
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-    const updateRoom = () => { viewport.style.setProperty('--room-distance', distance.toFixed(3)); viewport.style.setProperty('--room-pan-x', `${panX}px`); viewport.style.setProperty('--room-pan-y', `${panY}px`); viewport.classList.toggle('is-seated', seated); viewport.classList.toggle('is-bottle-held', bottleHeld); viewport.classList.toggle('is-watered', watered); viewport.classList.toggle('is-book-ready', bookReady); };
+    const updateRoom = () => { viewport.style.setProperty('--room-distance', distance.toFixed(3)); viewport.style.setProperty('--room-pan-x', `${panX}px`); viewport.style.setProperty('--room-pan-y', `${panY}px`); viewport.classList.toggle('is-seated', seated); viewport.classList.toggle('is-bottle-held', bottleHeld); viewport.classList.toggle('is-bottle-dragging', bottleDragging); viewport.classList.toggle('is-watered', watered); viewport.classList.toggle('is-book-ready', bookReady); };
     const revealEast = (clientX) => { const start = innerWidth * .52, progress = clamp((clientX - start) / (innerWidth - start), 0, 1); chamber.style.setProperty('--east-reveal', progress.toFixed(3)); chamber.style.setProperty('--east-shift', `${((1 - progress) * 38).toFixed(2)}%`); chamber.style.setProperty('--water-shift', `${((1 - progress) * 32).toFixed(2)}%`); chamber.style.setProperty('--growth-shift', `${((1 - progress) * 24).toFixed(2)}%`); chamber.style.setProperty('--cue-reveal', clamp((progress - .68) * 4, 0, 1).toFixed(3)); eastThreshold.style.pointerEvents = progress >= .9 ? 'auto' : 'none'; eastCue.classList.toggle('is-available', progress >= .9); };
     async function loadPublishedBook() { try { const response = await fetch('/data/threshold-vault.json', { cache: 'no-store' }); if (!response.ok) throw new Error(`Vault response ${response.status}`); const vault = await response.json(); for (const note of vault.documents) if (note.publish && !note.draft && /^index-000[12]$/.test(note.id) && typeof note.body === 'string') publishedBooks.set(note.id, note); } catch (error) { console.error('Unable to load Herb Room book source.', error); publishedBooks.clear(); } }
     async function enableRoomSound() { const AudioContext = window.AudioContext || window.webkitAudioContext; if (!AudioContext) return; if (!roomAudio || roomAudio.state === 'closed') roomAudio = new AudioContext(); if (roomAudio.state !== 'running') { try { await roomAudio.resume(); } catch (error) { console.error('Unable to start Herb Room sound.', error); } } }
@@ -116,9 +122,12 @@
     }
     function openBook() { const bookSource = publishedBooks.get(watered ? 'index-0002' : 'index-0001'); if (!seated || !bookReady || !bookSource) { status.textContent = 'The open pages lift, then settle without a readable mark.'; return; } renderPublishedBook(bookSource.body); reader.classList.add('is-open'); }
     function closeBook() { reader.classList.remove('is-open'); }
+    function waterPlant() { if (watered) return; watered = true; bottleHeld = false; bottleDragging = false; viewport.classList.add('is-pouring'); updateRoom(); playRoomCue(250, .24, .025); status.textContent = 'Water darkens the soil and disappears.'; window.setTimeout(() => viewport.classList.remove('is-pouring'), 620); }
+    function updateHeldBottle(event) { const bounds = viewport.getBoundingClientRect(); viewport.style.setProperty('--bottle-x', `${event.clientX - bounds.left}px`); viewport.style.setProperty('--bottle-y', `${event.clientY - bounds.top}px`); const plantBounds = plant.getBoundingClientRect(); if (event.clientX >= plantBounds.left && event.clientX <= plantBounds.right && event.clientY >= plantBounds.top && event.clientY <= plantBounds.bottom) waterPlant(); }
     chair.addEventListener('click', sit);
-    bottle.addEventListener('click', () => { void enableRoomSound(); bottleHeld = !bottleHeld; updateRoom(); playRoomCue(420, .1, .012); status.textContent = bottleHeld ? 'The bottle has a quiet weight in your hand.' : 'The bottle returns to the table.'; });
-    plant.addEventListener('click', () => { void enableRoomSound(); if (!bottleHeld || watered) { status.textContent = watered ? 'The soil remains dark and receptive.' : 'The lowered leaves remain still.'; return; } watered = true; bottleHeld = false; updateRoom(); playRoomCue(250, .24, .025); status.textContent = 'Water darkens the soil and disappears.'; });
+    bottle.addEventListener('pointerdown', (event) => { if (event.button !== 0 || watered) return; event.preventDefault(); event.stopPropagation(); void enableRoomSound(); bottleHeld = true; bottleDragging = true; updateHeldBottle(event); updateRoom(); playRoomCue(420, .1, .012); status.textContent = 'The bottle has a quiet weight in your hand.'; });
+    bottle.addEventListener('click', (event) => { if (event.detail !== 0 || watered) return; void enableRoomSound(); bottleHeld = true; updateRoom(); status.textContent = 'The bottle has a quiet weight in your hand.'; });
+    plant.addEventListener('click', () => { if (bottleHeld) waterPlant(); else status.textContent = watered ? 'The soil remains dark and receptive.' : 'The lowered leaves remain still.'; });
     book.addEventListener('pointerenter', () => viewport.classList.add('is-book-attended'));
     book.addEventListener('pointerleave', () => viewport.classList.remove('is-book-attended'));
     book.addEventListener('focus', () => viewport.classList.add('is-book-attended'));
@@ -127,8 +136,8 @@
     document.querySelector('.book-sit-cue').addEventListener('click', sit); document.querySelector('.book-read-cue').addEventListener('click', openBook); document.querySelector('[data-action="close-book"]').addEventListener('click', closeBook);
     scene.addEventListener('wheel', (event) => { event.preventDefault(); if (event.deltaY < 0 && seated) getUp(); distance = clamp(distance + Math.sign(event.deltaY) * .08, 0, 1); updateRoom(); }, { passive: false });
     scene.addEventListener('pointerdown', (event) => { if (event.button !== 0) return; panState = { x: event.clientX, y: event.clientY, panX, panY, moved: false }; });
-    window.addEventListener('pointermove', (event) => { if (!panState) { revealEast(event.clientX); return; } const dx = event.clientX - panState.x, dy = event.clientY - panState.y; if (Math.hypot(dx, dy) < 8 && !panState.moved) return; panState.moved = true; panX = clamp(panState.panX + dx, -180, 180); panY = clamp(panState.panY + dy, -110, 110); viewport.classList.add('is-panning'); updateRoom(); });
-    window.addEventListener('pointerup', () => { if (!panState) return; panState = null; viewport.classList.remove('is-panning'); });
+    window.addEventListener('pointermove', (event) => { if (bottleDragging) { updateHeldBottle(event); return; } if (!panState) { revealEast(event.clientX); return; } const dx = event.clientX - panState.x, dy = event.clientY - panState.y; if (Math.hypot(dx, dy) < 8 && !panState.moved) return; panState.moved = true; panX = clamp(panState.panX + dx, -180, 180); panY = clamp(panState.panY + dy, -110, 110); viewport.classList.add('is-panning'); updateRoom(); });
+    window.addEventListener('pointerup', () => { if (bottleDragging) { bottleDragging = false; if (!watered) bottleHeld = false; updateRoom(); } if (!panState) return; panState = null; viewport.classList.remove('is-panning'); });
     window.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeBook(); getUp(); } });
     window.addEventListener('pagehide', () => { window.clearTimeout(windTimer); if (roomAudio && roomAudio.state !== 'closed') void roomAudio.close().catch((error) => console.error('Unable to close Herb Room sound.', error)); });
     loadPublishedBook(); updateRoom(); windTimer = window.setTimeout(windEvent, 2500);

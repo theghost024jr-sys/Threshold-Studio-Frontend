@@ -29,6 +29,10 @@ test("keeps the Herb Room east threshold as an authored environmental reveal", a
   assert.match(herbRoom, /function enableRoomSound/);
   assert.match(herbRoom, /function playRoomCue/);
   assert.match(herbRoom, /function playWindChimes/);
+  assert.match(herbRoom, /function updateHeldBottle/);
+  assert.match(herbRoom, /function waterPlant/);
+  assert.match(herbRoom, /is-bottle-dragging/);
+  assert.match(herbRoom, /is-pouring/);
   assert.match(herbRoom, /class="book-sit-cue"/);
   assert.match(herbRoom, /class="book-read-cue"/);
   assert.match(herbRoom, /is-book-attended/);

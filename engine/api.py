@@ -13,10 +13,11 @@ app.add_middleware(
     allow_origins=[
         "http://127.0.0.1:8000",
         "http://localhost:8000",
+        "http://127.0.0.1:8788",
+        "http://localhost:8788",
         "https://www.thresholdstudiowebsite.org",
         "https://threshold-studio-frontend.pages.dev",
     ],
-    allow_origin_regex=r"http://(127\.0\.0\.1|localhost):\d+",
     allow_methods=["GET", "POST"],
     allow_headers=["content-type"],
 )

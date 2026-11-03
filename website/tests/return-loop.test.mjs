@@ -15,7 +15,8 @@ test("House and Garden restores the Herb Room paths and its archived exits", asy
   assert.match(houseGarden, /href="environment\/herbroom\.html">Enter Herb Room/);
   assert.match(houseGarden, /scripts\/access-flow\.js/);
   assert.match(herbRoom, /href="\/environment\/basin\.html"/);
-  assert.match(herbRoom, /href="\/environment\/waterfall\.html" class="exit-south">Look South/);
+  assert.match(herbRoom, /href="\/environment\/waterfall\.html" class="exit-south">Waterfall/);
+  assert.match(herbRoom, /href="\/environment\/basin\.html" class="exit-east">Step through to Basin/);
   assert.match(herbRoom, /src="\/scripts\/access-flow\.js"/);
   assert.match(basin, /src="\/scripts\/access-flow\.js"/);
   assert.match(waterfall, /<title>The Drift Falls — Threshold Studio<\/title>/);

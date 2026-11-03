@@ -52,6 +52,26 @@
     a {
       color: #d9e9b8;
     }
+
+    .forest-routes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .forest-routes a {
+      border-bottom: 1px solid rgba(185, 206, 146, 0.6);
+      padding-bottom: 0.35rem;
+      text-decoration: none;
+    }
+
+    .forest-routes a:hover,
+    .forest-routes a:focus-visible {
+      color: #f0f7d8;
+      outline: 2px solid #d9e9b8;
+      outline-offset: 4px;
+    }
   </style>
 </head>
 <body data-branch="old-forest">
@@ -60,7 +80,10 @@
       <p class="kind" id="chamber-pulse">biome</p>
       <h1 id="chamber-title">Old Forest</h1>
       <p id="chamber-lore"></p>
-      <a href="/environment/basin.html">Return to the Basin</a>
+      <nav class="forest-routes" aria-label="Old Forest routes">
+        <a href="/environment/basin.html">Return to the Basin</a>
+        <a href="/portal/cabin-of-moss">Follow the moss-lit way to Cabin of Moss</a>
+      </nav>
     </section>
   </main>
   <script src="/scripts/chamber-loader.js"></script>

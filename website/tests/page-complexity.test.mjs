@@ -33,7 +33,7 @@ test("keeps the richest Learning Wheel above preserved versions", async () => {
   assert.doesNotMatch(html, /@keyframes\s+pulse/i);
 });
 
-test("binds the Prime Atom to the logo, Engine, reveal, and hidden door contracts", async () => {
+test("binds the Prime Atom to the logo, Engine signals, and reveal contracts", async () => {
   const html = await readFile(new URL("index.html", root), "utf8");
   const script = await readFile(new URL("scripts/fibonacci-entry.js", root), "utf8");
 
@@ -41,7 +41,6 @@ test("binds the Prime Atom to the logo, Engine, reveal, and hidden door contract
   assert.match(html, /data-prime-logo/);
   assert.equal((html.match(/src="\/assets\/entry\/threshold-logo\.svg"/g) || []).length, 3);
   await readFile(new URL("assets/entry/threshold-logo.svg", root), "utf8");
-  assert.match(html, /data-prime-door data-door-state="sealed"/);
   assert.match(html, /data-entry-chamber/);
   assert.match(html, /data-hub-reactor/);
   assert.match(html, /hub-heartbeat-spokes/);
@@ -117,11 +116,9 @@ test("keeps Ella in the Beyond outer field", async () => {
 });
 
 test("anchors the Beyond gateway and Ella inner narrative", async () => {
-  const hub = await readFile(new URL("hub.html", root), "utf8");
   const beyond = await readFile(new URL("pages/beyond/beyond.html", root), "utf8");
   const immersive = await readFile(new URL("pages/beyond/immersive.js", root), "utf8");
 
-  assert.match(hub, /href="\/pages\/beyond\/beyond\.html">Beyond<\/a>/);
   assert.match(beyond, /<title>Threshold · Beyond<\/title>/);
   assert.match(beyond, /href="\/styles\/beyond\.css"/);
   assert.match(beyond, /href="\/styles\/immersive\.css"/);

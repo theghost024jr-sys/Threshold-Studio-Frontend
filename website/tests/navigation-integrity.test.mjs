@@ -36,6 +36,10 @@ function escapePattern(value) {
 
 test("every labeled static link resolves to a real destination", async () => {
   const pages = await collectHtmlFiles();
+  const portalApp = await readFile(path.join(root, "portal", "src", "App.jsx"), "utf8");
+  const registeredPortalRoutes = new Set(
+    Array.from(portalApp.matchAll(/<Route\s+path=["']([^"']+)["']/g), (match) => match[1])
+  );
 
   for (const page of pages) {
     const html = await readFile(page, "utf8");
@@ -76,6 +80,17 @@ test("every labeled static link resolves to a real destination", async () => {
           "https://threshold.invalid",
           `${relativePage}: link escapes the published site: ${href}`
         );
+        if (
+          targetUrl.pathname.startsWith("/portal/")
+          && targetUrl.pathname !== "/portal/index.html"
+        ) {
+          const portalRoute = targetUrl.pathname.slice("/portal".length) || "/";
+          assert.ok(
+            registeredPortalRoutes.has(portalRoute),
+            `${relativePage}: Portal link "${label}" has no registered route: ${href}`
+          );
+          continue;
+        }
         const resolved = path.resolve(root, decodeURIComponent(targetUrl.pathname.slice(1)));
         const resolvedRelative = path.relative(root, resolved);
         assert.ok(
@@ -158,4 +173,19 @@ test("every literal Portal navigation route is registered", async () => {
     /destination:\s*["']\/hub\.html["']/,
     "Portal Motion must return internally instead of linking to the static-only Hub route"
   );
+});
+
+test("the Worker protects internal build artifacts and redirects the legacy Portal entry", async () => {
+  const worker = await readFile(path.join(root, "_worker.js"), "utf8");
+
+  assert.match(worker, /url\.pathname === "\/portal\/index\.html"/);
+  assert.match(worker, /new URL\("\/portal\/", request\.url\), 308/);
+  for (const prefix of [
+    "portal-dist",
+    "generated-pages",
+    "page-templates",
+    "echoes/inventory"
+  ]) {
+    assert.match(worker, new RegExp(`url\\.pathname\\.startsWith\\("/${escapePattern(prefix)}/"\\)`));
+  }
 });

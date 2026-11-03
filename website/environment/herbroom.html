@@ -81,10 +81,18 @@
     .east-threshold__growth { background: radial-gradient(ellipse at 92% 42%, rgba(78,132,68,.94) 0 9%, transparent 10%), radial-gradient(ellipse at 76% 55%, rgba(99,151,77,.9) 0 12%, transparent 13%), radial-gradient(ellipse at 88% 72%, rgba(49,104,57,.92) 0 15%, transparent 16%); inset: 36% 0 0 18%; position: absolute; transform: translateX(var(--growth-shift)); }
     .east-threshold__cue { color: #fffff4; font: 500 1rem/1.2 Georgia, serif; letter-spacing: .08em; margin: 0; opacity: var(--cue-reveal); pointer-events: none; position: absolute; right: 34px; text-decoration: none; text-shadow: 0 2px 18px rgba(18,35,24,.9); top: 50%; transform: translateY(-50%); z-index: 2; }
     .east-threshold__cue.is-available { pointer-events: auto; }
+    .east-threshold:focus-within { opacity: 1; pointer-events: auto; }
     .chamber-controls, .herb-accessible { display: flex; gap: .75rem; position: absolute; z-index: 8; }
     .chamber-controls { bottom: 1.25rem; left: 1.25rem; }
-    .herb-accessible { right: 1.25rem; top: 1.25rem; }
-    .chamber-controls a, .herb-accessible button { background: rgba(8,12,8,.72); border: 1px solid rgba(255,255,255,.65); color: #fff; cursor: pointer; font: 600 .72rem/1 sans-serif; letter-spacing: .08em; padding: .7rem .85rem; text-decoration: none; text-transform: uppercase; }
+    .herb-accessible { bottom: 1.25rem; right: 1.25rem; }
+    .chamber-controls a, .herb-accessible a { background: rgba(8,12,8,.82); border: 1px solid rgba(255,244,191,.78); color: #fff4bf; cursor: pointer; font: 600 .72rem/1 sans-serif; letter-spacing: .08em; padding: .7rem .85rem; text-decoration: none; text-transform: uppercase; }
+    .chamber-controls a:hover, .chamber-controls a:focus-visible, .herb-accessible a:hover, .herb-accessible a:focus-visible { background: #fff4bf; color: #10150f; outline: 2px solid #fff4bf; outline-offset: 3px; }
+    @media (max-width: 640px) {
+      .chamber-controls, .herb-accessible { bottom: calc(1rem + env(safe-area-inset-bottom)); gap: .5rem; }
+      .chamber-controls { left: 1rem; }
+      .herb-accessible { right: 1rem; }
+      .chamber-controls a, .herb-accessible a { font-size: .64rem; padding: .72rem .68rem; }
+    }
     .book-reader { background: rgba(15, 21, 14, .94); border: 1px solid rgba(244, 231, 178, .62); box-shadow: 0 1rem 4rem rgba(0,0,0,.7); color: #f5efd2; left: 50%; max-height: min(72svh, 42rem); max-width: min(38rem, 86vw); opacity: 0; overflow: auto; padding: 2rem; pointer-events: none; position: absolute; top: 50%; transform: translate(-50%, -46%); transition: opacity 250ms ease, transform 250ms ease; width: 100%; z-index: 10; }
     .book-reader.is-open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
     .book-reader h2 { font-weight: normal; margin-top: 0; }
@@ -110,7 +118,8 @@
       <button class="room-object herb-book" type="button" aria-label="Attend to the open book"></button>
       <div class="east-threshold" aria-hidden="false"><div class="east-threshold__water"></div><div class="east-threshold__growth"></div><a class="east-threshold__cue" href="/environment/basin.html">Step through.</a></div>
     </div>
-    <div class="chamber-controls" aria-label="Chamber exits"><a href="/environment/waterfall.html" class="exit-south">Look South</a></div>
+    <nav class="chamber-controls" aria-label="Chamber exits"><a href="/environment/waterfall.html" class="exit-south">Waterfall</a></nav>
+    <nav class="herb-accessible" aria-label="Authored traversal"><a href="/environment/basin.html" class="exit-east">Step through to Basin</a></nav>
     <button class="book-sit-cue" type="button">Sit</button><button class="book-read-cue" type="button">Read</button>
     <aside class="book-reader" aria-labelledby="book-title" aria-modal="true" role="dialog"><button type="button" data-action="close-book">Close</button><h2 id="book-title">The open page</h2><div class="book-content"></div></aside>
     <p class="herb-status" aria-live="polite"></p>
@@ -163,6 +172,11 @@
     book.addEventListener('focus', () => viewport.classList.add('is-book-attended'));
     book.addEventListener('blur', () => viewport.classList.remove('is-book-attended'));
     book.addEventListener('click', () => { if (seated) openBook(); });
+    eastCue.addEventListener('focus', () => {
+      revealEast(window.innerWidth);
+      eastThreshold.style.pointerEvents = 'auto';
+      eastCue.classList.add('is-available');
+    });
     document.querySelector('.book-sit-cue').addEventListener('click', sit); document.querySelector('.book-read-cue').addEventListener('click', openBook); document.querySelector('[data-action="close-book"]').addEventListener('click', closeBook);
     scene.addEventListener('wheel', (event) => { event.preventDefault(); if (event.deltaY < 0 && seated) getUp(); if (gardenFocus >= .55) { gardenDistance = clamp(gardenDistance + Math.sign(event.deltaY) * .08, 0, 1); if (gardenDistance === 1 && event.deltaY > 0) status.textContent = 'The sill holds the Garden at a distance.'; } else distance = clamp(distance + Math.sign(event.deltaY) * .08, 0, 1); updateRoom(); }, { passive: false });
     scene.addEventListener('pointerdown', (event) => { if (event.button !== 0) return; void enableRoomSound(); panState = { x: event.clientX, y: event.clientY, panX, panY, moved: false }; });

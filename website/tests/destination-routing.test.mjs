@@ -17,15 +17,48 @@ const hubDestinations = [
 ];
 
 test("routes Hub cards to owned destination pages", async () => {
-  const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const hub = await readFile(new URL("../hub.html", import.meta.url), "utf8");
   for (const destination of hubDestinations) {
     assert.match(hub, new RegExp(`href=["']${destination}["']`));
   }
   assert.doesNotMatch(hub, /href=["']spoke\.html/);
 });
 
+test("renders first-level Hub routes as a connected, depth-aware field", async () => {
+  const [hub, graph] = await Promise.all([
+    readFile(new URL("../hub.html", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/hub-graph.js", import.meta.url), "utf8")
+  ]);
+
+  assert.match(hub, /<svg class="hub-graph-canvas" data-hub-graph-canvas/);
+  assert.match(hub, /data-graph-link="house" class="hub-graph-link hub-graph-link--house"/);
+  assert.match(hub, /data-graph-node="house" data-world-slit href="housegarden\.html"/);
+  assert.match(hub, /data-graph-node="ethos" data-hub-scaffold href="ethos\.html" hidden/);
+  assert.match(hub, /data-graph-node="contact" data-hub-scaffold href="contact\.html" hidden/);
+  assert.match(hub, /data-hub-vault-evidence/);
+  assert.match(hub, /transform: perspective\(1200px\)/);
+  assert.match(hub, /src="\/scripts\/hub-graph\.js(?:\?[^"]*)?"/);
+  assert.match(graph, /graph\.addEventListener\("pointermove"/);
+  assert.match(graph, /graph\.addEventListener\("wheel"/);
+  assert.match(graph, /const syncThreads =/);
+  assert.match(graph, /querySelectorAll\("\[data-graph-link\]"\)/);
+  assert.match(graph, /fetch\("\/data\/threshold-vault\.json"/);
+  assert.match(graph, /data-vault-evidence/);
+  for (const documentId of ["housegarden", "herbroom", "herbroom-threshold-east", "basin", "old-forest"]) {
+    assert.match(graph, new RegExp(`"${documentId}"`));
+  }
+  assert.match(graph, /threshold:access-flow-ready/);
+  assert.match(graph, /awaiting validation/);
+  assert.match(graph, /threshold:hub-vault-evidence-revealed/);
+  assert.match(graph, /Math\.min\(1\.08, Math\.max\(0\.94/);
+  assert.match(graph, /prefers-reduced-motion: reduce/);
+});
+
 test("warms the existing Entry Hub without replacing its route structure", async () => {
-  const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const [hub, routes] = await Promise.all([
+    readFile(new URL("../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../hub.html", import.meta.url), "utf8")
+  ]);
   const warmth = await readFile(new URL("../scripts/entry-warmth.js", import.meta.url), "utf8");
 
   assert.match(hub, /--season-color:/);
@@ -74,7 +107,7 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(warmth, /signal\.addEventListener\("dblclick"/);
   assert.match(warmth, /window\.location\.assign\(link\.href\)/);
   assert.match(warmth, /function wireRouteConstellations\(oortCloud\)/);
-  assert.match(hub, /data-hub-topology/);
+  assert.match(routes, /data-hub-topology/);
   assert.match(warmth, /const routeTopology/);
   assert.match(warmth, /const updateTopology = \(route\)/);
   assert.match(warmth, /"house and garden": \{/);
@@ -82,14 +115,18 @@ test("warms the existing Entry Hub without replacing its route structure", async
 });
 
 test("keeps panoramic main-Hub gestures separate from the return Hub", async () => {
-  const [mainHub, returnHub, experience] = await Promise.all([
+  const [mainHub, returnHub, returnState, experience] = await Promise.all([
     readFile(new URL("../index.html", import.meta.url), "utf8"),
     readFile(new URL("../hub.html", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/hub-return-state.js", import.meta.url), "utf8"),
     readFile(new URL("../scripts/main-hub-experience.js", import.meta.url), "utf8")
   ]);
 
   assert.match(mainHub, /main-hub-experience\.js/);
   assert.doesNotMatch(returnHub, /main-hub-experience\.js/);
+  assert.match(returnHub, /data-hub-return-reading/);
+  assert.match(returnHub, /hub-return-state\.js/);
+  assert.match(returnState, /threshold-return-state/);
   assert.match(experience, /function bindMainHubPan/);
   assert.match(experience, /orbit\.addEventListener\("wheel"/);
   assert.match(experience, /orbit\.addEventListener\("pointerdown"/);
@@ -116,45 +153,21 @@ test("keeps the World Map holding node attached to the canonical Fib 13 Hub", as
   assert.doesNotMatch(map, /world-map-node--holding" href="hub\.html"/);
 });
 
-test("boots the public Hub from a real engine entry control", async () => {
+test("retires the legacy Return page in favour of the Main Hub", async () => {
+  await assert.rejects(
+    readFile(new URL("../hub-return.html", import.meta.url), "utf8"),
+    { code: "ENOENT" }
+  );
+
   const hub = await readFile(new URL("../hub.html", import.meta.url), "utf8");
 
-  assert.match(hub, /<button id="hub-enter-engine"[^>]*>Enter Engine<\/button>/);
-  assert.match(hub, /class="hub-glyph hub-glyph-one"/);
-  assert.match(hub, /class="hub-glyph hub-glyph-two"/);
-  assert.match(hub, /class="hub-glyph hub-glyph-three"/);
-  assert.match(hub, /src="\/threshold-engine\.js"/);
-  assert.match(hub, /src="\/scripts\/hub-public-runtime\.js(?:\?[^"]*)?"/);
-  assert.doesNotMatch(hub, /src="\/scripts\/fibonacci-entry\.js"/);
-});
-
-test("teaches Hub interaction through environmental response rather than an overlay", async () => {
-  const [experience, styles] = await Promise.all([
-    readFile(new URL("../scripts/hub-public-experience.js", import.meta.url), "utf8"),
-    readFile(new URL("../styles/hub-public.css", import.meta.url), "utf8")
-  ]);
-
-  assert.match(experience, /function updateOortProximity/);
-  assert.match(experience, /function bindGlyphNodes/);
-  assert.match(experience, /glyph\.addEventListener\("dblclick"/);
-  assert.match(experience, /window\.location\.assign\("\/glyph-archive-node\.html"\)/);
-  assert.match(experience, /function bindDepthGesture/);
-  assert.match(experience, /orbitSystem\.addEventListener\("wheel"/);
-  assert.match(experience, /function bindPanGesture/);
-  assert.match(experience, /const panThreshold = 8/);
-  assert.match(experience, /suppressNextClick = true/);
-  assert.match(experience, /event\.stopImmediatePropagation\(\)/);
-  assert.doesNotMatch(experience, /tutorial|onboarding|checklist/i);
-  assert.match(styles, /\.hub-is-attended \.hub-oort-field/);
-  assert.match(styles, /\.hub-orbit-system\[data-hub-depth="3"\]/);
-  assert.match(styles, /\.hub-glyph\.is-selected/);
-  assert.match(styles, /\.hub-pan-structure/);
-  assert.match(styles, /\.hub-pan-foreground/);
-  assert.match(styles, /\.hub-is-panning \.hub-orbit-system/);
+  assert.match(hub, /data-hub-return-reading/);
+  assert.match(hub, /hub-return-state\.js/);
+  assert.doesNotMatch(hub, /hub-public-runtime\.js/);
 });
 
 test("ships the Fib 13 Hub reactor interaction contract", async () => {
-  const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const hub = await readFile(new URL("../hub.html", import.meta.url), "utf8");
   const reactor = await readFile(
     new URL("../scripts/fibonacci-entry.js", import.meta.url),
     "utf8"
@@ -241,7 +254,7 @@ test("keeps Engine outside the Fibonacci page topology", async () => {
     "utf8"
   ));
   const engine = await readFile(new URL("../deep-system/engine.html", import.meta.url), "utf8");
-  const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const hub = await readFile(new URL("../hub.html", import.meta.url), "utf8");
   const reactor = await readFile(new URL("../scripts/fibonacci-entry.js", import.meta.url), "utf8");
 
   assert.ok(!manifest.spokes.some((spoke) => spoke.id === "engine"));

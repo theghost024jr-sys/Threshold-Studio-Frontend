@@ -20,8 +20,10 @@ test("declares canonical place contracts for the published world surface", async
 
   const places = topologyById(topology);
   assert.equal(places.get("entry-hub").route, "/index.html");
-  assert.equal(places.get("world-holding").route, "/hub.html");
-  assert.equal(places.get("world-holding").returnsTo, "entry-hub");
+  assert.equal(places.get("hub").route, "/hub.html");
+  assert.equal(places.get("hub").returnsTo, "entry-hub");
+  assert.equal(places.get("hub").label, "Return Hub");
+  assert.ok(!places.has("world-holding"));
   assert.equal(places.get("world-map").classification, "CONNECT");
   assert.equal(places.get("lanternroot-conservatory").classification, "NEW");
 

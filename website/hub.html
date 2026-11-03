@@ -1,97 +1,1904 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Threshold Hub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/complexity-layers.css">
-  <link rel="stylesheet" href="/styles/hub-interaction.css">
-  <link rel="stylesheet" href="/styles/pulse.css">
-  <link rel="stylesheet" href="/styles/styles.css">
-  <link rel="stylesheet" href="/styles/hub-public.css?v=flagship-fib13-4">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/complexity-layers.css" />
+  <style>
+    :root {
+      --bg-0: #000000;
+      --bg-1: #0a0f2b;
+      --bg-2: #1f3bff;
+      --ink: rgba(248, 243, 232, 0.96);
+      --ink-soft: rgba(217, 226, 235, 0.78);
+      --gold: #f3be63;
+      --teal: #8be4d5;
+      --line: rgba(243, 190, 99, 0.36);
+      --panel: rgba(7, 10, 18, 0.74);
+      --panel-strong: rgba(11, 16, 28, 0.9);
+      --season-color: rgba(255, 200, 150, 0.25);
+    }
+
+    @property --orbit-drift {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    * { box-sizing: border-box; }
+
+    html::after {
+      content: "";
+      position: fixed;
+      inset: -24%;
+      z-index: 2;
+      background: linear-gradient(104deg, transparent 29%, rgba(255, 221, 172, 0.025) 43%, rgba(139, 228, 213, 0.065) 50%, rgba(255, 221, 172, 0.025) 57%, transparent 71%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      pointer-events: none;
+      animation: threshold-wind 48s cubic-bezier(0.36, 0, 0.64, 1) infinite;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at center, rgba(255, 240, 220, 0.05), rgba(0, 0, 0, 0.9)),
+        #000000;
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20vmax;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.42;
+      background:
+        radial-gradient(circle at 58% 42%, rgba(214, 168, 75, 0.15), transparent 31%),
+        radial-gradient(circle at 15% 18%, rgba(31, 59, 255, 0.2), transparent 39%),
+        conic-gradient(from 0deg, #000000, #0a0f2b 26%, rgba(31, 59, 255, 0.18) 49%, #000000 74%, #0a0f2b);
+      mix-blend-mode: screen;
+      animation: void-field-rotation 240s linear infinite;
+    }
+
+    body::after {
+      opacity: 0.05;
+      filter: none;
+      animation-duration: 320s;
+      animation-direction: reverse;
+    }
+
+    .void-field {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.92;
+      transition: opacity 420ms ease, filter 420ms ease;
+    }
+
+    body[data-reactor-zone="retreat"] .void-field { opacity: 0.68; }
+    body.is-void-descending .void-field {
+      opacity: 1;
+      filter: brightness(0.62) contrast(1.28);
+    }
+
+    .entry-shell {
+      position: relative;
+      z-index: 1;
+      isolation: isolate;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(2.2rem, 5vw, 4.8rem);
+      overflow: clip;
+      animation: hub-fade-in 1.2s ease both;
+    }
+
+    .entry-shell::before {
+      content: "";
+      position: absolute;
+      inset: -200px;
+      z-index: 0;
+      background: radial-gradient(circle, rgba(255, 240, 220, 0.05), rgba(0, 0, 0, 0.9));
+      animation: hub-fade-field 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .entry-shell::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      z-index: 0;
+      background: linear-gradient(112deg, transparent 36%, rgba(255, 229, 190, 0.05) 48%, transparent 60%);
+      animation: hub-solar-wind 24s linear infinite;
+      pointer-events: none;
+    }
+
+    .entry-panel {
+      width: min(1440px, 100%);
+      padding: clamp(0.25rem, 1vw, 0.8rem);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(1.25rem, 3.2vw, 3.5rem);
+      position: relative;
+      transform: translate3d(calc(var(--main-hub-pan-x, 0px) * 0.08), calc(var(--main-hub-pan-y, 0px) * 0.08), 0);
+      transition: transform 180ms ease-out;
+    }
+
+    .hub-constellation {
+      position: absolute;
+      z-index: 1;
+      height: 1px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(255, 220, 166, 0), rgba(255, 220, 166, 0.58), rgba(255, 220, 166, 0));
+      background-size: 220% 100%;
+      box-shadow: 0 0 8px rgba(255, 210, 138, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 500ms ease;
+    }
+
+    .hub-constellation::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -3px;
+      width: 6px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: rgba(139, 228, 213, 0.9);
+      box-shadow: 0 0 12px rgba(139, 228, 213, 0.88);
+      transform: translateY(-50%);
+    }
+
+    .hub-constellation.is-visible {
+      opacity: 1;
+      animation: hub-route-approach 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .hub-comet {
+      position: absolute;
+      z-index: 0;
+      width: 140px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 236, 204, 0.76), transparent);
+      filter: blur(0.25px);
+      opacity: 0;
+      pointer-events: none;
+      animation: hub-comet 27s ease-in-out infinite;
+      animation-delay: var(--hub-comet-delay, 0s);
+    }
+
+    .hub-oort-approach {
+      position: absolute;
+      z-index: 2;
+      max-width: 13rem;
+      color: rgba(209, 240, 233, 0.9);
+      font: 700 0.56rem/1.3 "Manrope", sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
+      transform: translate(0.8rem, -50%);
+      pointer-events: none;
+    }
+
+    @media (min-width: 1100px) {
+      body .entry-panel {
+        grid-template-columns: 1.35fr 0.85fr;
+      }
+
+      body .entry-orbit {
+        width: min(640px, 76vw);
+      }
+
+      body .entry-mark {
+        width: min(160px, 10vw);
+      }
+
+      body h1 {
+        font-size: 4rem;
+      }
+
+      body .entry-copy p {
+        font-size: 1.3rem;
+      }
+    }
+
+    .entry-copy,
+    .entry-nav {
+      position: relative;
+      z-index: 1;
+    }
+
+    .entry-copy {
+      isolation: isolate;
+    }
+
+    .entry-reactor {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hub-heartbeat-spokes {
+      position: absolute;
+      left: 0;
+      top: 1.15rem;
+      width: min(320px, 76vw);
+      aspect-ratio: 1;
+      z-index: 0;
+      pointer-events: none;
+      opacity: calc(0.08 + var(--spoke-glow, 0) * 0.52);
+      filter: blur(0.2px);
+    }
+
+    .entry-engine-core {
+      position: absolute;
+      left: 50%;
+      bottom: 3%;
+      width: clamp(86px, 12vw, 132px);
+      aspect-ratio: 1;
+      translate: -50% 0;
+      z-index: 1;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: calc(0.07 + var(--engine-pressure, 0) * 0.18 + var(--heartbeat-pressure, 0) * 0.12);
+      background: radial-gradient(circle, rgba(214, 168, 75, 0.28), rgba(31, 59, 255, 0.08) 42%, transparent 70%);
+      filter: blur(1px);
+      scale: calc(0.92 + var(--engine-pressure, 0) * 0.08 + var(--heartbeat-pressure, 0) * 0.04);
+      transition: opacity 280ms ease, scale 280ms ease;
+    }
+
+    .entry-engine-core::before,
+    .entry-engine-core::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border-radius: 50%;
+      border: 1px solid rgba(214, 168, 75, 0.3);
+      box-shadow: 0 0 22px rgba(31, 59, 255, 0.2);
+    }
+
+    .entry-engine-core::after {
+      inset: 36%;
+      border: 0;
+      background: rgba(214, 168, 75, 0.52);
+      box-shadow: 0 0 18px rgba(214, 168, 75, 0.42);
+      animation-delay: 120ms;
+    }
+
+    .entry-mark {
+      width: clamp(60px, 10vw, 130px);
+      aspect-ratio: 1;
+      margin: 0 0 0.9rem;
+      opacity: 0.92;
+      filter: drop-shadow(0 0 18px rgba(255, 219, 136, 0.52));
+      scale: calc(1 + var(--logo-charge, 0) * 0.06);
+      rotate: calc(var(--logo-direction, 0) * 1deg);
+      transition: opacity 360ms ease, filter 360ms ease, scale 360ms ease, rotate 480ms ease;
+    }
+
+    body[data-prime-atom-state="listening"] .entry-mark,
+    body[data-prime-atom-state="resonant"] .entry-mark {
+      filter: drop-shadow(0 0 24px rgba(139, 228, 213, 0.68));
+    }
+
+    body[data-prime-atom-state="revealing"] .entry-mark {
+      opacity: 0.38;
+      scale: 0.82;
+    }
+
+    body[data-prime-atom-state="descending"] .entry-mark {
+      opacity: 0;
+      scale: 0.18;
+    }
+
+    h1 {
+      margin: 0;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: clamp(1.5rem, 3.6vw, 3.5rem);
+      font-family: "Cinzel", Georgia, serif;
+      line-height: 1.15;
+    }
+
+    .entry-kicker {
+      margin: 0.45rem 0 0;
+      color: rgba(241, 206, 146, 0.92);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: clamp(0.68rem, 0.9vw, 0.9rem);
+    }
+
+    .entry-map-link {
+      display: inline-block;
+      margin-top: 1.25rem;
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .entry-map-link:hover,
+    .entry-map-link:focus-visible {
+      color: var(--gold);
+    }
+
+    p {
+      margin: 0.95rem 0 0;
+      max-width: 54ch;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      font-size: clamp(0.95rem, 1.15vw, 1.2rem);
+    }
+
+    .entry-orbit {
+      margin-top: 1.15rem;
+      width: min(560px, 76vw);
+      aspect-ratio: 1;
+      position: relative;
+      border-radius: 50%;
+      border: 1px solid rgba(243, 190, 99, 0.34);
+      background:
+        radial-gradient(circle at center, rgba(243, 190, 99, 0.24), rgba(10, 14, 20, 0.14) 42%, rgba(10, 14, 20, 0) 70%);
+      --wheel-rotation: 0deg;
+      --wheel-tilt-x: 0deg;
+      --wheel-tilt-y: 0deg;
+      --wheel-scale: 1;
+      --core-scale: 1;
+      --core-glow: 0.24;
+      --spoke-glow: 0;
+      --receptor-charge: 0;
+      perspective: 700px;
+      isolation: isolate;
+      animation: hub-pulse 4s ease-in-out infinite;
+      cursor: grab;
+      transform: translate3d(calc(var(--main-hub-pan-x, 0px) * 0.48), calc(var(--main-hub-pan-y, 0px) * 0.48), 0) scale(calc(1 + var(--main-hub-depth, 0) * 0.16));
+      transition: transform 180ms ease-out, filter 420ms ease;
+    }
+
+    body.is-main-hub-panning .entry-orbit { cursor: grabbing; }
+    .entry-orbit[data-main-hub-depth="3"] { filter: brightness(1.16) saturate(1.08); }
+
+    .entry-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 14%;
+      z-index: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(
+        circle at calc(50% + var(--route-approach-x, 0%)) calc(50% + var(--route-approach-y, 0%)),
+        rgba(139, 228, 213, 0.22),
+        transparent 44%
+      );
+      transition: opacity 420ms ease;
+    }
+
+    .entry-orbit[data-route-approach]::after {
+      opacity: 1;
+    }
+
+    .hub-cosmic-rotation {
+      position: absolute;
+      inset: -145%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hub-oort-field {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      transform-style: preserve-3d;
+      transition: opacity 700ms ease, filter 700ms ease;
+    }
+
+    .hub-cosmic-rotation::after {
+      content: "";
+      position: absolute;
+      inset: -60px;
+      z-index: -1;
+      border-radius: 50%;
+      background: var(--season-color);
+      filter: none;
+      scale: 0.96 1.04;
+      animation: hub-heliosphere 14s ease-in-out infinite, hub-heliosphere-parallax 100s linear infinite;
+      pointer-events: none;
+    }
+
+    .hub-cosmic-rotation::before {
+      content: "";
+      position: absolute;
+      inset: -20px;
+      z-index: -2;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 240, 220, 0.25), rgba(255, 240, 220, 0) 70%);
+      filter: none;
+      scale: 1.04 0.96;
+      animation: hub-atmosphere 10s ease-in-out infinite, hub-atmosphere-parallax 140s linear infinite;
+      pointer-events: none;
+    }
+
+    .hub-lens {
+      position: absolute;
+      inset: -110px;
+      z-index: -3;
+      border-radius: 50%;
+      background: radial-gradient(circle, transparent 22%, rgba(186, 213, 235, 0.018) 42%, rgba(255, 240, 220, 0.06) 51%, rgba(186, 213, 235, 0.018) 62%, transparent 74%);
+      mix-blend-mode: screen;
+      opacity: 0.25;
+      pointer-events: none;
+      animation: hub-lens-pulse 18s ease-in-out infinite;
+    }
+
+    .hub-oort {
+      position: absolute;
+      z-index: 1;
+      width: var(--hub-oort-size, 4px);
+      height: var(--hub-oort-size, 4px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 232, 188, 0.94), rgba(175, 206, 255, 0.32) 34%, rgba(175, 206, 255, 0));
+      opacity: var(--hub-oort-opacity, 0.22);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      transition:
+        left 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        top 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        width 700ms ease,
+        height 700ms ease,
+        opacity 700ms ease,
+        filter 700ms ease;
+    }
+
+    .hub-oort[data-depth="far"] {     filter: opacity(0.65); }
+    .hub-oort[data-depth="near"] { filter: drop-shadow(0 0 5px rgba(201, 225, 255, 0.5)); }
+    .hub-oort.is-related {
+      filter: drop-shadow(0 0 10px rgba(139, 228, 213, 0.9));
+      opacity: min(0.9, calc(var(--hub-oort-opacity, 0.22) + 0.22));
+    }
+
+    .hub-glyph-signal {
+      position: absolute;
+      z-index: 3;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      border: 1px solid rgba(139, 228, 213, 0.34);
+      border-radius: 50%;
+      background: rgba(8, 15, 30, 0.54);
+      box-shadow: 0 0 14px rgba(139, 228, 213, 0.24);
+      cursor: pointer;
+      opacity: 0.6;
+      transform: translate(-50%, -50%);
+      transition: opacity 220ms ease, transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      animation: hub-glyph-signal-pulse 4.8s ease-in-out infinite;
+      animation-delay: var(--hub-glyph-delay, 0s);
+    }
+
+    body[data-main-hub-discovery="arrival"] .hub-glyph-signal[data-glyph-order="2"],
+    body[data-main-hub-discovery="arrival"] .hub-glyph-signal[data-glyph-order="3"],
+    body[data-main-hub-discovery="space"] .hub-glyph-signal[data-glyph-order="3"] {
+      animation: none;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .hub-glyph-signal:hover,
+    .hub-glyph-signal:focus-visible,
+    .hub-glyph-signal.is-held {
+      border-color: rgba(227, 255, 247, 0.9);
+      box-shadow: 0 0 24px rgba(139, 228, 213, 0.7);
+      opacity: 1;
+      outline: none;
+      transform: translate(-50%, -50%) scale(1.22);
+    }
+
+    .hub-glyph-signal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 5px rgba(214, 249, 239, 0.66));
+    }
+
+    .hub-glyph-reading {
+      max-width: 32rem;
+      margin: 0.9rem auto 0;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(139, 228, 213, 0.24);
+      background: rgba(4, 10, 22, 0.48);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 260ms ease, transform 260ms ease;
+    }
+
+    .hub-glyph-reading.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hub-glyph-reading__eyebrow {
+      margin: 0;
+      color: rgba(139, 228, 213, 0.88);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hub-glyph-reading h2 {
+      margin: 0.3rem 0;
+      font-size: 1.05rem;
+    }
+
+    .hub-glyph-reading p {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+    .hub-glyph-reading a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: var(--teal);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hub-oort-field[data-oort-state="collapse"] { filter: brightness(0.68) saturate(0.55); }
+    .hub-oort-field[data-oort-state="anchoring"] { filter: brightness(1.14); }
+    .hub-slit {
+      background: linear-gradient(180deg, transparent, rgba(217, 255, 246, 0.9) 34%, rgba(128, 233, 223, 0.42) 68%, transparent);
+      box-shadow: 0 0 0 transparent;
+      height: 34%;
+      left: 76%;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 29%;
+      transform: rotate(9deg) scaleY(0.68);
+      transform-origin: center;
+      transition: box-shadow 900ms ease, opacity 700ms ease, transform 900ms ease, width 900ms ease;
+      width: 1px;
+      z-index: 4;
+    }
+
+    .entry-orbit[data-slit-state="near"] .hub-slit {
+      box-shadow: 0 0 10px rgba(139, 228, 213, 0.44);
+      opacity: 0.46;
+      transform: rotate(9deg) scaleY(0.82);
+    }
+
+    .entry-orbit[data-slit-state="open"] .hub-slit {
+      box-shadow: 0 0 24px rgba(180, 255, 244, 0.7), 0 0 44px rgba(88, 178, 232, 0.32);
+      opacity: 0.94;
+      transform: rotate(9deg) scaleY(1);
+      width: 3px;
+    }
+    .entry-orbit > img {
+      animation: hub-orbit-shimmer 12s linear infinite;
+    }
+
+    .entry-rotor,
+    .entry-node-field,
+    .entry-signal-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .entry-rotor {
+      transform: rotateX(var(--wheel-tilt-x)) rotateY(var(--wheel-tilt-y)) rotate(calc(var(--wheel-rotation) + var(--orbit-drift, 0deg))) scale(var(--wheel-scale));
+      transform-style: preserve-3d;
+      will-change: transform;
+      animation: hub-orbit-drift 20s ease-in-out infinite;
+    }
+
+    .entry-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .entry-ring-outer {
+      inset: 18% 7%;
+      border: 1px dashed rgba(155, 214, 255, 0.32);
+      transform: rotateX(64deg) rotateZ(12deg);
+    }
+
+    .entry-ring-inner {
+      inset: 18% 7%;
+      border: 1px solid rgba(139, 228, 213, 0.34);
+      transform: rotateY(64deg) rotateZ(32deg);
+    }
+
+    .prime-atom-logo-field {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 72%;
+      aspect-ratio: 1;
+      translate: -50% -50%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: calc(0.05 + var(--receptor-charge) * 0.09);
+      filter: blur(0.4px) drop-shadow(0 0 24px rgba(243, 190, 99, 0.3));
+      transition: opacity 360ms ease, scale 520ms ease, filter 420ms ease;
+    }
+
+    .prime-reveal-box {
+      position: absolute;
+      inset: 5%;
+      z-index: 6;
+      pointer-events: none;
+      border: 1px solid transparent;
+      opacity: 0;
+      scale: 0.72;
+      transition: opacity 240ms ease, scale 520ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease;
+    }
+
+    body[data-heartbeat-phase="micro-pulse"] .entry-ring {
+      animation: heartbeat-ring-micro 640ms ease-out;
+    }
+
+    body[data-heartbeat-phase="micro-pulse"] .entry-core,
+    body[data-heartbeat-phase="micro-pulse"] .prime-atom-logo-field {
+      animation: heartbeat-life-pulse 640ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-ring {
+      animation: heartbeat-ring-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-core {
+      animation: heartbeat-nucleus-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-signal-ring {
+      animation: heartbeat-pressure-wave 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-engine-core::before,
+    body[data-heartbeat-phase="heartbeat"] .entry-engine-core::after,
+    body[data-heartbeat-phase="heartbeat"] .entry-receptor::after {
+      animation: heartbeat-engine-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-mark,
+    body[data-heartbeat-phase="heartbeat"] .prime-atom-logo-field {
+      animation: heartbeat-logo-primary 1100ms ease-out;
+    }
+
+    body[data-heartbeat-phase="heartbeat"] .entry-panel {
+      filter: brightness(1.035);
+    }
+
+    body[data-heartbeat-phase="flicker"] .entry-core {
+      animation: heartbeat-nucleus-flicker 520ms linear;
+    }
+
+    body[data-heartbeat-phase="flicker"] .entry-ring,
+    body[data-heartbeat-phase="flicker"] .entry-orbit-node,
+    body[data-heartbeat-phase="flicker"] .entry-receptor {
+      animation: heartbeat-anomaly-glitch 520ms steps(2, end);
+    }
+
+    body[data-heartbeat-phase="flicker"] .entry-mark,
+    body[data-heartbeat-phase="flicker"] .prime-atom-logo-field {
+      animation: heartbeat-logo-echo 520ms steps(3, end);
+    }
+
+    body[data-heartbeat-phase="flicker"] .void-field {
+      animation: heartbeat-void-darken 520ms linear;
+    }
+
+    body[data-prime-atom-state="revealing"] .prime-reveal-box,
+    body[data-prime-atom-state="descending"] .prime-reveal-box {
+      opacity: 0.72;
+      scale: 1;
+      border-color: rgba(139, 228, 213, 0.38);
+    }
+
+    body[data-prime-atom-state="revealing"] .prime-atom-logo-field {
+      opacity: 0.18;
+      scale: 1.12 0.76;
+      filter: blur(1px) drop-shadow(0 0 30px rgba(139, 228, 213, 0.54));
+    }
+
+    body[data-prime-atom-state="descending"] .prime-atom-logo-field {
+      opacity: 0;
+      scale: 0.12;
+    }
+
+    .entry-signal-ring {
+      inset: 24%;
+      border: 1px solid rgba(243, 190, 99, calc(0.08 + var(--receptor-charge) * 0.36));
+      opacity: 0;
+    }
+
+    .entry-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 26%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 246, 227, 0.95) 0%, rgba(243, 190, 99, 0.78) 48%, rgba(12, 18, 26, 0.4) 100%);
+      box-shadow: 0 0 24px rgba(243, 190, 99, calc(0.18 + var(--core-glow)));
+      scale: var(--core-scale);
+      will-change: scale, box-shadow;
+      z-index: 4;
+    }
+
+    .prime-atom-logo-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 16%;
+      aspect-ratio: 1;
+      translate: -50% -50%;
+      z-index: 5;
+      pointer-events: none;
+      opacity: calc(0.3 + var(--receptor-charge) * 0.46);
+      filter: drop-shadow(0 0 9px rgba(255, 242, 210, 0.7));
+      mix-blend-mode: screen;
+    }
+
+    .entry-spoke {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 50%;
+      height: 1px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(var(--heartbeat-color-rgb, 243, 190, 99), 0.85), rgba(139, 228, 213, 0));
+      opacity: calc(0.28 + var(--spoke-glow) * 0.54);
+      box-shadow: 0 0 calc(var(--spoke-glow) * 12px) rgba(var(--heartbeat-color-rgb, 243, 190, 99), 0.72);
+      transition: opacity 240ms ease-in-out, box-shadow 240ms ease-in-out;
+    }
+
+    .entry-spoke-a { transform: rotate(-22deg); }
+    .entry-spoke-b { transform: rotate(102deg); }
+    .entry-spoke-c { transform: rotate(218deg); }
+
+    .entry-orbit-node {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      margin: -4px;
+      border-radius: 50%;
+      background: rgba(181, 232, 226, 0.92);
+      box-shadow: 0 0 10px rgba(139, 228, 213, 0.46);
+      opacity: var(--node-opacity, 0.24);
+      translate: var(--node-x, 0) var(--node-y, 0);
+      scale: var(--node-scale, 1);
+      will-change: translate, opacity, scale;
+    }
+
+    .entry-orbit-node.is-sparking {
+      animation: reactor-spark 620ms ease-out;
+    }
+
+    .entry-receptor {
+      width: 78px;
+      height: 32px;
+      margin: -9px auto 0;
+      --receptor-charge: 0;
+      position: relative;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      opacity: calc(0.46 + var(--receptor-charge) * 0.5);
+      scale: calc(1 + var(--receptor-charge) * 0.06);
+      transition: opacity 400ms ease-in-out, scale 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .entry-receptor::before,
+    .entry-receptor::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .entry-receptor::before {
+      width: 58px;
+      height: 16px;
+      border: 1px solid rgba(139, 228, 213, calc(0.24 + var(--receptor-charge) * 0.48));
+      box-shadow: 0 0 14px rgba(139, 228, 213, calc(var(--receptor-charge) * 0.24));
+    }
+
+    .entry-receptor::after {
+      width: 8px;
+      height: 8px;
+      background: rgba(243, 190, 99, 0.86);
+      box-shadow: 0 0 12px rgba(243, 190, 99, 0.68);
+    }
+
+    .entry-orbit.is-descending {
+      --wheel-scale: 0.96;
+      --core-scale: 1.08;
+      --core-glow: 0.8;
+      transition: transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .entry-nav {
+      border: 1px solid rgba(243, 190, 99, 0.24);
+      border-radius: 22px;
+      background: var(--panel-strong);
+      padding: clamp(0.9rem, 2.2vw, 1.2rem);
+      align-self: center;
+    }
+
+    .entry-nav h2 {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: "Cinzel", Georgia, serif;
+      color: #ffe9c7;
+    }
+
+    .entry-actions {
+      margin-top: 0.82rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.48rem;
+      margin-bottom: 0.95rem;
+    }
+
+    .entry-actions a {
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.42rem 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: clamp(0.82rem, 1.2vw, 1.25rem);
+      font-weight: 700;
+      background: rgba(255, 223, 164, 0.08);
+      transition: transform 300ms ease, background 170ms ease, color 300ms ease, text-shadow 300ms ease;
+    }
+
+    .entry-actions a:hover,
+    .entry-actions a:focus-visible {
+      background: rgba(255, 228, 173, 0.95);
+      color: #ffdca8;
+      text-shadow: 0 0 8px rgba(255, 200, 150, 0.6);
+      transform: translateX(8px);
+      outline: none;
+    }
+
+    .entry-engine {
+      display: inline-block;
+      margin-top: 0.1rem;
+      text-decoration: none;
+      color: #131722;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 233, 184, 0.95);
+      background: var(--gold);
+      padding: 1rem 2rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+      font-weight: 600;
+      box-shadow: 0 0 20px rgba(255, 214, 126, 0.3);
+      opacity: 0.34;
+      clip-path: inset(0 48% 0 48%);
+      pointer-events: none;
+      transition: box-shadow 300ms ease, transform 300ms ease, filter 170ms ease, opacity 360ms ease, clip-path 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .entry-engine[data-door-state="listening"] {
+      opacity: 0.62;
+      clip-path: inset(0 24% 0 24%);
+    }
+
+    .entry-engine[data-door-state="open"],
+    .entry-engine:focus-visible {
+      opacity: 1;
+      clip-path: inset(0);
+      pointer-events: auto;
+    }
+
+    .entry-engine:hover,
+    .entry-engine:focus-visible {
+      filter: brightness(1.06);
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 0 12px rgba(255, 200, 150, 0.7);
+      outline: none;
+    }
+
+    .entry-engine:active {
+      transform: scale(0.97);
+      box-shadow: 0 0 20px rgba(255, 200, 150, 0.9);
+    }
+
+    .hub-topology {
+      margin-top: 1.15rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(243, 190, 99, 0.2);
+    }
+
+    .hub-return-summary {
+      position: absolute;
+      left: clamp(1.25rem, 3vw, 3.5rem);
+      bottom: clamp(1.25rem, 3vw, 3.5rem);
+      width: min(18rem, 25vw);
+      padding: 1rem 1.1rem;
+      border: 1px solid rgba(240, 212, 138, 0.3);
+      background: rgba(4, 13, 23, 0.8);
+      box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.3);
+    }
+
+    .hub-return-summary p {
+      margin: 0 0 0.7rem;
+      color: var(--ink-soft);
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    .hub-return-summary a {
+      color: #f0d48a;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .hub-topology__eyebrow {
+      margin: 0;
+      color: rgba(255, 225, 178, 0.72);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hub-topology h3 {
+      margin: 0.45rem 0 0;
+      color: #ffe9c7;
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .hub-topology__reading {
+      margin: 0.4rem 0 0;
+      color: rgba(255, 235, 204, 0.78);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .hub-topology__seams {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.8rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hub-topology__seams li {
+      border: 1px solid rgba(243, 190, 99, 0.25);
+      border-radius: 999px;
+      color: rgba(255, 238, 210, 0.8);
+      font-size: 0.72rem;
+      padding: 0.22rem 0.52rem;
+    }
+
+    .entry-copy h1,
+    .entry-nav h2 {
+      letter-spacing: 0.5px;
+      color: #ffe9c7;
+    }
+
+    .entry-copy p {
+      color: #f7e7d8;
+      opacity: 0.9;
+    }
+
+    .entry-archive {
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(139, 228, 213, 0.24);
+    }
+
+    .entry-archive-list {
+      display: grid;
+      gap: 0.5rem;
+      margin: 0.75rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .entry-archive-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 0.65rem;
+      align-items: baseline;
+      padding-left: 0.7rem;
+      border-left: 2px solid rgba(139, 228, 213, 0.5);
+    }
+
+    .entry-seed-fib {
+      color: var(--teal);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .entry-seed-version { color: var(--ink); font-size: 0.78rem; }
+    .entry-seed-memory { grid-column: 2; color: var(--ink-soft); font-size: 0.7rem; }
+    .entry-seed-status { margin: 0 0 0.5rem; color: var(--ink-soft); font-size: 0.72rem; }
+
+    @keyframes void-field-rotation {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes threshold-wind {
+      0%, 100% { opacity: 0; transform: translateX(-18%) scale(1.01); }
+      14%, 72% { opacity: 0.82; }
+      50% { opacity: 0.46; transform: translateX(12%) scale(1.05); }
+      86% { transform: translateX(28%) scale(1.02); }
+    }
+
+    @keyframes hub-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.03); opacity: 1; }
+    }
+
+    @keyframes hub-route-approach {
+      from { background-position: 100% 0; }
+      to { background-position: 0 0; }
+    }
+
+    @keyframes hub-solar-wind {
+      from { transform: translateX(-20%) translateY(4%); }
+      to { transform: translateX(20%) translateY(-4%); }
+    }
+
+    @keyframes hub-comet {
+      0%, 8%, 100% { opacity: 0; transform: translate(-20vw, 16vh) rotate(-18deg); }
+      11% { opacity: 0.36; }
+      16% { opacity: 0; transform: translate(110vw, -20vh) rotate(-18deg); }
+    }
+
+    @keyframes hub-orbit-drift {
+      0%, 100% { --orbit-drift: -0.2deg; }
+      50% { --orbit-drift: 0.2deg; }
+    }
+
+    @keyframes hub-atmosphere-parallax {
+      from { rotate: 0deg; }
+      to { rotate: 360deg; }
+    }
+
+    @keyframes hub-heliosphere-parallax {
+      from { rotate: 0deg; }
+      to { rotate: -360deg; }
+    }
+
+    @keyframes hub-lens-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.12); opacity: 0.45; }
+    }
+
+    @keyframes hub-atmosphere {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    @keyframes hub-heliosphere {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    @keyframes hub-orbit-shimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.25); }
+    }
+
+    @keyframes hub-fade-field {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.7; }
+    }
+
+    @keyframes hub-fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes orbit-drift {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.01); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes reactor-spark {
+      0% { scale: 1; box-shadow: 0 0 10px rgba(139, 228, 213, 0.46); }
+      35% { scale: 2.2; box-shadow: 0 0 22px rgba(255, 225, 160, 0.9); }
+      100% { scale: 1; box-shadow: 0 0 10px rgba(139, 228, 213, 0.46); }
+    }
+
+    @keyframes heartbeat-ring-micro {
+      0%, 100% { translate: 0 0; filter: brightness(1); }
+      45% { translate: 0 -0.5px; filter: brightness(1.08); }
+    }
+
+    @keyframes heartbeat-life-pulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.12); }
+    }
+
+    @keyframes heartbeat-ring-primary {
+      0%, 100% { translate: 0 0; filter: brightness(1); }
+      25% { translate: 0 -1.5px; filter: brightness(1.22); }
+      38% { translate: 1px 0; }
+      52% { translate: -1px 0.5px; filter: brightness(1.35); }
+      68% { translate: 0.5px -0.5px; }
+    }
+
+    @keyframes heartbeat-nucleus-primary {
+      0%, 100% { filter: brightness(1); }
+      42% { filter: brightness(1.55); }
+      68% { filter: brightness(0.92); }
+    }
+
+    @keyframes heartbeat-pressure-wave {
+      0% { opacity: 0; transform: scale(0.35); }
+      30% { opacity: calc(0.18 + var(--receptor-charge) * 0.42); }
+      100% { opacity: 0; transform: scale(3.1); }
+    }
+
+    @keyframes heartbeat-engine-primary {
+      0%, 100% { scale: 1; opacity: 0.24; }
+      50% { scale: 1.12; opacity: 0.56; }
+    }
+
+    @keyframes heartbeat-logo-primary {
+      0%, 100% { filter: brightness(1) blur(0); }
+      48% { filter: brightness(1.32) blur(0.35px); }
+    }
+
+    @keyframes heartbeat-nucleus-flicker {
+      0%, 18%, 42%, 66%, 100% { filter: brightness(1); }
+      10%, 52% { filter: brightness(1.8); }
+      28%, 72% { filter: brightness(0.62); }
+    }
+
+    @keyframes heartbeat-anomaly-glitch {
+      0%, 100% { filter: brightness(1); }
+      35% { filter: brightness(1.55); }
+      58% { filter: brightness(0.68); }
+    }
+
+    @keyframes heartbeat-logo-echo {
+      0%, 100% { filter: brightness(1); translate: 0 0; }
+      40% { filter: brightness(1.45); translate: 1px -1px; }
+      62% { filter: brightness(0.74); translate: -1px 1px; }
+    }
+
+    @keyframes heartbeat-void-darken {
+      0%, 100% { opacity: 0.92; filter: brightness(1); }
+      50% { opacity: 0.78; filter: brightness(0.72) contrast(1.18); }
+    }
+
+    @keyframes hub-glyph-signal-pulse {
+      0%, 100% { opacity: 0.48; }
+      50% { opacity: 0.84; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html::after,
+      body::before,
+      body::after,
+      .entry-core,
+      .entry-ring,
+      .entry-signal-ring,
+      .entry-mark,
+      .prime-atom-logo-field,
+      .entry-orbit,
+      .hub-cosmic-rotation,
+      .hub-oort-field,
+      .hub-lens,
+      .entry-orbit > img,
+      .hub-oort,
+      .hub-oort-approach,
+      .hub-glyph-signal,
+      .hub-constellation,
+      .entry-shell::before,
+      .entry-shell::after,
+      .hub-comet,
+      .entry-rotor,
+      .entry-receptor::after,
+      .entry-engine-core::before,
+      .entry-engine-core::after,
+      .entry-orbit-node {
+        animation: none !important;
+      }
+
+      .void-field,
+      .entry-spoke,
+      .entry-receptor,
+      .entry-orbit.is-descending,
+      .entry-actions a,
+      .entry-engine {
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .entry-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-copy {
+        text-align: center;
+      }
+
+      .entry-mark {
+        margin: 0 auto 0.9rem;
+      }
+
+      p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .entry-orbit {
+        margin: 1rem auto 0;
+      }
+
+      .hub-heartbeat-spokes {
+        top: 1rem;
+      }
+
+      .entry-nav {
+        width: 100%;
+      }
+    }
+
+    .entry-page-return {
+      position: absolute;
+      top: clamp(1rem, 3vw, 2rem);
+      right: clamp(1rem, 3vw, 2rem);
+      z-index: 4;
+      color: var(--teal);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .entry-page-return--return {
+      left: clamp(1rem, 3vw, 2rem);
+      right: auto;
+    }
+
+    .entry-page-return:hover,
+    .entry-page-return:focus-visible {
+      color: #fff1cd;
+      outline: none;
+    }
+
+    .entry-shell {
+      align-items: stretch;
+      min-height: 100svh;
+      padding: 0;
+    }
+
+    .entry-shell::before {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(86, 204, 194, 0.16), transparent 25%),
+        radial-gradient(circle at 18% 82%, rgba(119, 90, 187, 0.15), transparent 32%),
+        radial-gradient(circle at 86% 16%, rgba(235, 182, 104, 0.12), transparent 28%),
+        #03070d;
+    }
+
+    .entry-panel {
+      position: relative;
+      width: 100%;
+      min-height: 100svh;
+      display: block;
+      padding: 0;
+      transform: none;
+    }
+
+    .entry-copy {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .entry-mark,
+    .entry-copy h1,
+    .entry-kicker,
+    .entry-welcome,
+    .entry-invitation,
+    .entry-map-link,
+    .hub-glyph-reading {
+      position: absolute;
+      left: clamp(1.25rem, 3vw, 3.5rem);
+      z-index: 4;
+      pointer-events: auto;
+    }
+
+    .entry-mark {
+      top: clamp(3.75rem, 7vw, 5.5rem);
+      width: clamp(2.4rem, 4vw, 4rem);
+      margin: 0;
+    }
+
+    .entry-copy h1 {
+      top: clamp(7rem, 12vw, 9.5rem);
+      margin: 0;
+      color: #fff4d8;
+      font-size: clamp(1.6rem, 3vw, 3.25rem);
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .entry-kicker {
+      top: clamp(10rem, 17vw, 13rem);
+      margin: 0;
+      color: #9de8e3;
+      font-size: 0.65rem;
+    }
+
+    .entry-welcome {
+      top: clamp(12rem, 21vw, 15.5rem);
+      max-width: 29ch;
+      margin: 0;
+      color: rgba(224, 242, 238, 0.82);
+      font-size: clamp(0.78rem, 1vw, 0.94rem);
+    }
+
+    .entry-invitation {
+      top: clamp(17rem, 29vw, 21rem);
+      max-width: 26ch;
+      margin: 0;
+      color: #f0d48a;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .entry-map-link {
+      top: clamp(20rem, 34vw, 24.5rem);
+      color: #b7fff0;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .entry-reactor {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(42vw, 38rem);
+      margin: 0;
+      pointer-events: auto;
+      transform: translate(-50%, -50%);
+    }
+
+    .entry-orbit {
+      width: 100%;
+      margin: 0;
+      border-color: rgba(162, 242, 226, 0.42);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(251, 204, 108, 0.18), transparent 12%),
+        radial-gradient(circle at 68% 28%, rgba(111, 92, 192, 0.18), transparent 28%),
+        radial-gradient(circle at 22% 76%, rgba(21, 184, 164, 0.18), transparent 30%),
+        rgba(4, 17, 29, 0.74);
+      box-shadow: inset 0 0 5rem rgba(10, 207, 183, 0.12), 0 0 6rem rgba(24, 117, 153, 0.2);
+    }
+
+    .entry-engine-core {
+      display: none;
+    }
+
+    .hub-glyph-reading {
+      top: auto;
+      bottom: clamp(1.5rem, 3vw, 3.5rem);
+      width: min(23rem, 30vw);
+      margin: 0;
+      background: rgba(4, 13, 23, 0.8);
+      border-color: rgba(168, 244, 224, 0.28);
+    }
+
+    .entry-nav {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      z-index: 2;
+      display: block;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .entry-nav > h2 {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    .hub-graph-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+      transform: perspective(1200px) rotateX(calc(var(--graph-y, 0) * -2deg)) rotateY(calc(var(--graph-x, 0) * 2deg)) scale(var(--graph-scale, 1));
+      transform-origin: center;
+      transition: transform 280ms ease-out;
+    }
+
+    .hub-graph-link {
+      stroke: rgba(139, 228, 213, 0.18);
+      stroke-dasharray: 1.5 1.2;
+      stroke-width: 0.16;
+      vector-effect: non-scaling-stroke;
+      transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease;
+    }
+
+    .hub-graph-link[hidden],
+    .entry-actions a[data-graph-node][hidden] {
+      display: none !important;
+    }
+
+    .hub-vault-evidence {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      pointer-events: none;
+    }
+
+    .hub-vault-evidence__node {
+      position: absolute;
+      width: 0.38rem;
+      height: 0.38rem;
+      border: 1px solid rgba(184, 232, 224, 0.46);
+      border-radius: 50%;
+      background: rgba(124, 191, 181, 0.22);
+      box-shadow: 0 0 0.7rem rgba(114, 226, 207, 0.18);
+      cursor: help;
+      pointer-events: auto;
+      transform: translate(-50%, -50%);
+      transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .hub-vault-evidence__node:nth-child(3n) {
+      border-color: rgba(182, 152, 255, 0.5);
+      background: rgba(146, 111, 213, 0.2);
+    }
+
+    .hub-vault-evidence__node:nth-child(5n) {
+      border-color: rgba(240, 212, 138, 0.52);
+      background: rgba(228, 182, 89, 0.2);
+    }
+
+    .hub-vault-evidence__node:hover,
+    .hub-vault-evidence__node:focus-visible {
+      border-color: #fff0c7;
+      background: rgba(246, 224, 166, 0.88);
+      box-shadow: 0 0 1.25rem rgba(245, 217, 141, 0.74);
+      outline: none;
+      transform: translate(-50%, -50%) scale(1.7);
+    }
+
+    .hub-vault-evidence__seed {
+      width: 0.9rem;
+      height: 0.9rem;
+      border-color: #fff0c7;
+      background: radial-gradient(circle, #fff4d5 0 17%, #e6bd68 20% 39%, rgba(116, 218, 198, 0.5) 42% 100%);
+      box-shadow: 0 0 1.8rem rgba(243, 211, 131, 0.8);
+    }
+
+    .hub-graph-link--house,
+    .hub-graph-link--record,
+    .hub-graph-link--contact { stroke: rgba(240, 212, 138, 0.36); }
+    .hub-graph-link--ethos,
+    .hub-graph-link--learning,
+    .hub-graph-link--mythology { stroke: rgba(170, 147, 255, 0.32); }
+
+    .entry-nav:has([data-graph-node="house"]:hover) .hub-graph-link--house,
+    .entry-nav:has([data-graph-node="record"]:hover) .hub-graph-link--record,
+    .entry-nav:has([data-graph-node="ethos"]:hover) .hub-graph-link--ethos,
+    .entry-nav:has([data-graph-node="learning"]:hover) .hub-graph-link--learning,
+    .entry-nav:has([data-graph-node="discover"]:hover) .hub-graph-link--discover,
+    .entry-nav:has([data-graph-node="invitation"]:hover) .hub-graph-link--invitation,
+    .entry-nav:has([data-graph-node="mythology"]:hover) .hub-graph-link--mythology,
+    .entry-nav:has([data-graph-node="glyphs"]:hover) .hub-graph-link--glyphs,
+    .entry-nav:has([data-graph-node="dialogues"]:hover) .hub-graph-link--dialogues,
+    .entry-nav:has([data-graph-node="contact"]:hover) .hub-graph-link--contact,
+    .entry-nav:has(.entry-actions a:focus-visible) .hub-graph-link {
+      stroke: #f5d98d;
+      stroke-width: 0.46;
+      opacity: 1;
+    }
+
+    .entry-actions {
+      position: absolute;
+      inset: 0;
+      display: block;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    .entry-actions a:not([data-graph-node]) {
+      display: none;
+    }
+
+    .entry-actions a[data-graph-node] {
+      position: absolute;
+      left: var(--node-x);
+      top: var(--node-y);
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      padding: 0.55rem 0.8rem;
+      border: 1px solid rgba(151, 238, 223, 0.45);
+      border-radius: 0.35rem;
+      background: rgba(5, 16, 29, 0.78);
+      box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.26), inset 0 1px rgba(235, 255, 248, 0.08);
+      color: #dff9f3;
+      font-size: clamp(0.6rem, 0.75vw, 0.74rem);
+      letter-spacing: 0.08em;
+      pointer-events: auto;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      transform: translate(-50%, -50%) translateZ(var(--node-depth, 0px)) scale(var(--node-scale, 1));
+      transform-style: preserve-3d;
+      transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .entry-actions a[data-graph-node]:hover,
+    .entry-actions a[data-graph-node]:focus-visible {
+      background: rgba(231, 255, 246, 0.94);
+      border-color: #fff0c7;
+      box-shadow: 0 0 2rem rgba(155, 244, 223, 0.58);
+      color: #091722;
+      outline: none;
+      transform: translate(-50%, -50%) translateZ(30px) scale(1.14);
+    }
+
+    .entry-actions a[data-world-slit] {
+      border-color: #fff0c7;
+      box-shadow: 0 0 1.8rem rgba(243, 190, 99, 0.42), inset 0 1px rgba(255, 247, 215, 0.2);
+      color: #fff4d8;
+    }
+
+    .entry-actions a[data-world-slit]::before {
+      content: "Slit to the world";
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #f0d48a;
+      font-size: 0.52em;
+      letter-spacing: 0.16em;
+    }
+
+    .entry-actions a[data-hub-reference] {
+      border-color: rgba(139, 228, 213, 0.3);
+      color: rgba(223, 249, 243, 0.76);
+      opacity: 0.78;
+    }
+
+    .entry-actions a[data-hub-reference]::before {
+      content: "Reference";
+      display: block;
+      margin-bottom: 0.2rem;
+      color: rgba(157, 232, 227, 0.62);
+      font-size: 0.5em;
+      letter-spacing: 0.13em;
+    }
+
+    .entry-actions [data-graph-node="house"] { --node-x: 24%; --node-y: 31%; --node-depth: 22px; --node-scale: 1.08; border-color: rgba(240, 212, 138, 0.78); }
+    .entry-actions [data-graph-node="record"] { --node-x: 52%; --node-y: 19%; --node-depth: -20px; opacity: 0.76; }
+    .entry-actions [data-graph-node="ethos"] { --node-x: 77%; --node-y: 30%; --node-depth: 18px; --node-scale: 1.05; border-color: rgba(170, 147, 255, 0.72); }
+    .entry-actions [data-graph-node="learning"] { --node-x: 82%; --node-y: 51%; --node-depth: -8px; border-color: rgba(170, 147, 255, 0.52); }
+    .entry-actions [data-graph-node="discover"] { --node-x: 75%; --node-y: 72%; --node-depth: 12px; }
+    .entry-actions [data-graph-node="invitation"] { --node-x: 53%; --node-y: 83%; --node-depth: -16px; }
+    .entry-actions [data-graph-node="mythology"] { --node-x: 31%; --node-y: 78%; --node-depth: 8px; border-color: rgba(170, 147, 255, 0.62); }
+    .entry-actions [data-graph-node="glyphs"] { --node-x: 14%; --node-y: 57%; --node-depth: -12px; }
+    .entry-actions [data-graph-node="dialogues"] { --node-x: 17%; --node-y: 44%; --node-depth: 12px; }
+    .entry-actions [data-graph-node="contact"] { --node-x: 83%; --node-y: 84%; --node-depth: -24px; border-color: rgba(240, 212, 138, 0.58); }
+
+    .hub-topology {
+      position: absolute;
+      right: clamp(1.25rem, 3vw, 3.5rem);
+      bottom: clamp(1.25rem, 3vw, 3.5rem);
+      width: min(20rem, 27vw);
+      margin: 0;
+      padding: 1rem 1.1rem;
+      border: 1px solid rgba(162, 242, 226, 0.22);
+      background: rgba(4, 13, 23, 0.8);
+      box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.3);
+      pointer-events: auto;
+    }
+
+    .entry-engine {
+      position: absolute;
+      right: clamp(1.25rem, 3vw, 3.5rem);
+      top: clamp(3.75rem, 7vw, 5.5rem);
+      z-index: 4;
+      opacity: 1;
+      clip-path: none;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 900px) {
+      .entry-shell {
+        overflow: auto;
+      }
+
+      .entry-panel {
+        min-height: 62rem;
+      }
+
+      .entry-copy h1 { top: 6rem; }
+      .entry-kicker { top: 9.25rem; }
+      .entry-welcome { top: 11rem; max-width: 24rem; }
+      .entry-invitation { top: 16.5rem; }
+      .entry-map-link { top: 19.5rem; }
+
+      .entry-reactor {
+        top: 47%;
+        width: min(76vw, 31rem);
+      }
+
+      .entry-actions [data-graph-node] {
+        font-size: 0.55rem;
+      }
+
+      .hub-vault-evidence__node {
+        width: 0.32rem;
+        height: 0.32rem;
+      }
+
+      .hub-vault-evidence__seed {
+        width: 0.75rem;
+        height: 0.75rem;
+      }
+
+      .entry-actions [data-graph-node="house"] { --node-x: 16%; --node-y: 36%; }
+      .entry-actions [data-graph-node="record"] { --node-x: 78%; --node-y: 34%; }
+      .entry-actions [data-graph-node="ethos"] { --node-x: 84%; --node-y: 49%; }
+      .entry-actions [data-graph-node="learning"] { --node-x: 82%; --node-y: 65%; }
+      .entry-actions [data-graph-node="discover"] { --node-x: 76%; --node-y: 78%; }
+      .entry-actions [data-graph-node="invitation"] { --node-x: 49%; --node-y: 88%; }
+      .entry-actions [data-graph-node="mythology"] { --node-x: 25%; --node-y: 82%; }
+      .entry-actions [data-graph-node="glyphs"] { --node-x: 12%; --node-y: 66%; }
+      .entry-actions [data-graph-node="dialogues"] { --node-x: 14%; --node-y: 51%; }
+      .entry-actions [data-graph-node="contact"] { --node-x: 78%; --node-y: 91%; }
+
+      .hub-topology {
+        top: 37rem;
+        right: 1rem;
+        bottom: auto;
+        width: min(17rem, 46vw);
+      }
+
+      .hub-return-summary {
+        top: 50rem;
+        bottom: auto;
+        left: 1rem;
+        width: min(17rem, 46vw);
+      }
+
+      .hub-glyph-reading {
+        bottom: 1rem;
+        width: min(19rem, 52vw);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .entry-panel {
+        min-height: 96rem;
+      }
+
+      .entry-page-return {
+        top: 1rem;
+        right: 0.9rem;
+        font-size: 0.55rem;
+        letter-spacing: 0.08em;
+      }
+
+      .entry-page-return--return {
+        left: 0.9rem;
+        right: auto;
+      }
+
+      .entry-page-return:not(.entry-page-return--return) {
+        top: 2.35rem;
+      }
+
+      .entry-engine {
+        top: 4.2rem;
+        right: 0.9rem;
+        margin: 0;
+        padding: 0.55rem 0.72rem;
+        font-size: 0.5rem;
+        letter-spacing: 0.08em;
+      }
+
+      .entry-actions a[data-graph-node] {
+        max-width: 5.25rem;
+        padding: 0.42rem 0.34rem;
+        font-size: 0.48rem;
+        line-height: 1.25;
+        white-space: normal;
+      }
+
+      .entry-actions [data-graph-node="house"] { --node-x: 22%; --node-y: 33%; }
+      .entry-actions [data-graph-node="record"] { --node-x: 78%; --node-y: 31%; }
+      .entry-actions [data-graph-node="ethos"] { --node-x: 79%; --node-y: 41%; }
+      .entry-actions [data-graph-node="learning"] { --node-x: 79%; --node-y: 50%; }
+      .entry-actions [data-graph-node="discover"] { --node-x: 79%; --node-y: 60%; }
+      .entry-actions [data-graph-node="invitation"] { --node-x: 32%; --node-y: 70%; }
+      .entry-actions [data-graph-node="mythology"] { --node-x: 20%; --node-y: 61%; }
+      .entry-actions [data-graph-node="glyphs"] { --node-x: 20%; --node-y: 51%; }
+      .entry-actions [data-graph-node="dialogues"] { --node-x: 20%; --node-y: 42%; }
+      .entry-actions [data-graph-node="contact"] { --node-x: 78%; --node-y: 71%; }
+
+      .hub-topology {
+        top: 80rem;
+        right: 7%;
+        width: 86%;
+      }
+
+      .hub-return-summary {
+        top: 86rem;
+        left: 7%;
+        width: 86%;
+      }
+
+      .hub-glyph-reading {
+        bottom: 1.25rem;
+        width: calc(100% - 2rem);
+      }
+    }
+  </style>
 </head>
-<body class="hub-public" data-threshold-spoke="hub">
-  <header class="hub-public-nav">
-    <a class="hub-public-brand" href="index.html"><img src="/assets/entry/threshold-logo.svg" alt="">Threshold</a>
-    <nav aria-label="Primary">
-      <a href="index.html">Entry</a>
-      <a href="hub.html" aria-current="page">Hub</a>
-      <a href="garden.html">Garden</a>
-    </nav>
-  </header>
-  <main class="hub-public-main">
-    <div class="hub-starfield" aria-hidden="true"></div>
-    <section class="hub-public-intro" aria-labelledby="hub-title">
-      <p>Circle I / Anchor</p>
-      <h1 id="hub-title">The world returns here to listen.</h1>
-      <p>The Hub does not send you back to the beginning. It receives the motion you bring, closes its loop, and makes the next seam visible.</p>
-    </section>
+<body data-entry-chamber data-complexity="foundation atmosphere topology interaction" data-motion="bounded">
+  <canvas class="void-field" data-void-field data-field-frame aria-hidden="true"></canvas>
+  <main id="hub" class="entry-shell" aria-label="Threshold hub entry">
+    <a class="entry-page-return entry-page-return--return" href="#hub-return-state">Return state</a>
+    <a class="entry-page-return" href="index.html">Return to Hub Entry</a>
+    <section class="entry-panel">
+      <div class="entry-copy">
+        <img class="entry-mark" data-prime-logo src="/assets/entry/threshold-logo.svg" alt="Threshold logo" loading="eager" decoding="async" />
+        <h1>Threshold Hub</h1>
+        <p class="entry-kicker">Fib 13 · Entry Point</p>
+        <p class="entry-welcome">
+          You’ve come to Threshold — where beginnings gather, paths take shape,
+          and what you contribute becomes part of the whole.
+        </p>
+        <p class="entry-invitation">Begin at the Hub. Follow what draws you inward.</p>
+        <a class="entry-map-link" href="world-map.html">Open World Map</a>
+        <div class="entry-reactor" data-hub-reactor>
+          <div class="hub-heartbeat-spokes" aria-hidden="true">
+            <span class="entry-spoke entry-spoke-a"></span>
+            <span class="entry-spoke entry-spoke-b"></span>
+            <span class="entry-spoke entry-spoke-c"></span>
+          </div>
+          <div class="entry-orbit" data-hub-wheel data-prime-atom aria-label="Prime Atom, the living threshold between the Hub and Engine">
+            <span class="hub-lens" aria-hidden="true"></span>
+            <span class="hub-cosmic-rotation"><span class="hub-oort-field"></span></span>
+            <span class="hub-slit" aria-hidden="true"></span>
+            <img class="prime-atom-logo-field" src="/assets/entry/threshold-logo.svg" alt="" aria-hidden="true" />
+            <span class="entry-signal-ring"></span>
+            <div class="entry-rotor">
+              <span class="entry-ring entry-ring-outer"></span>
+              <span class="entry-ring entry-ring-inner"></span>
+              <span class="entry-node-field" data-hub-node-field></span>
+            </div>
+            <span class="entry-core"></span>
+            <img class="prime-atom-logo-core" src="/assets/entry/threshold-logo.svg" alt="" aria-hidden="true" />
+            <span class="prime-reveal-box" data-reveal-box aria-hidden="true"></span>
+          </div>
+          <span class="entry-receptor" data-hub-receptor></span>
+        </div>
+        <div class="entry-engine-core" data-engine-core data-engine-state="latent" aria-hidden="true"></div>
+        <section class="hub-glyph-reading" data-hub-glyph-reading aria-live="polite" aria-labelledby="hub-glyph-title">
+          <p class="hub-glyph-reading__eyebrow">Oort signal</p>
+          <h2 id="hub-glyph-title">Something is moving at the edge.</h2>
+          <p data-hub-glyph-text>Hover or focus one of the quiet glyph signals in the field.</p>
+          <a data-hub-glyph-link href="glyphs.html" hidden>Follow this glyph</a>
+        </section>
+      </div>
 
-    <section class="hub-orbit-system" aria-label="Hub resonance system">
-      <div class="hub-oort-field" aria-hidden="true"></div>
-      <div class="hub-strands" aria-hidden="true"></div>
-      <div class="hub-mosslights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="hub-pan-layer hub-pan-structure" aria-hidden="true">
-        <div class="hub-orbit hub-orbit-outer"></div>
-        <div class="hub-orbit hub-orbit-middle"></div>
-        <div class="hub-orbit hub-orbit-inner"></div>
-      </div>
-      <div class="hub-pan-layer hub-pan-foreground">
-        <button id="hub-awaken" class="hub-core" type="button" aria-pressed="false">
-          <span class="hub-core-eye" aria-hidden="true"></span>
-          <span class="hub-core-kicker">Threshold Hub</span>
-          <span class="hub-core-label">Fib 13 / awaken</span>
-        </button>
-        <button class="hub-glyph hub-glyph-one" type="button" aria-label="Distant glyph signal">
-          <span aria-hidden="true">⌁</span>
-        </button>
-        <button class="hub-glyph hub-glyph-two" type="button" aria-label="Distant glyph signal">
-          <span aria-hidden="true">◈</span>
-        </button>
-        <button class="hub-glyph hub-glyph-three" type="button" aria-label="Distant glyph signal">
-          <span aria-hidden="true">⌇</span>
-        </button>
-        <a class="hub-route hub-petal hub-route-motion" href="/portal/motion"><span>Motion</span><small>world / vector</small></a>
-        <a class="hub-route hub-petal hub-route-ocean" href="/portal/ocean"><span>Ocean</span><small>depth / pressure</small></a>
-        <a class="hub-route hub-petal hub-route-door" href="/portal/first-door"><span>First Door</span><small>stance / seam</small></a>
-      </div>
-      <p class="hub-drag-hint" aria-live="polite" aria-hidden="true">Drag to look</p>
-    </section>
-
-    <section class="hub-public-status" aria-labelledby="hub-status-title">
-      <p>Live return state</p>
-      <h2 id="hub-status-title">The field is holding.</h2>
-      <p id="hub-return-reading" aria-live="polite">Bring a vector to the core. The Hub will hold it without choosing for you.</p>
-      <a id="hub-continue-route" class="hub-continue-route" href="/portal/motion">
-        <span>Next seam</span>
-        <strong id="hub-continue-label">Enter the Motion Field</strong>
-        <small id="hub-continue-detail">The Hub is ready to turn a vector into environmental motion.</small>
-      </a>
-      <div class="hub-engine-status" aria-live="polite">
-        <span id="hub-engine-node" class="hub-engine-indicator"></span>
-        <span id="hub-maze-depth" class="hub-engine-indicator"></span>
-      </div>
-      <div class="hub-public-actions">
-        <a class="hub-world-map" href="world-map.html">World Map</a>
-        <button id="hub-enter-engine" type="button">Enter Engine</button>
-        <a href="node-field.html">Enter the node field</a>
-        <a href="garden.html">Cross into the garden</a>
-        <a href="/pages/beyond/beyond.html">Beyond</a>
-      </div>
+      <aside class="entry-nav" aria-label="Hub routes">
+        <h2>Choose A Route</h2>
+        <svg class="hub-graph-canvas" data-hub-graph-canvas aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line data-graph-link="house" class="hub-graph-link hub-graph-link--house" x1="50" y1="50" x2="24" y2="31"></line>
+          <line data-graph-link="record" class="hub-graph-link hub-graph-link--record" x1="50" y1="50" x2="52" y2="19" hidden></line>
+          <line data-graph-link="ethos" class="hub-graph-link hub-graph-link--ethos" x1="50" y1="50" x2="77" y2="30" hidden></line>
+          <line data-graph-link="learning" class="hub-graph-link hub-graph-link--learning" x1="50" y1="50" x2="82" y2="51" hidden></line>
+          <line data-graph-link="discover" class="hub-graph-link hub-graph-link--discover" x1="50" y1="50" x2="75" y2="72" hidden></line>
+          <line data-graph-link="invitation" class="hub-graph-link hub-graph-link--invitation" x1="50" y1="50" x2="53" y2="83" hidden></line>
+          <line data-graph-link="mythology" class="hub-graph-link hub-graph-link--mythology" x1="50" y1="50" x2="31" y2="78" hidden></line>
+          <line data-graph-link="glyphs" class="hub-graph-link hub-graph-link--glyphs" x1="50" y1="50" x2="14" y2="57" hidden></line>
+          <line data-graph-link="dialogues" class="hub-graph-link hub-graph-link--dialogues" x1="50" y1="50" x2="17" y2="44" hidden></line>
+          <line data-graph-link="contact" class="hub-graph-link hub-graph-link--contact" x1="50" y1="50" x2="83" y2="84" hidden></line>
+        </svg>
+        <ul class="hub-vault-evidence" data-hub-vault-evidence aria-label="Published vault evidence"></ul>
+        <nav class="entry-actions" aria-label="Hub world seam">
+          <a data-graph-node="house" data-world-slit href="housegarden.html">House and Garden</a>
+          <a data-graph-node="record" data-hub-scaffold href="pages/threshold.html" hidden>Threshold Record</a>
+          <a data-graph-node="ethos" data-hub-scaffold href="ethos.html" hidden>Ethos</a>
+          <a data-graph-node="learning" data-hub-scaffold href="learningwheel.html" hidden>Learning Wheel</a>
+          <a data-graph-node="discover" data-hub-scaffold href="discover.html" hidden>Discover</a>
+          <a data-graph-node="invitation" data-hub-scaffold href="invitation.html" hidden>Invitation</a>
+          <a data-graph-node="mythology" data-hub-scaffold href="mythology.html" hidden>Mythology</a>
+          <a data-graph-node="glyphs" data-hub-scaffold href="glyphs.html" hidden>Glyphs</a>
+          <a data-graph-node="dialogues" data-hub-scaffold href="dialogues.html" hidden>Dialogues</a>
+          <a data-graph-node="contact" data-hub-scaffold href="contact.html" hidden>Contact</a>
+        </nav>
+        <section class="hub-topology" data-hub-topology aria-live="polite" aria-labelledby="hub-topology-title">
+          <p class="hub-topology__eyebrow">Spatial relation</p>
+          <h3 id="hub-topology-title" data-hub-topology-title>Hub · Fib 13</h3>
+          <p class="hub-topology__reading" data-hub-topology-reading>Choose a route to see the relationship it holds in the world.</p>
+          <ul class="hub-topology__seams" data-hub-topology-seams>
+            <li>World Map</li>
+            <li>Entry</li>
+            <li>Return</li>
+          </ul>
+        </section>
+        <section id="hub-return-state" class="hub-return-summary" aria-labelledby="hub-return-title">
+          <p id="hub-return-title">Return state</p>
+          <p data-hub-return-reading>The Hub holds what returns without sending it back to the beginning.</p>
+          <a data-hub-return-continuation href="/portal/motion">Enter the Motion Field</a>
+        </section>
+        <a class="entry-engine" data-prime-door data-door-state="sealed" href="deep-system/engine.html" aria-label="Enter the next Engine ring">Enter Engine</a>
+        <section class="entry-archive" data-hub-seed-archive hidden aria-labelledby="returned-seeds-title">
+          <h2 id="returned-seeds-title">Returned Seeds</h2>
+          <p class="entry-seed-status">Returns remain awaiting validation.</p>
+          <ol class="entry-archive-list" data-hub-seed-list></ol>
+        </section>
+      </aside>
     </section>
   </main>
+  <script type="module" src="/scripts/fibonacci-entry.js?v=no-hub-double-click-1"></script>
+  <script type="module" src="/scripts/access-flow.js"></script>
   <script type="module" src="/threshold-engine.js"></script>
-  <script>
-    if (window.location.port === "8789") {
-      document.querySelectorAll('a[href^="/portal/"]').forEach((link) => {
-        link.href = `http://${window.location.hostname}:4173${link.getAttribute("href")}`;
-      });
-    }
-  </script>
-  <script type="module" src="/scripts/hub-public-runtime.js?v=portal-link-bridge-1"></script>
-  <script type="module" src="/scripts/hub-public-experience.js?v=flagship-fib13-5"></script>
+  <script type="module" src="/scripts/entry-warmth.js?v=oort-glyph-signals-2"></script>
+  <script type="module" src="/scripts/hub-graph.js?v=vault-evidence-1"></script>
+  <script type="module" src="/scripts/hub-return-state.js"></script>
+  <script type="module" src="/scripts/canonical-path.js"></script>
 </body>
 </html>

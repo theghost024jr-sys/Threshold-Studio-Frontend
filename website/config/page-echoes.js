@@ -15,11 +15,7 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/complexity-layers.css"
   ]),
   pageEcho("hub", "rootSigil", "Hub", "/hub.html", "hub.html", [
-    "styles/complexity-layers.css",
-    "styles/hub-interaction.css",
-    "styles/hub-public.css",
-    "styles/pulse.css",
-    "styles/styles.css"
+    "styles/complexity-layers.css"
   ]),
   pageEcho("node-field", "rootSigil", "Node Field", "/node-field.html", "node-field.html", [
     "styles/complexity-layers.css",

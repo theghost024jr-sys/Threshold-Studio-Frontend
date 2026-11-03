@@ -1329,7 +1329,42 @@
     .entry-welcome,
     .entry-invitation,
     .entry-map-link {
-      display: none;
+      display: block;
+      position: absolute;
+      left: clamp(1.25rem, 3vw, 3.4rem);
+      z-index: 8;
+      max-width: min(25rem, 28vw);
+      color: rgba(235, 249, 245, 0.9) !important;
+      font-size: clamp(0.78rem, 0.92vw, 0.96rem) !important;
+      line-height: 1.6;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.86);
+    }
+
+    .entry-welcome {
+      top: clamp(7.5rem, 16vh, 10.5rem);
+    }
+
+    .entry-invitation {
+      top: clamp(13.5rem, 29vh, 18rem);
+      color: #f7d88e !important;
+      font-weight: 700;
+    }
+
+    .entry-map-link {
+      top: clamp(16.5rem, 35vh, 21rem);
+      width: fit-content;
+      color: #abf4e3;
+      font-size: 0.7rem !important;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .entry-map-link:hover,
+    .entry-map-link:focus-visible {
+      color: #fff3cc;
+      outline: none;
     }
 
     .entry-reactor {
@@ -1431,6 +1466,7 @@
 
 
     .entry-crossing {
+      display: none;
       position: absolute;
       right: clamp(1.25rem, 4vw, 4rem);
       bottom: clamp(1.25rem, 4vw, 3.4rem);
@@ -1457,7 +1493,19 @@
     }
 
     .entry-nav {
+      position: absolute;
+      top: clamp(1.25rem, 3vw, 3.4rem);
+      right: clamp(1.25rem, 3vw, 3.4rem);
+      bottom: clamp(1.25rem, 3vw, 3.4rem);
+      z-index: 8;
       display: none;
+      flex-direction: column;
+      width: min(22rem, 27vw);
+      padding: clamp(1rem, 1.8vw, 1.5rem);
+      border: 1px solid rgba(164, 246, 225, 0.36);
+      background: linear-gradient(160deg, rgba(7, 27, 40, 0.94), rgba(3, 10, 20, 0.88));
+      box-shadow: inset 0 1px rgba(230, 255, 247, 0.08), 0 1.2rem 3rem rgba(0, 0, 0, 0.32);
+      overflow-y: auto;
     }
 
     .entry-nav h2 {
@@ -1492,6 +1540,12 @@
       font-size: 0.84rem;
     }
 
+    .hub-topology,
+    .entry-engine,
+    .entry-archive {
+      flex-shrink: 0;
+    }
+
     body > [aria-label="Threshold access flow"] {
       display: none;
     }
@@ -1517,16 +1571,34 @@
       }
 
       .entry-nav {
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        display: none;
         width: auto;
         margin: 0 1rem 1rem;
         padding: 1.25rem;
         border: 1px solid rgba(132, 212, 202, 0.2);
+        overflow: visible;
       }
 
       .entry-crossing {
         right: 1rem;
         top: 72%;
         bottom: auto;
+      }
+
+      .entry-welcome,
+      .entry-invitation,
+      .entry-map-link {
+        position: static;
+        max-width: 34rem;
+        margin: 0.8rem auto 0;
+      }
+
+      .entry-map-link {
+        width: fit-content;
       }
     }
   </style>
@@ -1544,7 +1616,11 @@
           and what you contribute becomes part of the whole.
         </p>
         <p class="entry-invitation">Begin at the Hub. Follow what draws you inward.</p>
-        <a class="entry-map-link" href="world-map.html">Open World Map</a>
+        <a
+          class="entry-map-link"
+          data-main-hub-first-crossing
+          href="housegarden.html"
+        >House and Garden</a>
         <div class="entry-reactor" data-hub-reactor>
           <div class="hub-heartbeat-spokes" aria-hidden="true">
             <span class="entry-spoke entry-spoke-a"></span>
@@ -1575,40 +1651,7 @@
           <p data-hub-glyph-text>Hover or focus one of the quiet glyph signals in the field.</p>
           <a data-hub-glyph-link href="glyphs.html" hidden>Follow this glyph</a>
         </section>
-        <a class="entry-crossing" href="housegarden.html">Cross the first threshold</a>
       </div>
-
-      <aside class="entry-nav" aria-label="Hub routes">
-        <h2>Choose A Route</h2>
-        <nav class="entry-actions" aria-label="Threshold pages">
-          <a href="housegarden.html">House and Garden</a>
-          <a href="pages/threshold.html">Threshold Record</a>
-          <a href="ethos.html">Ethos</a>
-          <a href="learningwheel.html">Learning Wheel</a>
-          <a href="discover.html">Discover</a>
-          <a href="invitation.html">Invitation</a>
-          <a href="mythology.html">Mythology</a>
-          <a href="glyphs.html">Glyphs</a>
-          <a href="dialogues.html">Dialogues</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-        <section class="hub-topology" data-hub-topology aria-live="polite" aria-labelledby="hub-topology-title">
-          <p class="hub-topology__eyebrow">Spatial relation</p>
-          <h3 id="hub-topology-title" data-hub-topology-title>Hub · Fib 13</h3>
-          <p class="hub-topology__reading" data-hub-topology-reading>Choose a route to see the relationship it holds in the world.</p>
-          <ul class="hub-topology__seams" data-hub-topology-seams>
-            <li>World Map</li>
-            <li>Entry</li>
-            <li>Return</li>
-          </ul>
-        </section>
-        <a class="entry-engine" data-prime-door data-door-state="sealed" href="deep-system/engine.html" aria-label="Enter the next Engine ring">Enter Engine</a>
-        <section class="entry-archive" data-hub-seed-archive hidden aria-labelledby="returned-seeds-title">
-          <h2 id="returned-seeds-title">Returned Seeds</h2>
-          <p class="entry-seed-status">Returns remain awaiting validation.</p>
-          <ol class="entry-archive-list" data-hub-seed-list></ol>
-        </section>
-      </aside>
     </section>
   </main>
   <script type="module" src="/scripts/fibonacci-entry.js?v=no-hub-double-click-1"></script>
@@ -1616,7 +1659,8 @@
   <script type="module" src="/threshold-engine.js"></script>
   <script type="module" src="/scripts/entry-warmth.js?v=oort-glyph-signals-2"></script>
   <script type="module" src="/scripts/main-hub-experience.js"></script>
-  <script type="module" src="/scripts/main-hub-engine.js"></script>
+  <script type="module" src="/scripts/main-hub-runtime.js"></script>
+  <script type="module" src="/scripts/main-hub-engine-binding.js"></script>
   <script type="module" src="/scripts/canonical-path.js"></script>
 </body>
 </html>

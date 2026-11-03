@@ -104,7 +104,13 @@ function renderRail(flow, state) {
     steps.appendChild(item);
   });
 
-  rail.append(heading, steps);
+  const drawer = document.createElement("details");
+  drawer.className = "threshold-access-flow__drawer";
+  drawer.open = !window.matchMedia("(max-width: 640px)").matches;
+  const summary = document.createElement("summary");
+  summary.appendChild(heading);
+  drawer.append(summary, steps);
+  rail.appendChild(drawer);
   document.body.appendChild(rail);
 }
 

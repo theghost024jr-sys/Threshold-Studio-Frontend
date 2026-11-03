@@ -13,7 +13,7 @@ test("presents the existing Seed journey without inventing authority", async () 
   const [flow, accessFlow, hub, entry] = await Promise.all([
     readFile(new URL("../config/access-flow.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../scripts/access-flow.js", import.meta.url), "utf8"),
-    readFile(new URL("../index.html", import.meta.url), "utf8"),
+    readFile(new URL("../hub.html", import.meta.url), "utf8"),
     readFile(new URL("../scripts/fibonacci-entry.js", import.meta.url), "utf8")
   ]);
   const stage = (id) => flow.stages.find((candidate) => candidate.id === id);

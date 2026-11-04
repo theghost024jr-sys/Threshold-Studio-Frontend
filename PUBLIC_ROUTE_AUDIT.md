@@ -44,15 +44,15 @@ Cloudflare Pages Worker. This audit covers the checked-out output as of
 | `/index.html` | Threshold Hub - Entry | `website/index.html` | - | site-wide returns | `/housegarden.html`, `/glyphs.html` | Yes, for first crossing | `activateNode("housegarden")` accepted **and** `responded === true` | - | Yes: authoritative activation result | No | No | Canonical |
 | `/hub.html` | Threshold Hub | `website/hub.html` | `/index.html` | `/ethos.html`, legacy Hub Return routes | Hub spokes, return-state continuation, `/world-map.html`, `/deep-system/engine.html` | No | - | `/index.html` | No | No | No | Canonical |
 | ~~`/hub-return.html`~~ | Threshold Hub Return | - | - | - | - | - | - | `/hub.html` | - | - | - | Removed 2026-11-03 (was a redirect stub) |
-| `/world-map.html` | World Map - Threshold Studio | `website/world-map.html` | `/index.html` | `/hub.html` | `/index.html`, `/housegarden.html`, `/garden.html`, `/dialogues.html`, `/pages/beyond/Ella.html`, `/portal/index.html` | No | - | `/index.html` | No | No | No | Canonical |
+| `/world-map.html` | World Map - Threshold Studio | `website/world-map.html` | `/index.html` | `/hub.html` | `/index.html`, `/housegarden.html`, `/garden.html`, `/dialogues.html`, `/pages/beyond/Ella.html`, `/portal/` | No | - | `/index.html` | No | No | No | Canonical |
 | `/housegarden.html` | Threshold Studio - House and Garden | `website/housegarden.html` | `/index.html` | `/index.html`, Hub/world routes | world chambers and first-level spokes | Yes on canonical entry seam | Main Hub's `state-changed` result; direct URL remains technically loadable | `/index.html` | Yes for the entry crossing only | No | No | Canonical |
 | `/garden.html` | House and Garden - Threshold | `website/garden.html` | `/housegarden.html` | House/Garden, map, Return Hub | `/index.html` | No | - | `/housegarden.html` | No | No | No | Canonical |
 | `/environment/herbroom.html` | Herb Room | `website/environment/herbroom.html` | `/housegarden.html` | `/housegarden.html`, Basin/Waterfall returns | visible authored links to `/environment/basin.html` and `/environment/waterfall.html` | Track only | Access flow records it after House and Garden; direct URL is not blocked | `/housegarden.html` | No | No | No | Canonical |
 | `/environment/basin.html` | The Basin | `website/environment/basin.html` | `/environment/herbroom.html` | Herb Room, Old Forest, House/Garden | `/environment/herbroom.html`, `/environment/old-forest.html` | Track only | Access flow records it after Herb Room and awards Shimmer | `/environment/herbroom.html` | No | No | No | Canonical |
 | `/environment/old-forest.html` | Old Forest \| Threshold | `website/environment/old-forest.html` | `/housegarden.html` | Basin, House/Garden | `/environment/basin.html`, `/portal/cabin-of-moss` | No | - | `/environment/basin.html` | No | No | No | Canonical |
 | `/environment/waterfall.html` | The Drift Falls - Threshold Studio | `website/environment/waterfall.html` | `/environment/herbroom.html` | Herb Room, House/Garden | `/environment/herbroom.html`, `/portal/shimmer`, `/portal/old-forest-trek` | No | - | `/environment/herbroom.html` | No | No | No | Canonical |
-| `/deep-system/engine.html` | Threshold Engine - Mechanics | `website/deep-system/engine.html` | `/hub-return.html` | `/hub.html` | `/index.html` | No | - | `/hub-return.html` | No | No | No | Canonical |
-| `/node-field.html` | Node Field | `website/node-field.html` | `/hub-return.html` | `/hub-return.html`, runtime glyph archive navigation | `/hub-return.html` | No | - | `/hub-return.html` | No | No | No | Canonical |
+| `/deep-system/engine.html` | Threshold Engine - Mechanics | `website/deep-system/engine.html` | - | - (Engine door removed 2026-11-03) | `/index.html` | No | - | - | No | No | No | Canonical — makers' surface, direct URL only |
+| `/node-field.html` | Node Field | `website/node-field.html` | `/hub.html` (declared in `world-topology.json`) | `/glyph-archive-node.html` | `/hub.html` | No | - | `/hub.html` | No | No | No | Canonical |
 | `/ethos.html` | Ethos | `website/ethos.html` | `/index.html` | first-level spokes and Hub surfaces | `/hub.html`, `/invitation.html`, `/pages/ethos-seed.html` | No | - | `/index.html` | No | No | No | Canonical |
 | `/discover.html` | Threshold Discover | `website/discover.html` | `/index.html` | `/hub.html` | `/housegarden.html`, `/ethos.html`, `/index.html` | No | - | `/index.html` | No | No | No | Canonical |
 | `/invitation.html` | You Are Welcome | `website/invitation.html` | `/index.html` | first-level spokes and Hub surfaces | - | No route gate | Contribution action requires Shimmer | `/index.html` | No; local access-flow state gates contribution | No | No | Canonical |
@@ -81,10 +81,10 @@ Cloudflare Pages Worker. This audit covers the checked-out output as of
 | `/pages/role-expressions.html` | Role Expressions | `website/pages/role-expressions.html` | `/pages/notes.html` | living-pages config | configured Notes return | No | - | `/pages/notes.html` | No | No | No | Canonical |
 | `/pages/species-signals.html` | Species Signals | `website/pages/species-signals.html` | `/pages/notes.html` | living-pages config | configured Notes return | No | - | `/pages/notes.html` | No | No | No | Canonical |
 | `/pages/ethos-seed.html` | Ethos Seed | `website/pages/ethos-seed.html` | `/ethos.html` | `/ethos.html` | `/ethos.html` | No | - | `/ethos.html` | No | No | No | Experimental |
-| `/pages/beyond/beyond.html` | Threshold - Beyond | `website/pages/beyond/beyond.html` | `/hub-return.html` | `/hub-return.html` | `/garden.html`, `/hub-return.html`, `/index.html` | No | - | `/hub-return.html` | No | No | No | Experimental |
+| `/pages/beyond/beyond.html` | Threshold - Beyond | `website/pages/beyond/beyond.html` | - | - | `/garden.html`, `/hub.html`, `/index.html` | No | - | `/hub.html` | No | No | No | Experimental |
 | `/pages/beyond/Ella.html` | Ella \| The Shepherd of Animals | `website/pages/beyond/Ella.html` | `/world-map.html` | `/world-map.html` | `/index.html` | No | - | `/index.html` | No | No | No | Experimental |
 | `/wildflower-drift.html` | Wildflower Drift | `website/wildflower-drift.html` | - | runtime/legacy surface | `/index.html` | No | - | `/index.html` | No | Yes | No | Experimental |
-| `/glyph-archive-node.html` | Glyph Archive | `website/glyph-archive-node.html` | `/hub-return.html` | runtime from Hub Return | `/glyphs.html`, `/node-field.html` | No | - | `/hub-return.html` | No | No | No | Experimental |
+| `/glyph-archive-node.html` | Glyph Archive | `website/glyph-archive-node.html` | - | - | `/glyphs.html`, `/node-field.html` | No | - | - | No | No | No | Experimental |
 | `/spoke.html` | Threshold Spoke | `website/spoke.html` | - | - | - | No | - | - | No | Yes | No | Legacy |
 | `/thankyou.html` | Thank You | `website/thankyou.html` | - | form/runtime completion only | `/index.html`, first-level spokes | No | - | `/index.html` | No | No | No | Experimental |
 
@@ -96,7 +96,7 @@ until removed from `website/` or explicitly intercepted by the Worker.
 
 | URL | Page title | Source file | Parent route | Linked from | Links to | Activation required? | Activation condition | Return target | Engine state required? | Orphaned? | Dead link? | Status |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `/portal/index.html` | Threshold Portal shell | `website/portal/index.html` | `/portal` | `/world-map.html` | - | No | - | `/portal` | No | No | **Yes**: Worker serves the SPA shell but `/index.html` is not a registered SPA route | Legacy |
+| `/portal/index.html` | Threshold Portal shell | `website/portal/index.html` | `/portal` | - | - | No | - | `/portal` | No | Yes | **Yes**: Worker serves the SPA shell but `/index.html` is not a registered SPA route | Legacy |
 | `/portal-dist/index.html` | Threshold Portal | `website/portal-dist/index.html` | - | - | - | No | - | - | No | Yes | No | Experimental |
 | `/generated-pages/environment/basin.html` | The Basin | `website/generated-pages/environment/basin.html` | - | - | `/environment/herbroom.html` | No | - | `/environment/herbroom.html` | No | Yes | No | Experimental |
 | `/page-templates/environment/basin.html` | The Basin | `website/page-templates/environment/basin.html` | - | - | `/environment/herbroom.html` | No | - | `/environment/herbroom.html` | No | Yes | No | Experimental |
@@ -195,6 +195,10 @@ that their content is invalid.
    navigation declaration. Their presence is recorded, not promoted.
 
 4. **Hub consolidation is now routed:** `/index.html` remains the Main Hub
-   and owns the Engine-gated first crossing. `/hub.html` now carries the
-   Return-state continuation, while `/hub-return.html` is a compatibility
-   redirect rather than a third operational Hub.
+   and owns the Engine-gated first crossing. `/hub.html` carries the
+   Return-state continuation. `/hub-return.html` is **retired**, not a
+   compatibility redirect: the file is absent and
+   `website/tests/destination-routing.test.mjs` L156–167 asserts its absence
+   (`ENOENT`). Rows 54, 55, 84, and 87 were generated before that retirement;
+   their `/hub-return.html` cells have been corrected, and no page in
+   `website/` linked to it at the time of correction.

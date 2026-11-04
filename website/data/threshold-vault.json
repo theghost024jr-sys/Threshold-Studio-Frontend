@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-01T09:48:44.221268+00:00",
+  "generatedAt": "2026-11-03T10:13:49.130043+00:00",
   "authorship": "echoroot & theghost",
   "counts": {
     "markdown": 24,
@@ -337,7 +337,7 @@
       "html": "/housegarden.html",
       "links": [],
       "assets": [],
-      "body": "# House & Garden\n\nHub biome for the Herb Room, Greenhouse, Lagoon, and Camp."
+      "body": "# House & Garden\n\nHub biome for the Herb Room, Greenhouse, Lagoon, and Camp.\n\nPollen moves through the cluster on the garden channel. The bee crosses from the\ngreenhouse to the herb room and back. The butterfly drifts over the lagoon and\ndoes not land. Nothing here is pollinated on purpose.\n\nThe house keeps the wind out. The garden is what the wind does anyway."
     },
     {
       "id": "camp",
@@ -429,7 +429,7 @@
       "html": "/housegarden.html#greenhouse",
       "links": [],
       "assets": [],
-      "body": "# Greenhouse\n\nFormation biome in the House & Garden cluster."
+      "body": "# Greenhouse\n\nFormation biome in the House & Garden cluster.\n\nGrowth here is not planned. The flower emerges where the humidity holds, and the\nglass keeps the air still enough for it to stay. Pollen settles on the panes and\nis not cleaned off.\n\nThis is the only place in the cluster where a seed becomes a plant without\nanyone deciding it should."
     },
     {
       "id": "herb_room",

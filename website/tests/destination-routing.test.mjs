@@ -261,7 +261,10 @@ test("keeps Engine outside the Fibonacci page topology", async () => {
   assert.ok(!Object.hasOwn(topology.spokes, "engine"));
   assert.doesNotMatch(engine, /data-threshold-spoke=["']engine/);
   assert.doesNotMatch(engine, /destination-page\.js|node-runtime\.js|spoke-tabs\.js/);
-  assert.match(hub, /class=["']entry-engine["'][^>]+href=["']deep-system\/engine\.html/);
+  // RULED 2026-11-03: the Engine console is a makers' surface, not a room. It stays outside the
+  // Fibonacci topology and is no longer linked from the player Hub; reachability moves to the
+  // Studio surface. This assertion is inverted deliberately - it now fails if the door returns.
+  assert.doesNotMatch(hub, /class=["']entry-engine["'][^>]+href=["']deep-system\/engine\.html/);
   assert.match(reactor, /querySelectorAll\(["']\.entry-actions a["']\)/);
   assert.doesNotMatch(reactor, /querySelectorAll\(["'][^"']*\.entry-engine/);
 });

@@ -75,7 +75,7 @@ test("keeps Basin east of Herb Room while restoring the south Waterfall exit", a
   assert.match(basin, /data-origin-chamber="herbroom"/);
   assert.match(basin, /src="\/assets\/basin\.png"/);
   assert.match(herbRoom, /east-threshold__cue" href="\/environment\/basin\.html"/);
-  assert.match(herbRoom, /href="\/environment\/waterfall\.html" class="exit-south">Look South/);
+  assert.match(herbRoom, /href="\/environment\/waterfall\.html" class="exit-south">Waterfall/);
   assert.match(basin, /href="\/environment\/herbroom\.html"/);
   assert.match(basin, /href="\/environment\/old-forest\.html"/);
   assert.match(oldForest, /data-branch="old-forest"/);

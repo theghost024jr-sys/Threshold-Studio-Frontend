@@ -15,6 +15,12 @@ test("Basin uses a user-initiated procedural bamboo fountain", async () => {
   assert.match(source, /@keyframes basin-breathe/);
   assert.match(source, /@keyframes basin-light/);
   assert.match(source, /@keyframes basin-water/);
+  assert.match(source, /body\[data-basin-shimmer="true"\] \.basin-vignette::after/);
+  assert.match(source, /repeating-linear-gradient\(168deg/);
+  assert.match(source, /body\[data-basin-shimmer="true"\] \.basin-route--chamber/);
+  assert.match(source, /threshold:access-flow-ready/);
+  assert.match(source, /state\.completed\.includes\("basin"\)/);
+  assert.match(source, /state\.shimmer === true/);
   assert.match(source, /prefers-reduced-motion: reduce/);
   assert.match(source, /class="sound-toggle"/);
   assert.match(source, /aria-pressed="false"/);

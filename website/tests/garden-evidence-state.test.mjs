@@ -60,6 +60,11 @@ test("keeps the Garden representation evidence-bound and route-free", async () =
   assert.match(herbRoom, /recordGardenAttention/);
   assert.match(herbRoom, /function beginGardenObservation/);
   assert.match(herbRoom, /function endGardenObservation/);
+  assert.match(herbRoom, /gardenWindow\.dataset\.gardenState = hasEvidence \? 'evidenced' : 'unmanifested'/);
+  assert.match(herbRoom, /gardenWindow\.dataset\.gardenState = 'unavailable'/);
+  assert.match(herbRoom, /gardenWindow\.classList\.remove\('is-unmanifested'\)/);
+  assert.match(herbRoom, /\.garden-window\.is-unmanifested::after/);
+  assert.doesNotMatch(herbRoom, /\.is-unmanifested \.garden-sky/);
   assert.match(presentation, /gardenRepresentation/);
   assert.doesNotMatch(garden, /Enter Garden|Step through/i);
 });

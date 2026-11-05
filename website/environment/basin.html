@@ -69,6 +69,26 @@
       animation: basin-water 12s ease-in-out infinite alternate;
     }
 
+    body[data-basin-shimmer="true"] .basin-world {
+      object-position: 54% center;
+    }
+
+    body[data-basin-shimmer="true"] .basin-vignette {
+      background:
+        linear-gradient(90deg, rgba(3, 9, 7, 0.48), transparent 24%, transparent 76%, rgba(3, 9, 7, 0.32)),
+        linear-gradient(0deg, rgba(3, 9, 7, 0.72), transparent 32%);
+    }
+
+    body[data-basin-shimmer="true"] .basin-vignette::before {
+      background: radial-gradient(circle at 34% 42%, rgba(255, 229, 137, 0.16), transparent 24%);
+    }
+
+    body[data-basin-shimmer="true"] .basin-vignette::after {
+      background:
+        repeating-linear-gradient(168deg, transparent 0 16px, rgba(235, 240, 185, 0.11) 17px 18px, transparent 19px 35px),
+        radial-gradient(ellipse at 68% 22%, rgba(255, 228, 143, 0.16), transparent 48%);
+    }
+
     .basin-name {
       position: fixed;
       bottom: clamp(1.25rem, 4vw, 3.5rem);
@@ -122,6 +142,11 @@
       right: 1rem;
       border-right: 0;
       text-align: right;
+    }
+
+    body[data-basin-shimmer="true"] .basin-route--chamber {
+      border-color: rgba(244, 244, 223, 0.34);
+      background: rgba(5, 16, 12, 0.73);
     }
 
     .basin-route:hover,
@@ -248,6 +273,18 @@
   </nav>
   <script type="module" src="/scripts/access-flow.js"></script>
   <script>
+    window.addEventListener("threshold:access-flow-ready", (event) => {
+      const state = event.detail?.state;
+      const hasBasinShimmer = Array.isArray(state?.completed)
+        && state.completed.includes("basin")
+        && state.shimmer === true;
+      if (hasBasinShimmer) {
+        document.body.dataset.basinShimmer = "true";
+      } else {
+        delete document.body.dataset.basinShimmer;
+      }
+    });
+
     const soundToggle = document.querySelector('.sound-toggle');
     let fountain = null;
 

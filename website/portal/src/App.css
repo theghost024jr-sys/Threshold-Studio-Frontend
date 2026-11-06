@@ -6176,3 +6176,4 @@
 .wildflower-drift-portal__starfish span { position: absolute; inset: 0; }
 .wildflower-drift-portal--seam-found .wildflower-drift-portal__seam { border-color: rgba(255, 238, 195, .8); box-shadow: 0 0 3rem rgba(255, 214, 138, .62), inset 0 0 2rem rgba(255, 214, 138, .25); color: #fff3dc; }
 .wildflower-drift-portal__answer { color: #ffd28b !important; }
+.wildflower-drift-portal__next { display: inline-block; margin-top: 1rem; color: #ffd28b; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 0.3em; }

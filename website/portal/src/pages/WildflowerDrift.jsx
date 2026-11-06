@@ -161,6 +161,7 @@ export default function WildflowerDrift() {
       <p>Walk the drift. Poppies hold the visible memory; seeds carry what can move without becoming loss.</p>
       <small>Move through the field to shift the view. Nothing here is collected or changed.</small>
       {foundSeam && <small className="wildflower-drift-portal__answer">The field remembers a sea it never was.</small>}
+      {foundSeam && <a className="wildflower-drift-portal__next" href="/wildflower-drift.html">Continue the drift</a>}
     </section>
   </main>
 }

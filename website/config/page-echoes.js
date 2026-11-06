@@ -39,6 +39,18 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/complexity-layers.css",
     "styles/world-map.css"
   ]),
+  pageEcho("legacy-index", "home", "Legacy Constructs", "/legacy/index.html", "legacy/index.html"),
+  pageEcho("legacy-hub2", "home", "Legacy Hub", "/hub2.html", "hub2.html", ["styles/styles.css"]),
+  pageEcho("legacy-index2", "home", "Fibonacci Flower Constellation Wheel", "/index2.html", "index2.html"),
+  pageEcho("legacy-resonancehub", "home", "Resonance Hub", "/resonancehub.html", "resonancehub.html", ["styles/styles.css"]),
+  pageEcho("legacy-thresholddialogues", "home", "Threshold Dialogues", "/thresholddialogues.html", "thresholddialogues.html"),
+  pageEcho("legacy-thresholdmythology", "home", "Threshold Mythology", "/thresholdmythology.html", "thresholdmythology.html"),
+  pageEcho("legacy-ledger", "home", "Ledger", "/ledger.html", "ledger.html", ["styles/styles.css"]),
+  pageEcho("legacy-submit", "home", "Submit a Glyph", "/submit.html", "submit.html", ["styles.css"]),
+  pageEcho("legacy-testing", "home", "Echoing Vessel", "/testing.html", "testing.html", ["styles.css"]),
+  pageEcho("legacy-architecture", "home", "Engine Mechanics", "/architecture.html", "architecture.html", ["styles/styles.css", "styles/hub-interaction.css"]),
+  pageEcho("legacy-chamber-palette-map", "home", "Chamber Map", "/chamber-palette-map.html", "chamber-palette-map.html", ["styles/styles.css", "styles/weather-engine.css"]),
+  pageEcho("legacy-porpoise", "home", "Porpoise", "/porpoise.html", "porpoise.html", ["styles/styles.css"]),
   pageEcho("discover", "home", "Discover", "/discover.html", "discover.html", [
     "styles/styles.css",
     "styles/complexity-layers.css",

@@ -60,6 +60,14 @@
     rotate(var(--tilt));
   opacity: calc(0.35 + var(--depth) * 0.5);
   filter: brightness(calc(0.7 + var(--resolve) * 0.6));
+  animation: cave-fold-drift calc(14s + var(--depth) * 18s) ease-in-out infinite alternate;
+  animation-delay: calc(var(--depth) * -11s);
+}
+
+/* Lumen Vault: the cave sits in a fold where orientation is negotiable. */
+@keyframes cave-fold-drift {
+  from { rotate: -14deg; }
+  to { rotate: 16deg; }
 }
 
 .cave-fractures b {
@@ -116,6 +124,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .cave-crystals i {
+    animation: none;
+  }
+
   .cave-opening,
   .cave-nav__forward {
     transition: none;

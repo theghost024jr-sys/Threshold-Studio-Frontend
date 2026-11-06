@@ -37,6 +37,7 @@ export default function OldForestTrek() {
         <nav>
           <Link to="/cabin-of-moss">Return to the porch</Link>
           <Link to="/basin">Look back through the Basin</Link>
+          <Link to="/snail-band-clearing">Into the Snail Band Clearing</Link>
           <Link to="/">Return to the Portal</Link>
         </nav>
       </div>

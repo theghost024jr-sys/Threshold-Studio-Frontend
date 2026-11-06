@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { SlitNavigationContext } from './SlitNavigationContext.js'
 
 const routes = new Set([
-  '/', '/dashboard', '/basin', '/basin-falls', '/beach', '/canyon', '/deepwater', '/doug', '/ethos',
+  '/', '/dashboard', '/basin', '/basin-falls', '/beach', '/canyon', '/cave-corridor', '/deepwater', '/doug', '/ethos',
   '/first-door', '/motion', '/ocean', '/quiet-grove', '/ruins', '/shimmer',
   '/spiral-grove', '/drift-systems', '/drift-chamber', '/collapse-chamber',
   '/glyphs', '/glyphs/hourglass', '/rohg', '/snail-band-clearing',

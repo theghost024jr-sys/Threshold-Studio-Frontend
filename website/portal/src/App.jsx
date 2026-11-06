@@ -10,6 +10,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard.jsx'))
 const Beach = lazy(() => import('./pages/Beach.jsx'))
 const Basin = lazy(() => import('./pages/Basin.jsx'))
 const BasinFalls = lazy(() => import('./pages/BasinFalls.jsx'))
+const CaveCorridor = lazy(() => import('./pages/CaveCorridor.jsx'))
 const Canyon = lazy(() => import('./pages/Canyon.jsx'))
 const Deepwater = lazy(() => import('./pages/Deepwater.jsx'))
 const Doug = lazy(() => import('./pages/Doug.jsx'))
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/beach" element={<Beach />} />
           <Route path="/basin" element={<Basin />} />
           <Route path="/basin-falls" element={<BasinFalls />} />
+          <Route path="/cave-corridor" element={<CaveCorridor />} />
           <Route path="/canyon" element={<Canyon />} />
           <Route path="/deepwater" element={<Deepwater />} />
           <Route path="/doug" element={<Doug />} />

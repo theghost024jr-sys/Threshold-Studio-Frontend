@@ -29,7 +29,7 @@ export default function HourglassGlyph() {
         {readings.map(([label], index) => <button type="button" className={index === reading ? 'is-active' : ''} onClick={() => select(index)} key={label}>{label}</button>)}
       </div>
       <aside><strong>{title}</strong><p>{detail}</p></aside>
-      <nav><Link to="/collapse-chamber">Follow collapse intelligence</Link><Link to="/drift-systems">Return to drift</Link><Link to="/">Return to the Portal</Link></nav>
+      <nav><Link to="/glyphs">Return to the glyph archive</Link><Link to="/collapse-chamber">Follow collapse intelligence</Link><Link to="/drift-systems">Return to drift</Link><Link to="/">Return to the Portal</Link></nav>
     </section>
   </main>
 }

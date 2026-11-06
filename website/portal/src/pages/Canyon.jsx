@@ -68,6 +68,7 @@ export default function Canyon() {
         </section>
         <p className="canyon-end">The path keeps going.</p>
         <nav className="canyon-nav" aria-label="Canyon destinations">
+          <Link to="/cave-corridor">Back to the Cave Corridor</Link>
           <a href="/mythology.html">Meet Cindervox</a>
           <Link to="/">Return to Threshold</Link>
         </nav>

@@ -50,6 +50,18 @@
   transition: opacity 0.6s ease;
 }
 
+.cave-opening--meadow {
+  left: 12%;
+  transform: translate(calc(-50% + var(--lx) * -18px), calc(-50% + var(--ly) * -12px));
+  background: radial-gradient(ellipse at 50% 60%, #e8f2a0 0%, #6fa35a 45%, #1c3a1e 100%);
+  filter: blur(calc(10px - var(--meadow-opening) * 6px));
+  opacity: calc(var(--meadow-opening) * 0.9);
+}
+
+.cave-nav__meadow {
+  animation: cave-fade-in 0.8s ease both;
+}
+
 .cave-crystals i {
   position: absolute;
   width: calc(var(--depth) * 7vmin);
@@ -129,6 +141,7 @@
   }
 
   .cave-opening,
+  .cave-nav__meadow,
   .cave-nav__forward {
     transition: none;
     animation: cave-fade-in 0.4s ease both;

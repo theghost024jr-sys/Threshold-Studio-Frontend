@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom'
 import './CaveCorridor.css'
 
 const ALIGNMENT = { x: 0.42, y: -0.12 }
+const MEADOW_ALIGNMENT = { x: -0.9, y: 0.1 }
 const REVEAL_START = 0.45
 const RESOLVED_AT = 0.86
 const KEY_STEP = 0.1
 
 const clamp = (value, min = -1, max = 1) => Math.min(max, Math.max(min, value))
 
-function measureResolve(look) {
-  const distance = Math.hypot(look.x - ALIGNMENT.x, look.y - ALIGNMENT.y)
+function measureResolve(look, target = ALIGNMENT) {
+  const distance = Math.hypot(look.x - target.x, look.y - target.y)
   return clamp(1 - distance / 1.1, 0, 1)
 }
 
@@ -52,6 +53,11 @@ export default function CaveCorridor() {
 
   const resolve = reducedMotion ? 1 : measureResolve(look)
   const resolved = resolve >= RESOLVED_AT
+  const meadowResolve = reducedMotion ? 1 : measureResolve(look, MEADOW_ALIGNMENT)
+  const meadowResolved = meadowResolve >= RESOLVED_AT
+  const meadowPresence = reducedMotion
+    ? 1
+    : clamp((meadowResolve - REVEAL_START) / (RESOLVED_AT - REVEAL_START), 0, 1)
 
   const lookFromPointer = useCallback((event) => {
     const box = stageRef.current.getBoundingClientRect()
@@ -112,6 +118,7 @@ export default function CaveCorridor() {
           '--ly': reducedMotion ? 0 : look.y,
           '--resolve': resolve,
           '--opening': openingPresence,
+          '--meadow-opening': meadowPresence,
         }}
         tabIndex={0}
         role="group"
@@ -124,6 +131,7 @@ export default function CaveCorridor() {
       >
         <div className="cave-walls" aria-hidden="true" />
         <div className="cave-opening" aria-hidden="true" />
+        <div className="cave-opening cave-opening--meadow" aria-hidden="true" />
         <div className="cave-crystals" aria-hidden="true">
           {crystals.map((crystal) => (
             <i
@@ -149,6 +157,7 @@ export default function CaveCorridor() {
 
       <nav className="cave-nav" aria-label="Cave corridor passages">
         <a className="cave-nav__retreat" href="/housegarden.html">Back to House &amp; Garden</a>
+        {meadowResolved && <a className="cave-nav__meadow" href="/wildflower-drift.html">Toward the wildflower field</a>}
         {resolved && <Link className="cave-nav__forward" to="/canyon">Enter the Canyon</Link>}
       </nav>
     </main>

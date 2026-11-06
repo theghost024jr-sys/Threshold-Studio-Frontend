@@ -183,8 +183,9 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/access-flow.css"
   ]),
   pageEcho("garden", "houseGarden", "Garden", "/garden.html", "garden.html", [
-    "styles.css"
-  ]),
+      "styles.css",
+      "styles/garden-evidence.css"
+    ]),
   pageEcho("herbroom", "houseGarden", "Herb Room", "/environment/herbroom.html", "environment/herbroom.html"),
   pageEcho("basin-reference-page", "houseGarden", "Basin", "/environment/basin.html", "environment/basin.html"),
   pageEcho("basin-generated-page", "houseGarden", "Basin (published note)", "/generated-pages/environment/basin.html", null),

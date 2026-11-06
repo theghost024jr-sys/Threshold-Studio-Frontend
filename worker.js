@@ -613,6 +613,18 @@ async function buildEthosChamberPayload(env, request, trace, limit = 220) {
 async function handleRequest(request, env, trace) {
   const url = new URL(request.url);
 
+  if (url.pathname === "/portal/index.html") {
+    return Response.redirect(new URL("/portal/", request.url), 308);
+  }
+  if (
+    url.pathname.startsWith("/portal-dist/") ||
+    url.pathname.startsWith("/generated-pages/") ||
+    url.pathname.startsWith("/page-templates/") ||
+    url.pathname.startsWith("/echoes/inventory/")
+  ) {
+    return new Response("Not found", { status: 404 });
+  }
+
   const isPortalPath = url.pathname === "/portal" || url.pathname.startsWith("/portal/");
   const isWorldPath = url.pathname === "/world" || url.pathname.startsWith("/world/");
   if (request.method === "GET" && (isPortalPath || isWorldPath)) {

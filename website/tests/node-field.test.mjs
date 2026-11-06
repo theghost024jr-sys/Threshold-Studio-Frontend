@@ -66,8 +66,8 @@ test("ships a first-level node field without inventing interaction authority", a
   assert.doesNotMatch(script, /activateNode|localStorage|sessionStorage|updateNode|relationship|strand|braid/i);
 
   const nodeField = topology.places.find((place) => place.id === "node-field");
-  const holding = topology.places.find((place) => place.id === "world-holding");
+  const holding = topology.places.find((place) => place.id === "hub");
   assert.equal(nodeField.route, "/node-field.html");
-  assert.equal(nodeField.returnsTo, "world-holding");
+  assert.equal(nodeField.returnsTo, "hub");
   assert.ok(holding.connectsTo.includes("node-field"));
 });

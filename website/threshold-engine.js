@@ -1,3 +1,7 @@
+import { PAGE_ECHOES, resolvePageEchoes } from "./config/page-echoes.js";
+import { EchoNode, EchoProtocolLens } from "./echo-protocol.js";
+import { createWeatherSnapshot } from "./weather-model.js";
+
 const TARGET_IDS = [
   "cave",
   "stairs",
@@ -25,6 +29,7 @@ const BRANCH_IDS = [
   "dialogues",
   "mythology",
   "houseGarden",
+  "oldForest",
   "invitation",
   "contact"
 ];
@@ -38,12 +43,27 @@ const SEASONAL_MODIFIERS = Object.freeze({
 });
 const GLYPH_CHAMBER_IDS = new Set(["glyph_collapse", "glyph_expand", "glyph_fog", "glyph_soil"]);
 
+function createBranchEchoNode(id) {
+  return new EchoNode({
+    id,
+    pattern: ["branch", id],
+    boundary: "threshold-branch",
+    frequencyBand: [0.1, 10],
+    toleranceBand: 1,
+    flexibility: 0.25,
+    stability: 4,
+    reconfigure: () => true
+  });
+}
+
 class ThresholdBranch {
-  constructor(id, render) {
+  constructor(id, render, echoes = [], echoNode = null) {
     this.id = id;
     this.visible = true;
     this.state = "stable";
     this.payload = null;
+    this.echoes = echoes.filter((echo) => echo.branchId === id);
+    this.echoNode = echoNode;
     this.render = render;
   }
 
@@ -81,6 +101,8 @@ class ThresholdBranchEngine {
   constructor(engine) {
     this.engine = engine;
     this.initialized = false;
+    this.echoLens = new EchoProtocolLens();
+    this.weatherStates = new Map();
   }
 
   initialize() {
@@ -90,9 +112,10 @@ class ThresholdBranchEngine {
 
     const render = this.engine.renderBranch.bind(this.engine);
     this.engine.branches = {};
+    const echoes = resolvePageEchoes(PAGE_ECHOES, this.engine.vault || {});
 
     BRANCH_IDS.forEach((id) => {
-      this.engine.branches[id] = new ThresholdBranch(id, render);
+      this.engine.branches[id] = new ThresholdBranch(id, render, echoes, createBranchEchoNode(id));
       render(this.engine.branches[id]);
     });
 
@@ -115,6 +138,80 @@ class ThresholdBranchEngine {
       : pool[Math.floor(Math.random() * pool.length)];
 
     return this.engine.branches[id] || null;
+  }
+
+  inspectEchoes() {
+    return this.echoLens.inspect(
+      Object.values(this.engine.branches || {}).map((branch) => branch.echoNode)
+    );
+  }
+
+  processEchoSignal(nodeId, signal) {
+    const branch = this.engine.branches && this.engine.branches[nodeId];
+    if (!branch || !branch.echoNode) {
+      throw new RangeError(`Unknown Echo branch "${nodeId}"`);
+    }
+    const node = branch.echoNode.receiveSignal(signal);
+    if (node.accepted) {
+      this.weatherStates.delete(nodeId);
+    }
+    return this.publishEchoUpdate("signal", node);
+  }
+
+  advanceEchoNode(nodeId) {
+    const branch = this.engine.branches && this.engine.branches[nodeId];
+    if (!branch || !branch.echoNode) {
+      throw new RangeError(`Unknown Echo branch "${nodeId}"`);
+    }
+    this.weatherStates.delete(nodeId);
+    return this.publishEchoUpdate("advance", branch.echoNode.advance());
+  }
+
+  inspectWeather(nodeId) {
+    if (nodeId === undefined) {
+      return Object.freeze([...this.weatherStates.values()]);
+    }
+    return this.weatherStates.get(String(nodeId)) || null;
+  }
+
+  applyWeatherState(nodeId, weatherInput) {
+    const branch = this.engine.branches && this.engine.branches[nodeId];
+    if (!branch || !branch.echoNode) {
+      throw new RangeError(`Unknown Echo branch "${nodeId}"`);
+    }
+    if (branch.echoNode.substrateState !== "Echo") {
+      throw new Error(`Weather can only adapt on an Echo-active node ("${nodeId}")`);
+    }
+
+    const weather = createWeatherSnapshot({ ...weatherInput, nodeId });
+    this.weatherStates.set(nodeId, weather);
+    const detail = Object.freeze({ nodeId, weather });
+    window.dispatchEvent(new CustomEvent("threshold:weather-update", { detail }));
+    return weather;
+  }
+
+  resetEchoSystem() {
+    const nodes = Object.values(this.engine.branches || {})
+      .map((branch) => branch.echoNode.reset());
+    this.weatherStates.clear();
+    const detail = Object.freeze({
+      trigger: "reset",
+      node: null,
+      nodes: Object.freeze(nodes),
+      lens: this.inspectEchoes()
+    });
+    window.dispatchEvent(new CustomEvent("threshold:echo-lens-update", { detail }));
+    return detail;
+  }
+
+  publishEchoUpdate(trigger, node) {
+    const detail = Object.freeze({
+      trigger,
+      node,
+      lens: this.inspectEchoes()
+    });
+    window.dispatchEvent(new CustomEvent("threshold:echo-lens-update", { detail }));
+    return detail;
   }
 }
 
@@ -1231,6 +1328,30 @@ class ThresholdEngine {
     });
   }
 
+  inspectEchoes() {
+    return this.branchEngine.inspectEchoes();
+  }
+
+  inspectWeather(nodeId) {
+    return this.branchEngine.inspectWeather(nodeId);
+  }
+
+  applyWeatherState(nodeId, weatherInput) {
+    return this.branchEngine.applyWeatherState(nodeId, weatherInput);
+  }
+
+  processEchoSignal(nodeId, signal) {
+    return this.branchEngine.processEchoSignal(nodeId, signal);
+  }
+
+  advanceEchoNode(nodeId) {
+    return this.branchEngine.advanceEchoNode(nodeId);
+  }
+
+  resetEchoSystem() {
+    return this.branchEngine.resetEchoSystem();
+  }
+
   pickSelectedNote(selection) {
     if (!selection || typeof selection !== "object") {
       return null;
@@ -1701,5 +1822,11 @@ if (threshold) {
   });
 }
 
-export { ThresholdBranch, ThresholdBranchEngine, ThresholdEngine, ThresholdGlyphEngine };
+export {
+  EchoProtocolLens,
+  ThresholdBranch,
+  ThresholdBranchEngine,
+  ThresholdEngine,
+  ThresholdGlyphEngine
+};
 export default threshold;

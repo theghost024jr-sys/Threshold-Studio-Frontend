@@ -18,7 +18,7 @@
     // Editor Behavior
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+        "source.organizeImports": "explicit"
     },
     "editor.renderWhitespace": "boundary",
     "editor.minimap.enabled": false,
@@ -40,9 +40,5 @@
 
     // Git
     "git.autofetch": true,
-    "git.confirmSync": true,
-
-    // Extensions
-    "extensions.autoUpdate": false,
-    "extensions.autoCheckUpdates": false
+    "git.confirmSync": true
 }

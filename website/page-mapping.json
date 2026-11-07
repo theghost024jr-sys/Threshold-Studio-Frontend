@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "note": "_publish/basin.md",
+      "templateId": "environment/basin.html",
+      "output": "environment/basin.html"
+    }
+  ]
+}

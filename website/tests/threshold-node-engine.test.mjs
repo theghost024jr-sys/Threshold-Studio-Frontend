@@ -68,3 +68,96 @@ test("returns null without publishing an update when no branch is available", ()
   assert.equal(glyphEngine.glyphInteractWithBranch({ nodeId: "missing", action: "hide" }), null);
   assert.equal(events.length, 0);
 });
+
+test("publishes read-only Echo Lens telemetry for protocol updates", () => {
+  events.length = 0;
+  const branchEngine = new thresholdEngineModule.ThresholdBranchEngine({
+    vault: {},
+    renderBranch() {}
+  });
+  branchEngine.initialize();
+
+  const update = branchEngine.processEchoSignal("home", {
+    pattern: ["branch", "home"],
+    charge: 1,
+    frequency: 1,
+    direction: 0,
+    boundary: ["home"]
+  });
+
+  assert.equal(update.node.phase, "Anchored");
+  assert.equal(update.lens.system.state, "LocalResonance");
+  assert.equal(update.lens.metrics.activeNodeCount, 1);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].type, "threshold:echo-lens-update");
+  assert.deepEqual(events[0].detail, update);
+});
+
+test("resets the Echo system to Argon and publishes one system update", () => {
+  events.length = 0;
+  const branchEngine = new thresholdEngineModule.ThresholdBranchEngine({
+    vault: {},
+    renderBranch() {}
+  });
+  branchEngine.initialize();
+  branchEngine.processEchoSignal("home", {
+    pattern: ["branch", "home"],
+    charge: 1,
+    frequency: 1,
+    direction: 0,
+    boundary: ["home"]
+  });
+  branchEngine.applyWeatherState("home", {
+    cyclePhase: "Void",
+    seasonState: "Winter",
+    drivers: { drift: [0], pressure: 0, resonance: 1, density: 0 },
+    phenomena: { environmental: null, symbolic: null, astral: "stillness-field" }
+  });
+  events.length = 0;
+
+  const update = branchEngine.resetEchoSystem();
+
+  assert.equal(update.trigger, "reset");
+  assert.equal(update.nodes.length, 12);
+  assert.equal(update.lens.metrics.activeNodeCount, 0);
+  assert.ok(update.nodes.every((node) => node.substrateState === "Argon"));
+  assert.equal(branchEngine.inspectWeather("home"), null);
+  assert.equal(events.length, 1);
+  assert.deepEqual(events[0].detail, update);
+});
+
+test("applies weather only to an Echo-active local node", () => {
+  events.length = 0;
+  const branchEngine = new thresholdEngineModule.ThresholdBranchEngine({
+    vault: {},
+    renderBranch() {}
+  });
+  branchEngine.initialize();
+  const weatherInput = {
+    cyclePhase: "Void",
+    seasonState: "Winter",
+    drivers: { drift: [0, -1], pressure: 0, resonance: 1, density: 0 },
+    phenomena: { environmental: null, symbolic: null, astral: "stillness-field" }
+  };
+
+  assert.throws(
+    () => branchEngine.applyWeatherState("home", weatherInput),
+    /Weather can only adapt on an Echo-active node/
+  );
+  branchEngine.processEchoSignal("home", {
+    pattern: ["branch", "home"],
+    charge: 1,
+    frequency: 1,
+    direction: 0,
+    boundary: ["home"]
+  });
+
+  const weather = branchEngine.applyWeatherState("home", weatherInput);
+
+  assert.equal(weather.scope.kind, "local");
+  assert.equal(weather.scope.id, "home");
+  assert.equal(branchEngine.inspectWeather("home"), weather);
+  assert.equal(branchEngine.inspectWeather("ethos"), null);
+  assert.equal(branchEngine.inspectWeather().length, 1);
+  assert.equal(events.at(-1).type, "threshold:weather-update");
+});

@@ -83,26 +83,52 @@
       <div><span>Weather</span><strong id="wheelWeather">Fog</strong></div>
     </section>
 
+    <section class="season-threshold" aria-labelledby="seasonThresholdTitle">
+      <p>Current field</p>
+      <h2 id="seasonThresholdTitle">The wheel is turning.</h2>
+      <p id="wheelVector">Choose a season to read its movement.</p>
+      <p id="wheelMemory" class="wheel-memory">0 / 4 seasonal movements recognized.</p>
+      <a id="wheelGate" href="/pages/learning-spring.html">Enter Sprout Gallery</a>
+      <a id="seasonalAlcove" class="seasonal-alcove-link" href="/learningwheel.html?node=seasonal-alcove&fib=5&trail=learning-wheel" hidden>Open Seasonal Alcove</a>
+    </section>
+
+    <section id="seasonalAlcovePanel" class="seasonal-alcove-panel" hidden aria-labelledby="seasonalAlcoveTitle">
+      <p>Fib 5 / Revealed node</p>
+      <h2 id="seasonalAlcoveTitle">Seasonal Alcove</h2>
+      <p>Fog, ocean, storm, and soil fragments with unique visuals.</p>
+      <nav class="alcove-paths" aria-label="Seasonal Alcove paths">
+        <a href="/pages/learning-spring.html">Fog</a>
+        <a href="/pages/learning-summer.html">Ocean</a>
+        <a href="/pages/learning-autumn.html">Storm</a>
+        <a href="/pages/learning-winter.html">Soil</a>
+      </nav>
+      <p class="alcove-lock"><strong>Storm Cabinet</strong> reveals after double-clicking two glyphs and triggering one rare event.</p>
+    </section>
+
+    <section id="stormCabinetPanel" class="storm-cabinet-panel" hidden aria-labelledby="stormCabinetTitle">
+      <p>Fib 3 / Shared node</p>
+      <h2 id="stormCabinetTitle">Storm Cabinet</h2>
+      <p>Fracture myths, refusal stories, and remapped paths.</p>
+      <p>It is held by Seasonal Alcove and Mythology’s Fracture Pedal.</p>
+      <nav class="storm-cabinet-paths" aria-label="Storm Cabinet paths">
+        <a href="/learningwheel.html">Return to Learning Wheel</a>
+        <a href="/mythology.html?node=fracture-pedal&fib=5&trail=mythology">Follow Fracture Pedal</a>
+      </nav>
+    </section>
+
     <section class="season-portals" aria-labelledby="seasonPortalsTitle">
       <header>
         <p>Revealed by rotation</p>
         <h2 id="seasonPortalsTitle">Seasonal Portals</h2>
       </header>
       <div class="portal-row">
-        <button type="button" data-season-portal="spring">Sprout Gallery</button>
-        <button type="button" data-season-portal="summer">Shimmer Chamber</button>
-        <button type="button" data-season-portal="autumn">Collapse Lore</button>
-        <button type="button" data-season-portal="winter">Soil Archive</button>
+        <a href="/pages/learning-spring.html" data-season-portal="spring">Sprout Gallery</a>
+        <a href="/pages/learning-summer.html" data-season-portal="summer">Shimmer Chamber</a>
+        <a href="/pages/learning-autumn.html" data-season-portal="autumn">Collapse Lore</a>
+        <a href="/pages/learning-winter.html" data-season-portal="winter">Soil Archive</a>
       </div>
       <p id="wheelStatus">Choose a season to turn the wheel.</p>
     </section>
-
-    <dialog class="season-dialog" id="seasonDialog">
-      <button class="season-dialog-close" type="button" aria-label="Close seasonal portal">Close</button>
-      <p id="seasonDialogKicker"></p>
-      <h2 id="seasonDialogTitle"></h2>
-      <p id="seasonDialogBody"></p>
-    </dialog>
   </main>
 
   <footer class="wheel-footer">
@@ -110,7 +136,7 @@
     <span>The wheel returns what the season teaches.</span>
   </footer>
 
-  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/node-runtime.js?v=local-preview-activation-1" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script type="module" src="scripts/learning-wheel.js"></script>
   <script type="module" src="scripts/destination-page.js?v=reveal-3"></script>

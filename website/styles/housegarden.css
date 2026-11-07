@@ -35,6 +35,16 @@
   gap: 0.55rem;
 }
 
+.garden-navigation span.garden-navigation__link {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(200, 215, 200, 0.22);
+  border-radius: 999px;
+  background: rgba(20, 30, 24, 0.55);
+  opacity: 0.6;
+  cursor: default;
+}
+
 .flower-signals {
   display: flex;
   flex-wrap: wrap;

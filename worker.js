@@ -225,6 +225,30 @@ async function activateNodeAsset(url, env, trace) {
   return new Response(object.body, { headers });
 }
 
+async function helpWithDoug(request, trace) {
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    log("warn", "doug.help.rejected", trace, { reason: "invalid-json" });
+    return json({ error: "Doug needs a readable question before he can find the right form." }, 400);
+  }
+
+  const query = String(payload?.query || "").trim();
+  if (!query) {
+    log("warn", "doug.help.rejected", trace, { reason: "missing-question" });
+    return json({ error: "Doug needs a question before he can find the right form." }, 400);
+  }
+
+  log("info", "doug.help.succeeded", trace, { queryLength: query.length });
+  return json({
+    label: "Doug’s desk",
+    answer: "I can start from where you are and make the next seam less sharp.",
+    href: "/portal/motion",
+    action: "Enter Motion"
+  });
+}
+
 function normalizeText(value) {
   return String(value || "").toLowerCase();
 }
@@ -589,6 +613,18 @@ async function buildEthosChamberPayload(env, request, trace, limit = 220) {
 async function handleRequest(request, env, trace) {
   const url = new URL(request.url);
 
+  if (url.pathname === "/portal/index.html") {
+    return Response.redirect(new URL("/portal/", request.url), 308);
+  }
+  if (
+    url.pathname.startsWith("/portal-dist/") ||
+    url.pathname.startsWith("/generated-pages/") ||
+    url.pathname.startsWith("/page-templates/") ||
+    url.pathname.startsWith("/echoes/inventory/")
+  ) {
+    return new Response("Not found", { status: 404 });
+  }
+
   const isPortalPath = url.pathname === "/portal" || url.pathname.startsWith("/portal/");
   const isWorldPath = url.pathname === "/world" || url.pathname.startsWith("/world/");
   if (request.method === "GET" && (isPortalPath || isWorldPath)) {
@@ -630,6 +666,10 @@ async function handleRequest(request, env, trace) {
 
     if (url.pathname === "/api/nodes/activate" && request.method === "POST") {
       return activateNode(request, env, trace);
+    }
+
+    if (url.pathname === "/api/doug/help" && request.method === "POST") {
+      return helpWithDoug(request, trace);
     }
 
     if (url.pathname.startsWith("/api/nodes/assets/") && request.method === "GET") {

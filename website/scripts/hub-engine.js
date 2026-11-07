@@ -12,4 +12,4 @@ const bridge = {
 window.__thresholdEngine = bridge;
 
 // Phase-2 bridge: keep current behavior by loading the legacy monolith.
-await import("./hub-choice.js?v=20260807l");
+await import("./hub-choice.js?v=20261020-diamond-spirals");

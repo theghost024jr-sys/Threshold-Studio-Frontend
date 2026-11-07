@@ -4,6 +4,12 @@
   "systemRoot": "C:\\Threshold",
   "websiteRoot": "C:\\Threshold\\website",
   "htmlInventoryRoot": "C:\\Threshold\\html-inventory",
+  "pages": {
+    "mapping": "page-mapping.json",
+    "templates": "page-templates",
+    "output": "generated-pages",
+    "renderJobs": "data/vault-render-jobs.json"
+  },
   "worldRoot": "C:\\Threshold\\world",
   "thresholdRoot": "C:\\Threshold\\threshold",
   "nodeBundlesRoot": "C:\\Threshold\\node-bundles",

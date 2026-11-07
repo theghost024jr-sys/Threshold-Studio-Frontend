@@ -1,263 +1,984 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Drift Falls | Threshold</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Drift Falls — Threshold Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&amp;family=Source+Sans+3:wght@300;400;600&amp;display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --accent: #9fd9cd;
-      --background: #0d1a14;
-      --text: #f0fff9;
-    }
-
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
-    }
-
-    html,
-    body {
-      min-height: 100%;
       margin: 0;
+      padding: 0;
     }
 
+    :root {
+      --bg: #0d1a14;
+      --text: #e8f5e9;
+      --muted: #8ab49a;
+      --accent: #4dd9ac;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      background: var(--background);
+      background: var(--bg);
       color: var(--text);
       font-family: "Source Sans 3", sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
     }
 
-    .falls {
-      position: relative;
-      min-height: 100svh;
+    .nav {
+      left: 0;
+      padding: 1.25rem 1.75rem;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav a {
+      align-items: center;
+      backdrop-filter: blur(8px);
+      background: rgba(13, 26, 20, 0.55);
+      border: 1px solid rgba(77, 217, 172, 0.25);
+      border-radius: 4px;
+      color: var(--text);
+      display: inline-flex;
+      font-size: 0.8rem;
+      font-weight: 600;
+      gap: 0.5rem;
+      letter-spacing: 0.12em;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      background: rgba(77, 217, 172, 0.1);
+      border-color: rgba(77, 217, 172, 0.55);
+    }
+
+    .nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .nav a svg {
+      fill: none;
+      height: 14px;
+      stroke: var(--accent);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
+      width: 14px;
+    }
+
+    .hero {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      height: 92svh;
+      justify-content: center;
       overflow: hidden;
-      isolation: isolate;
-    }
-
-    .falls__image,
-    .falls::before,
-    .falls::after {
-      position: absolute;
-      inset: 0;
-    }
-
-    .falls__image {
+      position: relative;
       width: 100%;
+    }
+
+    .hero-img {
       height: 100%;
+      inset: 0;
       object-fit: cover;
       object-position: center;
-      animation: falls-breathe 18s ease-in-out infinite alternate;
-      z-index: -3;
+      position: absolute;
+      width: 100%;
+      z-index: 0;
     }
 
-    .falls::before {
-      background:
-        linear-gradient(to bottom, rgba(5, 15, 13, 0.72), transparent 34%),
-        linear-gradient(to top, rgba(5, 15, 13, 0.8), transparent 30%);
+    .hero::before,
+    .hero::after {
       content: "";
-      z-index: -2;
-    }
-
-    .falls::after {
-      background:
-        radial-gradient(ellipse at 38% 88%, rgba(201, 238, 230, 0.24), transparent 30%),
-        radial-gradient(ellipse at 72% 82%, rgba(177, 229, 220, 0.16), transparent 36%);
-      content: "";
-      mix-blend-mode: screen;
+      left: 0;
       pointer-events: none;
-      z-index: -1;
-    }
-
-    .return {
       position: absolute;
-      top: 1.25rem;
-      left: 1.75rem;
+      right: 0;
+      z-index: 1;
     }
 
-    .return,
-    .sound {
-      border: 1px solid rgba(159, 217, 205, 0.3);
-      border-radius: 4px;
-      background: rgba(13, 26, 20, 0.56);
-      color: var(--text);
-      font: 600 0.7rem/1 "Source Sans 3", sans-serif;
-      letter-spacing: 0.12em;
-      padding: 0.6rem 1rem;
-      text-decoration: none;
-      text-transform: uppercase;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
+    .hero::before {
+      background: linear-gradient(to bottom, rgba(13, 26, 20, 0.88), transparent);
+      height: 35%;
+      top: 0;
     }
 
-    .return:hover,
-    .return:focus-visible,
-    .sound:hover,
-    .sound:focus-visible {
-      border-color: rgba(159, 217, 205, 0.8);
-      background: rgba(13, 26, 20, 0.78);
-      outline: none;
+    .hero::after {
+      background: linear-gradient(to top, rgba(13, 26, 20, 0.92), transparent);
+      bottom: 0;
+      height: 40%;
     }
 
-    .sound {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.75rem;
-      cursor: pointer;
-    }
-
-    .title {
-      position: absolute;
-      top: 43%;
-      left: 50%;
-      width: min(90%, 56rem);
+    .hero-content {
+      max-width: 720px;
+      padding: 0 1.5rem;
+      position: relative;
       text-align: center;
-      text-shadow: 0 2px 2rem rgba(0, 0, 0, 0.86);
-      transform: translate(-50%, -50%);
+      z-index: 2;
     }
 
-    .title p {
-      margin: 0 0 0.8rem;
-      color: var(--accent);
-      font-size: 0.68rem;
+    .hero-title {
+      animation: drift-pulse 5s ease-in-out infinite;
+      color: #d6f5ec;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
       font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
     }
 
-    h1 {
-      margin: 0;
-      font: 400 clamp(2.7rem, 7vw, 5.7rem)/0.96 "Playfair Display", Georgia, serif;
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-style: italic;
+      letter-spacing: 0.04em;
+      margin-top: 1.1rem;
     }
 
-    .paths {
+    .scroll-arrow {
+      animation: arrow-bounce 2.2s ease-in-out infinite;
+      bottom: 2.25rem;
+      left: 50%;
       position: absolute;
-      bottom: 1.4rem;
-      left: 1.75rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+      transform: translateX(-50%);
+      z-index: 2;
     }
 
-    .paths a {
-      color: rgba(240, 255, 249, 0.94);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-decoration: none;
-      text-shadow: 0 2px 1rem rgba(0, 0, 0, 0.9);
-      text-transform: uppercase;
+    .scroll-arrow svg {
+      fill: none;
+      height: 22px;
+      opacity: 0.7;
+      stroke: var(--accent);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.5;
+      width: 22px;
     }
 
-    .paths a:hover,
-    .paths a:focus-visible {
-      color: #d8fff6;
-      outline: none;
-      text-decoration: underline;
-      text-underline-offset: 0.28rem;
+    .lore {
+      background: var(--bg);
+      padding: 6rem 2rem 7rem;
     }
 
-    @keyframes falls-breathe {
-      from {
-        scale: 1.01;
-        filter: brightness(0.9) saturate(0.95);
-      }
-
-      to {
-        scale: 1.035;
-        filter: brightness(1.05) saturate(1.05);
-      }
+    .lore-inner {
+      align-items: start;
+      display: grid;
+      gap: 0 2.5rem;
+      grid-template-columns: 4px 1fr;
+      margin: 0 auto;
+      max-width: 900px;
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    @media (max-width: 600px) {
-      .return {
-        left: 1rem;
-      }
+    .lore-bar {
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      border-radius: 2px;
+      box-shadow: 0 0 16px rgba(77, 217, 172, 0.35);
+      min-height: 180px;
+      width: 4px;
+    }
 
-      .sound {
-        right: 1rem;
-      }
+    .lore-text h2 {
+      color: var(--text);
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+    }
 
-      .paths {
-        right: 1rem;
-        bottom: 1rem;
-        left: 1rem;
-        justify-content: center;
-      }
+    .lore-text p {
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+      max-width: 620px;
+    }
+
+    footer {
+      background: var(--bg);
+      border-top: 1px solid rgba(77, 217, 172, 0.12);
+      color: rgba(138, 180, 154, 0.55);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      padding: 1.75rem 2rem;
+      text-align: center;
+    }
+
+    @keyframes drift-pulse {
+      0%, 100% { text-shadow: 0 0 30px rgba(77, 217, 172, 0.45), 0 0 70px rgba(77, 217, 172, 0.2), 0 2px 4px rgba(0, 0, 0, 0.6); }
+      50% { text-shadow: 0 0 55px rgba(77, 217, 172, 0.75), 0 0 110px rgba(77, 217, 172, 0.35), 0 2px 4px rgba(0, 0, 0, 0.6); }
+    }
+
+    @keyframes arrow-bounce {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(8px); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .falls__image {
-        animation: none;
-      }
+      html { scroll-behavior: auto; }
+      .hero-title, .scroll-arrow { animation: none; }
+      .lore-inner { opacity: 1; transform: none; transition: none; }
+    }
+
+    @media (max-width: 600px) {
+      .nav { padding: 1rem; }
+      .lore { padding: 4rem 1.25rem 5rem; }
+      .lore-inner { gap: 0 1.5rem; grid-template-columns: 3px 1fr; }
+    }
+
+    .falls-viewport {
+      --falls-distance: 0;
+      --falls-pan-x: 0px;
+      --falls-pan-y: 0px;
+      background: #04100f;
+      color: #e8f5e9;
+      height: 100svh;
+      isolation: isolate;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .falls-scene,
+    .falls-backdrop,
+    .falls-veil,
+    .falls-mist,
+    .falls-spray {
+      inset: 0;
+      position: absolute;
+    }
+
+    .falls-scene {
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .falls-viewport.is-panning .falls-scene {
+      cursor: grabbing;
+      user-select: none;
+    }
+
+    .falls-backdrop {
+      height: 100%;
+      object-fit: cover;
+      transform: scale(calc(1.04 + var(--falls-distance) * .27)) translate3d(
+        calc(var(--falls-pan-x) * .12),
+        calc(var(--falls-pan-y) * .12),
+        0
+      );
+      transition: transform 450ms cubic-bezier(.16, 1, .3, 1), filter 600ms ease;
+      width: 100%;
+    }
+
+    .falls-veil {
+      background:
+        radial-gradient(ellipse at 50% 55%, transparent 16%, rgba(3, 14, 14, .78) 82%),
+        linear-gradient(180deg, rgba(1, 10, 10, .68), transparent 30%, rgba(1, 9, 10, .52));
+      opacity: .42;
+      pointer-events: none;
+      transition: opacity 500ms ease;
+      z-index: 1;
+    }
+
+    .falls-viewport.is-near .falls-veil { opacity: .74; }
+
+    .falls-mist {
+      background:
+        radial-gradient(ellipse at 30% 94%, rgba(202, 249, 242, .38), transparent 37%),
+        radial-gradient(ellipse at 75% 82%, rgba(164, 232, 224, .3), transparent 43%);
+      filter: blur(2px);
+      opacity: calc(.42 + var(--falls-distance) * .5);
+      pointer-events: none;
+      transform: translate3d(calc(var(--falls-pan-x) * .82), calc(4vh + var(--falls-pan-y) * .82), 0) scale(calc(1.02 + var(--falls-distance) * .48));
+      transition: transform 360ms ease-out, opacity 500ms ease;
+      z-index: 2;
+    }
+
+    .falls-spray {
+      background:
+        radial-gradient(ellipse at 28% 42%, rgba(223, 255, 250, .22), transparent 16%),
+        radial-gradient(ellipse at 72% 61%, rgba(223, 255, 250, .18), transparent 20%),
+        radial-gradient(ellipse at 52% 80%, rgba(223, 255, 250, .16), transparent 24%);
+      filter: blur(1.5rem);
+      opacity: calc(.03 + var(--falls-distance) * .3);
+      pointer-events: none;
+      transform: translate3d(calc(var(--falls-pan-x) * .58), calc(var(--falls-pan-y) * .58), 0) scale(calc(1 + var(--falls-distance) * .24));
+      z-index: 3;
+    }
+
+    .falls-title {
+      left: 50%;
+      max-width: min(36rem, 80vw);
+      pointer-events: none;
+      position: absolute;
+      text-align: center;
+      top: 39%;
+      transform: translate(-50%, calc(-50% - var(--falls-distance) * 9rem));
+      transition: opacity 450ms ease, transform 700ms cubic-bezier(.16, 1, .3, 1);
+      z-index: 4;
+    }
+
+    .falls-title p {
+      color: #9fd9cd;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      margin: 0 0 .8rem;
+      text-transform: uppercase;
+    }
+
+    .falls-title h1 {
+      color: #f0fff9;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.4rem, 7vw, 5.7rem);
+      font-weight: 400;
+      line-height: .96;
+      text-shadow: 0 2px 2rem rgba(0, 0, 0, .8);
+    }
+
+    .falls-viewport.is-moving .falls-title {
+      opacity: 0;
+      transform: translate(-50%, calc(-50% - 12rem));
+    }
+
+    .falls-velin,
+    .falls-tree,
+    .falls-ascent,
+    .falls-behind-route,
+    .falls-past-route {
+      position: absolute;
+      z-index: 5;
+    }
+
+    .falls-velin {
+      background: transparent;
+      border: 0;
+      bottom: 19%;
+      cursor: pointer;
+      height: 34%;
+      left: 13%;
+      opacity: .16;
+      overflow: hidden;
+      padding: 0;
+      transform: translate3d(calc(var(--falls-pan-x) * .9), calc(var(--falls-pan-y) * .72), 0);
+      transition: opacity 700ms ease, transform 1100ms ease;
+      width: 13%;
+    }
+
+    .falls-velin-image {
+      filter: brightness(.58) saturate(.62);
+      height: 100%;
+      mask-image: radial-gradient(ellipse at 50% 52%, #000 32%, transparent 72%);
+      object-fit: cover;
+      object-position: center;
+      position: absolute;
+      inset: 0;
+      transition: filter 700ms ease;
+      width: 100%;
+    }
+
+    .falls-velin::after {
+      background: radial-gradient(circle, rgba(255, 224, 142, .88) 0 5%, rgba(234, 177, 82, .34) 18%, transparent 62%);
+      content: "";
+      height: 38%;
+      left: 48%;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 28%;
+      transition: opacity 600ms ease;
+      transform: translate(-50%, -50%);
+      width: 48%;
+    }
+
+    .falls-viewport.is-velin-noticed .falls-velin {
+      opacity: .42;
+    }
+
+    .falls-viewport.is-velin-noticed .falls-velin-image {
+      filter: brightness(.72) saturate(.78);
+    }
+
+    .falls-viewport.is-velin-attended .falls-velin::after {
+      opacity: .8;
+    }
+
+    .falls-viewport.is-velin-approached .falls-velin {
+      opacity: .78;
+      transform: translate3d(calc(-1.6rem + var(--falls-pan-x) * .9), calc(-.5rem + var(--falls-pan-y) * .72), 0);
+    }
+
+    .falls-tree {
+      background: transparent;
+      border: 0;
+      bottom: 13%;
+      color: transparent;
+      cursor: pointer;
+      height: 57%;
+      left: auto;
+      padding: 0;
+      right: 3%;
+      transform: translate3d(calc(var(--falls-pan-x) * .54), calc(var(--falls-pan-y) * .54), 0);
+      width: 25%;
+    }
+
+    .falls-tree::before {
+      background:
+        radial-gradient(ellipse at 65% 58%, rgba(173, 235, 209, .46), transparent 9%),
+        linear-gradient(122deg, transparent 37%, rgba(140, 212, 184, .3) 49%, transparent 55%);
+      content: "";
+      inset: 8% 4%;
+      opacity: 0;
+      position: absolute;
+      transition: opacity 500ms ease, transform 700ms ease;
+    }
+
+    .falls-tree:hover::before,
+    .falls-tree:focus-visible::before,
+    .falls-tree.is-awake::before {
+      opacity: 1;
+      transform: rotate(4deg) scale(1.06);
+    }
+
+    .falls-tree:focus-visible,
+    .falls-velin:focus-visible,
+    .falls-ascent:focus-visible,
+    .falls-behind-route:focus-visible,
+    .falls-past-route:focus-visible,
+    .falls-sound:focus-visible,
+    .falls-accessible a:focus-visible {
+      outline: 2px solid #d8fff6;
+      outline-offset: 4px;
+    }
+
+    .falls-ascent {
+      bottom: 12%;
+      height: 65%;
+      right: 0;
+      transform: translate3d(calc(var(--falls-pan-x) * .54), calc(var(--falls-pan-y) * .54), 0);
+      width: 28%;
+    }
+
+    .falls-behind-route,
+    .falls-past-route {
+      color: #e8fff8;
+      font-size: .67rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      opacity: 0;
+      padding: .8rem;
+      pointer-events: none;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: opacity 500ms ease, text-shadow 250ms ease;
+    }
+
+    .falls-behind-route { bottom: 28%; left: 9%; }
+    .falls-past-route { bottom: 31%; right: 8%; }
+    .falls-viewport.is-velin-approached .falls-behind-route,
+    .falls-viewport.is-past-visible .falls-past-route {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .falls-behind-route:hover,
+    .falls-past-route:hover { text-shadow: 0 0 1.4rem #a8fff0; }
+
+    .falls-boundary {
+      bottom: 5%;
+      color: rgba(224, 255, 248, .7);
+      font-size: .62rem;
+      left: 50%;
+      letter-spacing: .16em;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      transition: opacity 400ms ease;
+      z-index: 5;
+    }
+
+    .falls-viewport.is-near .falls-boundary { opacity: 1; }
+
+    .falls-sound {
+      background: rgba(3, 18, 18, .64);
+      border: 1px solid rgba(168, 255, 240, .44);
+      color: #d7fff5;
+      cursor: pointer;
+      font: 600 .62rem/1 "Source Sans 3", sans-serif;
+      letter-spacing: .14em;
+      padding: .65rem .82rem;
+      position: absolute;
+      right: 1.5rem;
+      text-transform: uppercase;
+      top: 1.5rem;
+      z-index: 7;
+    }
+
+    .falls-hint {
+      bottom: 2rem;
+      color: rgba(221, 255, 247, .78);
+      font-size: .62rem;
+      left: 50%;
+      letter-spacing: .16em;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      transition: opacity 350ms ease;
+      z-index: 6;
+    }
+
+    .falls-hint.is-visible { opacity: 1; }
+
+    .falls-accessible {
+      bottom: 1.25rem;
+      display: flex;
+      gap: .75rem;
+      left: 1.5rem;
+      position: absolute;
+      z-index: 7;
+    }
+
+    .falls-accessible a {
+      color: #d5f6ea;
+      font-size: .62rem;
+      letter-spacing: .11em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .falls-status {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .falls-backdrop,
+      .falls-mist,
+      .falls-spray,
+      .falls-velin,
+      .falls-tree,
+      .falls-ascent { transition: none; transform: none; }
     }
   </style>
 </head>
-<body data-branch="drift-falls">
-  <main class="falls">
-    <img class="falls__image" src="/assets/images/drift-falls-panorama.png" alt="The Drift Falls cascade through a moss-dark gorge." width="1536" height="1024">
-    <a class="return" href="/environment/old-forest.html">Return North</a>
-    <button class="sound" type="button" aria-pressed="false">Listen to the Falls</button>
-    <header class="title">
-      <p>Forest boundary</p>
-      <h1>The Drift Falls</h1>
-    </header>
-    <nav class="paths" aria-label="Drift Falls routes">
-      <a href="/environment/wildflower-drift.html">Behind the Falls</a>
-      <a href="/environment/cabin-of-moss.html">Past the Falls</a>
+<body>
+  <nav class="nav" aria-label="Chamber navigation">
+    <a href="/environment/herbroom.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Return North
+    </a>
+  </nav>
+
+  <section class="falls-viewport" aria-label="The Drift Falls exploration scene">
+    <div class="falls-scene">
+      <img class="falls-backdrop" src="/assets/images/drift-falls-panorama.png" alt="The Drift Falls cascade through a moss-dark gorge, with a rooted tree to the left and stone stairs on the right." width="1536" height="1024" loading="eager" decoding="async" />
+      <div class="falls-veil" aria-hidden="true"></div>
+      <div class="falls-mist" aria-hidden="true"></div>
+      <div class="falls-spray" aria-hidden="true"></div>
+      <div class="falls-title" aria-hidden="true"><p>Forest boundary</p><h1>The Drift Falls</h1></div>
+      <button class="falls-velin" type="button" aria-label="Attend to the lantern-bearing figure among the roots">
+        <img class="falls-velin-image" src="/assets/vault/velinsignalobject.png" alt="" width="1024" height="1024" loading="eager" decoding="async" />
+      </button>
+      <button class="falls-tree" type="button" aria-label="Attend to the moving tree"></button>
+      <div class="falls-ascent" aria-hidden="true"></div>
+      <a class="falls-behind-route" href="/environment/wildflower-drift.html">Behind the falls</a>
+      <a class="falls-past-route" href="/environment/cabin-of-moss.html">Past the falls</a>
+      <p class="falls-boundary" aria-hidden="true">The water resists a hurried crossing.</p>
+      <p class="falls-hint" aria-hidden="true">Drag to look</p>
+    </div>
+    <button class="falls-sound" type="button" aria-pressed="false">Listen to the falls</button>
+    <nav class="falls-accessible" aria-label="Drift Falls routes">
+      <a href="/environment/wildflower-drift.html">Behind the falls</a>
+      <a href="/environment/cabin-of-moss.html">Past the falls</a>
     </nav>
-  </main>
+    <p class="falls-status" aria-live="polite"></p>
+  </section>
+
+  <section class="lore">
+    <div class="lore-inner" id="lore">
+      <div class="lore-bar"></div>
+      <div class="lore-text">
+        <h2>About the Falls</h2>
+        <p>
+          Tall beyond measure, the Drift Falls mark the threshold between two worlds.
+          Luminous Drift energy infuses every drop, glowing brightest at the crest
+          and fading into heavy mist below. Thick roots grip the stone walls.
+          The shallow pool at the base holds a silence that feels earned.
+          Natural stone shelves descend southward, carving the first steps
+          into the Forest biome.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Generated with Drift &nbsp;·&nbsp; &copy; 2026 Threshold Studio
+  </footer>
   <script>
-    const soundControl = document.querySelector(".sound");
-    const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
-    let waterfallAudio;
+    const viewport = document.querySelector('.falls-viewport');
+    const scene = document.querySelector('.falls-scene');
+    const velin = document.querySelector('.falls-velin');
+    const tree = document.querySelector('.falls-tree');
+    const soundControl = document.querySelector('.falls-sound');
+    const hint = document.querySelector('.falls-hint');
+    const status = document.querySelector('.falls-status');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let distance = 0;
+    let panX = 0;
+    let panY = 0;
+    let panState = null;
+    let suppressNextClick = false;
+    let hintShown = false;
+    let velinHasDeparted = false;
+    let treeAttended = false;
+    let audioContext;
+    let waterGain;
+    let waterFilter;
+    let waterSprayFilter;
+    let waterPanner;
+    let waterRumbleGain;
+    let soundMuted = true;
 
-    function createWaterfallAudio() {
-      const context = new AudioContextConstructor();
-      const buffer = context.createBuffer(1, context.sampleRate * 4, context.sampleRate);
-      const samples = buffer.getChannelData(0);
-      let current = 0;
+    function clamp(value, minimum, maximum) {
+      return Math.max(minimum, Math.min(maximum, value));
+    }
 
-      for (let index = 0; index < samples.length; index += 1) {
-        current = current * 0.985 + (Math.random() * 2 - 1) * 0.04;
-        samples[index] = current;
+    function updateScene(message) {
+      viewport.style.setProperty('--falls-distance', distance.toFixed(3));
+      viewport.style.setProperty('--falls-pan-x', `${panX}px`);
+      viewport.style.setProperty('--falls-pan-y', `${panY}px`);
+      viewport.classList.toggle('is-moving', distance > 0.02);
+      viewport.classList.toggle('is-near', distance >= 0.78);
+      const velinNoticed = distance >= 0.24 && panX <= -20;
+      const velinApproached = distance >= 0.52 && panX <= -62;
+      const treeApproached = distance >= 0.34 && panX >= 34;
+      let velinDeparted = false;
+      viewport.classList.toggle('is-velin-noticed', velinNoticed);
+      viewport.classList.toggle('is-velin-approached', velinApproached);
+      viewport.classList.toggle('is-past-visible', treeApproached);
+      tree.classList.toggle('is-awake', treeApproached || treeAttended);
+      if (velinApproached && !velinHasDeparted) {
+        velinHasDeparted = true;
+        velinDeparted = true;
+        playVelinSignal(.014);
+        status.textContent = 'The lantern-bearing figure turns toward the concealed passage, then moves away.';
+      } else if (!velinApproached) {
+        velinHasDeparted = false;
+      }
+      updateSoundMix();
+      if (message && !velinDeparted) status.textContent = message;
+    }
+
+    function moveDistance(delta) {
+      const resistance = delta > 0 ? 1 - distance * 0.68 : 1;
+      distance = clamp(distance + delta * resistance, 0, 1);
+      updateScene(
+        distance >= 0.78
+          ? 'The water boundary is close. A lantern and the moving tree remain at the edges of view.'
+          : distance > 0.1
+            ? 'The falls draw nearer. Spray and water presence increase.'
+            : 'The falls settle back into a distant boundary.'
+      );
+    }
+
+    function createWaterSound() {
+      if (audioContext) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) {
+        status.textContent = 'Water sound is unavailable in this browser.';
+        return;
       }
 
-      const source = context.createBufferSource();
-      const filter = context.createBiquadFilter();
-      const gain = context.createGain();
+      audioContext = new AudioContext();
+      const buffer = audioContext.createBuffer(1, audioContext.sampleRate * 2, audioContext.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let index = 0; index < data.length; index += 1) {
+        data[index] = Math.random() * 2 - 1;
+      }
+      const source = audioContext.createBufferSource();
+      const rumble = audioContext.createOscillator();
+      waterFilter = audioContext.createBiquadFilter();
+      waterSprayFilter = audioContext.createBiquadFilter();
+      waterGain = audioContext.createGain();
+      waterRumbleGain = audioContext.createGain();
       source.buffer = buffer;
       source.loop = true;
-      filter.type = "bandpass";
-      filter.frequency.value = 860;
-      filter.Q.value = 0.45;
-      gain.gain.value = 0.12;
-      source.connect(filter).connect(gain).connect(context.destination);
+      waterFilter.type = 'lowpass';
+      waterFilter.Q.value = 0.7;
+      waterSprayFilter.type = 'highpass';
+      waterSprayFilter.Q.value = 0.35;
+      waterSprayFilter.frequency.value = 920;
+      waterGain.gain.value = 0;
+      waterRumbleGain.gain.value = 0;
+      rumble.type = 'sine';
+      rumble.frequency.value = 48;
+      source.connect(waterFilter);
+      source.connect(waterSprayFilter);
+      rumble.connect(waterRumbleGain);
+      waterRumbleGain.connect(waterFilter);
+      if (audioContext.createStereoPanner) {
+        waterPanner = audioContext.createStereoPanner();
+        waterFilter.connect(waterPanner);
+        waterSprayFilter.connect(waterPanner);
+        waterPanner.connect(waterGain);
+      } else {
+        waterFilter.connect(waterGain);
+        waterSprayFilter.connect(waterGain);
+      }
+      waterGain.connect(audioContext.destination);
       source.start();
-      return { context, gain };
+      rumble.start();
     }
 
-    if (!AudioContextConstructor) {
-      soundControl.disabled = true;
-      soundControl.textContent = "Sound unavailable";
-    } else {
-      soundControl.addEventListener("click", async () => {
-        if (!waterfallAudio) {
-          waterfallAudio = createWaterfallAudio();
-        }
-
-        if (waterfallAudio.context.state === "suspended") {
-          await waterfallAudio.context.resume();
-        }
-
-        const isPlaying = soundControl.getAttribute("aria-pressed") === "true";
-        waterfallAudio.gain.gain.setTargetAtTime(isPlaying ? 0 : 0.12, waterfallAudio.context.currentTime, 0.04);
-        soundControl.setAttribute("aria-pressed", String(!isPlaying));
-        soundControl.textContent = isPlaying ? "Listen to the Falls" : "Quiet the Falls";
-      });
+    function updateSoundMix() {
+      if (!audioContext || !waterGain || !waterFilter) return;
+      const intensity = reducedMotion.matches ? 0.55 : 1;
+      const targetGain = soundMuted ? 0 : (0.045 + distance * 0.115) * intensity;
+      waterGain.gain.setTargetAtTime(targetGain, audioContext.currentTime, 0.16);
+      waterFilter.frequency.setTargetAtTime(460 + distance * 2650, audioContext.currentTime, 0.16);
+      waterRumbleGain.gain.setTargetAtTime(
+        soundMuted ? 0 : (0.008 + distance * 0.022) * intensity,
+        audioContext.currentTime,
+        0.16
+      );
+      if (waterPanner) {
+        waterPanner.pan.setTargetAtTime(clamp(panX / 180, -0.5, 0.5), audioContext.currentTime, 0.16);
+      }
     }
+
+    async function beginSound() {
+      createWaterSound();
+      if (!audioContext) return false;
+      if (audioContext.state !== 'running') {
+        try {
+          await audioContext.resume();
+        } catch (error) {
+          console.error('Unable to start Drift Falls sound.', error);
+          soundMuted = true;
+          viewport.dataset.sound = 'blocked';
+          soundControl.setAttribute('aria-pressed', 'false');
+          soundControl.textContent = 'Listen to the falls';
+          status.textContent = 'The browser blocked sound. Press Listen to the falls again.';
+          return false;
+        }
+      }
+      soundMuted = false;
+      viewport.dataset.sound = 'playing';
+      soundControl.setAttribute('aria-pressed', 'true');
+      soundControl.textContent = 'Quiet the falls';
+      updateSoundMix();
+      return true;
+    }
+
+    soundControl.addEventListener('click', async () => {
+      if (soundMuted) {
+        if (await beginSound()) {
+          status.textContent = 'Water sound is now responding to distance.';
+        }
+      } else {
+        soundMuted = true;
+        viewport.dataset.sound = 'muted';
+        soundControl.setAttribute('aria-pressed', 'false');
+        soundControl.textContent = 'Listen to the falls';
+        updateSoundMix();
+      }
+    });
+
+    function stopWaterSound() {
+      soundMuted = true;
+      viewport.dataset.sound = 'muted';
+      soundControl.setAttribute('aria-pressed', 'false');
+      soundControl.textContent = 'Listen to the falls';
+
+      const activeContext = audioContext;
+      audioContext = undefined;
+      waterGain = undefined;
+      waterFilter = undefined;
+      waterSprayFilter = undefined;
+      waterPanner = undefined;
+      waterRumbleGain = undefined;
+
+      if (activeContext && activeContext.state !== 'closed') {
+        void activeContext.close().catch((error) => {
+          console.error('Unable to close Drift Falls sound.', error);
+        });
+      }
+    }
+
+    window.addEventListener('pagehide', stopWaterSound);
+
+    scene.addEventListener('wheel', (event) => {
+      if (Math.abs(event.deltaY) < 4) return;
+      event.preventDefault();
+      void beginSound();
+      moveDistance(Math.sign(event.deltaY) * 0.075);
+    }, { passive: false });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+        event.preventDefault();
+        void beginSound();
+        moveDistance(0.08);
+      }
+      if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        event.preventDefault();
+        moveDistance(-0.1);
+      }
+    });
+
+    function playVelinSignal(volume = .009) {
+      if (!audioContext || audioContext.state !== 'running' || soundMuted) return;
+      const tone = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const panner = audioContext.createStereoPanner?.();
+      tone.frequency.value = 468;
+      tone.type = 'sine';
+      gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(volume, audioContext.currentTime + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.9);
+      tone.connect(gain);
+      if (panner) {
+        panner.pan.value = -0.55;
+        gain.connect(panner);
+        panner.connect(audioContext.destination);
+      } else {
+        gain.connect(audioContext.destination);
+      }
+      tone.start();
+      tone.stop(audioContext.currentTime + 0.95);
+    }
+
+    velin.addEventListener('pointerenter', () => {
+      viewport.classList.add('is-velin-attended');
+      playVelinSignal();
+      status.textContent = 'Mist briefly loosens around the lantern-bearing figure.';
+    });
+    velin.addEventListener('pointerleave', () => {
+      viewport.classList.remove('is-velin-attended');
+    });
+    velin.addEventListener('focus', () => {
+      viewport.classList.add('is-velin-attended');
+      playVelinSignal();
+    });
+    velin.addEventListener('blur', () => {
+      viewport.classList.remove('is-velin-attended');
+    });
+    velin.addEventListener('dblclick', () => {
+      status.textContent = 'The figure acknowledges the direct attention, then becomes still again.';
+    });
+
+    tree.addEventListener('pointerenter', () => {
+      treeAttended = true;
+      updateScene();
+    });
+    tree.addEventListener('pointerleave', () => {
+      treeAttended = false;
+      updateScene();
+    });
+    tree.addEventListener('focus', () => {
+      treeAttended = true;
+      updateScene();
+    });
+    tree.addEventListener('blur', () => {
+      treeAttended = false;
+      updateScene();
+    });
+    tree.addEventListener('click', () => {
+      treeAttended = true;
+      updateScene();
+      status.textContent = 'The tree moves against the spray. The ascent remains ahead and to the right.';
+    });
+
+    function hideHint() {
+      hint.classList.remove('is-visible');
+      hint.setAttribute('aria-hidden', 'true');
+    }
+
+    function beginPan(event) {
+      if (event.button !== 0) return;
+      panState = {
+        pointerId: event.pointerId,
+        pointerType: event.pointerType,
+        startX: event.clientX,
+        startY: event.clientY,
+        originX: panX,
+        originY: panY,
+        moved: false
+      };
+      if (!hintShown) {
+        window.setTimeout(() => {
+          if (panState && !panState.moved) {
+            hint.classList.add('is-visible');
+            hint.setAttribute('aria-hidden', 'false');
+          }
+        }, 360);
+      }
+    }
+
+    function movePan(event) {
+      const mouseFallback = panState?.pointerType === 'mouse' && event.type === 'mousemove';
+      if (!panState || (!mouseFallback && event.pointerId !== panState.pointerId)) return;
+      const horizontal = event.clientX - panState.startX;
+      const vertical = event.clientY - panState.startY;
+      if (!panState.moved && Math.hypot(horizontal, vertical) < 8) return;
+      panState.moved = true;
+      hintShown = true;
+      hideHint();
+      viewport.classList.add('is-panning');
+      panX = clamp(panState.originX + horizontal, -180, 180);
+      panY = clamp(panState.originY + vertical, -120, 120);
+      updateScene(panX >= 28 && distance >= 0.28 ? 'The stone ascent becomes readable past the falls.' : null);
+      event.preventDefault();
+    }
+
+    function finishPan(event) {
+      const mouseFallback = panState?.pointerType === 'mouse' && event.type === 'mouseup';
+      if (!panState || (!mouseFallback && event.pointerId !== panState.pointerId)) return;
+      const moved = panState.moved;
+      panState = null;
+      viewport.classList.remove('is-panning');
+      hideHint();
+      if (moved) suppressNextClick = true;
+    }
+
+    scene.addEventListener('pointerdown', beginPan);
+    window.addEventListener('pointermove', movePan);
+    window.addEventListener('pointerup', finishPan);
+    window.addEventListener('pointercancel', finishPan);
+    window.addEventListener('mousemove', movePan);
+    window.addEventListener('mouseup', finishPan);
+    scene.addEventListener('click', (event) => {
+      if (!suppressNextClick) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      suppressNextClick = false;
+    }, true);
+
+    document.querySelectorAll('a[href^="/portal/"]').forEach((link) => {
+      if (window.location.port === '8789') {
+        link.href = `http://${window.location.hostname}:4173${link.getAttribute('href')}`;
+      }
+    });
+    reducedMotion.addEventListener('change', updateSoundMix);
+    viewport.dataset.sound = 'muted';
+    updateScene();
   </script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "noteId": "role-expressions",
+      "route": "/pages/role-expressions.html",
+      "branches": [
+        { "label": "Return to Notes", "route": "/pages/notes.html" }
+      ]
+    },
+    {
+      "noteId": "species-signals",
+      "route": "/pages/species-signals.html",
+      "includeAssets": true,
+      "branches": [
+        { "label": "Return to Notes", "route": "/pages/notes.html" }
+      ]
+    },
+    {
+      "noteId": "index-0001",
+      "route": "/pages/threshold.html",
+      "aliases": ["threshold"],
+      "branches": [
+        { "label": "Notes", "route": "/pages/notes.html" },
+        { "label": "Projects", "route": "/pages/projects.html" },
+        { "label": "Posts", "route": "/pages/posts.html" },
+        { "label": "Return to Hub", "route": "/index.html" }
+      ]
+    },
+    {
+      "noteId": "index-0002",
+      "route": "/pages/notes.html",
+      "aliases": ["notes"],
+      "branches": [
+        { "label": "Role Expressions", "route": "/pages/role-expressions.html" },
+        { "label": "Species Signals", "route": "/pages/species-signals.html" },
+        { "label": "Back to Threshold", "route": "/pages/threshold.html" }
+      ]
+    },
+    {
+      "noteId": "index-0003",
+      "route": "/pages/posts.html",
+      "aliases": ["posts"],
+      "branches": [
+        { "label": "Back to Threshold", "route": "/pages/threshold.html" }
+      ]
+    },
+    {
+      "noteId": "index-0004",
+      "route": "/pages/projects.html",
+      "aliases": ["projects"],
+      "branches": [
+        { "label": "Back to Threshold", "route": "/pages/threshold.html" }
+      ]
+    },
+    {
+      "noteId": "glyph_fog",
+      "route": "/pages/learning-spring.html",
+      "branches": [
+        { "label": "Return to Learning Wheel", "route": "/learningwheel.html" }
+      ]
+    },
+    {
+      "noteId": "glyph_expand",
+      "route": "/pages/learning-summer.html",
+      "branches": [
+        { "label": "Return to Learning Wheel", "route": "/learningwheel.html" }
+      ]
+    },
+    {
+      "noteId": "glyph_collapse",
+      "route": "/pages/learning-autumn.html",
+      "branches": [
+        { "label": "Return to Learning Wheel", "route": "/learningwheel.html" }
+      ]
+    },
+    {
+      "noteId": "glyph_soil",
+      "route": "/pages/learning-winter.html",
+      "branches": [
+        { "label": "Return to Learning Wheel", "route": "/learningwheel.html" }
+      ]
+    }
+  ]
+}

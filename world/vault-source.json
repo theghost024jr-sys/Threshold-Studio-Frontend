@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-03T13:33:24.801075+00:00",
+  "generatedAt": "2026-11-03T10:13:49.130043+00:00",
   "authorship": "echoroot & theghost",
   "dataPath": "/data/threshold-vault.json",
   "counts": {
-    "markdown": 4046,
-    "publishedMarkdown": 135,
-    "entities": 15,
+    "markdown": 24,
+    "publishedMarkdown": 21,
+    "entities": 0,
     "chambers": 3,
     "translations": 0
   }

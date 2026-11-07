@@ -66,9 +66,20 @@ activation through the generic selection-input helper.
 
 - `website/data/threshold-vault.json`: public note data and resolved asset metadata
 - `website/data/vault-index.json`: metadata-only full-vault index
+- `website/data/vault-render-jobs.json`: ignored build artifact containing validated `PageRenderJob` records, regenerated from the public vault export and explicit mapping
 - `website/assets/vault/`: media referenced by published notes
+- `website/generated-pages/`: standalone HTML generated from mapped notes and approved templates
 - `world/vault-source.json`: world-facing source metadata
 - `node-bundles/`: generated canonical bundle families
+
+## Page Generation Boundary
+
+- The `tools` exporter is the only component that reads the canonical vault and resolves its media.
+- `tools/build_page_render_jobs.py` consumes the public vault export, the configured mapping manifest, and templates under `website/page-templates/`; it emits only valid `PageRenderJob` records.
+- The Node page generator consumes those jobs and approved templates under `website/page-templates/`. It has no access to private vault notes.
+- `html-inventory/` is read-only manual reference material and is never read by the build. Approved templates are copied into the website-owned template directory before use.
+- The Hub declares the `hub.pages` capability and the Engine declares its build-time graph; neither performs page generation or changes runtime physics.
+- The Portal does not read generated pages. The website build publishes them alongside the Portal output.
 
 ## Change Rules
 
@@ -77,3 +88,4 @@ activation through the generic selection-input helper.
 3. Resolve source media from the canonical vault and retain its relative provenance in generated metadata.
 4. Do not move, mirror, or delete the canonical vault as part of a website build.
 5. Keep tests with the builder or browser integration they validate.
+6. Keep the Python-to-Node page job contract explicit and fail the build for invalid mappings, templates, assets, or output paths.

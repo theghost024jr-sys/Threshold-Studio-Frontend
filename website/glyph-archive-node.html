@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glyph Archive · Threshold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/glyph-archive-node.css">
+</head>
+<body class="glyph-archive-page">
+  <main class="glyph-archive-shell" aria-labelledby="glyph-archive-title">
+    <header class="glyph-archive-header">
+      <a href="node-field.html">Return to the node field</a>
+      <p>Vault item / interactive reading</p>
+    </header>
+
+    <section class="glyph-archive-intro">
+      <p class="glyph-kicker">Discover a glyph. Let it change the reading, not the field.</p>
+      <h1 id="glyph-archive-title" data-archive-title>Glyph Archive</h1>
+      <p data-archive-summary>Resolving the published archive record.</p>
+    </section>
+
+    <section class="glyph-instrument" data-glyph-instrument data-glyph-state="unresolved" aria-labelledby="glyph-instrument-title">
+      <div class="glyph-instrument__field" aria-hidden="true"></div>
+      <div class="glyph-instrument__rings" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="glyph-instrument__contours" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="glyph-instrument__substrate" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="glyph-instrument__glyph" aria-hidden="true">
+        <i></i><i></i><i></i><i></i>
+      </div>
+      <div class="glyph-instrument__grain" aria-hidden="true"></div>
+      <p id="glyph-instrument-title">Faint marks move through the field. Reach one to reveal it.</p>
+      <p class="glyph-instrument__lens" data-glyph-lens>Nothing has been selected. The field remains unresolved.</p>
+
+      <div class="glyph-choices" role="group" aria-label="Unresolved glyph traces">
+        <button type="button" data-glyph-id="glyph_fog" aria-pressed="false"><span>01</span><strong>Fog</strong></button>
+        <button type="button" data-glyph-id="glyph_expand" aria-pressed="false"><span>02</span><strong>Expand</strong></button>
+        <button type="button" data-glyph-id="glyph_collapse" aria-pressed="false"><span>03</span><strong>Collapse</strong></button>
+        <button type="button" data-glyph-id="glyph_soil" aria-pressed="false"><span>04</span><strong>Soil</strong></button>
+      </div>
+    </section>
+
+    <section class="glyph-reading" aria-live="polite">
+      <p class="glyph-kicker">Archive reading</p>
+      <h2 data-glyph-title>No glyph selected</h2>
+      <p data-glyph-detail>Move through the field. A glyph can be read after it has appeared.</p>
+      <p class="glyph-reading__rule" data-glyph-rule>Discovery changes attention. It does not change the world.</p>
+      <dl>
+        <div><dt>Lens</dt><dd data-glyph-lens-name>Unresolved</dd></div>
+        <div><dt>Node</dt><dd data-glyph-node>glyph_fog</dd></div>
+        <div><dt>Route</dt><dd data-glyph-route>Glyph Archive</dd></div>
+        <div><dt>Source</dt><dd data-glyph-source>Published vault record</dd></div>
+      </dl>
+      <a class="glyph-reading__open" data-glyph-open href="glyphs.html">Open the preserved glyph page</a>
+      <p class="glyph-reading__discovery" data-glyph-discovery aria-live="polite">No glyphs have been revealed.</p>
+    </section>
+
+    <footer class="glyph-archive-footer">
+      <p data-archive-source>Loading published vault source.</p>
+      <a href="glyphs.html">Open the existing glyph pages</a>
+      <a href="node-field.html">See connected nodes</a>
+    </footer>
+  </main>
+  <script type="module" src="/scripts/glyph-archive-node.js"></script>
+</body>
+</html>

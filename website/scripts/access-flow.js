@@ -1,8 +1,12 @@
 import {
   completeStage,
   createAccessState,
+  contribute,
   lockedRequirements,
-  prerequisitesMet
+  prerequisitesMet,
+  returnSeedToHub,
+  validateAccessFlow,
+  validateAuthoritativeState
 } from "./access-flow-model.js";
 
 const FLOW_URL = "/config/access-flow.json";
@@ -20,10 +24,18 @@ function stageForLocation(stages) {
   }) || null;
 }
 
-function readState(storageKey) {
+function readState(storageKey, flow, legacyStorageKeys = []) {
   try {
-    return createAccessState(JSON.parse(localStorage.getItem(storageKey) || "{}"));
-  } catch {
+    const stored = localStorage.getItem(storageKey)
+      || legacyStorageKeys.map((key) => localStorage.getItem(key)).find(Boolean)
+      || "{}";
+    return validateAuthoritativeState(
+      flow,
+      createAccessState(JSON.parse(stored))
+    );
+  } catch (error) {
+    console.error("Threshold access flow rejected contradictory saved state", error);
+    localStorage.removeItem(storageKey);
     return createAccessState();
   }
 }
@@ -31,8 +43,8 @@ function readState(storageKey) {
 function writeState(storageKey, state) {
   try {
     localStorage.setItem(storageKey, JSON.stringify(state));
-  } catch {
-    // The flow remains navigable when browser storage is unavailable.
+  } catch (error) {
+    console.warn("Threshold access flow could not persist state.", error);
   }
 }
 
@@ -59,7 +71,14 @@ function renderRail(flow, state) {
 
   const heading = document.createElement("div");
   heading.className = "threshold-access-flow__heading";
-  heading.innerHTML = `<strong>${project ? `${project.label} Chamber` : "Threshold Graft"}</strong><span>${state.completed.length}/${flow.stages.length} passages</span>`;
+  const journeyState = state.seed
+    ? "A Seed is carried toward the Hub"
+    : state.returnedSeeds.length > 0
+      ? "A Seed has returned · awaiting validation"
+      : state.shimmer
+        ? "Shimmer held"
+        : "Find Shimmer";
+  heading.innerHTML = `<strong>${project ? `${project.label} Chamber` : "Threshold Graft"}</strong><span>${journeyState}</span>`;
 
   const steps = document.createElement("ol");
   steps.className = "threshold-access-flow__steps";
@@ -70,50 +89,50 @@ function renderRail(flow, state) {
     const control = document.createElement(unlocked ? "a" : "span");
     control.textContent = stage.label;
     control.dataset.state = completed.has(stage.id) ? "complete" : unlocked ? "available" : "locked";
+    if (stage.awardsShimmer === true && completed.has(stage.id)) {
+      control.dataset.thresholdState = "shimmer";
+    } else if (stage.kind === "contribution" && unlocked && !state.seed && !state.returnedSeeds.includes(stage.id)) {
+      control.dataset.thresholdState = "seed-available";
+    } else if (state.seed?.chamber === stage.id) {
+      control.dataset.thresholdState = "seed-carried";
+    } else if (state.returnedSeeds.includes(stage.id)) {
+      control.dataset.thresholdState = "seed-returned";
+    }
     if (unlocked) control.href = stage.route;
     if (!unlocked) control.title = `Requires ${lockedRequirements(stage, state).join(", ")}`;
     item.appendChild(control);
     steps.appendChild(item);
   });
 
-  rail.append(heading, steps);
+  const drawer = document.createElement("details");
+  drawer.className = "threshold-access-flow__drawer";
+  drawer.open = !window.matchMedia("(max-width: 640px)").matches;
+  const summary = document.createElement("summary");
+  summary.appendChild(heading);
+  drawer.append(summary, steps);
+  rail.appendChild(drawer);
   document.body.appendChild(rail);
 }
 
-function renderGate(stage, stages, state) {
-  const missing = lockedRequirements(stage, state);
-  const firstRequired = stages.find((candidate) => candidate.id === missing[0]);
-  const gate = document.createElement("section");
-  gate.className = "threshold-access-gate";
-  gate.setAttribute("role", "dialog");
-  gate.setAttribute("aria-modal", "true");
-  gate.setAttribute("aria-labelledby", "threshold-access-gate-title");
-  gate.innerHTML = `
-    <div class="threshold-access-gate__panel">
-      <p>Passage held</p>
-      <h1 id="threshold-access-gate-title">${stage.label}</h1>
-      <p>Complete ${missing.join(", ")} before entering this passage.</p>
-      <a href="${firstRequired?.route || "/index.html"}">Return to ${firstRequired?.label || "Hub Entry"}</a>
-    </div>`;
-  document.body.dataset.accessLocked = "true";
-  document.body.appendChild(gate);
-}
-
 function bindAcceptance(flow, state) {
-  const acceptStage = flow.stages.find((stage) => stage.id === "accept");
-  const button = document.querySelector("[data-threshold-accept]");
-  if (!acceptStage || !button || !prerequisitesMet(acceptStage, state)) return;
+  const stage = stageForLocation(flow.stages);
+  const button = document.querySelector("[data-threshold-contribution]");
+  if (!stage || stage.kind !== "contribution" || !button || !prerequisitesMet(stage, state)) return;
   button.addEventListener("click", () => {
-    const nextState = completeStage(acceptStage, readState(flow.storageKey));
+    const nextState = contribute(
+      stage,
+      readState(flow.storageKey, flow, flow.legacyStorageKeys)
+    );
     writeState(flow.storageKey, nextState);
-    button.textContent = "Invitation Accepted";
+    button.textContent = "The Seed is carried";
+    button.dataset.seedState = "carried";
     button.disabled = true;
     renderRail(flow, nextState);
-    const engine = document.createElement("a");
-    engine.className = "threshold-access-flow__continue";
-    engine.href = "/deep-system/engine.html";
-    engine.textContent = "Enter Engine";
-    button.insertAdjacentElement("afterend", engine);
+    const hub = document.createElement("a");
+    hub.className = "threshold-access-flow__continue";
+    hub.href = "/index.html";
+    hub.textContent = "Carry this return toward the Hub";
+    button.insertAdjacentElement("afterend", hub);
   });
 }
 
@@ -121,19 +140,22 @@ async function initializeAccessFlow() {
   addStylesheet();
   const response = await fetch(FLOW_URL, { cache: "no-store" });
   if (!response.ok) throw new Error(`Access flow unavailable (${response.status})`);
-  const flow = await response.json();
-  let state = readState(flow.storageKey);
+  const flow = validateAccessFlow(await response.json());
+  let state = readState(flow.storageKey, flow, flow.legacyStorageKeys);
   const currentStage = stageForLocation(flow.stages);
 
   if (currentStage && !prerequisitesMet(currentStage, state)) {
     renderRail(flow, state);
-    renderGate(currentStage, flow.stages, state);
+    window.dispatchEvent(new CustomEvent("threshold:access-flow-ready", { detail: { flow, state } }));
     return;
   }
   if (currentStage?.completion === "visit") {
     state = completeStage(currentStage, state);
-    writeState(flow.storageKey, state);
   }
+  if (currentStage?.id === "hub") {
+    state = returnSeedToHub(currentStage, state);
+  }
+  writeState(flow.storageKey, state);
 
   renderRail(flow, state);
   bindAcceptance(flow, state);

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "id": "hub.pages",
+      "label": "Pages",
+      "description": "Generate standalone HTML pages from explicitly mapped published vault notes.",
+      "owner": "website-build-pipeline",
+      "dependsOn": [
+        "vault.exporter",
+        "website.page-mapping"
+      ],
+      "outputs": [
+        "website/generated-pages/"
+      ],
+      "buildGraph": "../../engine/build-graph.json"
+    },
+    {
+      "id": "environment.basin-sandbox",
+      "label": "Basin environment sandbox",
+      "description": "Preserve Basin as the first environmental sandbox: a focused place for user-initiated sound and evidence-led environment experiments without retrofitting those capabilities across Threshold.",
+      "owner": "website-environment",
+      "dependsOn": [
+        "website.environment.herb-room",
+        "website.environment.basin.audio"
+      ],
+      "outputs": [
+        "website/environment/basin.html"
+      ]
+    }
+  ]
+}

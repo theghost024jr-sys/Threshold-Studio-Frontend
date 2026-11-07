@@ -402,7 +402,7 @@
     }
 
     .panel h2::before {
-      content: "âœ¦";
+      content: "✦";
       font-size: 0.78rem;
       color: rgba(224, 231, 255, 0.75);
     }
@@ -634,7 +634,7 @@
     }
 
     .mythology-page .panel h2::before {
-      content: "âŒ";
+      content: "⌁";
       color: rgba(228, 199, 127, 0.78);
     }
 
@@ -653,7 +653,7 @@
     }
 
     .mythology-page .turbulence-panel h2::before {
-      content: "â‰ˆ";
+      content: "≈";
       color: rgba(228, 199, 127, 0.74);
     }
 
@@ -678,7 +678,7 @@
     }
 
     .mythology-page .serenity-panel h2::before {
-      content: "â—”";
+      content: "◔";
       color: rgba(228, 199, 127, 0.82);
     }
 
@@ -821,6 +821,49 @@
       margin: 0.18rem 0;
     }
 
+    .myth-glyph-thread {
+      display: grid;
+      grid-template-columns: 3.2rem minmax(0, 1fr);
+      gap: 0.85rem;
+      align-items: center;
+      max-width: 32rem;
+      margin: 1.5rem auto;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid rgba(190, 177, 255, 0.3);
+      border-radius: 0.8rem;
+      background: rgba(15, 20, 38, 0.48);
+    }
+
+    .myth-glyph-thread img {
+      width: 3.2rem;
+      height: 3.2rem;
+      object-fit: cover;
+      border-radius: 50%;
+      opacity: 0.76;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .myth-glyph-thread:hover img,
+    .myth-glyph-thread:focus-within img {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    .myth-glyph-thread summary {
+      cursor: pointer;
+      color: rgba(235, 230, 255, 0.88);
+      font: 600 0.7rem/1.3 "DM Mono", monospace;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .myth-glyph-thread p {
+      margin: 0.45rem 0 0;
+      color: rgba(219, 218, 234, 0.72);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
     @keyframes mythReveal {
       from {
         opacity: 0;
@@ -873,10 +916,10 @@
       <span class="cosmic-arc c1"></span>
       <span class="cosmic-arc c2"></span>
       <span class="cosmic-arc c3"></span>
-      <span class="drift-glyph g1">â—Œ</span>
-      <span class="drift-glyph g2">âœ¶</span>
-      <span class="drift-glyph g3">â—</span>
-      <a class="hidden-hub" id="hiddenHub" href="index.html?hub=1#hub" aria-label="Enter Hub Mode">âœ¦</a>
+      <span class="drift-glyph g1">◌</span>
+      <span class="drift-glyph g2">✶</span>
+      <span class="drift-glyph g3">◍</span>
+      <a class="hidden-hub" id="hiddenHub" href="index.html?hub=1#hub" aria-label="Enter Hub Mode">✦</a>
     </div>
 
     <div class="layer dusk-layer"></div>
@@ -888,15 +931,15 @@
     </div>
 
     <div class="layer seed-layer">
-      <button class="seed-glyph s1" type="button" aria-label="Seed glyph">â—Œ</button>
-      <button class="seed-glyph s2" type="button" aria-label="Seed glyph">âœ§</button>
-      <button class="seed-glyph s3" type="button" aria-label="Seed glyph">â—</button>
+      <button class="seed-glyph s1" type="button" aria-label="Seed glyph">◌</button>
+      <button class="seed-glyph s2" type="button" aria-label="Seed glyph">✧</button>
+      <button class="seed-glyph s3" type="button" aria-label="Seed glyph">◍</button>
     </div>
 
     <div class="layer soil-layer">
       <span class="soil-grain"></span>
-      <span class="fossil f1">âœ¶</span>
-      <span class="fossil f2">â—Œ</span>
+      <span class="fossil f1">✶</span>
+      <span class="fossil f2">◌</span>
     </div>
   </div>
 
@@ -905,6 +948,13 @@
       <h1 class="vault-law-structural">Mythology</h1>
       <p class="quote vault-law-body">Myth is a living system. It does not preserve a museum. It preserves a pulse.</p>
     </section>
+    <aside class="myth-glyph-thread" data-glyph-source="Thread" data-glyph-context="myth-cluster">
+      <img src="/assets/glyphs/thread.png" alt="Thread glyph from the Myth Cluster source">
+      <details>
+        <summary>Thread glyph</summary>
+        <p>Found in the Myth Cluster’s “How You Know Me” source. It is a mark of relation, not an instruction.</p>
+      </details>
+    </aside>
 
     <p class="divider" aria-hidden="true">chambers</p>
 
@@ -931,39 +981,60 @@
       <span class="trunk-summary" id="trunkSummary">Awaiting contribution</span>
     </section>
 
+    <section id="fracture-pedal-chamber" class="fracture-pedal-chamber vault-chamber-surface vault-chamber-border" hidden aria-labelledby="fracture-pedal-title">
+      <p class="fracture-pedal-index">Fib 5 / Mythology return</p>
+      <h2 id="fracture-pedal-title">Fracture Pedal</h2>
+      <p>The Mythology path into remapped fracture lore.</p>
+      <p id="fracture-pedal-trace" class="fracture-pedal-trace">The wheel has not returned a seasonal trace.</p>
+      <section class="fracture-pedal-prompt" aria-labelledby="fracture-pedal-prompt-title">
+        <p>Threshold prompt</p>
+        <h3 id="fracture-pedal-prompt-title">The remapped path is in front of you. What is your movement?</h3>
+        <div class="fracture-pedal-choices">
+          <button type="button" data-fracture-stance="hold">Hold steady</button>
+          <button type="button" data-fracture-stance="cross">Step through</button>
+          <button type="button" data-fracture-stance="wait">Wait and listen</button>
+        </div>
+        <p id="fracture-pedal-consequence" class="fracture-pedal-consequence" aria-live="polite">A stance opens a consequence field. Waiting remains available.</p>
+      </section>
+      <nav class="fracture-pedal-paths" aria-label="Fracture Pedal paths">
+        <a href="/learningwheel.html?node=storm-cabinet&fib=3&trail=learning-wheel,seasonal-alcove">Return to Storm Cabinet</a>
+        <a href="/mythology.html">Enter Mythology</a>
+      </nav>
+    </section>
+
     <section class="grid" aria-label="Elemental archetypes">
       <article class="chamber mythology-entry" data-fade-section data-archetype="fire" data-spirit="cindervox" data-element="Fire" aria-expanded="false">
-        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Fire Â· Cindervox">
-          <h3><span class="glyph-mark">âœ¶</span>Fire Â· Cindervox</h3>
-          <p>Fire Â· Ignition Â· Clarifying Rupture</p>
+        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Fire · Cindervox">
+          <h3><span class="glyph-mark">✶</span>Fire · Cindervox</h3>
+          <p>Fire · Ignition · Clarifying Rupture</p>
         </div>
         <img class="mythology-image" alt="Cindervox" loading="lazy" />
       </article>
       <article class="chamber mythology-entry" data-fade-section data-archetype="water" data-spirit="porpoise" data-element="Water" aria-expanded="false">
-        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Water Â· Porpoise">
-          <h3><span class="glyph-mark">â—Œ</span>Water Â· Porpoise</h3>
-          <p>Water Â· Flow Â· Emotional Conductivity</p>
+        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Water · Porpoise">
+          <h3><span class="glyph-mark">◌</span>Water · Porpoise</h3>
+          <p>Water · Flow · Emotional Conductivity</p>
         </div>
         <img class="mythology-image" alt="Porpoise" loading="lazy" />
       </article>
       <article class="chamber mythology-entry" data-fade-section data-archetype="air" data-spirit="whisperhawk" data-element="Air" aria-expanded="false">
-        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Air Â· Whisperhawk">
-          <h3><span class="glyph-mark">âœ§</span>Air Â· Whisperhawk</h3>
-          <p>Air Â· Perspective Â· Pattern Lift</p>
+        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Air · Whisperhawk">
+          <h3><span class="glyph-mark">✧</span>Air · Whisperhawk</h3>
+          <p>Air · Perspective · Pattern Lift</p>
         </div>
         <img class="mythology-image" alt="Whisperhawk" loading="lazy" />
       </article>
       <article class="chamber mythology-entry" data-fade-section data-archetype="earth" data-spirit="stonecat" data-element="Earth" aria-expanded="false">
-        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Earth Â· Stonecat">
-          <h3><span class="glyph-mark">â—</span>Earth Â· Stonecat</h3>
-          <p>Earth Â· Grounding Â· Structural Truth</p>
+        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Earth · Stonecat">
+          <h3><span class="glyph-mark">◍</span>Earth · Stonecat</h3>
+          <p>Earth · Grounding · Structural Truth</p>
         </div>
         <img class="mythology-image" alt="Stonecat" loading="lazy" />
       </article>
       <article class="chamber mythology-entry" data-fade-section data-archetype="light" data-spirit="lumenstag" data-element="Light" aria-expanded="false">
-        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Light Â· Lumenstag">
-          <h3><span class="glyph-mark">âœ¦</span>Light Â· Lumenstag</h3>
-          <p>Light Â· Alignment Â· Signal Illumination</p>
+        <div class="mythology-text" role="button" tabindex="0" aria-label="Reveal Light · Lumenstag">
+          <h3><span class="glyph-mark">✦</span>Light · Lumenstag</h3>
+          <p>Light · Alignment · Signal Illumination</p>
         </div>
         <img class="mythology-image" alt="Lumenstag" loading="lazy" />
       </article>
@@ -983,9 +1054,9 @@
         <p id="viewer-meta" class="viewer-meta">Awaiting spirit selection.</p>
 
         <div id="viewer-image-wrap" class="viewer-image-wrap">
-          <div id="viewer-halo" class="viewer-halo" aria-hidden="true">âœ¶</div>
+          <div id="viewer-halo" class="viewer-halo" aria-hidden="true">✶</div>
           <img id="viewer-image" alt="Spirit variant" />
-          <p id="viewer-path" class="viewer-path">Vault path pending.</p>
+          <p id="viewer-path" class="viewer-path">Archive image awaits a selection.</p>
           <p id="viewer-orientation" class="viewer-orientation">Orientation pending.</p>
         </div>
 
@@ -995,6 +1066,65 @@
           <button type="button" class="viewer-btn" data-species-intent="signal" aria-pressed="false">Signal</button>
           <span id="viewer-index" class="viewer-index">default</span>
         </div>
+        <section id="cindervox-encounter" class="cindervox-encounter" hidden aria-labelledby="cindervox-encounter-title">
+          <p class="cindervox-encounter-label">Canyon threshold</p>
+          <h4 id="cindervox-encounter-title">Cindervox leads you to the burn line.</h4>
+          <p id="cindervox-encounter-copy">The boundary hums. What is your movement?</p>
+          <div class="cindervox-choices">
+            <button type="button" data-cindervox-choice="hold">Hold steady</button>
+            <button type="button" data-cindervox-choice="cross">Step through</button>
+            <button type="button" data-cindervox-choice="wait">Wait and listen</button>
+          </div>
+          <p id="cindervox-consequence" class="cindervox-consequence" aria-live="polite">A choice opens a consequence field. Waiting remains available.</p>
+          <a id="cindervox-canyon-link" class="cindervox-canyon-link" href="/portal/canyon" hidden>Enter the canyon</a>
+        </section>
+        <section id="whisperhawk-signal" class="whisperhawk-signal" hidden aria-labelledby="whisperhawk-signal-title">
+          <p class="whisperhawk-signal-label">Air signal · early warning</p>
+          <h4 id="whisperhawk-signal-title">The signal arrives from an angle.</h4>
+          <div class="whisperhawk-trace" aria-hidden="true">
+            <span class="whisperhawk-eye"></span>
+            <span class="whisperhawk-line"></span>
+            <span class="whisperhawk-arrow"></span>
+          </div>
+          <p id="whisperhawk-signal-copy">A faint streak scans across the layers before its meaning resolves.</p>
+          <button type="button" class="whisperhawk-scan" data-whisperhawk-scan="true">Trace the shift</button>
+          <p id="whisperhawk-consequence" class="whisperhawk-consequence" aria-live="polite">The pattern is still forming.</p>
+          <ol class="whisperhawk-chain" aria-label="Whisperhawk signal chain">
+            <li><span>Origin</span><strong>Whisperhawk</strong></li>
+            <li><span>Transmission</span><strong>Angled arc</strong></li>
+            <li><span>Interpretation</span><strong>Pattern scan</strong></li>
+            <li><span>Resonance</span><strong>Early warning</strong></li>
+          </ol>
+          <section id="whisper-map" class="whisper-map" hidden aria-labelledby="whisper-map-title">
+            <p>Whisper Map</p>
+            <h5 id="whisper-map-title">The shift is a signal, not the event.</h5>
+            <dl>
+              <div><dt>Classification</dt><dd>Soft signal · early drift</dd></div>
+              <div><dt>Layer resonance</dt><dd>Air · pattern and motion</dd></div>
+              <div><dt>Direction</dt><dd>Pre-manifest shift detected</dd></div>
+              <div><dt>Routing note</dt><dd>Read through context before movement.</dd></div>
+            </dl>
+            <button type="button" class="whisperhawk-stillwatch" data-whisperhawk-stillwatch="true">Hold the signal · Owl Stillwatch</button>
+          </section>
+        </section>
+        <section id="owl-stillwatch" class="owl-stillwatch" hidden aria-labelledby="owl-stillwatch-title">
+          <p>Ethyl signal · Stillwatch</p>
+          <h4 id="owl-stillwatch-title">Be still. The pattern will reveal itself.</h4>
+          <div class="owl-gaze" aria-hidden="true"><span></span><span></span></div>
+          <p>Owl does not chase the warning. It holds quiet vigilance, geometric clarity, and a pause before action.</p>
+          <button type="button" data-owl-return="true">Return to Whisperhawk</button>
+        </section>
+        <section id="circuit-mirror" class="circuit-mirror" hidden aria-labelledby="circuit-mirror-title">
+          <p>Circuit Mirror</p>
+          <h4 id="circuit-mirror-title">The signal meets the node.</h4>
+          <dl>
+            <div><dt>Input</dt><dd id="mirror-input"></dd></div>
+            <div><dt>Reflection</dt><dd id="mirror-reflection"></dd></div>
+            <div><dt>Difference</dt><dd id="mirror-difference"></dd></div>
+            <div><dt>Demand</dt><dd id="mirror-demand"></dd></div>
+            <div><dt>Pressure</dt><dd id="mirror-pressure"></dd></div>
+          </dl>
+        </section>
       </article>
     </section>
 
@@ -1082,7 +1212,7 @@
 
         const turbulenceState = window.vault.getTurbulenceState(window.vault.getTrunkState ? window.vault.getTrunkState() : undefined);
         if (turbulenceBand) {
-          turbulenceBand.textContent = turbulenceState.band + " pressure Â· " + turbulenceState.pressure.toFixed(3);
+          turbulenceBand.textContent = turbulenceState.band + " pressure · " + turbulenceState.pressure.toFixed(3);
           turbulenceBand.setAttribute("data-turbulence-band", turbulenceState.band);
         }
 
@@ -1104,7 +1234,7 @@
         );
 
         if (serenityBand) {
-          serenityBand.textContent = serenityState.band + " coherence Â· " + serenityState.coherence.toFixed(3);
+          serenityBand.textContent = serenityState.band + " coherence · " + serenityState.coherence.toFixed(3);
           serenityBand.setAttribute("data-serenity-band", serenityState.band);
         }
 
@@ -1384,7 +1514,7 @@
         banner.style.color = "rgba(246, 236, 220, 0.92)";
         banner.style.textAlign = "center";
         banner.style.fontFamily = "'Source Code Pro', monospace";
-        banner.textContent = title + " Â· " + detail;
+        banner.textContent = title + " · " + detail;
         const shell = document.querySelector(".shell");
         if (shell) {
           shell.insertAdjacentElement("afterbegin", banner);
@@ -1434,7 +1564,7 @@
             const selectedDocument = selectedNote.document;
             const sourceLore = selectedDocument.body || selectedDocument.description || "Storm mirrored itself into an archetypal chamber.";
             const lore = sourceLore.replace(/^#.*$/m, "").trim().replace(/\s+/g, " ").slice(0, 420);
-            banner.textContent = title + " Â· " + lore;
+            banner.textContent = title + " · " + lore;
             const imageCandidates = window.ThresholdImages.candidatesFor(selectedDocument);
             const panel = document.createElement("div");
             panel.style.maxWidth = "760px";
@@ -1569,6 +1699,63 @@ loadMythology().catch(function () {
 });
 
   </script>
+  <script>
+    (function () {
+      if (new URLSearchParams(window.location.search).get("node") !== "fracture-pedal") {
+        return;
+      }
+
+      const chamber = document.getElementById("fracture-pedal-chamber");
+      const trace = document.getElementById("fracture-pedal-trace");
+      if (!chamber || !trace) {
+        return;
+      }
+
+      let seasons = [];
+      let glyphs = [];
+      try {
+        const wheelState = JSON.parse(localStorage.getItem("threshold.learningWheel.state.v1") || "null");
+        const glyphReturns = JSON.parse(localStorage.getItem("threshold.learningWheel.glyphReturns.v1") || "null");
+        seasons = Array.isArray(wheelState?.visitedSeasons) ? wheelState.visitedSeasons : [];
+        glyphs = Array.isArray(glyphReturns?.glyphs) ? glyphReturns.glyphs : [];
+      } catch (error) {
+        console.warn("Seasonal trace could not be restored.", error);
+      }
+
+      const seasonalTrace = [...new Set(seasons)].map(function (season) {
+        return season.charAt(0).toUpperCase() + season.slice(1);
+      });
+      const glyphTrace = [...new Set(glyphs)].map(function (glyph) {
+        return glyph.charAt(0).toUpperCase() + glyph.slice(1);
+      });
+      const fragments = [];
+      if (seasonalTrace.length) fragments.push("Seasons: " + seasonalTrace.join(", "));
+      if (glyphTrace.length) fragments.push("Returned glyphs: " + glyphTrace.join(", "));
+      trace.textContent = fragments.length
+        ? fragments.join(". ") + "."
+        : "The wheel has not returned a seasonal trace.";
+      const consequence = document.getElementById("fracture-pedal-consequence");
+      const paths = document.querySelectorAll("[data-fracture-stance]");
+      paths.forEach(function (path) {
+        path.addEventListener("click", function () {
+          const stance = path.dataset.fractureStance;
+          localStorage.setItem("threshold.mythology.fractureStance.v1", stance);
+          paths.forEach(function (button) {
+            button.setAttribute("aria-pressed", String(button === path));
+          });
+          if (stance === "hold") {
+            consequence.textContent = "The Cabinet remains in view. The fracture is witnessed before it is crossed.";
+          } else if (stance === "cross") {
+            consequence.textContent = "The seasonal trace enters Mythology. The path is available to cross.";
+          } else {
+            consequence.textContent = "No vector is fixed. The remapped path remains open.";
+          }
+        });
+      });
+      chamber.hidden = false;
+      chamber.scrollIntoView({ behavior: "smooth", block: "center" });
+    })();
+  </script>
   <a class="engine-architecture-link" href="index.html" aria-label="Open hub entry">Hub Entry</a>
   <style>
     .engine-architecture-link {
@@ -1594,21 +1781,10 @@ loadMythology().catch(function () {
       outline: none;
     }
   </style>
-  <script src="scripts/node-runtime.js" data-manifest="config/spokes.json"></script>
+  <script src="scripts/node-runtime.js?v=local-preview-activation-1" data-manifest="config/spokes.json"></script>
   <script src="scripts/spoke-tabs.js"></script>
   <script src="scripts/emotional-engine.js"></script>
-  <script src="scripts/species-signals.js"></script>
+  <script src="scripts/species-signals.js?v=owl-stillwatch-2"></script>
   <script type="module" src="scripts/destination-page.js?v=reveal-3"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

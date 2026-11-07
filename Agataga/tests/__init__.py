@@ -1,0 +1,1 @@
+"""Agataga test package."""

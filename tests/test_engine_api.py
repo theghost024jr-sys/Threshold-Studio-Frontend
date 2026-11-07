@@ -18,7 +18,9 @@ def test_node_activation_is_applied_on_next_tick() -> None:
     response = client.post("/input/basin", json={"type": "node.activate"})
 
     assert response.status_code == 200
-    assert response.json() == {"status": "ok"}
+    assert response.json()["status"] == "ok"
+    assert response.json()["recorded"] is True
+    assert response.json()["responded"] is True
 
     state = graph.tick()
     assert state["nodes"]["basin"]["active"] is True
@@ -60,3 +62,28 @@ def test_allows_the_local_pages_frontend_origin() -> None:
 
     assert response.status_code == 200
     assert response.headers["access-control-allow-origin"] == "http://127.0.0.1:8788"
+
+
+def test_select_is_recorded_but_never_responds() -> None:
+    response = client.post("/input/lagoon", json={"action": "select"})
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["recorded"] is True
+    assert body["responded"] is False
+    assert body["reason"] == "recorded-only"
+
+    state = graph.tick()
+    assert state["nodes"]["lagoon"]["active"] is False
+    assert state["nodes"]["lagoon"]["inputCount"] == 1
+
+
+def test_repeated_activation_is_recorded_without_a_second_response() -> None:
+    first = client.post("/input/herb_room", json={"type": "node.activate"})
+    second = client.post("/input/herb_room", json={"type": "node.activate"})
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert first.json()["responded"] is True
+    assert second.json()["responded"] is False
+    assert second.json()["recorded"] is True

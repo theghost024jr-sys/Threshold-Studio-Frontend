@@ -48,9 +48,8 @@ def tick() -> dict[str, Any]:
 
 
 @app.post("/input/{node_id}")
-def input_node(node_id: str, data: dict[str, Any]) -> dict[str, str]:
+def input_node(node_id: str, data: dict[str, Any]) -> dict[str, Any]:
     try:
-        graph.apply_input(node_id, data)
+        return graph.apply_input(node_id, data)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
-    return {"status": "ok"}

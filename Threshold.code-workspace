@@ -1,0 +1,11 @@
+{
+    "name": "Threshold Engine Workspace",
+    "folders": [
+        {
+            "path": "C:\\Threshold"
+        }
+    ],
+    "settings": {
+        "python.defaultInterpreterPath": "C:\\Users\\James Romeo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe"
+    }
+}

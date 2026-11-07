@@ -39,6 +39,7 @@
         <div><dt>Path</dt><dd id="telemetry-path">none</dd></div>
         <div><dt>Hub Energy</dt><dd id="telemetry-energy">0.0000</dd></div>
       </dl>
+      <ul class="diamond-spiral-key" aria-label="Diamond field spirals" data-diamond-spiral-key></ul>
     </aside>
 
     <aside class="engine-calibration" aria-label="Engine calibration controls">
@@ -118,21 +119,21 @@
         <span class="hub-ring hub-ring-outer"></span>
         <span class="hub-ring hub-ring-middle"></span>
         <span class="hub-ring hub-ring-inner"></span>
-        <span class="hub-core" aria-hidden="true">âœ¦</span>
+        <span class="hub-core" aria-hidden="true">✦</span>
       </button>
 
       <button id="hub-b" class="hub hub-b" type="button" aria-label="Schematic Hub B" data-hub="fold">
         <span class="hub-ring hub-ring-outer"></span>
         <span class="hub-ring hub-ring-middle"></span>
         <span class="hub-ring hub-ring-inner"></span>
-        <span class="hub-core" aria-hidden="true">â—Œ</span>
+        <span class="hub-core" aria-hidden="true">◌</span>
       </button>
 
       <button id="hub-c" class="hub hub-c" type="button" aria-label="Schematic Hub C" data-hub="spire">
         <span class="hub-ring hub-ring-outer"></span>
         <span class="hub-ring hub-ring-middle"></span>
         <span class="hub-ring hub-ring-inner"></span>
-        <span class="hub-core" aria-hidden="true">âŸ¡</span>
+        <span class="hub-core" aria-hidden="true">⟡</span>
       </button>
     </section>
 
@@ -149,15 +150,15 @@
   <script type="module" src="/threshold-engine.js"></script>
   <script type="module" src="/scripts/engine-ui-feedback.js"></script>
   <script type="module" src="/scripts/node-editor.js"></script>
-  <script type="module" src="../scripts/hub-engine.js?v=20260807h"></script>
+  <script type="module" src="../scripts/hub-engine.js?v=20261020-diamond-spirals"></script>
   <script type="module" src="/scripts/access-flow.js"></script>
 
   <template id="glyph-template">
-    <span class="spawn-glyph">âœ§</span>
+    <span class="spawn-glyph">✧</span>
   </template>
 
   <script>
-    window.__thresholdHubGlyphSet = ["âœ¦", "âœ§", "âœ¶", "âœ¹", "âœº", "âœ·", "â‹", "âˆ", "âœµ", "âŠ¹", "âœ´", "âŸ¡", "â—ˆ", "â—Œ", "â—", "â˜‰", "â˜½", "â˜¿", "âŒ˜", "âŒ–", "âŒ‘", "âŸ", "âŸ¢", "â—Š"];
+    window.__thresholdHubGlyphSet = ["✦", "✧", "✶", "✹", "✺", "✷", "❋", "❈", "✵", "⊹", "✴", "⟡", "◈", "◌", "◍", "☉", "☽", "☿", "⌘", "⌖", "⌑", "⟁", "⟢", "◊"];
   </script>
 
   <style>
@@ -200,9 +201,6 @@
   </style>
 </body>
 </html>
-
-
-
 
 
 

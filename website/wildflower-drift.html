@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wildflower Drift · Threshold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#f7ecdb; --mist:#b7d8d5; --poppy:#df654f; --gold:#f3c677; --night:#0b1521; }
+    * { box-sizing:border-box; }
+    body { min-height:100svh; margin:0; overflow-x:hidden; color:var(--ink); background:var(--night); font-family:"DM Mono", monospace; }
+    .drift-journey { min-height:240svh; background:#0b1521; }
+    .field { --tilt-x:0deg; --tilt-y:0deg; --shift-x:0px; --shift-y:0px; --scroll-progress:0; position:sticky; top:0; isolation:isolate; height:100svh; min-height:100svh; overflow:hidden; perspective:1100px; background:linear-gradient(180deg,#80b9ce 0%,#d1d1b3 43%,#4b7053 100%); }
+    .field::before { content:""; position:absolute; inset:-5%; z-index:-2; background:url("/assets/wildflower-drift.png") center/cover; filter:saturate(.88) contrast(1.04); opacity:calc(.88 - var(--scroll-progress) * .48); transform:translate3d(var(--shift-x),calc(var(--shift-y) - var(--scroll-progress) * 70px),-80px) scale(calc(1.1 + var(--scroll-progress) * .24)) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:filter 900ms ease, transform 220ms ease-out; }
+    .field::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(8,20,34,.5),transparent 38%,rgba(9,24,20,.48)); opacity:calc(1 - var(--scroll-progress) * .7); }
+    .field[data-reading="silence"]::before { filter:saturate(.42) brightness(.75); transform:scale(1.1); }
+    .field[data-reading="drift"]::before { filter:saturate(1.12) brightness(1.08); transform:scale(1.06) translateX(-.6%); }
+    .topbar { display:flex; justify-content:space-between; gap:1rem; padding:1.4rem clamp(1.25rem,4vw,4rem); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; }
+    a { color:var(--ink); text-decoration:none; } a:hover,a:focus-visible { color:var(--gold); }
+    main { display:grid; min-height:calc(100svh - 4.5rem); align-content:space-between; padding:clamp(2rem,7vw,7rem) clamp(1.25rem,7vw,8rem) 2rem; transform-style:preserve-3d; }
+    .hero { max-width:52rem; text-shadow:0 2px 20px rgba(5,15,20,.55); transform:translate3d(calc(var(--shift-x) * -.5),calc(var(--shift-y) * -.5),70px); transition:transform 220ms ease-out; }
+    .eyebrow { margin:0; color:var(--gold); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; }
+    h1 { max-width:10ch; margin:.6rem 0 1rem; font:600 clamp(4rem,12vw,10rem)/.78 "Newsreader",Georgia,serif; letter-spacing:-.07em; }
+    .hero > p:last-child { max-width:37rem; margin:0; font:clamp(1rem,1.8vw,1.35rem)/1.55 "Newsreader",Georgia,serif; }
+    .reading { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; align-self:end; max-width:62rem; transform:translate3d(var(--shift-x),var(--shift-y),110px); transition:transform 220ms ease-out; }
+    .reading button { min-height:8.5rem; border:1px solid rgba(255,244,218,.35); border-radius:.9rem; padding:1rem; color:var(--ink); cursor:pointer; background:rgba(9,23,27,.42); backdrop-filter:blur(8px); font:inherit; text-align:left; transition:background .25s ease,transform .25s ease,border-color .25s ease; }
+    .reading button:hover,.reading button:focus-visible,.reading button[aria-pressed="true"] { border-color:var(--gold); background:rgba(20,35,34,.72); outline:none; transform:translateY(-5px); }
+    .reading strong { display:block; margin-bottom:.55rem; color:var(--gold); font-size:.67rem; letter-spacing:.12em; text-transform:uppercase; }
+    .reading span { font:1.05rem/1.35 "Newsreader",Georgia,serif; }
+    .seed { position:absolute; width:.6rem; aspect-ratio:1; border-radius:50%; background:var(--ink); box-shadow:0 0 12px var(--ink); opacity:.65; animation:float 9s ease-in-out infinite; transform:translate3d(calc(var(--shift-x) * 2),calc(var(--shift-y) * 2),180px); }
+    .seed:nth-of-type(1){left:18%;top:33%;animation-delay:-2s}.seed:nth-of-type(2){left:73%;top:24%;animation-delay:-5s}.seed:nth-of-type(3){left:59%;top:69%;animation-delay:-7s}.seed:nth-of-type(4){left:37%;top:57%;animation-delay:-1s}
+    .drift-stream { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; transform-style:preserve-3d; }
+    .drift-mote { position:absolute; top:var(--top); left:-8vw; width:var(--size); height:var(--size); border:1px solid rgba(255,249,224,.8); border-radius:50%; opacity:var(--opacity); box-shadow:0 0 9px rgba(255,243,210,.48); animation:drift-across var(--duration) linear infinite; animation-delay:var(--delay); }
+    .drift-mote::after { content:""; position:absolute; width:calc(var(--size) * 3); height:1px; top:50%; right:100%; background:linear-gradient(90deg,transparent,rgba(255,246,218,.56)); transform:rotate(-18deg); transform-origin:right; }
+    .field[data-reading="drift"] .drift-mote { animation-duration:calc(var(--duration) * .58); opacity:calc(var(--opacity) + .18); }
+    .blossom-layer { position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none; transform-style:preserve-3d; }
+    .blossom { position:absolute; top:var(--top); left:var(--left); width:var(--size); aspect-ratio:1; transform-style:preserve-3d; animation:blossom-sway var(--sway-duration) ease-in-out infinite alternate; animation-delay:var(--sway-delay); }
+    .blossom i { position:absolute; top:50%; left:50%; width:42%; height:67%; border-radius:70% 70% 58% 58%; background:radial-gradient(ellipse at 50% 18%,rgba(255,215,164,.94),rgba(225,74,67,.94) 56%,rgba(114,27,42,.92)); box-shadow:inset 0 0 11px rgba(255,240,201,.35),0 0 12px rgba(130,24,44,.3); transform-origin:50% 100%; }
+    .blossom i:nth-child(1){transform:translate(-50%,-100%) rotate(0deg) translateZ(8px)}.blossom i:nth-child(2){transform:translate(-50%,-100%) rotate(72deg) translateZ(1px)}.blossom i:nth-child(3){transform:translate(-50%,-100%) rotate(144deg) translateZ(6px)}.blossom i:nth-child(4){transform:translate(-50%,-100%) rotate(216deg) translateZ(2px)}.blossom i:nth-child(5){transform:translate(-50%,-100%) rotate(288deg) translateZ(5px)}
+    .blossom b { position:absolute; top:50%; left:50%; width:24%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffe8a3,#6e2730 65%); box-shadow:0 0 8px rgba(255,205,126,.66); transform:translate(-50%,-50%) translateZ(12px); }
+    .field[data-reading="drift"] .blossom { animation-duration:calc(var(--sway-duration) * .62); }
+    .mist-seam { position:absolute; z-index:3; top:5.7rem; left:clamp(1.25rem,4vw,4rem); width:clamp(5rem,12vw,10rem); aspect-ratio:1; display:grid; place-items:center; border:1px dashed rgba(255,244,218,.35); border-radius:50%; color:rgba(255,244,218,.45); font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; pointer-events:none; transition:box-shadow .8s ease,border-color .8s ease,color .8s ease; }
+    .field[data-seam-found="true"] .mist-seam { border-color:var(--gold); color:var(--gold); box-shadow:0 0 3rem rgba(243,198,119,.62),inset 0 0 2rem rgba(243,198,119,.2); }
+    .field-starfish { position:absolute; z-index:4; left:78%; top:76%; width:4rem; aspect-ratio:1; border:0; clip-path:polygon(50% 0%,61% 34%,98% 38%,69% 59%,79% 95%,50% 73%,21% 95%,31% 59%,2% 38%,39% 34%); background:var(--poppy); cursor:grab; filter:drop-shadow(0 10px 12px rgba(11,21,33,.52)); touch-action:none; }
+    .field-starfish:active { cursor:grabbing; }.field-starfish:focus-visible { outline:2px solid var(--gold); outline-offset:6px; }
+    .seam-answer { position:absolute; z-index:3; top:calc(5.7rem + clamp(5rem,12vw,10rem) + .75rem); left:clamp(1.25rem,4vw,4rem); width:14rem; margin:0; color:var(--gold); font:.86rem/1.35 "Newsreader",Georgia,serif; opacity:0; transform:translateY(-.5rem); transition:opacity .7s ease,transform .7s ease; pointer-events:none; }
+    .field[data-seam-found="true"] .seam-answer { opacity:1; transform:none; }
+    .scroll-cue { position:absolute; right:clamp(1.25rem,4vw,4rem); bottom:1.75rem; z-index:3; margin:0; color:rgba(255,244,218,.75); font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; animation:float 3s ease-in-out infinite; }
+    .transition-landing { position:relative; z-index:2; min-height:100svh; margin-top:40svh; padding:clamp(2rem,7vw,8rem); display:grid; align-content:center; background:linear-gradient(145deg,rgba(11,21,33,.88),rgba(36,61,65,.92) 58%,rgba(116,109,91,.94)); clip-path:polygon(0 11%,100% 0,100% 100%,0 100%); }
+    .transition-landing p { max-width:32rem; margin:0; color:var(--gold); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; }
+    .transition-landing h2 { max-width:10ch; margin:.8rem 0 1.2rem; font:600 clamp(3.5rem,10vw,8rem)/.82 "Newsreader",Georgia,serif; letter-spacing:-.07em; }
+    .transition-landing div { max-width:32rem; font:1.18rem/1.55 "Newsreader",Georgia,serif; }
+    .source { margin:1.4rem 0 0; color:rgba(247,236,219,.7); font-size:.62rem; letter-spacing:.08em; }
+    @keyframes float { 50% { transform:translate(2rem,-3rem); opacity:.18; } }
+    @keyframes drift-across { from { transform:translate3d(0,0,var(--depth)) rotate(0deg); } 55% { transform:translate3d(64vw,-4rem,var(--depth)) rotate(160deg); } to { transform:translate3d(118vw,2rem,var(--depth)) rotate(340deg); } }
+    @keyframes blossom-sway { from { transform:rotateX(10deg) rotateY(-16deg) rotateZ(-8deg) translate3d(-.5rem,.3rem,60px); } to { transform:rotateX(-8deg) rotateY(18deg) rotateZ(9deg) translate3d(.7rem,-.4rem,100px); } }
+    @media (prefers-reduced-motion:reduce){.seed,.drift-mote,.blossom{animation:none}.field::before,.hero,.reading,.reading button{transition:none}}
+    @media (max-width:680px){.reading{grid-template-columns:1fr}.reading button{min-height:5rem}h1{font-size:clamp(4rem,20vw,7rem)}}
+  </style>
+</head>
+<body>
+  <div class="drift-journey">
+  <div class="field" data-field>
+    <span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span>
+    <div class="drift-stream" data-drift-stream aria-hidden="true"></div>
+    <div class="blossom-layer" data-blossom-layer aria-hidden="true"></div>
+    <div class="mist-seam" aria-hidden="true">mist seam</div>
+    <button class="field-starfish" type="button" aria-label="Drag the starfish to the mist seam"></button>
+    <p class="seam-answer" aria-live="polite">The field remembers a sea it never was.</p>
+    <p class="scroll-cue">Scroll through the boundary</p>
+    <header class="topbar"><a href="garden.html">Return to the Garden</a><span>Ephemeral Field · Mist / Air boundary</span></header>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Wildflower Drift</p>
+        <h1>The field holds without closing.</h1>
+        <p>Memory anchors in poppies. Dandelion seeds carry the drift. Nothing here asks to be held; attention only changes what becomes clear.</p>
+        <p class="source">Source: Wildflower Drift · Environmental Substrate Artifact</p>
+      </section>
+      <section class="reading" aria-label="Field readings">
+        <button type="button" data-reading="anchor" aria-pressed="true"><strong>Anchors</strong><span>Read the vivid things that remain.</span></button>
+        <button type="button" data-reading="drift" aria-pressed="false"><strong>Drift</strong><span>Let the field widen around what is leaving.</span></button>
+        <button type="button" data-reading="silence" aria-pressed="false"><strong>Silence field</strong><span>The diagram is linked here, but has not yet taken form.</span></button>
+      </section>
+    </main>
+  </div>
+  <section class="transition-landing">
+    <p>After the drift</p>
+    <h2>Nothing was taken from the field.</h2>
+    <div>The flowers are still there. The mist simply changes the distance from which they can be understood.</div>
+  </section>
+  </div>
+  <script>
+    const field = document.querySelector("[data-field]");
+    const stream = document.querySelector("[data-drift-stream]");
+    const blossomLayer = document.querySelector("[data-blossom-layer]");
+    const starfish = document.querySelector(".field-starfish");
+    let draggingStarfish = false;
+    let starfishPosition = { x: 78, y: 76 };
+    for (let index = 0; index < 18; index += 1) {
+      const mote = document.createElement("span");
+      mote.className = "drift-mote";
+      mote.style.setProperty("--top", `${8 + ((index * 17) % 80)}%`);
+      mote.style.setProperty("--size", `${3 + (index % 4)}px`);
+      mote.style.setProperty("--opacity", `${0.16 + (index % 5) * 0.08}`);
+      mote.style.setProperty("--duration", `${13 + (index % 6) * 3}s`);
+      mote.style.setProperty("--delay", `${-index * 1.7}s`);
+      mote.style.setProperty("--depth", `${-70 + (index % 4) * 55}px`);
+      stream.appendChild(mote);
+    }
+    for (let index = 0; index < 15; index += 1) {
+      const blossom = document.createElement("span");
+      blossom.className = "blossom";
+      blossom.innerHTML = "<i></i><i></i><i></i><i></i><i></i><b></b>";
+      blossom.style.setProperty("--left", `${5 + ((index * 17) % 90)}%`);
+      blossom.style.setProperty("--top", `${62 + ((index * 11) % 32)}%`);
+      blossom.style.setProperty("--size", `${24 + (index % 5) * 10}px`);
+      blossom.style.setProperty("--sway-duration", `${3.2 + (index % 5) * .7}s`);
+      blossom.style.setProperty("--sway-delay", `${-index * .31}s`);
+      blossomLayer.appendChild(blossom);
+    }
+    document.querySelectorAll("[data-reading]").forEach((button) => button.addEventListener("click", () => {
+      field.dataset.reading = button.dataset.reading;
+      document.querySelectorAll("[data-reading]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
+    }));
+    const updateScrollPassage = () => {
+      field.style.setProperty("--scroll-progress", String(Math.min(1, Math.max(0, window.scrollY / window.innerHeight))));
+    };
+    updateScrollPassage();
+    window.addEventListener("scroll", updateScrollPassage, { passive:true });
+    const beginStarfishDrag = (event) => {
+      draggingStarfish = true;
+      event.preventDefault();
+    };
+    const moveStarfish = (event) => {
+      if (!draggingStarfish || field.dataset.seamFound === "true") return;
+      const bounds = field.getBoundingClientRect();
+      const x = Math.max(2, Math.min(94, ((event.clientX - bounds.left) / bounds.width) * 100));
+      const y = Math.max(2, Math.min(92, ((event.clientY - bounds.top) / bounds.height) * 100));
+      starfishPosition = { x, y };
+      starfish.style.left = `${x}%`;
+      starfish.style.top = `${y}%`;
+    };
+    const placeStarfish = () => {
+      if (!draggingStarfish) return;
+      draggingStarfish = false;
+      if (starfishPosition.x < 19 && starfishPosition.y < 24) {
+        field.dataset.seamFound = "true";
+        starfish.remove();
+      }
+    };
+    starfish.addEventListener("pointerdown", beginStarfishDrag);
+    starfish.addEventListener("mousedown", beginStarfishDrag);
+    document.addEventListener("pointermove", moveStarfish);
+    document.addEventListener("mousemove", moveStarfish);
+    document.addEventListener("pointerup", placeStarfish);
+    document.addEventListener("mouseup", placeStarfish);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      field.addEventListener("pointermove", (event) => {
+        const x = (event.clientX / window.innerWidth - 0.5);
+        const y = (event.clientY / window.innerHeight - 0.5);
+        field.style.setProperty("--tilt-x", `${-y * 2.4}deg`);
+        field.style.setProperty("--tilt-y", `${x * 2.4}deg`);
+        field.style.setProperty("--shift-x", `${x * 12}px`);
+        field.style.setProperty("--shift-y", `${y * 12}px`);
+      });
+      field.addEventListener("pointerleave", () => {
+        field.style.setProperty("--tilt-x", "0deg");
+        field.style.setProperty("--tilt-y", "0deg");
+        field.style.setProperty("--shift-x", "0px");
+        field.style.setProperty("--shift-y", "0px");
+      });
+    }
+  </script>
+</body>
+</html>

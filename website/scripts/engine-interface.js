@@ -29,7 +29,12 @@ export function createEngineInterface({ endpoint = DEFAULT_ENDPOINT, root = docu
   }
 
   function acceptIntent(intent, result) {
-    const acceptance = Object.freeze({ type: "accepted", intent, result });
+    const acceptance = Object.freeze({
+      type: "accepted",
+      responded: Boolean(result?.responded),
+      intent,
+      result
+    });
     window.dispatchEvent(new CustomEvent("threshold:engine-intent-accepted", { detail: acceptance }));
     return acceptance;
   }

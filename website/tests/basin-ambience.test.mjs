@@ -7,6 +7,7 @@ const basinUrl = new URL("../environment/basin.html", import.meta.url);
 test("Basin uses a user-initiated procedural bamboo fountain", async () => {
   const source = await readFile(basinUrl, "utf8");
   assert.match(source, /data-threshold-environment="basin"/);
+  assert.match(source, /data-threshold-sandbox="basin"/);
   assert.match(source, /data-origin-chamber="herbroom"/);
   assert.match(source, /class="basin-world" src="\/assets\/basin\.png"/);
   assert.match(source, /Continue into Threshold/);
@@ -14,6 +15,12 @@ test("Basin uses a user-initiated procedural bamboo fountain", async () => {
   assert.match(source, /@keyframes basin-breathe/);
   assert.match(source, /@keyframes basin-light/);
   assert.match(source, /@keyframes basin-water/);
+  assert.match(source, /body\[data-basin-shimmer="true"\] \.basin-vignette::after/);
+  assert.match(source, /repeating-linear-gradient\(168deg/);
+  assert.match(source, /body\[data-basin-shimmer="true"\] \.basin-route--chamber/);
+  assert.match(source, /threshold:access-flow-ready/);
+  assert.match(source, /state\.completed\.includes\("basin"\)/);
+  assert.match(source, /state\.shimmer === true/);
   assert.match(source, /prefers-reduced-motion: reduce/);
   assert.match(source, /class="sound-toggle"/);
   assert.match(source, /aria-pressed="false"/);

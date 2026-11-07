@@ -36,10 +36,17 @@ function escapePattern(value) {
 
 test("every labeled static link resolves to a real destination", async () => {
   const pages = await collectHtmlFiles();
+  const portalApp = await readFile(path.join(root, "portal", "src", "App.jsx"), "utf8");
+  const registeredPortalRoutes = new Set(
+    Array.from(portalApp.matchAll(/<Route\s+path=["']([^"']+)["']/g), (match) => match[1])
+  );
 
   for (const page of pages) {
     const html = await readFile(page, "utf8");
     const relativePage = path.relative(root, page).replaceAll("\\", "/");
+    const documentUrl = new URL(`/${relativePage}`, "https://threshold.invalid");
+    const baseHref = html.match(/<base\b[^>]*\bhref\s*=\s*["']([^"']+)["']/i)?.[1];
+    const baseUrl = baseHref ? new URL(baseHref, documentUrl) : documentUrl;
     const links = html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi);
 
     for (const match of links) {
@@ -50,7 +57,12 @@ test("every labeled static link resolves to a real destination", async () => {
 
       const href = hrefMatch[1].trim();
       assert.notEqual(href, "", `${relativePage}: labeled link "${label}" has an empty href`);
-      assert.notEqual(href, "#", `${relativePage}: labeled link "${label}" has a dead # href`);
+      const hiddenSpiritNotePlaceholder = href === "#"
+        && /\bid=["']viewer-note["']/i.test(attributes)
+        && /<section\b[^>]*id=["']myth-viewer["'][^>]*aria-hidden=["']true["']/i.test(html);
+      if (!hiddenSpiritNotePlaceholder) {
+        assert.notEqual(href, "#", `${relativePage}: labeled link "${label}" has a dead # href`);
+      }
       assert.doesNotMatch(href, /^javascript:/i, `${relativePage}: labeled link "${label}" uses a dead JavaScript URL`);
 
       if (/^(?:https?:|mailto:|tel:|obsidian:|\/\/)/i.test(href)) {
@@ -62,11 +74,31 @@ test("every labeled static link resolves to a real destination", async () => {
       let targetPage = page;
 
       if (routePath) {
-        const decodedPath = decodeURIComponent(routePath);
-        const resolved = decodedPath.startsWith("/")
-          ? path.join(root, decodedPath.slice(1))
-          : path.resolve(path.dirname(page), decodedPath);
-        assert.ok(resolved.startsWith(root), `${relativePage}: link escapes the published site: ${href}`);
+        const targetUrl = new URL(decodeURIComponent(routePath), baseUrl);
+        assert.equal(
+          targetUrl.origin,
+          "https://threshold.invalid",
+          `${relativePage}: link escapes the published site: ${href}`
+        );
+        if (
+          targetUrl.pathname.startsWith("/portal/")
+          && targetUrl.pathname !== "/portal/index.html"
+        ) {
+          const portalRoute = targetUrl.pathname.slice("/portal".length) || "/";
+          assert.ok(
+            registeredPortalRoutes.has(portalRoute),
+            `${relativePage}: Portal link "${label}" has no registered route: ${href}`
+          );
+          continue;
+        }
+        const resolved = path.resolve(root, decodeURIComponent(targetUrl.pathname.slice(1)));
+        const resolvedRelative = path.relative(root, resolved);
+        assert.ok(
+          resolvedRelative !== ".."
+            && !resolvedRelative.startsWith(`..${path.sep}`)
+            && !path.isAbsolute(resolvedRelative),
+          `${relativePage}: link escapes the published site: ${href}`
+        );
         targetPage = await firstExisting([
           resolved,
           `${resolved}.html`,
@@ -92,4 +124,68 @@ test("shared chamber navigation exposes only implemented paths", async () => {
 
   assert.match(tabs, /href="index\.html">Return to Hub/);
   assert.doesNotMatch(tabs, /data-seed-gate|data-seed-action|\/api\//);
+});
+
+async function collectSourceFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = await Promise.all(entries.map(async (entry) => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      return collectSourceFiles(entryPath);
+    }
+    return entry.name.endsWith(".jsx") ? [entryPath] : [];
+  }));
+  return files.flat();
+}
+
+test("every literal Portal navigation route is registered", async () => {
+  const portalRoot = path.join(root, "portal", "src");
+  const app = await readFile(path.join(portalRoot, "App.jsx"), "utf8");
+  const registered = new Set(
+    Array.from(app.matchAll(/<Route\s+path=["']([^"']+)["']/g), (match) => match[1])
+  );
+  const sources = await collectSourceFiles(portalRoot);
+  const routes = new Set();
+
+  for (const source of sources) {
+    const contents = await readFile(source, "utf8");
+    for (const match of contents.matchAll(/<Link\s+to=["'](\/[^"']+)["']/g)) {
+      routes.add(match[1]);
+    }
+    for (const match of contents.matchAll(/href:\s*["'](\/[^"']+)["']/g)) {
+      routes.add(match[1]);
+    }
+    for (const match of contents.matchAll(/destination:\s*["'](\/[^"']+)["']/g)) {
+      routes.add(match[1]);
+    }
+  }
+
+  for (const route of routes) {
+    if (route.endsWith(".html")) {
+      await access(path.join(root, route.slice(1)));
+      continue;
+    }
+    assert.ok(registered.has(route), `Portal navigation points to an unregistered route: ${route}`);
+  }
+
+  assert.doesNotMatch(
+    app,
+    /destination:\s*["']\/hub\.html["']/,
+    "Portal Motion must return internally instead of linking to the static-only Hub route"
+  );
+});
+
+test("the Worker protects internal build artifacts and redirects the legacy Portal entry", async () => {
+  const worker = await readFile(path.join(root, "_worker.js"), "utf8");
+
+  assert.match(worker, /url\.pathname === "\/portal\/index\.html"/);
+  assert.match(worker, /new URL\("\/portal\/", request\.url\), 308/);
+  for (const prefix of [
+    "portal-dist",
+    "generated-pages",
+    "page-templates",
+    "echoes/inventory"
+  ]) {
+    assert.match(worker, new RegExp(`url\\.pathname\\.startsWith\\("/${escapePattern(prefix)}/"\\)`));
+  }
 });

@@ -11,6 +11,13 @@ const vaultData = JSON.parse(
   await readFile(resolve(outputDirectory, "data", "threshold-vault.json"), "utf8"),
 );
 
+if ("vaultRoot" in vaultData || "publishRoot" in vaultData) {
+  throw new Error("Public vault data must not contain local filesystem paths");
+}
+if (!staticOnly && (!vaultData.generatedAt || !Array.isArray(vaultData.chambers))) {
+  throw new Error("Generated website vault data is missing required fields");
+}
+
 await copyFile(workerSource, workerOutput);
 
 await Promise.all(

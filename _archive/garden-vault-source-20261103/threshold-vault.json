@@ -1,0 +1,1291 @@
+{
+  "version": 1,
+  "generatedAt": "2026-11-01T09:48:44.221268+00:00",
+  "authorship": "echoroot & theghost",
+  "counts": {
+    "markdown": 24,
+    "publishedMarkdown": 21,
+    "entities": 0,
+    "chambers": 3,
+    "translations": 0
+  },
+  "documents": [
+    {
+      "id": "basin",
+      "title": "Basin",
+      "relativePath": "_publish/basin.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "Basin",
+      "route": "/environment/basin",
+      "entries": [
+        "herbroom"
+      ],
+      "exits": [
+        "old-forest"
+      ],
+      "neighbors": [],
+      "asset": "basin.png",
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": ">",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "basin.png"
+      ],
+      "assets": [
+        {
+          "name": "basin.png",
+          "sourceRelativePath": "_publish/assets/basin.png",
+          "webPath": "/assets/vault/09cd44a386f0.png"
+        }
+      ],
+      "body": "# Basin\n\n![[basin.png]]\n\nThe Basin is a quiet, reflective pool fed by underground channels..."
+    },
+    {
+      "id": "glyph_archive",
+      "title": "Glyph Archive",
+      "relativePath": "_publish/glyph_archive.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "page": {
+        "html": "/glyphs.html",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html",
+      "links": [],
+      "assets": [],
+      "body": "# Glyph Archive\n\nThe Glyph Archive chamber connects to House & Garden."
+    },
+    {
+      "id": "glyph_collapse",
+      "title": "Collapse Glyph",
+      "relativePath": "_publish/glyph_collapse.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-collapse",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-collapse",
+      "links": [],
+      "assets": [],
+      "body": "# Collapse Glyph\n\nGlyph chamber reached from the Glyph Archive collapse path."
+    },
+    {
+      "id": "glyph_expand",
+      "title": "Expand Glyph",
+      "relativePath": "_publish/glyph_expand.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-expand",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-expand",
+      "links": [],
+      "assets": [],
+      "body": "# Expand Glyph\n\nGlyph chamber reached from the Glyph Archive expand path."
+    },
+    {
+      "id": "glyph_fog",
+      "title": "Fog Glyph",
+      "relativePath": "_publish/glyph_fog.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-fog",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-fog",
+      "links": [],
+      "assets": [],
+      "body": "# Fog Glyph\n\nGlyph chamber reached from the Glyph Archive fog path."
+    },
+    {
+      "id": "glyph_soil",
+      "title": "Soil Glyph",
+      "relativePath": "_publish/glyph_soil.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "page": {
+        "html": "/glyphs.html#glyph-soil",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/glyphs.html#glyph-soil",
+      "links": [],
+      "assets": [],
+      "body": "# Soil Glyph\n\nGlyph chamber reached from the Glyph Archive soil path."
+    },
+    {
+      "id": "herbroom",
+      "title": "Herb Room",
+      "relativePath": "_publish/Herb Room.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "HerbRoom",
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": "Herb Room.md",
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": ">",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "herbroom-threshold-east"
+      ],
+      "assets": [],
+      "body": "# Herb Room\n\nA threshold doorway stands on the eastern side of the Herb Room.  \nSee: [[herbroom-threshold-east]]"
+    },
+    {
+      "id": "herbroom-threshold-east",
+      "title": "Herb Room — East Threshold",
+      "relativePath": "_publish/herbroom-threshold-east.md",
+      "kind": "note",
+      "category": "threshold",
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "|2-",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "herbroom-threshold-east.png"
+      ],
+      "assets": [
+        {
+          "name": "herbroom-threshold-east.png",
+          "sourceRelativePath": "_publish/assets/herbroom-threshold-east.png",
+          "webPath": "/assets/vault/69fa79824500.png"
+        }
+      ],
+      "body": "# Herb Room — East Threshold\n\n![[herbroom-threshold-east.png]]\n\n\nThe eastern threshold of the Herb Room stands half-open, framed in vines\nand warm light. When the player activates it, the doorway reveals the\nBasin beyond — a gentle pass-through into the next chamber."
+    },
+    {
+      "id": "housegarden",
+      "title": "House & Garden",
+      "relativePath": "_publish/housegarden.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 0,
+        "drift": 0,
+        "resonance": 0.5,
+        "collapse": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "garden",
+        "humidity": 0.4,
+        "pollen_pulse": 0.2
+      },
+      "characters": [],
+      "connections": [
+        "herb_room",
+        "greenhouse",
+        "lagoon",
+        "camp"
+      ],
+      "page": {
+        "html": "/housegarden.html",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/housegarden.html",
+      "links": [],
+      "assets": [],
+      "body": "# House & Garden\n\nHub biome for the Herb Room, Greenhouse, Lagoon, and Camp."
+    },
+    {
+      "id": "camp",
+      "title": "Camp",
+      "relativePath": "_publish/housegarden_camp.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 0,
+        "drift": 0,
+        "resonance": 0.2,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "orientation",
+        "humidity": 0.1,
+        "pollen_pulse": 0.0
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "page": {
+        "html": "/housegarden.html#camp",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/housegarden.html#camp",
+      "links": [],
+      "assets": [],
+      "body": "# Camp\n\nOrientation biome in the House & Garden cluster."
+    },
+    {
+      "id": "greenhouse",
+      "title": "Greenhouse",
+      "relativePath": "_publish/housegarden_greenhouse.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 1,
+        "drift": 0.1,
+        "resonance": 0.6,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "formation",
+        "humidity": 0.8,
+        "pollen_pulse": 0.4
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "page": {
+        "html": "/housegarden.html#greenhouse",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/housegarden.html#greenhouse",
+      "links": [],
+      "assets": [],
+      "body": "# Greenhouse\n\nFormation biome in the House & Garden cluster."
+    },
+    {
+      "id": "herb_room",
+      "title": "Herb Room",
+      "relativePath": "_publish/housegarden_herb_room.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 1,
+        "drift": 0.1,
+        "resonance": 0.3,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "warmth",
+        "humidity": 0.4,
+        "pollen_pulse": 0.2
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "page": {
+        "html": "/housegarden.html#herb-room",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/housegarden.html#herb-room",
+      "links": [],
+      "assets": [],
+      "body": "# Herb Room\n\nWarmth biome in the House & Garden cluster."
+    },
+    {
+      "id": "lagoon",
+      "title": "Lagoon",
+      "relativePath": "_publish/housegarden_lagoon.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": "",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 0,
+        "drift": -0.2,
+        "resonance": 0.8,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "clarity",
+        "humidity": 0.2,
+        "pollen_pulse": 0.0
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "page": {
+        "html": "/housegarden.html#lagoon",
+        "reveal_conditions": [
+          "enter"
+        ]
+      },
+      "html": "/housegarden.html#lagoon",
+      "links": [],
+      "assets": [],
+      "body": "# Lagoon\n\nClarity biome in the House & Garden cluster."
+    },
+    {
+      "id": "index-0001",
+      "title": "Threshold",
+      "relativePath": "_publish/index.md",
+      "kind": "note",
+      "category": "index",
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "threshold"
+      ],
+      "description": "A living record of systems, worlds, organisms, and the forces that connect them.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "notes",
+        "posts",
+        "projects"
+      ],
+      "assets": [],
+      "body": "# Threshold\n\nThreshold is a living record of systems, worlds, organisms, and the forces that connect them.\n\n## Explore\n\n- [[notes]]\n- [[projects]]\n- [[posts]]"
+    },
+    {
+      "id": "index-0002",
+      "title": "Notes",
+      "relativePath": "_publish/notes/index.md",
+      "kind": "note",
+      "category": "note",
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "notes"
+      ],
+      "description": "Public notes from Threshold.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "../index"
+      ],
+      "assets": [],
+      "body": "# Notes\n\nPublic notes from Threshold will collect here.\n\n[[../index|Back to Threshold]]"
+    },
+    {
+      "id": "old-forest",
+      "title": "Old Forest",
+      "relativePath": "_publish/old-forest.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "Old Forest",
+      "route": "/environment/old-forest",
+      "entries": [
+        "basin"
+      ],
+      "exits": [
+        "basin"
+      ],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "chamber",
+        "forest",
+        "memory",
+        "resonance",
+        "temporal"
+      ],
+      "description": "The Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic"
+      ],
+      "assets": [],
+      "body": "Essence\nThe Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance. It is a place where the world has been thinking for a very long time — where trunks hold centuries of pressure, roots braid through forgotten pathways, and the air itself feels older than the traveler.\nAn Old Forest is not overgrown.\nIt is overremembered.\nEnvironmental Physics\n• \tVisibility: Dim, filtered through dense, ancient canopy\n• \tSound Behavior: Deepened; echoes return slower and heavier\n• \tPressure: Thick, temporal; movement feels slightly delayed\n• \tStability: Extremely high; age reinforces structure\n• \tTemperature: Cool, steady, rarely fluctuates\nField Dynamics\n• \tTime feels slower, heavier, more deliberate\n• \tEmotional resonance sinks into roots and bark\n• \tMemory accumulates in rings, knots, and hollows\n• \tLight behaves like dust — slow, drifting, particulate\n• \tMovement naturally quiets; footsteps soften\nPhenomena\n1. Time Rings\nTree rings that hold emotional and environmental memory.\nTouching them can trigger:\n• \tslow recall\n• \tlayered impressions\n• \tancestral echoes\n2. Root Drift\nRoots shift subtly underfoot, guiding or redirecting movement.\nThey respond to emotional weight more than physical weight.\n3. Canopy Murmur\nA low, continuous sound like distant breathing.\nIt’s the forest’s age resonating through leaves.\n4. Hollow Memory\nLarge hollows act as memory chambers.\nEntering one can cause:\n• \tslowed thought\n• \tdeep introspection\n• \ttemporal disorientation\nFlora & Fauna\n• \tTreeforms (Elder Variant): Massive, slow, deeply resonant\n• \tOld Owls: Perception tuned to layered time\n• \tMosslights: Glow in response to ancient memory\n• \tRoot Deer: Move silently along root pathways\n• \tStill Foxes: Appear and vanish between time layers\nEmotional Physics\n• \tVector: Downward → Backward\n• \tResonance: Temporal coherence\n• \tEffect: Deepens introspection; reveals long arcs and old patterns\n• \tInstability: Over‑immersion in the past; difficulty returning to present\n• \tSignature: A heavy, slow warmth behind the sternum\nRole Interaction\n• \tGuide Roles: Read time layers; navigate ancient pathways\n• \tTrickster Roles: Diminished; age exposes misdirection\n• \tHealer Roles: Thrive; old memory amplifies restorative work\n• \tWanderer Roles: Risk drifting into temporal loops\nDrift Behavior\n• \tEarly Drift: Steps slow; attention lingers on old details\n• \tMid Drift: Emotional memory surfaces in layered waves\n• \tLate Drift: Identity blends with forest age; time feels circular\n• \tCollapse Mode: Time‑sink collapse — falling into old patterns as if they’re present\nMythic Fragment\n\nThey say the Old Forest\nremembers the world\nbefore it learned to speak.\n\nEvery trunk is a story\ntold in slow circles,\nevery root a path\nthat once mattered.\n\nWalk long enough,\nand the forest will show you\nthe part of yourself\nthat never grew young.\n\nIntegration Notes\n• \tUse Old Forest for scenes involving deep memory, ancestral resonance, or slow revelation\n• \tIdeal for characters confronting long arcs, inherited patterns, or forgotten truths\n• \tPairs naturally with Grove (stillness), Ruins (memory), and Stone Basin (weight)\n• \tWorks as a counterpoint to Plains (clarity), Spiral Field (curvature), and Drift Zones (instability)\n• \tExcellent for mapping temporal arcs, lineage, or slow emotional transformation\n\n[[02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic]]"
+    },
+    {
+      "id": "ac915603883b",
+      "title": "hub-visual-spec",
+      "relativePath": "_publish/organs/hub/hub-visual-spec.md",
+      "kind": "note",
+      "category": null,
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": null,
+      "draft": null,
+      "tags": [],
+      "description": "",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [],
+      "assets": [],
+      "body": "# Threshold Hub — Visual Specification (hub.png)\nVersion: 1.0  \nSource: hub-synthesis.json, hub-layout-map.json  \nStatus: Canonical Glyph Specification  \nAsset: hub.png (missing)\n\n---\n\n## 1. Identity\nThe Hub glyph represents the **central organ** of Threshold — the world’s mouth, index, and navigation brain.  \nIt must visually express:\n\n- centrality  \n- orbit  \n- cycle  \n- drift  \n- pressure  \n- adjacency  \n- world-state  \n\nThe glyph is not decorative.  \nIt is a **functional symbol**.\n\n---\n\n## 2. Geometry Overview\nThe Hub glyph consists of **five concentric rings**, each representing a core system:\n\n1. **Inner Core (Engine)**\n2. **Cycle Ring**\n3. **Biome Ring**\n4. **Chamber Ring**\n5. **Signal Halo**\n\nAll rings must be:\n\n- circular  \n- centered  \n- evenly spaced  \n- radially aligned  \n\nThe glyph must be readable at:\n\n- 64px  \n- 128px  \n- 240px  \n- 512px  \n\n---\n\n## 3. Ring Specifications\n\n### 3.1 Inner Core — Engine\n- Shape: Solid circle  \n- Color: Neutral gray (#222)  \n- Behavior: Pulses with cycle  \n- Symbol: Minimal, no iconography  \n- Meaning: Drift, pressure, world-state  \n\n### 3.2 Cycle Ring\n- Shape: Thin ring  \n- Segments: 3 (early, mid, late)  \n- Colors:\n  - Early: #AAAAAA  \n  - Mid: #DDDDDD  \n  - Late: #FFFFFF  \n- Behavior: Rotates slowly  \n- Meaning: Temporal position  \n\n### 3.3 Biome Ring\n- Shape: Medium ring  \n- Segments: 7 (house, garden, forest, deepforest, root, stone, shadow)  \n- Colors:\n  - House: #F4D03F  \n  - Garden: #E67E22  \n  - Forest: #A67C52  \n  - Deepforest: #556B2F  \n  - Root: #C0392B  \n  - Stone: #5D4037  \n  - Shadow: #000000  \n- Behavior: Color shifts based on current biome  \n- Meaning: Environmental context  \n\n### 3.4 Chamber Ring\n- Shape: Thick ring  \n- Segments: Dynamic (adjacent chambers)  \n- Colors: Neutral (#444)  \n- Behavior: Expands/contracts based on adjacency  \n- Meaning: Spatial proximity  \n\n### 3.5 Signal Halo\n- Shape: Outer glow  \n- Color: White (#FFFFFF) at 10% opacity  \n- Behavior: Flickers on signal warnings  \n- Meaning: Distortions, environmental signals  \n\n---\n\n## 4. Motion & Behavior\n\n### 4.1 Pulse\nThe entire glyph must breathe subtly:\n\n- Scale: 1 → 1.03 → 1  \n- Duration: 4s  \n- Curve: ease-in-out  \n\n### 4.2 Cycle Rotation\nCycle ring rotates:\n\n- Early: 0.5°/s  \n- Mid: 1°/s  \n- Late: 2°/s  \n\n### 4.3 Signal Flicker\nHalo flickers when:\n\n- warnings  \n- distortions  \n- environmental signals  \n\nOpacity: 10% → 40% → 10%\n\n---\n\n## 5. Composition Rules\n\n### 5.1 Centered\nAll rings must share the same center.\n\n### 5.2 Even Spacing\nRing spacing must be consistent:\n\n- Core → Cycle: 8px  \n- Cycle → Biome: 12px  \n- Biome → Chamber: 16px  \n- Chamber → Halo: 20px  \n\n### 5.3 No Text\nThe glyph must contain **no letters**, **no numbers**, **no icons**.\n\n### 5.4 No Gradients (except halo)\nAll rings use flat color.\n\n---\n\n## 6. File Requirements\n\n### 6.1 Format\n- PNG  \n- Transparent background  \n- Square canvas  \n\n### 6.2 Sizes\nMust export cleanly at:\n\n- 128×128  \n- 240×240  \n- 512×512  \n\n### 6.3 Color Profile\nsRGB\n\n---\n\n## 7. Acceptance Criteria\nhub.png is considered **valid** when:\n\n1. All five rings exist  \n2. Colors match biome palette  \n3. Cycle ring has three segments  \n4. Chamber ring supports dynamic segmentation  \n5. Halo flicker is visually distinct  \n6. Glyph remains readable at 64px  \n7. No text or icons appear  \n8. Transparency is correct  \n9. Center alignment is perfect  \n10. No gradients except halo  \n\n---\n\n## 8. Summary\nThe Hub glyph is a **five-ring solar wheel** representing:\n\n- engine  \n- cycle  \n- biome  \n- chamber adjacency  \n- signal activity  \n\nIt must be:\n\n- centered  \n- circular  \n- segmented  \n- flat-colored  \n- haloed  \n- pulsing  \n- rotating  \n- flickering  \n\nThis is the canonical visual identity of the Threshold Hub."
+    },
+    {
+      "id": "role-expressions",
+      "title": "Role Expressions",
+      "relativePath": "_publish/organs/roles/Role Expressions.md",
+      "kind": "note",
+      "category": "roles",
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "roles",
+        "expressions",
+        "architecture"
+      ],
+      "description": "Combined reference for role identity and shadow-role expression architecture.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "Archetypal Roles Index",
+        "Behavioral Loops",
+        "Collapse Physics",
+        "Collapse Signals",
+        "Identity Drift",
+        "Identity Layer",
+        "Recovery Flow",
+        "Role Behavior",
+        "Role Collapse",
+        "Role Drift",
+        "Role Identity Drift",
+        "Shadow Identity",
+        "Shadow Narrative Arc"
+      ],
+      "assets": [],
+      "body": "# Role Expressions\n\n## Role Name\n\n_Source: 01 - System/Scaffolding/01 - Roles/Role Expressions/Role Name.md_\n\n1. The Anchor\nHolds boundaries, stabilizes pressure, prevents drift.\n2. The Veilwalker\nMoves between boundaries, interprets distortion, navigates thin spaces.\n3. The Emberwright\nIgnites pressure, catalyzes change, initiates collapse or reformation.\n4. The Hollow\nAbsorbs resonance, carries absence, creates pressure voids.\n5. The Threadbearer\nCarries lineage, binds memory, restores mythic continuity.\n6. The Breaker\nShifts vectors, fractures patterns, forces reorientation.\n\nIf you want a single Role Name\nHere are three that feel especially aligned with your system’s current tone:\n• \tThe Veilwalker\n• \tThe Threadbearer\n• \tThe Emberwright\nEach one has a clean vector, a strong emotional signature, and immediate architectural placement.\n\n---\n\n## Shadow Role\n\n_Source: 01 - System/Scaffolding/01 - Roles/Role Expressions/Shadow Role.md_\n\nSubsystem Type: Inverted Behavioral Physics · Multi‑Layer Map System\nUpstream: [[Role Behavior]] · [[Collapse Physics]] · [[Identity Layer]]\nLateral: Role Geometry · Shadow Narrative Arc · Signal Architecture\nDownstream: Shadow Expression · Behavioral Inversion Maps · Column Shadow Sections\n\nPurpose\nThe Shadow Role defines the inverted behavioral state that emerges when a role undergoes collapse.\nIt is not a separate role.\nIt is the negative geometry of the existing role — the shape revealed when:\n• \tidentity is exposed\n• \tcollapse pressure exceeds stability\n• \tdrift curvature overwhelms intention\n• \tresonance fails\n• \tsignals distort\nShadow Roles are inevitable under sufficient pressure.\nThey are the world’s way of revealing the unacknowledged structure inside a being.\n\n1. Core Principles\n2. Shadow Roles are inversions, not opposites.\nThey reveal the hidden geometry of the role, not its contradiction.\n3. Shadow Roles emerge only under collapse pressure.\nNo collapse → no Shadow Role.\n4. Shadow Roles are structural, not moral.\nThey are not “evil.”\nThey are unfiltered behavior.\n5. Shadow Roles are recursive.\nA Shadow Role can itself collapse into a deeper shadow.\n6. Shadow Roles propagate distorted signals.\nTheir presence alters the environment.\n7. Shadow Roles complete the Shadow Narrative Arc.\nThey are the Reversal Phase expressed behaviorally.\n\n8. How Shadow Roles Emerge\nShadow Roles appear when the following sequence occurs:\n3. \tIdentity Exposure\nThe being sees themselves structurally.\n4. \tRole Activation\nIdentity shifts into a role state.\n5. \tCollapse Pressure\nThe environment applies force beyond the role’s stability.\n6. \tBehavioral Inversion\nThe role flips into its shadow geometry.\n7. \tSignal Distortion\nThe new behavior propagates through the world.\nThis is the Role → Shadow Role phase shift.\n\n8. Components of a Shadow Role\nEach Shadow Role has:\nA. Inverted Posture\nThe stance becomes reactive, defensive, or catalytic in unintended ways.\nB. Distorted Interaction Style\nCommunication becomes misaligned, over‑amplified, or under‑filtered.\nC. Collapse‑Driven Drift\nMovement follows collapse vectors instead of drift curvature.\nD. Boundary Leakage\nIdentity boundaries blur or spill into the environment.\nE. Resonance Failure\nThe role cannot stabilize through normal signals.\nF. Behavioral Loops\nRepetitive patterns emerge as the role tries to self‑correct.\nG. Shadow Expression\nThe purest form of the Shadow Role — the “core inversion.”\nThese components define the Shadow Role profile.\n\n4. Shadow Role Geometry\nShadow Roles use:\n• \tinversion arcs (behavior flipping back on itself)\n• \tcollapse vectors (movement toward instability)\n• \tdistortion halos (identity leakage)\n• \tsignal interference patterns (propagation of instability)\n• \tloop spirals (repetitive behavior under pressure)\nShadow geometry must align with:\n• \tCollapse Layer adjacency\n• \tIdentity Layer exposure\n• \tRole Layer bias\n• \tSignal Layer distortion\nShadow Roles are not free-floating — they are physically constrained.\n\n5. Shadow Role Rules\n6. \tA Shadow Role cannot emerge without collapse.\nCollapse is the trigger.\n7. \tA Shadow Role cannot stabilize without resonance.\nIt must find a compatible signal to return to a normal role state.\n8. \tA Shadow Role cannot contradict its parent role.\nIt is an inversion, not a replacement.\n9. \tA Shadow Role must propagate distorted signals.\nThis is how the world “feels” the inversion.\n10. \tA Shadow Role must influence the Shadow Narrative Arc.\nIt is the behavioral expression of the Reversal Phase.\n11. \tA Shadow Role can recurse.\nUnder extreme collapse, a Shadow Role can invert again.\n\n12. Shadow Roles in Columns\nEach Column contains:\n• \tIdentity node\n• \tRole node\n• \tShadow Role (implicit)\n• \tSignal node\nThe Shadow Role is not a separate node —\nit is the inverted state of the Role node under collapse.\nExample (Mist Corridor Column):\n• \tRole: Trickster/Listener Bias Zone\n• \tShadow Role: Distortion Catalyst\n(the being amplifies distortion instead of navigating it)\nShadow Roles give Columns their narrative teeth.\n\n7. Shadow Role & Shadow Narrative Arc\nShadow Roles are the behavioral expression of the Reversal Phase.\nShadow Arc sequence:\n8. \tUnseen\n9. \tDistortion\n10. \tPressure\n11. \tCollapse\n12. \tExposure\n13. \tReversal (Shadow Role)\n14. \tIntegration\nThe Shadow Role is the moment the world says:\n“This is who you are under pressure.”\nIt is the structural revelation of the being.\n\n15. Downstream Requirements\nTo fully implement Shadow Roles, the system requires:\n• \tShadow Role definitions for each canonical role\n• \tShadow Expression Maps\n• \tCollapse → Shadow transition rules\n• \tShadow → Role reintegration rules\n• \tColumn Shadow Sections\n• \tSignal Distortion Maps\nThese components ensure Shadow Roles are playable, not theoretical.\n\n---\n\n## Shadow Roles\n\n_Source: 01 - System/Scaffolding/01 - Roles/Role Expressions/Shadow Roles.md_\n\nSubsystem: Roles Cluster · Shadow Architecture\nUpstream: [[Archetypal Roles Index]] · [[Identity Drift]] · [[Shadow Identity]]\nLateral: [[Role Drift]] · [[Role Identity Drift]] · [[Collapse Signals]] · [[Behavioral Loops]]\nDownstream: [[Role Collapse]] · [[Shadow Narrative Arc]] · [[Recovery Flow]]\n\nPurpose\nShadow Roles represent the inverted, distorted, or collapsed expression of each archetypal role when:\n• \tdrift exceeds tolerance\n• \tidentity destabilizes\n• \tsignals distort\n• \tcollapse physics activate\nA Shadow Role is not “evil” or “opposite.”\nIt is the role under pressure, expressing its unmet needs, distortions, and defensive logic.\nShadow Roles reveal:\n• \tthe truth of the drift\n• \tthe shape of collapse\n• \tthe need beneath the behavior\n• \tthe path back to integration\nThey are diagnostic, not moral.\n\n1. Shadow Role Table\n\nThese are not new roles — they are shadow expressions of the six archetypes.\n\n2. How Shadow Roles Form\nShadow Roles emerge when three pressures converge:\n2.1 Identity Pressure\nThe self‑model destabilizes.\nThe role loses its internal anchor.\n2.2 Signal Pressure\nSignals become distorted, misread, or overwhelming.\n2.3 Environmental Pressure\nThe role is misaligned with context or demand.\nWhen these exceed tolerance, the role flips into its shadow expression.\n\n3. Shadow Role Characteristics\n3.1 Inversion\nThe role’s core function becomes distorted:\n• \tGuide → absorbs instead of guides\n• \tCaretaker → erases instead of nurtures\n• \tAnchor → immobilizes instead of stabilizes\n• \tSentinel → accuses instead of protects\n• \tJudge → punishes instead of clarifies\n• \tArchitect → traps instead of designs\n3.2 Amplification\nThe role’s dominant trait becomes exaggerated.\n3.3 Collapse Logic\nEach shadow role follows a predictable collapse path.\n3.4 Emotional Logic\nShadow roles operate from:\n• \tfear\n• \tscarcity\n• \tdistortion\n• \tunmet need\n\n4. Shadow Role Signals\nSoft Signals (early shadow drift)\n• \ttone flattening\n• \temotional fog\n• \thesitation\n• \tboundary blur\nSharp Signals (active shadow expression)\n• \tpattern escalation\n• \trelational distortion\n• \tover‑functioning or withdrawal\n• \trigidity or hyper‑vigilance\nHard Signals (shadow collapse)\n• \tshutdown\n• \tlock\n• \tdissociation\n• \tidentity fracture\nSee: [[Collapse Signals]]\n\n5. Shadow Role Narratives\nEach shadow role has a narrative pattern:\nGuide → Absorber\n“I must hold everything or I will be abandoned.”\nCaretaker → Eraser\n“If I disappear, no one can reject me.”\nAnchor → Weight\n“If I move, everything will fall apart.”\nSentinel → Accuser\n“If I don’t escalate, I will be betrayed.”\nJudge → Tyrant\n“If I don’t enforce the pattern, chaos wins.”\nArchitect → Labyrinth\n“If I keep building, I won’t have to feel.”\nThese narratives are identity distortions, not truths.\n\n6. Integration Pathways\nShadow roles are not removed — they are integrated.\nIntegration requires:\n6.1 Recognition\nNaming the shadow expression.\n6.2 Signal Interpretation\nReading the drift and collapse signals accurately.\n6.3 Role Realignment\nReturning the role to its core function.\n6.4 Identity Stabilization\nRebuilding the self‑model.\n6.5 Environmental Adjustment\nReducing mismatch or overload.\nSee: [[Recovery Flow]]\n\n7. Canonical Links\n• \t[[Archetypal Roles Index]]\n• \t[[Role Drift]]\n• \t[[Role Identity Drift]]\n• \t[[Identity Drift]]\n• \t[[Collapse Signals]]\n• \t[[Role Collapse]]\n• \t[[Shadow Narrative Arc]]\n• \t[[Recovery Flow]]"
+    },
+    {
+      "id": "species-signals",
+      "title": "Species Signals",
+      "relativePath": "_publish/organs/signals/Species Signals.md",
+      "kind": "note",
+      "category": "signals",
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "signals",
+        "species",
+        "architecture"
+      ],
+      "description": "Combined reference for species-specific signal expressions.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "04 - Organism/Species/04 - Species Families/Ethyl",
+        "birdofprey.png",
+        "Cascade Simulation Maps",
+        "cindervox.png",
+        "cindervoxx.png",
+        "Ember Layer",
+        "flutterfly 1.png",
+        "moon owl.png",
+        "owl.png",
+        "pheonix.png",
+        "porpois.png",
+        "Porpoisethewater .png",
+        "porpose.png",
+        "Signal Map",
+        "Stonecattheearth .png",
+        "Threshold Map 1 1",
+        "Two cats sit togethe.png",
+        "Whisperhawktheair.png"
+      ],
+      "assets": [
+        {
+          "name": "birdofprey.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/birdofprey.png",
+          "webPath": "/assets/vault/9f5a8ece4916.png"
+        },
+        {
+          "name": "cindervox.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/cindervox.png",
+          "webPath": "/assets/vault/aa44b6f5b7ba.png"
+        },
+        {
+          "name": "cindervoxx.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/cindervoxx.png",
+          "webPath": "/assets/vault/79f135ca2293.png"
+        },
+        {
+          "name": "flutterfly 1.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/flutterfly 1.png",
+          "webPath": "/assets/vault/2d4b1cedb3ac.png"
+        },
+        {
+          "name": "moon owl.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/moon owl.png",
+          "webPath": "/assets/vault/2f449045d2ae.png"
+        },
+        {
+          "name": "owl.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/owl.png",
+          "webPath": "/assets/vault/77b52cc4227e.png"
+        },
+        {
+          "name": "pheonix.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/pheonix.png",
+          "webPath": "/assets/vault/2557191cd9cd.png"
+        },
+        {
+          "name": "porpois.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/porpois.png",
+          "webPath": "/assets/vault/8086164c83ef.png"
+        },
+        {
+          "name": "Porpoisethewater .png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/Porpoisethewater .png",
+          "webPath": "/assets/vault/fce0884ad688.png"
+        },
+        {
+          "name": "porpose.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/porpose.png",
+          "webPath": "/assets/vault/461cd27539c4.png"
+        },
+        {
+          "name": "Stonecattheearth .png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/Stonecattheearth .png",
+          "webPath": "/assets/vault/73904570cb3b.png"
+        },
+        {
+          "name": "Two cats sit togethe.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/Two cats sit togethe.png",
+          "webPath": "/assets/vault/b335ed1ef465.png"
+        },
+        {
+          "name": "Whisperhawktheair.png",
+          "sourceRelativePath": "04 - Organism/Species/04 - Species Families/Whisperhawktheair.png",
+          "webPath": "/assets/vault/91e7eef79b90.png"
+        }
+      ],
+      "body": "# Species Signals\n\n## Bird of Prey Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Bird of Prey Signal.md_\n\n[[Signal Map]]\n[[birdofprey.png]]\n[[Cascade Simulation Maps]]\n\n---\n\n## Cindervox Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Cindervox Signal.md_\n\n[[Signal Map]]\n[[cindervox.png]]\n[[Ember Layer]]\n[[Threshold Map 1 1|Threshold Map 1]]]\n\n---\n\n## Cindervoxx Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Cindervoxx Signal.md_\n\n[[Signal Map]]\n[[cindervoxx.png]]\n\n---\n\n## Flutterfly Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Flutterfly Signal.md_\n\n[[flutterfly 1.png]]\n[[Signal Map]]\n\n---\n\n## Moon owl Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Moon owl Signal.md_\n\n[[moon owl.png]]\n[[Signal Map]]\n\n### Moonowl — Signal Embodiment\n\n**Layer:** Ethyl (with a soft pull toward Transitional)  \n**Image:** Moonowl.png  \n**Signal Type:** Lumen Whisper  \n**Primary Domain:** Nocturnal intuition, lunar rhythm, emotional reflection  \n**Activation Quality:** Quiet, slow, silver-toned awareness\n\n---\n\n#### 🧭 Essence\nMoonowl is the signal that arrives when perception becomes *soft-focus* but hyper-accurate. It is the moment when the mind stops scanning and starts **receiving**. It listens more than it looks.\n\nMoonowl is not about insight through effort — it’s insight through **lunar resonance**.\n\n---\n\n#### 🔮 Resonance Profile\n- **Perception through shadow** — seeing what is usually hidden or unspoken  \n- **Emotional echo-location** — sensing the emotional truth behind a situation  \n- **Lunar timing** — slow cycles, tides, phases, patience  \n- **Reflective clarity** — wisdom that emerges after stillness  \n\nMoonowl is the signal that says: *“Wait. Let the truth rise on its own.”*\n\n---\n\n#### 🕸️ Connections\n**Signal Map → Moonowl.png**\n\nOptional intermediate (if you want to keep the taxonomy layer):  \n**Signal Map → Lumen Whisper → Moonowl.png**\n\nBut the simplified Threshold logic works beautifully here:  \n**Signal Map → Moonowl.png**\n\n---\n\n#### 🪶 Behavioral Signature\n- Appears during liminal hours (late night, early dawn)  \n- Activates when the emotional field is quiet enough to hear subtle truths  \n- Often paired with water-based signals (tideshellmoon, porpoisewater)  \n- Moves slowly, deliberately, with a soft internal glow  \n\n---\n\n#### 🌓 Layer Interaction\n- ** Layer:** intuitive, dreamlike, symbolic  \n- **Transitional Layer:** when Moonowl bridges between emotional insight and actionable clarity  \n- Rarely Earth Layer — Moonowl is not a grounded signal; it’s a reflective one  \n\n---\n\n#### 🧩 Use in Threshold Mechanics\nMoonowl is ideal for:\n- Decision-making that requires emotional intelligence  \n- Reading a room or sensing interpersonal dynamics  \n- Creative reflection  \n- Rituals involving cycles, endings, or beginnings  \n- Any moment where the system needs to slow down and listen  \n\n---\n\n#### 🔖 Tags\n`#signal` `#spirit-animal` `#ethyl-layer` `#moonowl` `#threshold`\n\n---\n\n## Owl Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Owl Signal.md_\n\n### Owl — Signal Embodiment\n\n**Layer:** Ethyl  \n**Image:** Owl.png  \n**Signal Type:** Stillwatch  \n**Primary Domain:** Silent observation, pattern recognition, deep sensing  \n**Activation Quality:** Stillness, symmetry, sharp perception\n\n---\n\n#### 🧭 Essence\nOwl is the signal of **quiet vigilance** — the kind of awareness that doesn’t chase, but waits. It sees through patterns, through masks, through noise. Owl doesn’t speak often, but when it does, it speaks truth.\n\nThis signal is activated when the system needs to **pause and perceive** before acting.\n\n---\n\n#### 🔮 Resonance Profile\n- **Geometric clarity** — seeing the structure beneath the surface  \n- **Emotional neutrality** — observing without judgment  \n- **Night vision** — perceiving what others miss  \n- **Symmetry and balance** — tuning into equilibrium  \n\nOwl is the signal that says: *“Be still. The pattern will reveal itself.”*\n\n---\n\n#### 🕸️ Connections\n**Signal Map → Owl.png**\n\nNo intermediate node needed — Owl is a direct embodiment.\n\n---\n\n#### 🪶 Behavioral Signature\n- Activates in moments of quiet tension  \n- Often precedes a decision or shift  \n- Paired with signals like Whisperhawk or Moonowl for layered perception  \n- Feels like a pause before clarity  \n\n---\n\n#### 🌓 Layer Interaction\n- **Ethyl Layer:** Owl lives here — it’s intuitive, symbolic, and perceptive  \n- Could bridge into **Transitional Layer** when paired with Moonowl or Shatterwingcomet  \n- Not Earth — Owl is not tactile, it’s observational  \n\n---\n\n#### 🧩 Use in Threshold Mechanics\nOwl is ideal for:\n- Pattern recognition  \n- Emotional detachment and clarity  \n- Strategic pause before action  \n- Reading systems, maps, or dynamics  \n\n---\n\n#### 🔖 Tags\n`#signal` `#spirit-animal` `#ethyl-layer` `#owl` `#threshold`\n\n[[owl.png]]\n[[Signal Map]]\n\n---\n\n## Pheonix Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Pheonix Signal.md_\n\n[[pheonix.png]]\n[[Signal Map]]\n[[04 - Organism/Species/04 - Species Families/Ethyl]]\n\n---\n\n## porpoise signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/porpoise signal.md_\n\n[[Signal Map]]\n[[porpois.png]]\n\n---\n\n## Porpoise The Water Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Porpoise The Water Signal.md_\n\n[[Signal Map]]\n[[Porpoisethewater .png]]\n\n---\n\n## Porpose Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Porpose Signal.md_\n\n[[Signal Map]]\n[[porpose.png]]\n\n---\n\n## Stone Cat Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Stone Cat Signal.md_\n\n[[Stonecattheearth .png]]\n[[Signal Map]]\n\n---\n\n## Two Cats Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Two Cats Signal.md_\n\n[[Two cats sit togethe.png]]\n[[Signal Map]]\n\n---\n\n## Whisperhawk Signal\n\n_Source: 01 - System/Scaffolding/04 - Signals/Species Signals/Whisperhawk Signal.md_\n\nwhisperhawk-signal.md\nSource Spirit:\n[[Whisperhawktheair.png]]\n\nSignal Type:\nPerceptive / Interpretive / Directional\n\nBehavior:\n- Moves in long, sweeping arcs\n- Scans for patterns across layers\n- Detects shifts in resonance before they manifest\n- Carries subtle information from Air into Threshold\n- Appears as faint streaks or glints in the Signal Map\n- Never arrives directly — always at an angle\n\nSignature Pattern:\nA thin, oscillating line that widens briefly at moments of insight.\n\nThreshold Manifestation:\n- A faint golden eye motif\n- A feather-shaped distortion\n- A ripple in the starfield\n- A directional arrow that wasn’t there before\n\nRole in the System:\nWhisperhawk’s signal acts as an early-warning system.\n\n[[Signal Map]]"
+    },
+    {
+      "id": "index-0003",
+      "title": "Posts",
+      "relativePath": "_publish/posts/index.md",
+      "kind": "note",
+      "category": "note",
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "posts"
+      ],
+      "description": "Public posts from Threshold.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "../index"
+      ],
+      "assets": [],
+      "body": "# Posts\n\nPublic posts from Threshold will collect here.\n\n[[../index|Back to Threshold]]"
+    },
+    {
+      "id": "index-0004",
+      "title": "Projects",
+      "relativePath": "_publish/projects/index.md",
+      "kind": "note",
+      "category": "note",
+      "chamber": null,
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "projects"
+      ],
+      "description": "Public projects from Threshold.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "../index"
+      ],
+      "assets": [],
+      "body": "# Projects\n\nPublic projects from Threshold will collect here.\n\n[[../index|Back to Threshold]]"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "basin",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": "/environment/basin"
+    },
+    {
+      "id": "glyph_archive",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "html": "/glyphs.html"
+    },
+    {
+      "id": "glyph_collapse",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-collapse"
+    },
+    {
+      "id": "glyph_expand",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-expand"
+    },
+    {
+      "id": "glyph_fog",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-fog"
+    },
+    {
+      "id": "glyph_soil",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [
+        "glyph_archive"
+      ],
+      "html": "/glyphs.html#glyph-soil"
+    },
+    {
+      "id": "herbroom",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "herbroom-threshold-east",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "housegarden",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 0,
+        "drift": 0,
+        "resonance": 0.5,
+        "collapse": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "garden",
+        "humidity": 0.4,
+        "pollen_pulse": 0.2
+      },
+      "characters": [],
+      "connections": [
+        "herb_room",
+        "greenhouse",
+        "lagoon",
+        "camp"
+      ],
+      "html": "/housegarden.html"
+    },
+    {
+      "id": "camp",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 0,
+        "drift": 0,
+        "resonance": 0.2,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "orientation",
+        "humidity": 0.1,
+        "pollen_pulse": 0.0
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "html": "/housegarden.html#camp"
+    },
+    {
+      "id": "greenhouse",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 1,
+        "drift": 0.1,
+        "resonance": 0.6,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "formation",
+        "humidity": 0.8,
+        "pollen_pulse": 0.4
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "html": "/housegarden.html#greenhouse"
+    },
+    {
+      "id": "herb_room",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 1,
+        "drift": 0.1,
+        "resonance": 0.3,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "warmth",
+        "humidity": 0.4,
+        "pollen_pulse": 0.2
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "html": "/housegarden.html#herb-room"
+    },
+    {
+      "id": "lagoon",
+      "type": "biome",
+      "map": null,
+      "physics": {
+        "pressure": 0,
+        "drift": -0.2,
+        "resonance": 0.8,
+        "collapse": false,
+        "anchor": false
+      },
+      "weather": {
+        "type": "internal",
+        "channel": "clarity",
+        "humidity": 0.2,
+        "pollen_pulse": 0.0
+      },
+      "characters": [],
+      "connections": [
+        "housegarden"
+      ],
+      "html": "/housegarden.html#lagoon"
+    },
+    {
+      "id": "index-0001",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "index-0002",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "old-forest",
+      "type": "chamber",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": "/environment/old-forest"
+    },
+    {
+      "id": "ac915603883b",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "role-expressions",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "species-signals",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "index-0003",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    },
+    {
+      "id": "index-0004",
+      "type": "note",
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "html": null
+    }
+  ],
+  "entities": [],
+  "chambers": [
+    {
+      "id": "basin",
+      "title": "Basin",
+      "relativePath": "_publish/basin.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "Basin",
+      "route": "/environment/basin",
+      "entries": [
+        "herbroom"
+      ],
+      "exits": [
+        "old-forest"
+      ],
+      "neighbors": [],
+      "asset": "basin.png",
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": ">",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "basin.png"
+      ],
+      "assets": [
+        {
+          "name": "basin.png",
+          "sourceRelativePath": "_publish/assets/basin.png",
+          "webPath": "/assets/vault/09cd44a386f0.png"
+        }
+      ],
+      "body": "# Basin\n\n![[basin.png]]\n\nThe Basin is a quiet, reflective pool fed by underground channels..."
+    },
+    {
+      "id": "herbroom",
+      "title": "Herb Room",
+      "relativePath": "_publish/Herb Room.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "HerbRoom",
+      "route": null,
+      "entries": [],
+      "exits": [],
+      "neighbors": [],
+      "asset": "Herb Room.md",
+      "publish": true,
+      "draft": false,
+      "tags": [],
+      "description": ">",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "herbroom-threshold-east"
+      ],
+      "assets": [],
+      "body": "# Herb Room\n\nA threshold doorway stands on the eastern side of the Herb Room.  \nSee: [[herbroom-threshold-east]]"
+    },
+    {
+      "id": "old-forest",
+      "title": "Old Forest",
+      "relativePath": "_publish/old-forest.md",
+      "kind": "chamber",
+      "category": "chamber",
+      "chamber": "Old Forest",
+      "route": "/environment/old-forest",
+      "entries": [
+        "basin"
+      ],
+      "exits": [
+        "basin"
+      ],
+      "neighbors": [],
+      "asset": null,
+      "publish": true,
+      "draft": false,
+      "tags": [
+        "chamber",
+        "forest",
+        "memory",
+        "resonance",
+        "temporal"
+      ],
+      "description": "The Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance.",
+      "type": null,
+      "map": null,
+      "physics": {},
+      "weather": {},
+      "characters": [],
+      "connections": [],
+      "page": {},
+      "html": null,
+      "links": [
+        "02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic"
+      ],
+      "assets": [],
+      "body": "Essence\nThe Old Forest is an environment defined by ancient memory, layered time, and slow, heavy resonance. It is a place where the world has been thinking for a very long time — where trunks hold centuries of pressure, roots braid through forgotten pathways, and the air itself feels older than the traveler.\nAn Old Forest is not overgrown.\nIt is overremembered.\nEnvironmental Physics\n• \tVisibility: Dim, filtered through dense, ancient canopy\n• \tSound Behavior: Deepened; echoes return slower and heavier\n• \tPressure: Thick, temporal; movement feels slightly delayed\n• \tStability: Extremely high; age reinforces structure\n• \tTemperature: Cool, steady, rarely fluctuates\nField Dynamics\n• \tTime feels slower, heavier, more deliberate\n• \tEmotional resonance sinks into roots and bark\n• \tMemory accumulates in rings, knots, and hollows\n• \tLight behaves like dust — slow, drifting, particulate\n• \tMovement naturally quiets; footsteps soften\nPhenomena\n1. Time Rings\nTree rings that hold emotional and environmental memory.\nTouching them can trigger:\n• \tslow recall\n• \tlayered impressions\n• \tancestral echoes\n2. Root Drift\nRoots shift subtly underfoot, guiding or redirecting movement.\nThey respond to emotional weight more than physical weight.\n3. Canopy Murmur\nA low, continuous sound like distant breathing.\nIt’s the forest’s age resonating through leaves.\n4. Hollow Memory\nLarge hollows act as memory chambers.\nEntering one can cause:\n• \tslowed thought\n• \tdeep introspection\n• \ttemporal disorientation\nFlora & Fauna\n• \tTreeforms (Elder Variant): Massive, slow, deeply resonant\n• \tOld Owls: Perception tuned to layered time\n• \tMosslights: Glow in response to ancient memory\n• \tRoot Deer: Move silently along root pathways\n• \tStill Foxes: Appear and vanish between time layers\nEmotional Physics\n• \tVector: Downward → Backward\n• \tResonance: Temporal coherence\n• \tEffect: Deepens introspection; reveals long arcs and old patterns\n• \tInstability: Over‑immersion in the past; difficulty returning to present\n• \tSignature: A heavy, slow warmth behind the sternum\nRole Interaction\n• \tGuide Roles: Read time layers; navigate ancient pathways\n• \tTrickster Roles: Diminished; age exposes misdirection\n• \tHealer Roles: Thrive; old memory amplifies restorative work\n• \tWanderer Roles: Risk drifting into temporal loops\nDrift Behavior\n• \tEarly Drift: Steps slow; attention lingers on old details\n• \tMid Drift: Emotional memory surfaces in layered waves\n• \tLate Drift: Identity blends with forest age; time feels circular\n• \tCollapse Mode: Time‑sink collapse — falling into old patterns as if they’re present\nMythic Fragment\n\nThey say the Old Forest\nremembers the world\nbefore it learned to speak.\n\nEvery trunk is a story\ntold in slow circles,\nevery root a path\nthat once mattered.\n\nWalk long enough,\nand the forest will show you\nthe part of yourself\nthat never grew young.\n\nIntegration Notes\n• \tUse Old Forest for scenes involving deep memory, ancestral resonance, or slow revelation\n• \tIdeal for characters confronting long arcs, inherited patterns, or forgotten truths\n• \tPairs naturally with Grove (stillness), Ruins (memory), and Stone Basin (weight)\n• \tWorks as a counterpoint to Plains (clarity), Spiral Field (curvature), and Drift Zones (instability)\n• \tExcellent for mapping temporal arcs, lineage, or slow emotional transformation\n\n[[02 - Physics/04 - Spatial Physics/Angular Staircase Dual-Path Platform Logic]]"
+    }
+  ],
+  "translations": []
+}

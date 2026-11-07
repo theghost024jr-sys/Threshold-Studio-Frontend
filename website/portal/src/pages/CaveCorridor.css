@@ -1,0 +1,149 @@
+.cave-page {
+  position: relative;
+  min-height: 100vh;
+  background: #050507;
+  color: #e9e6f2;
+  overflow: hidden;
+}
+
+.cave-stage {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  touch-action: none;
+  outline: none;
+  cursor: crosshair;
+}
+
+.cave-stage:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(190, 210, 255, 0.45);
+}
+
+.cave-walls,
+.cave-opening,
+.cave-crystals,
+.cave-fractures,
+.cave-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cave-walls {
+  background:
+    radial-gradient(ellipse 38% 70% at 50% 50%, #0b0b10 0%, transparent 100%),
+    linear-gradient(90deg, #17161b 0%, #0a0a0d 30%, #0a0a0d 70%, #17161b 100%);
+  transform: translate(calc(var(--lx) * -6px), calc(var(--ly) * -4px));
+}
+
+.cave-opening {
+  left: 50%;
+  top: 50%;
+  width: 16vmin;
+  height: 24vmin;
+  inset: auto;
+  transform: translate(calc(-50% + var(--lx) * -18px), calc(-50% + var(--ly) * -12px));
+  border-radius: 45% 45% 40% 40% / 60% 60% 35% 35%;
+  background: radial-gradient(ellipse at 50% 60%, #f3b27a 0%, #b4552d 45%, #3b1710 100%);
+  filter: blur(calc(10px - var(--opening) * 6px));
+  opacity: calc(var(--opening) * 0.9);
+  transition: opacity 0.6s ease;
+}
+
+.cave-opening--meadow {
+  left: 12%;
+  transform: translate(calc(-50% + var(--lx) * -18px), calc(-50% + var(--ly) * -12px));
+  background: radial-gradient(ellipse at 50% 60%, #e8f2a0 0%, #6fa35a 45%, #1c3a1e 100%);
+  filter: blur(calc(10px - var(--meadow-opening) * 6px));
+  opacity: calc(var(--meadow-opening) * 0.9);
+}
+
+.cave-nav__meadow {
+  animation: cave-fade-in 0.8s ease both;
+}
+
+.cave-crystals i {
+  position: absolute;
+  width: calc(var(--depth) * 7vmin);
+  background: linear-gradient(160deg, rgba(200, 220, 255, 0.55), rgba(110, 90, 190, 0.35) 55%, rgba(20, 18, 40, 0.8));
+  clip-path: polygon(50% 0, 100% 62%, 72% 100%, 24% 100%, 0 58%);
+  transform:
+    translate(calc(var(--lx) * var(--depth) * -46px), calc(var(--ly) * var(--depth) * -30px))
+    rotate(var(--tilt));
+  opacity: calc(0.35 + var(--depth) * 0.5);
+  filter: brightness(calc(0.7 + var(--resolve) * 0.6));
+  animation: cave-fold-drift calc(14s + var(--depth) * 18s) ease-in-out infinite alternate;
+  animation-delay: calc(var(--depth) * -11s);
+}
+
+/* Lumen Vault: the cave sits in a fold where orientation is negotiable. */
+@keyframes cave-fold-drift {
+  from { rotate: -14deg; }
+  to { rotate: 16deg; }
+}
+
+.cave-fractures b {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140vmax;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 215, 255, 0.5), transparent);
+  transform-origin: 0 50%;
+  transform: translate(calc(var(--lx) * -14px), calc(var(--ly) * -10px))
+    rotate(calc(var(--angle) * (1 - var(--resolve))));
+  opacity: calc(0.25 + var(--resolve) * 0.4);
+}
+
+.cave-vignette {
+  background: radial-gradient(ellipse at 50% 50%, transparent 25%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.cave-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  z-index: 2;
+}
+
+.cave-nav a {
+  color: #e9e6f2;
+  text-decoration: none;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid rgba(200, 215, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(5, 5, 8, 0.7);
+}
+
+.cave-nav a:hover,
+.cave-nav a:focus-visible {
+  border-color: rgba(243, 178, 122, 0.8);
+}
+
+.cave-nav__forward {
+  margin-left: auto;
+  animation: cave-fade-in 0.8s ease both;
+}
+
+@keyframes cave-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cave-crystals i {
+    animation: none;
+  }
+
+  .cave-opening,
+  .cave-nav__meadow,
+  .cave-nav__forward {
+    transition: none;
+    animation: cave-fade-in 0.4s ease both;
+  }
+}

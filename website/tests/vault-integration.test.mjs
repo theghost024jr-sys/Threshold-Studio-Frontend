@@ -36,6 +36,8 @@ test("publishes Cindervox intent signals from the canonical vault", async () => 
   assert.match(controller, /window\.openCindervox/);
   assert.match(controller, /window\.openPorpoise/);
   assert.match(controller, /button\.hidden = !variants/);
+  assert.match(controller, /Archive image available for this orientation\./);
+  assert.doesNotMatch(controller, /viewerPath\) viewerPath\.textContent = imagePath/);
   assert.match(controller, /function variantsFor\(speciesKey\)/);
   for (const species of ["cindervox", "porpoise", "whisperhawk", "stonecat", "lumenstag"]) {
     assert.match(controller, new RegExp(`${species}: ["']\/`));
@@ -53,7 +55,7 @@ test("keeps local paths and personal authorship out of public vault data", async
   assert.doesNotMatch(vaultData, /James Romeo/);
 });
 
-test("keeps Basin as the first environment beyond the Herb Room chamber", async () => {
+test("keeps Basin east of Herb Room while restoring the south Waterfall exit", async () => {
   const vault = JSON.parse(await readFile("website/data/threshold-vault.json", "utf8"));
   const basinDocument = vault.documents.find((document) => document.id === "basin");
   const oldForestDocument = vault.chambers.find((chamber) => chamber.id === "old-forest");
@@ -67,12 +69,13 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
   const herbRoom = await readFile("website/environment/herbroom.html", "utf8");
   const basin = await readFile("website/environment/basin.html", "utf8");
   const oldForest = await readFile("website/environment/old-forest.html", "utf8");
+  const waterfall = await readFile("website/environment/waterfall.html", "utf8");
   const mythology = await readFile("website/mythology.html", "utf8");
   assert.match(basin, /data-threshold-environment="basin"/);
   assert.match(basin, /data-origin-chamber="herbroom"/);
   assert.match(basin, /src="\/assets\/basin\.png"/);
-  assert.match(herbRoom, /href="\/environment\/basin\.html"/);
-  assert.doesNotMatch(herbRoom, /href="\/environment\/waterfall\.html"/);
+  assert.match(herbRoom, /east-threshold__cue" href="\/environment\/basin\.html"/);
+  assert.match(herbRoom, /href="\/environment\/waterfall\.html" class="exit-south">Waterfall/);
   assert.match(basin, /href="\/environment\/herbroom\.html"/);
   assert.match(basin, /href="\/environment\/old-forest\.html"/);
   assert.match(oldForest, /data-branch="old-forest"/);
@@ -81,21 +84,35 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
   assert.ok(oldForestDocument, "expected Old Forest to be a published chamber");
   assert.equal(oldForestDocument.route, "/environment/old-forest");
   assert.match(oldForestDocument.body, /The Old Forest is an environment defined by ancient memory/);
+  assert.match(waterfall, /<a href="\/environment\/herbroom\.html">[\s\S]*?Return North/);
+  assert.match(waterfall, /src="\/assets\/images\/drift-falls-panorama\.png"/);
+  assert.match(waterfall, /into the Forest biome/);
+  await access("website/assets/images/drift-falls-panorama.png");
   assert.ok(!vault.chambers.some((chamber) => chamber.id === "waterfall"));
   assert.match(mythology, /values\.includes\('mythology'\)/);
 });
 
+test("keeps local vault filesystem paths out of public output", async () => {
+  const vault = JSON.parse(await readFile("website/data/threshold-vault.json", "utf8"));
+  const index = JSON.parse(await readFile("website/data/vault-index.json", "utf8"));
+  const publicData = JSON.stringify({ vault, index });
+  const engine = await readFile("website/threshold-engine.js", "utf8");
+
+  assert.equal("vaultRoot" in vault, false);
+  assert.equal("publishRoot" in vault, false);
+  assert.equal("vaultRoot" in index, false);
+  assert.equal(publicData.includes("C:\\\\Users\\\\"), false);
+  assert.ok(vault.documents.every((document) => document.publish !== false && document.draft !== true));
+  assert.match(engine, /noteTitle: PUBLIC_AUTHORSHIP/);
+});
+
 test("connects the Drift Falls choices to Wildflower Drift and Cabin of Moss", async () => {
-  const oldForest = await readFile("website/environment/old-forest.html", "utf8");
   const driftFalls = await readFile("website/environment/waterfall.html", "utf8");
   const wildflowerDrift = await readFile("website/environment/wildflower-drift.html", "utf8");
   const cabinOfMoss = await readFile("website/environment/cabin-of-moss.html", "utf8");
 
-  await access("website/assets/images/drift-falls-panorama.png");
-  assert.match(oldForest, /href="\/environment\/waterfall\.html">Follow the water<\/a>/);
-  assert.match(driftFalls, /data-branch="drift-falls"/);
-  assert.match(driftFalls, /href="\/environment\/wildflower-drift\.html">Behind the Falls<\/a>/);
-  assert.match(driftFalls, /href="\/environment\/cabin-of-moss\.html">Past the Falls<\/a>/);
+  assert.match(driftFalls, /href="\/environment\/wildflower-drift\.html">Behind the falls<\/a>/);
+  assert.match(driftFalls, /href="\/environment\/cabin-of-moss\.html">Past the falls<\/a>/);
   assert.match(wildflowerDrift, /data-branch="wildflower-drift"/);
   assert.match(wildflowerDrift, /href="\/environment\/waterfall\.html"/);
   assert.match(cabinOfMoss, /data-branch="cabin-of-moss"/);

@@ -76,6 +76,15 @@ test("serves the Portal router shell for direct World navigation", async () => {
   assert.deepEqual(requestedPaths, ["/portal-dist/portal-shell.txt"]);
 });
 
+test("redirects static Hub routes that were resolved beneath Portal", async () => {
+  const response = await worker.fetch(
+    new Request("https://threshold.example/portal/housegarden.html?path=garden")
+  );
+
+  assert.equal(response.status, 308);
+  assert.equal(response.headers.get("location"), "https://threshold.example/housegarden.html?path=garden");
+});
+
 test("logs sanitized node activation failures without a LOG binding", async () => {
   const logs = captureLogs();
   try {

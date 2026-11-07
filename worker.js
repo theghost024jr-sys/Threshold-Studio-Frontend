@@ -616,6 +616,11 @@ async function handleRequest(request, env, trace) {
   if (url.pathname === "/portal/index.html") {
     return Response.redirect(new URL("/portal/", request.url), 308);
   }
+  if (request.method === "GET" && /^\/portal\/.+\.html$/i.test(url.pathname)) {
+    const staticUrl = new URL(request.url);
+    staticUrl.pathname = url.pathname.slice("/portal".length);
+    return Response.redirect(staticUrl, 308);
+  }
   if (
     url.pathname.startsWith("/portal-dist/") ||
     url.pathname.startsWith("/generated-pages/") ||

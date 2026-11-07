@@ -13,8 +13,9 @@
     body { min-height:100svh; margin:0; overflow-x:hidden; color:var(--ink); background:var(--night); font-family:"DM Mono", monospace; }
     .drift-journey { min-height:240svh; background:#0b1521; }
     .field { --tilt-x:0deg; --tilt-y:0deg; --shift-x:0px; --shift-y:0px; --scroll-progress:0; position:sticky; top:0; isolation:isolate; height:100svh; min-height:100svh; overflow:hidden; perspective:1100px; background:linear-gradient(180deg,#80b9ce 0%,#d1d1b3 43%,#4b7053 100%); }
-    .field::before { content:""; position:absolute; inset:-5%; z-index:-2; background:url("/assets/wildflower-drift.png") center/cover; filter:saturate(.88) contrast(1.04); opacity:calc(.88 - var(--scroll-progress) * .48); transform:translate3d(var(--shift-x),calc(var(--shift-y) - var(--scroll-progress) * 70px),-80px) scale(calc(1.1 + var(--scroll-progress) * .24)) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:filter 900ms ease, transform 220ms ease-out; }
-    .field::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(8,20,34,.5),transparent 38%,rgba(9,24,20,.48)); opacity:calc(1 - var(--scroll-progress) * .7); }
+    .field::before { content:""; position:absolute; inset:-5%; z-index:-3; background:url("/assets/wildflower-drift.png") center/cover; filter:saturate(.88) contrast(1.04); opacity:calc(.88 - var(--scroll-progress) * .48); transform:translate3d(var(--shift-x),calc(var(--shift-y) - var(--scroll-progress) * 70px),-80px) scale(calc(1.1 + var(--scroll-progress) * .24)) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:filter 900ms ease, transform 220ms ease-out; }
+    .field::after { content:""; position:absolute; inset:0; z-index:-2; background:linear-gradient(180deg,rgba(8,20,34,.5),transparent 38%,rgba(9,24,20,.48)); opacity:calc(1 - var(--scroll-progress) * .7); }
+    .field-painted-art { position:absolute; inset:0; z-index:-1; pointer-events:none; background:url("/assets/wildflower-drift-painted-poppies.png") left bottom / min(52rem,76vw) auto no-repeat; mix-blend-mode:screen; filter:saturate(.92) contrast(1.05); opacity:calc(.7 - var(--scroll-progress) * .28); transform:translate3d(calc(var(--shift-x) * -.35),calc(var(--shift-y) * -.2),-10px) scale(1.04); transform-origin:left bottom; transition:opacity 700ms ease,transform 220ms ease-out; }
     .field[data-reading="silence"]::before { filter:saturate(.42) brightness(.75); transform:scale(1.1); }
     .field[data-reading="drift"]::before { filter:saturate(1.12) brightness(1.08); transform:scale(1.06) translateX(-.6%); }
     .topbar { display:flex; justify-content:space-between; gap:1rem; padding:1.4rem clamp(1.25rem,4vw,4rem); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; }
@@ -63,6 +64,7 @@
 <body>
   <div class="drift-journey">
   <div class="field" data-field>
+    <div class="field-painted-art" aria-hidden="true"></div>
     <span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span>
     <div class="drift-stream" data-drift-stream aria-hidden="true"></div>
     <div class="blossom-layer" data-blossom-layer aria-hidden="true"></div>
@@ -70,7 +72,7 @@
     <button class="field-starfish" type="button" aria-label="Drag the starfish to the mist seam"></button>
     <p class="seam-answer" aria-live="polite">The field remembers a sea it never was.</p>
     <p class="scroll-cue">Scroll through the boundary</p>
-    <header class="topbar"><a href="garden.html">Return to the Garden</a><span>Ephemeral Field · Mist / Air boundary</span></header>
+    <header class="topbar"><a href="garden.html">Return to the Garden</a><a href="/environment/waterfall.html">Return to the Drift Falls</a><span>Ephemeral Field · Mist / Air boundary</span></header>
     <main>
       <section class="hero">
         <p class="eyebrow">Wildflower Drift</p>

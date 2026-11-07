@@ -114,6 +114,18 @@ test("connects the Drift Falls choices to Wildflower Drift and Cabin of Moss", a
   assert.match(driftFalls, /href="\/wildflower-drift\.html">Behind the falls<\/a>/);
   assert.match(driftFalls, /href="\/environment\/cabin-of-moss\.html">Past the falls<\/a>/);
   assert.match(wildflowerDrift, /url\("\/assets\/wildflower-drift\.png"\)/);
+  assert.match(wildflowerDrift, /url\("\/assets\/wildflower-drift-painted-poppies\.png"\)/);
+  assert.match(wildflowerDrift, /mote\.className = "drift-mote"/);
+  assert.match(wildflowerDrift, /blossom\.className = "blossom"/);
+  assert.match(wildflowerDrift, /prefers-reduced-motion:reduce/);
+  assert.match(wildflowerDrift, /position:sticky/);
+  assert.match(wildflowerDrift, /min-height:240svh/);
+  assert.match(wildflowerDrift, /window\.addEventListener\(["']scroll["'], updateScrollPassage/);
+  assert.match(wildflowerDrift, /class="transition-landing"/);
+  assert.match(wildflowerDrift, /clip-path:polygon\(0 11%,100% 0,100% 100%,0 100%\)/);
+  assert.match(wildflowerDrift, /Nothing was taken from the field\./);
+  assert.match(wildflowerDrift, /The flowers are still there\. The mist simply changes the distance from which they can be understood\./);
+  assert.match(wildflowerDrift, /href="\/environment\/waterfall\.html">Return to the Drift Falls<\/a>/);
   assert.match(cabinOfMoss, /data-branch="cabin-of-moss"/);
   assert.match(cabinOfMoss, /href="\/wildflower-drift\.html">Return through Wildflower Drift<\/a>/);
 });

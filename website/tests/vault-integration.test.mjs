@@ -85,6 +85,23 @@ test("keeps Basin as the first environment beyond the Herb Room chamber", async 
   assert.match(mythology, /values\.includes\('mythology'\)/);
 });
 
+test("connects the Drift Falls choices to Wildflower Drift and Cabin of Moss", async () => {
+  const oldForest = await readFile("website/environment/old-forest.html", "utf8");
+  const driftFalls = await readFile("website/environment/waterfall.html", "utf8");
+  const wildflowerDrift = await readFile("website/environment/wildflower-drift.html", "utf8");
+  const cabinOfMoss = await readFile("website/environment/cabin-of-moss.html", "utf8");
+
+  await access("website/assets/images/drift-falls-panorama.png");
+  assert.match(oldForest, /href="\/environment\/waterfall\.html">Follow the water<\/a>/);
+  assert.match(driftFalls, /data-branch="drift-falls"/);
+  assert.match(driftFalls, /href="\/environment\/wildflower-drift\.html">Behind the Falls<\/a>/);
+  assert.match(driftFalls, /href="\/environment\/cabin-of-moss\.html">Past the Falls<\/a>/);
+  assert.match(wildflowerDrift, /data-branch="wildflower-drift"/);
+  assert.match(wildflowerDrift, /href="\/environment\/waterfall\.html"/);
+  assert.match(cabinOfMoss, /data-branch="cabin-of-moss"/);
+  assert.match(cabinOfMoss, /href="\/environment\/wildflower-drift\.html">Return through Wildflower Drift<\/a>/);
+});
+
 test("publishes and renders the four-path glyph archive", async () => {
   const index = JSON.parse(await readFile("website/config/glyphs.json", "utf8"));
   assert.deepEqual(Object.keys(index.glyphs), ["collapse", "expand", "fog", "soil"]);

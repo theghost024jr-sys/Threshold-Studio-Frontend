@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cabin of Moss | Threshold</title>
+  <style>
+    :root {
+      color: #e7efd7;
+      background: #101a13;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 68% 22%, rgba(158, 191, 111, 0.18), transparent 28%),
+        radial-gradient(ellipse at 25% 80%, rgba(66, 117, 69, 0.32), transparent 34%),
+        linear-gradient(145deg, #17251a, #0d1510 68%);
+    }
+
+    main {
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+      padding: 2rem;
+    }
+
+    .cabin {
+      position: relative;
+      width: min(44rem, 100%);
+      padding: clamp(1.5rem, 5vw, 3.5rem);
+      border: 1px solid rgba(177, 205, 137, 0.48);
+      background:
+        linear-gradient(90deg, rgba(71, 96, 59, 0.2) 1px, transparent 1px),
+        linear-gradient(rgba(71, 96, 59, 0.16) 1px, transparent 1px),
+        rgba(16, 29, 18, 0.78);
+      background-size: 2rem 2rem;
+      box-shadow: inset 0 0 5rem rgba(84, 125, 68, 0.14), 0 1.5rem 5rem rgba(0, 0, 0, 0.42);
+    }
+
+    .cabin::before {
+      position: absolute;
+      top: -0.5rem;
+      right: 12%;
+      left: 12%;
+      height: 0.65rem;
+      border-radius: 50%;
+      background: #638f55;
+      box-shadow: 0 0 1.4rem rgba(126, 174, 99, 0.46);
+      content: "";
+    }
+
+    .kind {
+      margin: 0 0 0.75rem;
+      color: #b7d691;
+      font: 0.72rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 9vw, 5.5rem);
+      font-weight: 400;
+    }
+
+    p {
+      max-width: 38rem;
+      line-height: 1.7;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #d9edbd;
+      text-underline-offset: 0.28rem;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: #fff7cf;
+      outline: none;
+    }
+  </style>
+</head>
+<body data-branch="cabin-of-moss">
+  <main>
+    <section class="cabin" aria-labelledby="cabin-title">
+      <p class="kind">living shelter</p>
+      <h1 id="cabin-title">Cabin of Moss</h1>
+      <p>
+        Moss is not laid over the cabin. It is the cabin's skin and memory,
+        softening the porch, beams, and steps into a shape grown by time.
+        From here, the paths can be seen without being forced.
+      </p>
+      <a href="/environment/wildflower-drift.html">Return through Wildflower Drift</a>
+    </section>
+  </main>
+</body>
+</html>

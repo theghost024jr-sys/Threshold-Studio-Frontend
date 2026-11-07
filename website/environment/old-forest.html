@@ -52,6 +52,13 @@
     a {
       color: #d9e9b8;
     }
+
+    .paths {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body data-branch="old-forest">
@@ -60,7 +67,10 @@
       <p class="kind" id="chamber-pulse">biome</p>
       <h1 id="chamber-title">Old Forest</h1>
       <p id="chamber-lore"></p>
-      <a href="/environment/basin.html">Return to the Basin</a>
+      <nav class="paths" aria-label="Paths through the Old Forest">
+        <a href="/environment/basin.html">Return to the Basin</a>
+        <a href="/environment/waterfall.html">Follow the water</a>
+      </nav>
     </section>
   </main>
   <script src="/scripts/chamber-loader.js"></script>

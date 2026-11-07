@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wildflower Drift | Threshold</title>
+  <style>
+    :root {
+      color: #fff4d8;
+      background: #354f4c;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 18% 82%, rgba(196, 56, 49, 0.72) 0 3%, transparent 3.4%),
+        radial-gradient(ellipse at 36% 75%, rgba(223, 72, 49, 0.66) 0 2.4%, transparent 2.8%),
+        radial-gradient(ellipse at 68% 88%, rgba(204, 57, 48, 0.72) 0 3.5%, transparent 3.9%),
+        radial-gradient(ellipse at 84% 78%, rgba(237, 86, 47, 0.6) 0 2.8%, transparent 3.2%),
+        linear-gradient(180deg, #6e9db0 0%, #d2bd73 54%, #596e43 55%, #273d2c 100%);
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      content: "";
+      pointer-events: none;
+    }
+
+    body::before {
+      inset: -10%;
+      background:
+        radial-gradient(ellipse at 28% 42%, rgba(255, 246, 202, 0.36) 0 1px, transparent 2px),
+        radial-gradient(ellipse at 61% 30%, rgba(255, 246, 202, 0.4) 0 1px, transparent 2px),
+        radial-gradient(ellipse at 78% 52%, rgba(255, 246, 202, 0.3) 0 1px, transparent 2px);
+      background-size: 15rem 12rem, 19rem 16rem, 13rem 17rem;
+      opacity: 0.7;
+    }
+
+    body::after {
+      inset: 45% 0 0;
+      background: linear-gradient(180deg, transparent, rgba(23, 39, 27, 0.32));
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      min-height: 100vh;
+      place-items: center;
+      padding: 2rem;
+    }
+
+    .field {
+      width: min(42rem, 100%);
+      padding: clamp(1.5rem, 5vw, 3.5rem);
+      border: 1px solid rgba(255, 244, 216, 0.5);
+      background: rgba(37, 57, 40, 0.48);
+      box-shadow: 0 1.5rem 5rem rgba(19, 30, 20, 0.38);
+      text-shadow: 0 2px 14px rgba(20, 31, 21, 0.86);
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+    }
+
+    .kind {
+      margin: 0 0 0.75rem;
+      color: #fff0a9;
+      font: 0.72rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 9vw, 5.5rem);
+      font-weight: 400;
+    }
+
+    p {
+      max-width: 37rem;
+      line-height: 1.7;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    a {
+      color: #fff4d8;
+      text-underline-offset: 0.28rem;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: #fff0a9;
+      outline: none;
+    }
+  </style>
+</head>
+<body data-branch="wildflower-drift">
+  <main>
+    <section class="field" aria-labelledby="drift-title">
+      <p class="kind">ephemeral field</p>
+      <h1 id="drift-title">Wildflower Drift</h1>
+      <p>
+        Red poppies hold their color in the grass while dandelion seeds move through
+        the warm, changing light. The field does not press for an answer. It lets
+        memory loosen without being lost.
+      </p>
+      <nav aria-label="Paths through Wildflower Drift">
+        <a href="/environment/waterfall.html">Return to the Drift Falls</a>
+      </nav>
+    </section>
+  </main>
+</body>
+</html>

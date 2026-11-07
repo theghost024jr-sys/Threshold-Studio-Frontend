@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Drift Falls | Threshold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #9fd9cd;
+      --background: #0d1a14;
+      --text: #f0fff9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: "Source Sans 3", sans-serif;
+    }
+
+    .falls {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .falls__image,
+    .falls::before,
+    .falls::after {
+      position: absolute;
+      inset: 0;
+    }
+
+    .falls__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      animation: falls-breathe 18s ease-in-out infinite alternate;
+      z-index: -3;
+    }
+
+    .falls::before {
+      background:
+        linear-gradient(to bottom, rgba(5, 15, 13, 0.72), transparent 34%),
+        linear-gradient(to top, rgba(5, 15, 13, 0.8), transparent 30%);
+      content: "";
+      z-index: -2;
+    }
+
+    .falls::after {
+      background:
+        radial-gradient(ellipse at 38% 88%, rgba(201, 238, 230, 0.24), transparent 30%),
+        radial-gradient(ellipse at 72% 82%, rgba(177, 229, 220, 0.16), transparent 36%);
+      content: "";
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .return {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.75rem;
+    }
+
+    .return,
+    .sound {
+      border: 1px solid rgba(159, 217, 205, 0.3);
+      border-radius: 4px;
+      background: rgba(13, 26, 20, 0.56);
+      color: var(--text);
+      font: 600 0.7rem/1 "Source Sans 3", sans-serif;
+      letter-spacing: 0.12em;
+      padding: 0.6rem 1rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+    }
+
+    .return:hover,
+    .return:focus-visible,
+    .sound:hover,
+    .sound:focus-visible {
+      border-color: rgba(159, 217, 205, 0.8);
+      background: rgba(13, 26, 20, 0.78);
+      outline: none;
+    }
+
+    .sound {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.75rem;
+      cursor: pointer;
+    }
+
+    .title {
+      position: absolute;
+      top: 43%;
+      left: 50%;
+      width: min(90%, 56rem);
+      text-align: center;
+      text-shadow: 0 2px 2rem rgba(0, 0, 0, 0.86);
+      transform: translate(-50%, -50%);
+    }
+
+    .title p {
+      margin: 0 0 0.8rem;
+      color: var(--accent);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font: 400 clamp(2.7rem, 7vw, 5.7rem)/0.96 "Playfair Display", Georgia, serif;
+    }
+
+    .paths {
+      position: absolute;
+      bottom: 1.4rem;
+      left: 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .paths a {
+      color: rgba(240, 255, 249, 0.94);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-shadow: 0 2px 1rem rgba(0, 0, 0, 0.9);
+      text-transform: uppercase;
+    }
+
+    .paths a:hover,
+    .paths a:focus-visible {
+      color: #d8fff6;
+      outline: none;
+      text-decoration: underline;
+      text-underline-offset: 0.28rem;
+    }
+
+    @keyframes falls-breathe {
+      from {
+        scale: 1.01;
+        filter: brightness(0.9) saturate(0.95);
+      }
+
+      to {
+        scale: 1.035;
+        filter: brightness(1.05) saturate(1.05);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .return {
+        left: 1rem;
+      }
+
+      .sound {
+        right: 1rem;
+      }
+
+      .paths {
+        right: 1rem;
+        bottom: 1rem;
+        left: 1rem;
+        justify-content: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .falls__image {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body data-branch="drift-falls">
+  <main class="falls">
+    <img class="falls__image" src="/assets/images/drift-falls-panorama.png" alt="The Drift Falls cascade through a moss-dark gorge." width="1536" height="1024">
+    <a class="return" href="/environment/old-forest.html">Return North</a>
+    <button class="sound" type="button" aria-pressed="false">Listen to the Falls</button>
+    <header class="title">
+      <p>Forest boundary</p>
+      <h1>The Drift Falls</h1>
+    </header>
+    <nav class="paths" aria-label="Drift Falls routes">
+      <a href="/environment/wildflower-drift.html">Behind the Falls</a>
+      <a href="/environment/cabin-of-moss.html">Past the Falls</a>
+    </nav>
+  </main>
+  <script>
+    const soundControl = document.querySelector(".sound");
+    const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+    let waterfallAudio;
+
+    function createWaterfallAudio() {
+      const context = new AudioContextConstructor();
+      const buffer = context.createBuffer(1, context.sampleRate * 4, context.sampleRate);
+      const samples = buffer.getChannelData(0);
+      let current = 0;
+
+      for (let index = 0; index < samples.length; index += 1) {
+        current = current * 0.985 + (Math.random() * 2 - 1) * 0.04;
+        samples[index] = current;
+      }
+
+      const source = context.createBufferSource();
+      const filter = context.createBiquadFilter();
+      const gain = context.createGain();
+      source.buffer = buffer;
+      source.loop = true;
+      filter.type = "bandpass";
+      filter.frequency.value = 860;
+      filter.Q.value = 0.45;
+      gain.gain.value = 0.12;
+      source.connect(filter).connect(gain).connect(context.destination);
+      source.start();
+      return { context, gain };
+    }
+
+    if (!AudioContextConstructor) {
+      soundControl.disabled = true;
+      soundControl.textContent = "Sound unavailable";
+    } else {
+      soundControl.addEventListener("click", async () => {
+        if (!waterfallAudio) {
+          waterfallAudio = createWaterfallAudio();
+        }
+
+        if (waterfallAudio.context.state === "suspended") {
+          await waterfallAudio.context.resume();
+        }
+
+        const isPlaying = soundControl.getAttribute("aria-pressed") === "true";
+        waterfallAudio.gain.gain.setTargetAtTime(isPlaying ? 0 : 0.12, waterfallAudio.context.currentTime, 0.04);
+        soundControl.setAttribute("aria-pressed", String(!isPlaying));
+        soundControl.textContent = isPlaying ? "Listen to the Falls" : "Quiet the Falls";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -202,6 +202,8 @@ export const PAGE_ECHOES = Object.freeze([
   pageEcho("basin-reference-page", "houseGarden", "Basin", "/environment/basin.html", "environment/basin.html"),
   pageEcho("basin-generated-page", "houseGarden", "Basin (published note)", "/generated-pages/environment/basin.html", null),
   pageEcho("waterfall", "houseGarden", "Waterfall", "/environment/waterfall.html", "environment/waterfall.html"),
+  pageEcho("wildflower-drift-environment", "houseGarden", "Wildflower Drift", "/environment/wildflower-drift.html", "environment/wildflower-drift.html"),
+  pageEcho("cabin-of-moss-environment", "oldForest", "Cabin of Moss", "/environment/cabin-of-moss.html", "environment/cabin-of-moss.html"),
   pageEcho("old-forest", "houseGarden", "Old Forest", "/environment/old-forest.html", "environment/old-forest.html"),
   pageEcho("wildflower-drift", "home", "Wildflower Drift", "/wildflower-drift.html", "wildflower-drift.html"),
   pageEcho("living-threshold", "rootSigil", "Threshold Record", "/pages/threshold.html", "pages/threshold.html", [

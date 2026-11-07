@@ -31,3 +31,9 @@ test("build emits the canonical Worker into the Pages output directory", async (
   assert.match(output, /env\.NODE_BUNDLES/);
   assert.match(output, /env\.SEED_SECRET/);
 });
+
+test("builds the Portal bundle before publishing the CI artifact", async () => {
+  const packageJson = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
+
+  assert.match(packageJson.scripts["build:ci"], /npm --prefix website\/portal run build:site/);
+});

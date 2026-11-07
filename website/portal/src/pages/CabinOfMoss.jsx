@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import cabin from '../assets/cabin-of-moss.png'
 import { recordReturnState } from '../returnState.js'
-import WorldThread from '../components/WorldThread.jsx'
 
 const layers = [
   ['Moss', 'Memory layer. Thick moss marks what has endured; bare wood does not claim a path is ready.'],
   ['Porch', 'Perception interface. From here, timing can become visible without the world forcing a choice.'],
   ['Torches', 'Attention layer. They illuminate only what is relevant, not every possible future.']
+]
+
+const roomTraces = [
+  'Rain-dark footprints cross the porch, then stop before the door.',
+  'One chair is warm. The room does not say who rose from it.',
+  'A lantern dims beyond the eaves as though someone has just passed into the trees.'
 ]
 
 export default function CabinOfMoss() {
@@ -37,7 +42,7 @@ export default function CabinOfMoss() {
   }, [])
   function reveal(index) {
     setLayer(index)
-    recordReturnState('Cabin', name, detail)
+    recordReturnState('Cabin of Moss', name, detail)
   }
 
   function lookDown(event) {
@@ -61,7 +66,6 @@ export default function CabinOfMoss() {
   >
     <div className="moss-cabin__screensaver" aria-hidden="true" />
     <section className="moss-cabin__porch">
-      <WorldThread active="cabin" />
       <span className="moss-cabin__bird" aria-hidden="true"><i /><i /></span>
       <figure className="moss-cabin-image">
         <img src={cabin} alt="The Cabin, a stable porch in the forest" />
@@ -73,7 +77,8 @@ export default function CabinOfMoss() {
         <p>The Cabin does not make paths or decide them. Its moss carries the residue of time; its porch holds a stable view while the forest stays itself.</p>
         <div className="moss-layers">{layers.map(([label], index) => <button type="button" className={index === layer ? 'is-active' : ''} onClick={() => reveal(index)} key={label}>{label}</button>)}</div>
         <aside className="moss-reading"><strong>{name}</strong><p>{detail}</p></aside>
-        <nav><a href="#basin-lookdown" onClick={lookDown}>Look down toward the Basin</a><Link to="/old-forest-trek">Continue into the forest</Link><Link to="/">Return to the Portal</Link></nav>
+        <p className="moss-arrival" aria-live="polite">{roomTraces[layer]}</p>
+        <nav><a href="#basin-lookdown" onClick={lookDown}>Look down toward the Basin</a></nav>
       </section>
     </section>
     <section className="moss-overlook" id="basin-lookdown">

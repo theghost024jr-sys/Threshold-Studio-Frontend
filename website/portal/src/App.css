@@ -1459,6 +1459,14 @@
   margin: 0.6rem 0 0;
 }
 
+.moss-arrival {
+  color: rgba(215, 222, 184, 0.72);
+  font: italic 0.98rem/1.55 Georgia, serif;
+  margin: 0;
+  max-width: 29rem;
+  transition: color 420ms ease;
+}
+
 .moss-copy nav {
   display: flex;
   flex-wrap: wrap;

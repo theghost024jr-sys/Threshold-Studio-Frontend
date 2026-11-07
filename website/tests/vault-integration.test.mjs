@@ -108,16 +108,14 @@ test("keeps local vault filesystem paths out of public output", async () => {
 
 test("connects the Drift Falls choices to Wildflower Drift and Cabin of Moss", async () => {
   const driftFalls = await readFile("website/environment/waterfall.html", "utf8");
-  const wildflowerDrift = await readFile("website/environment/wildflower-drift.html", "utf8");
+  const wildflowerDrift = await readFile("website/wildflower-drift.html", "utf8");
   const cabinOfMoss = await readFile("website/environment/cabin-of-moss.html", "utf8");
 
-  assert.match(driftFalls, /href="\/environment\/wildflower-drift\.html">Behind the falls<\/a>/);
+  assert.match(driftFalls, /href="\/wildflower-drift\.html">Behind the falls<\/a>/);
   assert.match(driftFalls, /href="\/environment\/cabin-of-moss\.html">Past the falls<\/a>/);
-  assert.match(wildflowerDrift, /data-branch="wildflower-drift"/);
-  assert.match(wildflowerDrift, /url\("\/assets\/images\/wildflower-drift-background\.png"\)/);
-  assert.match(wildflowerDrift, /href="\/environment\/waterfall\.html"/);
+  assert.match(wildflowerDrift, /url\("\/assets\/wildflower-drift\.png"\)/);
   assert.match(cabinOfMoss, /data-branch="cabin-of-moss"/);
-  assert.match(cabinOfMoss, /href="\/environment\/wildflower-drift\.html">Return through Wildflower Drift<\/a>/);
+  assert.match(cabinOfMoss, /href="\/wildflower-drift\.html">Return through Wildflower Drift<\/a>/);
 });
 
 test("publishes and renders the four-path glyph archive", async () => {

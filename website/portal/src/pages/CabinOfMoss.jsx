@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import cabin from '../assets/cabin-of-moss.png'
 import { recordReturnState } from '../returnState.js'
@@ -12,7 +12,29 @@ const layers = [
 
 export default function CabinOfMoss() {
   const [layer, setLayer] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [name, detail] = layers[layer]
+
+  useEffect(() => {
+    let frame = 0
+    const updateScrollProgress = () => {
+      frame = 0
+      const maximum = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      setScrollProgress(Math.min(1, Math.max(0, window.scrollY / maximum)))
+    }
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateScrollProgress)
+    }
+
+    updateScrollProgress()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    return () => {
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [])
   function reveal(index) {
     setLayer(index)
     recordReturnState('Cabin', name, detail)
@@ -33,9 +55,14 @@ export default function CabinOfMoss() {
     })
   }
 
-  return <main className="moss-cabin">
+  return <main
+    className="moss-cabin"
+    style={{ '--cabin-scroll': scrollProgress, '--cabin-image': `url(${cabin})` }}
+  >
+    <div className="moss-cabin__screensaver" aria-hidden="true" />
     <section className="moss-cabin__porch">
       <WorldThread active="cabin" />
+      <span className="moss-cabin__bird" aria-hidden="true"><i /><i /></span>
       <figure className="moss-cabin-image">
         <img src={cabin} alt="The Cabin, a stable porch in the forest" />
         <div className="moss-cabin-image__veil" />

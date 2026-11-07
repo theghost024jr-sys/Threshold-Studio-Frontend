@@ -1261,7 +1261,24 @@
 .moss-cabin {
   background: #0a160d;
   color: #e8efd9;
+  isolation: isolate;
   min-height: 100svh;
+  overflow: clip;
+  position: relative;
+}
+
+.moss-cabin__screensaver {
+  background:
+    linear-gradient(90deg, rgba(7, 17, 10, 0.42), rgba(7, 17, 10, 0.72)),
+    var(--cabin-image) center / cover;
+  filter: saturate(0.7) brightness(0.52) blur(2px);
+  inset: -2rem;
+  opacity: calc(0.38 - var(--cabin-scroll, 0) * 0.2);
+  pointer-events: none;
+  position: fixed;
+  transform: scale(calc(1.05 + var(--cabin-scroll, 0) * 0.08));
+  transition: opacity 240ms ease, transform 240ms ease;
+  z-index: -1;
 }
 
 .moss-cabin__porch {
@@ -1269,6 +1286,47 @@
   grid-template-columns: minmax(0, 1.06fr) minmax(22rem, 0.94fr);
   min-height: 100svh;
   overflow: hidden;
+  transform: translateY(calc(var(--cabin-scroll, 0) * -4vh));
+  transition: transform 160ms ease-out;
+}
+
+.moss-cabin__bird {
+  animation: moss-cabin-bird-flyby 13s linear infinite;
+  height: 2rem;
+  left: -12vw;
+  opacity: calc(0.88 - var(--cabin-scroll, 0) * 0.44);
+  position: absolute;
+  top: clamp(5rem, 18vh, 12rem);
+  transform: rotate(-8deg);
+  width: 4rem;
+  z-index: 4;
+}
+
+.moss-cabin__bird i {
+  border-top: 3px solid rgba(18, 24, 19, 0.9);
+  border-radius: 100% 100% 0 0;
+  height: 1.2rem;
+  position: absolute;
+  top: 0.4rem;
+  width: 2.2rem;
+}
+
+.moss-cabin__bird i:first-child {
+  right: 1.85rem;
+  transform: rotate(18deg);
+}
+
+.moss-cabin__bird i:last-child {
+  left: 1.85rem;
+  transform: rotate(-18deg);
+}
+
+@keyframes moss-cabin-bird-flyby {
+  0% { translate: 0 1.2rem; }
+  20% { translate: 28vw -1rem; }
+  48% { translate: 62vw 0.4rem; }
+  76% { translate: 96vw -1.6rem; }
+  100% { translate: 124vw 0.8rem; }
 }
 
 .moss-cabin-image {
@@ -1285,7 +1343,7 @@
   inset: 0;
   object-fit: cover;
   position: absolute;
-  transform: scale(1.045);
+  transform: scale(calc(1.045 + var(--cabin-scroll, 0) * 0.12)) translateY(calc(var(--cabin-scroll, 0) * -4%));
   transition: filter 900ms ease, transform 1.2s ease;
   width: 100%;
 }

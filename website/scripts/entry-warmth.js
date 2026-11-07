@@ -24,6 +24,20 @@ const oortNodes = Object.freeze([
   { x: 0.24, y: 0.3, z: 0.08, drift: 0.38, decay: 0.3, anchor: 0.3 }
 ]);
 
+const oortDustNodes = Object.freeze(Array.from({ length: 72 }, (_, index) => {
+  const angle = index * 2.399963229728653;
+  const radius = 0.23 + (index % 9) * 0.017;
+  return {
+    x: Math.cos(angle) * radius,
+    y: Math.sin(angle) * radius * (0.72 + (index % 4) * 0.05),
+    z: ((index * 7) % 17) / 8 - 1,
+    drift: 0.12 + (index % 5) * 0.035,
+    decay: 0.12 + (index % 6) * 0.06,
+    anchor: 0.08 + (index % 4) * 0.04,
+    dust: true
+  };
+}));
+
 const cometPositions = Object.freeze([
   ["12%", "76%", "-8s"],
   ["56%", "24%", "-21s"]
@@ -111,9 +125,9 @@ function addOortCloud() {
     viewX: 0,
     viewY: 0
   };
-  const particles = oortNodes.map((node) => {
+  const particles = [...oortNodes, ...oortDustNodes].map((node) => {
     const particle = document.createElement("span");
-    particle.className = "hub-oort";
+    particle.className = node.dust ? "hub-oort hub-oort--dust" : "hub-oort";
     oortField.appendChild(particle);
     return { node, particle };
   });

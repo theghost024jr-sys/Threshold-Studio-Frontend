@@ -1792,6 +1792,38 @@
         width: calc(100% - 2rem);
       }
     }
+
+    /* The Oort field remains outside the atom's orbital system, but must read
+       as a coherent field rather than isolated background stars. */
+    .hub-oort {
+      opacity: min(0.94, calc(var(--hub-oort-opacity, 0.22) + 0.3));
+      box-shadow: 0 0 9px rgba(165, 232, 224, 0.72);
+      filter: drop-shadow(0 0 5px rgba(165, 232, 224, 0.64));
+      animation: hub-oort-flicker 4.8s ease-in-out infinite;
+      animation-delay: calc(var(--hub-oort-size, 4px) * -0.22);
+    }
+
+    .hub-oort--dust {
+      opacity: min(0.78, calc(var(--hub-oort-opacity, 0.22) + 0.18));
+      box-shadow: 0 0 6px rgba(174, 237, 228, 0.58);
+    }
+
+    @keyframes hub-oort-flicker {
+      50% {
+        filter: drop-shadow(0 0 10px rgba(203, 255, 239, 0.92));
+        transform: scale(1.34);
+      }
+    }
+
+    @media (min-width: 901px) {
+      .entry-invitation {
+        top: clamp(18.5rem, 32vw, 23rem);
+      }
+
+      .entry-map-link {
+        top: clamp(21.75rem, 37vw, 26.25rem);
+      }
+    }
   </style>
 </head>
 <body data-entry-chamber data-complexity="foundation atmosphere topology interaction" data-motion="bounded">

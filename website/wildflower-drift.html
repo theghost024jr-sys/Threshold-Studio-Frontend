@@ -13,11 +13,14 @@
     body { min-height:100svh; margin:0; overflow-x:hidden; color:var(--ink); background:var(--night); font-family:"DM Mono", monospace; }
     .drift-journey { min-height:240svh; background:#0b1521; }
     .field { --tilt-x:0deg; --tilt-y:0deg; --shift-x:0px; --shift-y:0px; --scroll-progress:0; position:sticky; top:0; isolation:isolate; height:100svh; min-height:100svh; overflow:hidden; perspective:1100px; background:linear-gradient(180deg,#80b9ce 0%,#d1d1b3 43%,#4b7053 100%); }
-    .field::before { content:""; position:absolute; inset:-5%; z-index:-3; background:url("/assets/wildflower-drift.png") center/cover; filter:saturate(.88) contrast(1.04); opacity:calc(.88 - var(--scroll-progress) * .48); transform:translate3d(var(--shift-x),calc(var(--shift-y) - var(--scroll-progress) * 70px),-80px) scale(calc(1.1 + var(--scroll-progress) * .24)) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:filter 900ms ease, transform 220ms ease-out; }
+    .field::before { content:""; position:absolute; inset:-5%; z-index:-3; background:url("/assets/wildflower-drift.png") center / cover; filter:blur(20px) saturate(.72) contrast(1.06); opacity:calc(.5 - var(--scroll-progress) * .28); transform:translate3d(var(--shift-x),calc(var(--shift-y) - var(--scroll-progress) * 70px),-80px) scale(calc(1.14 + var(--scroll-progress) * .24)) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition:filter 900ms ease, transform 220ms ease-out; }
     .field::after { content:""; position:absolute; inset:0; z-index:-2; background:linear-gradient(180deg,rgba(8,20,34,.5),transparent 38%,rgba(9,24,20,.48)); opacity:calc(1 - var(--scroll-progress) * .7); }
-    .field-painted-art { position:absolute; inset:0; z-index:-1; pointer-events:none; background:url("/assets/wildflower-drift-painted-poppies.png") left bottom / min(52rem,76vw) auto no-repeat; mix-blend-mode:screen; filter:saturate(.92) contrast(1.05); opacity:calc(.7 - var(--scroll-progress) * .28); transform:translate3d(calc(var(--shift-x) * -.35),calc(var(--shift-y) * -.2),-10px) scale(1.04); transform-origin:left bottom; transition:opacity 700ms ease,transform 220ms ease-out; }
+    .field-original-art { position:absolute; inset:0; z-index:-1; pointer-events:none; background:url("/assets/wildflower-drift.png") left bottom / auto 100svh no-repeat; filter:saturate(.88) contrast(1.04); opacity:calc(.9 - var(--scroll-progress) * .48); transform:translate3d(var(--shift-x),calc(var(--shift-y) - var(--scroll-progress) * 70px),-20px) scale(calc(1 + var(--scroll-progress) * .12)); transform-origin:left bottom; transition:filter 900ms ease,transform 220ms ease-out; }
+    .field-painted-art { position:absolute; inset:0; z-index:0; pointer-events:none; background:url("/assets/wildflower-drift-painted-poppies.png") left bottom / auto 100svh no-repeat; mix-blend-mode:screen; filter:saturate(.92) contrast(1.05); opacity:calc(.7 - var(--scroll-progress) * .28); transform:translate3d(calc(var(--shift-x) * -.35),calc(var(--shift-y) * -.2),-10px) scale(1.04); transform-origin:left bottom; transition:opacity 700ms ease,transform 220ms ease-out; }
     .field[data-reading="silence"]::before { filter:saturate(.42) brightness(.75); transform:scale(1.1); }
     .field[data-reading="drift"]::before { filter:saturate(1.12) brightness(1.08); transform:scale(1.06) translateX(-.6%); }
+    .field[data-reading="silence"] .field-original-art { filter:saturate(.42) brightness(.75); }
+    .field[data-reading="drift"] .field-original-art { filter:saturate(1.12) brightness(1.08); }
     .topbar { display:flex; justify-content:space-between; gap:1rem; padding:1.4rem clamp(1.25rem,4vw,4rem); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; }
     a { color:var(--ink); text-decoration:none; } a:hover,a:focus-visible { color:var(--gold); }
     main { display:grid; min-height:calc(100svh - 4.5rem); align-content:space-between; padding:clamp(2rem,7vw,7rem) clamp(1.25rem,7vw,8rem) 2rem; transform-style:preserve-3d; }
@@ -41,7 +44,17 @@
     .blossom i { position:absolute; top:50%; left:50%; width:42%; height:67%; border-radius:70% 70% 58% 58%; background:radial-gradient(ellipse at 50% 18%,rgba(255,215,164,.94),rgba(225,74,67,.94) 56%,rgba(114,27,42,.92)); box-shadow:inset 0 0 11px rgba(255,240,201,.35),0 0 12px rgba(130,24,44,.3); transform-origin:50% 100%; }
     .blossom i:nth-child(1){transform:translate(-50%,-100%) rotate(0deg) translateZ(8px)}.blossom i:nth-child(2){transform:translate(-50%,-100%) rotate(72deg) translateZ(1px)}.blossom i:nth-child(3){transform:translate(-50%,-100%) rotate(144deg) translateZ(6px)}.blossom i:nth-child(4){transform:translate(-50%,-100%) rotate(216deg) translateZ(2px)}.blossom i:nth-child(5){transform:translate(-50%,-100%) rotate(288deg) translateZ(5px)}
     .blossom b { position:absolute; top:50%; left:50%; width:24%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffe8a3,#6e2730 65%); box-shadow:0 0 8px rgba(255,205,126,.66); transform:translate(-50%,-50%) translateZ(12px); }
+    .blossom--draggable { border:0; padding:0; background:transparent; cursor:grab; pointer-events:auto; touch-action:none; }
+    .blossom--draggable:active { cursor:grabbing; }
+    .blossom--draggable:focus-visible { outline:2px solid var(--gold); outline-offset:.35rem; border-radius:50%; }
     .field[data-reading="drift"] .blossom { animation-duration:calc(var(--sway-duration) * .62); }
+    .painted-poppy-target { position:absolute; z-index:2; left:27%; top:68%; width:clamp(3.2rem,6vw,5.25rem); aspect-ratio:1; border:0; border-radius:50%; background:transparent; cursor:default; opacity:0; pointer-events:none; }
+    .field[data-flower-dragging="true"] .painted-poppy-target { opacity:1; border:1px solid rgba(255,230,167,.72); box-shadow:0 0 2.2rem rgba(255,193,111,.72),inset 0 0 1.4rem rgba(255,216,157,.28); }
+    .shimmer-portal { position:absolute; z-index:5; left:50%; top:50%; display:grid; gap:.55rem; width:min(19rem,74vw); padding:1rem 1.1rem; color:#fff1d2; background:rgba(20,21,36,.58); border:1px solid rgba(255,223,157,.68); box-shadow:0 0 3rem rgba(255,191,111,.38); text-align:center; transform:translate(-50%,-50%) scale(.82); opacity:0; pointer-events:none; transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1); }
+    .shimmer-portal::before { content:""; position:absolute; inset:-5rem -8rem; z-index:-1; border:1px solid rgba(255,211,136,.44); border-radius:50%; transform:rotate(-18deg); box-shadow:0 0 3rem rgba(236,161,111,.28); }
+    .shimmer-portal p { margin:0; color:#ffe3a7; font:.66rem/1.35 "DM Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
+    .shimmer-portal a { justify-self:center; color:#fff5da; font:.78rem/1.3 "DM Mono",monospace; letter-spacing:.1em; text-decoration:underline; text-underline-offset:.35em; text-transform:uppercase; }
+    .field[data-shimmer-path="true"] .shimmer-portal { opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
     .mist-seam { position:absolute; z-index:3; top:5.7rem; left:clamp(1.25rem,4vw,4rem); width:clamp(5rem,12vw,10rem); aspect-ratio:1; display:grid; place-items:center; border:1px dashed rgba(255,244,218,.35); border-radius:50%; color:rgba(255,244,218,.45); font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; pointer-events:none; transition:box-shadow .8s ease,border-color .8s ease,color .8s ease; }
     .field[data-seam-found="true"] .mist-seam { border-color:var(--gold); color:var(--gold); box-shadow:0 0 3rem rgba(243,198,119,.62),inset 0 0 2rem rgba(243,198,119,.2); }
     .field-starfish { position:absolute; z-index:4; left:78%; top:76%; width:4rem; aspect-ratio:1; border:0; clip-path:polygon(50% 0%,61% 34%,98% 38%,69% 59%,79% 95%,50% 73%,21% 95%,31% 59%,2% 38%,39% 34%); background:var(--poppy); cursor:grab; filter:drop-shadow(0 10px 12px rgba(11,21,33,.52)); touch-action:none; }
@@ -64,10 +77,16 @@
 <body>
   <div class="drift-journey">
   <div class="field" data-field>
+    <div class="field-original-art" aria-hidden="true"></div>
     <div class="field-painted-art" aria-hidden="true"></div>
     <span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span><span class="seed" aria-hidden="true"></span>
     <div class="drift-stream" data-drift-stream aria-hidden="true"></div>
-    <div class="blossom-layer" data-blossom-layer aria-hidden="true"></div>
+    <div class="blossom-layer" data-blossom-layer></div>
+    <button class="painted-poppy-target" type="button" aria-label="Painted poppy memory anchor"></button>
+    <aside class="shimmer-portal" aria-live="polite">
+      <p>A Shimmer Path gathers where memory meets memory.</p>
+      <a href="/portal/shimmer">Follow the Shimmer Path</a>
+    </aside>
     <div class="mist-seam" aria-hidden="true">mist seam</div>
     <button class="field-starfish" type="button" aria-label="Drag the starfish to the mist seam"></button>
     <p class="seam-answer" aria-live="polite">The field remembers a sea it never was.</p>
@@ -97,8 +116,10 @@
     const field = document.querySelector("[data-field]");
     const stream = document.querySelector("[data-drift-stream]");
     const blossomLayer = document.querySelector("[data-blossom-layer]");
+    const paintedPoppyTarget = document.querySelector(".painted-poppy-target");
     const starfish = document.querySelector(".field-starfish");
     let draggingStarfish = false;
+    let draggingBlossom = null;
     let starfishPosition = { x: 78, y: 76 };
     for (let index = 0; index < 18; index += 1) {
       const mote = document.createElement("span");
@@ -112,8 +133,14 @@
       stream.appendChild(mote);
     }
     for (let index = 0; index < 15; index += 1) {
-      const blossom = document.createElement("span");
-      blossom.className = "blossom";
+      const blossom = document.createElement(index === 0 ? "button" : "span");
+      blossom.className = index === 0 ? "blossom blossom--draggable" : "blossom";
+      if (index === 0) {
+        blossom.type = "button";
+        blossom.setAttribute("aria-label", "Drag this floating poppy onto a painted poppy");
+      } else {
+        blossom.setAttribute("aria-hidden", "true");
+      }
       blossom.innerHTML = "<i></i><i></i><i></i><i></i><i></i><b></b>";
       blossom.style.setProperty("--left", `${5 + ((index * 17) % 90)}%`);
       blossom.style.setProperty("--top", `${62 + ((index * 11) % 32)}%`);
@@ -122,6 +149,7 @@
       blossom.style.setProperty("--sway-delay", `${-index * .31}s`);
       blossomLayer.appendChild(blossom);
     }
+    const draggableBlossom = blossomLayer.querySelector(".blossom--draggable");
     document.querySelectorAll("[data-reading]").forEach((button) => button.addEventListener("click", () => {
       field.dataset.reading = button.dataset.reading;
       document.querySelectorAll("[data-reading]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
@@ -158,6 +186,47 @@
     document.addEventListener("mousemove", moveStarfish);
     document.addEventListener("pointerup", placeStarfish);
     document.addEventListener("mouseup", placeStarfish);
+    const beginBlossomDrag = (event) => {
+      if (field.dataset.shimmerPath === "true") return;
+      draggingBlossom = event.currentTarget;
+      field.dataset.flowerDragging = "true";
+      event.preventDefault();
+    };
+    const revealShimmerPath = (blossom) => {
+      field.dataset.flowerDragging = "false";
+      field.dataset.shimmerPath = "true";
+      blossom.remove();
+    };
+    const moveBlossom = (event) => {
+      if (!draggingBlossom) return;
+      const bounds = field.getBoundingClientRect();
+      const x = Math.max(2, Math.min(94, ((event.clientX - bounds.left) / bounds.width) * 100));
+      const y = Math.max(2, Math.min(92, ((event.clientY - bounds.top) / bounds.height) * 100));
+      draggingBlossom.style.setProperty("--left", `${x}%`);
+      draggingBlossom.style.setProperty("--top", `${y}%`);
+    };
+    const placeBlossom = () => {
+      if (!draggingBlossom) return;
+      const blossomBounds = draggingBlossom.getBoundingClientRect();
+      const targetBounds = paintedPoppyTarget.getBoundingClientRect();
+      const blossomCenterX = blossomBounds.left + blossomBounds.width / 2;
+      const blossomCenterY = blossomBounds.top + blossomBounds.height / 2;
+      const matched = blossomCenterX >= targetBounds.left && blossomCenterX <= targetBounds.right
+        && blossomCenterY >= targetBounds.top && blossomCenterY <= targetBounds.bottom;
+      field.dataset.flowerDragging = "false";
+      if (matched) {
+        revealShimmerPath(draggingBlossom);
+      }
+      draggingBlossom = null;
+    };
+    draggableBlossom.addEventListener("pointerdown", beginBlossomDrag);
+    draggableBlossom.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      revealShimmerPath(event.currentTarget);
+    });
+    document.addEventListener("pointermove", moveBlossom);
+    document.addEventListener("pointerup", placeBlossom);
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       field.addEventListener("pointermove", (event) => {
         const x = (event.clientX / window.innerWidth - 0.5);

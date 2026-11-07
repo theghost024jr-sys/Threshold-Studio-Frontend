@@ -114,6 +114,7 @@ test("connects the Drift Falls choices to Wildflower Drift and Cabin of Moss", a
   assert.match(driftFalls, /href="\/environment\/wildflower-drift\.html">Behind the falls<\/a>/);
   assert.match(driftFalls, /href="\/environment\/cabin-of-moss\.html">Past the falls<\/a>/);
   assert.match(wildflowerDrift, /data-branch="wildflower-drift"/);
+  assert.match(wildflowerDrift, /url\("\/assets\/images\/wildflower-drift-background\.png"\)/);
   assert.match(wildflowerDrift, /href="\/environment\/waterfall\.html"/);
   assert.match(cabinOfMoss, /data-branch="cabin-of-moss"/);
   assert.match(cabinOfMoss, /href="\/environment\/wildflower-drift\.html">Return through Wildflower Drift<\/a>/);

@@ -51,5 +51,5 @@ test("connects the canonical five-minute path through existing Threshold territo
   assert.match(pages[3], /Sound unavailable/);
   assert.match(pages[3], /the Basin remains open/);
   assert.match(pages[4], /href="\/environment\/basin\.html">Return to the Basin/);
-  assert.match(pages[4], /href="\/portal\/cabin-of-moss">Follow the moss-lit way to Cabin of Moss/);
+  assert.match(pages[4], /href="\/environment\/cabin-of-moss\.html">Continue to the Cabin of Moss/);
 });

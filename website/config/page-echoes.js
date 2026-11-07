@@ -162,7 +162,7 @@ export const PAGE_ECHOES = Object.freeze([
   pageEcho("rava", "mythology", "Rava, the Stone-Mover", "/portal/rava", "portal/index.html", [
     "portal/src/App.css", "portal/src/index.css"
   ]),
-  pageEcho("cabin-of-moss", "oldForest", "Cabin of Moss", "/portal/cabin-of-moss", "portal/index.html", [
+  pageEcho("cabin-of-moss", "oldForest", "Cabin", "/portal/cabin-of-moss", "portal/index.html", [
     "portal/src/App.css", "portal/src/index.css"
   ]),
   pageEcho("lanternroot-conservatory", "oldForest", "Lanternroot Conservatory", "/portal/lanternroot-conservatory", "portal/index.html", [

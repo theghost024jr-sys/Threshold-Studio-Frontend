@@ -15,7 +15,7 @@ export default function CabinOfMoss() {
   const [name, detail] = layers[layer]
   function reveal(index) {
     setLayer(index)
-    recordReturnState('Cabin of Moss', name, detail)
+    recordReturnState('Cabin', name, detail)
   }
 
   function lookDown(event) {
@@ -37,12 +37,12 @@ export default function CabinOfMoss() {
     <section className="moss-cabin__porch">
       <WorldThread active="cabin" />
       <figure className="moss-cabin-image">
-        <img src={cabin} alt="The Cabin of Moss, a stable porch in the forest" />
+        <img src={cabin} alt="The Cabin, a stable porch in the forest" />
         <div className="moss-cabin-image__veil" />
         <figcaption>A place where timing can become legible.</figcaption>
       </figure>
       <section className="moss-copy">
-        <p>Cabin of Moss / adaptive clarity</p><h1>What has waited can be seen.</h1>
+        <p>Cabin / adaptive clarity</p><h1>What has waited can be seen.</h1>
         <p>The Cabin does not make paths or decide them. Its moss carries the residue of time; its porch holds a stable view while the forest stays itself.</p>
         <div className="moss-layers">{layers.map(([label], index) => <button type="button" className={index === layer ? 'is-active' : ''} onClick={() => reveal(index)} key={label}>{label}</button>)}</div>
         <aside className="moss-reading"><strong>{name}</strong><p>{detail}</p></aside>

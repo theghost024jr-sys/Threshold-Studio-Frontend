@@ -29,7 +29,7 @@ export default function LanternrootConservatory() {
           {readings.map(([label], index) => <button className={index === reading ? 'is-active' : ''} type="button" onClick={() => readRoots(index)} key={label}>{label}</button>)}
         </div>
         <aside aria-live="polite"><strong>{name}</strong><p>{detail}</p></aside>
-        <nav><Link to="/old-forest-trek">Carry the reading into the forest</Link><Link to="/cabin-of-moss">Return to the Cabin of Moss</Link><Link to="/">Return to the Portal</Link></nav>
+        <nav><Link to="/old-forest-trek">Carry the reading into the forest</Link><Link to="/cabin-of-moss">Return to the Cabin</Link><Link to="/">Return to the Portal</Link></nav>
       </section>
       <p className="lanternroot-mark" aria-hidden="true">⌁</p>
     </main>

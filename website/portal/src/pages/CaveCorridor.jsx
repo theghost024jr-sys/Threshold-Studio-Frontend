@@ -1,43 +1,61 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './CaveCorridor.css'
+import { deriveCaveCorridorState } from './CaveCorridorState.js'
+import {
+  lookDirectionAtAngle,
+  observeBendSeverance,
+  travelerPositionAtProgress,
+} from './CaveCorridorGeometry.js'
+import CaveCorridorViewport from './CaveCorridorViewport.jsx'
 
-const ALIGNMENT = { x: 0.42, y: -0.12 }
 const MEADOW_ALIGNMENT = { x: -0.9, y: 0.1 }
-const REVEAL_START = 0.45
 const RESOLVED_AT = 0.86
 const KEY_STEP = 0.1
+const TRAVEL_STEP = 0.055
 
 const clamp = (value, min = -1, max = 1) => Math.min(max, Math.max(min, value))
 
-function measureResolve(look, target = ALIGNMENT) {
+function measureResolve(look, target) {
   const distance = Math.hypot(look.x - target.x, look.y - target.y)
   return clamp(1 - distance / 1.1, 0, 1)
-}
-
-function buildCrystals() {
-  const crystals = []
-  for (let index = 0; index < 18; index += 1) {
-    const side = index % 2 === 0 ? -1 : 1
-    const depth = 0.25 + ((index * 37) % 100) / 100 * 0.75
-    crystals.push({
-      key: index,
-      depth,
-      left: 50 + side * (14 + ((index * 53) % 36)),
-      top: 8 + ((index * 29) % 74),
-      height: 10 + ((index * 17) % 26) * depth,
-      tilt: side * (6 + ((index * 11) % 24)),
-    })
-  }
-  return crystals
 }
 
 export default function CaveCorridor() {
   const stageRef = useRef(null)
   const dragRef = useRef(null)
-  const [look, setLook] = useState({ x: -0.5, y: 0.1 })
+  const [look, setLook] = useState({ x: 0.5, y: 0 })
+  const [progress, setProgress] = useState(0)
   const [reducedMotion, setReducedMotion] = useState(false)
-  const crystals = useMemo(() => buildCrystals(), [])
+  const corridor = useMemo(() => deriveCaveCorridorState(progress), [progress])
+  const travelerPosition = useMemo(() => travelerPositionAtProgress(progress), [progress])
+  const lookDirection = useMemo(
+    () => lookDirectionAtAngle(look.x * Math.PI),
+    [look.x],
+  )
+  const bendSeverance = useMemo(() => {
+    return observeBendSeverance({ position: travelerPosition, lookDirection })
+  }, [lookDirection, travelerPosition])
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return undefined
+
+    const walkthrough = {
+      getTravelerPosition: () => travelerPosition,
+      getLookDirection: () => lookDirection,
+      getSeveranceObservation: () => bendSeverance,
+      setProgressForTest: (value) => setProgress(clamp(value, 0, 1)),
+      resetWalkthrough: () => {
+        setProgress(0)
+        setLook({ x: 0.5, y: 0 })
+      },
+    }
+    window.__caveCorridorWalkthrough = walkthrough
+
+    return () => {
+      if (window.__caveCorridorWalkthrough === walkthrough) delete window.__caveCorridorWalkthrough
+    }
+  }, [bendSeverance, lookDirection, travelerPosition])
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -51,14 +69,8 @@ export default function CaveCorridor() {
     stageRef.current?.focus({ preventScroll: true })
   }, [])
 
-  const resolve = reducedMotion ? 1 : measureResolve(look)
-  const resolved = resolve >= RESOLVED_AT
   const meadowResolve = reducedMotion ? 1 : measureResolve(look, MEADOW_ALIGNMENT)
   const meadowResolved = meadowResolve >= RESOLVED_AT
-  const meadowPresence = reducedMotion
-    ? 1
-    : clamp((meadowResolve - REVEAL_START) / (RESOLVED_AT - REVEAL_START), 0, 1)
-
   const lookFromPointer = useCallback((event) => {
     const box = stageRef.current.getBoundingClientRect()
     return {
@@ -74,18 +86,18 @@ export default function CaveCorridor() {
   }
 
   const onPointerMove = (event) => {
-    if (reducedMotion) return
     if (event.pointerType === 'touch') {
       const drag = dragRef.current
       if (!drag || drag.id !== event.pointerId) return
       const box = stageRef.current.getBoundingClientRect()
       setLook({
         x: clamp(drag.look.x + ((event.clientX - drag.x) / box.width) * 2.4),
-        y: clamp(drag.look.y + ((event.clientY - drag.y) / box.height) * 2.4),
+        y: drag.look.y,
       })
+      setProgress((current) => clamp(current - ((event.clientY - drag.y) / box.height) * 0.65, 0, 1))
       return
     }
-    setLook(lookFromPointer(event))
+    if (!reducedMotion) setLook(lookFromPointer(event))
   }
 
   const onPointerEnd = (event) => {
@@ -93,72 +105,69 @@ export default function CaveCorridor() {
   }
 
   const onKeyDown = (event) => {
-    const step = {
+    const lookStep = {
       ArrowLeft: [-KEY_STEP, 0],
       ArrowRight: [KEY_STEP, 0],
-      ArrowUp: [0, -KEY_STEP],
-      ArrowDown: [0, KEY_STEP],
     }[event.key]
-    if (!step) return
-    event.preventDefault()
-    setLook((current) => ({ x: clamp(current.x + step[0]), y: clamp(current.y + step[1]) }))
-  }
+    if (lookStep) {
+      event.preventDefault()
+      setLook((current) => ({ x: clamp(current.x + lookStep[0]), y: clamp(current.y + lookStep[1]) }))
+      return
+    }
 
-  const openingPresence = reducedMotion
-    ? 1
-    : clamp((resolve - REVEAL_START) / (RESOLVED_AT - REVEAL_START), 0, 1)
+    const travelStep = {
+      w: TRAVEL_STEP,
+      W: TRAVEL_STEP,
+      ArrowUp: TRAVEL_STEP,
+      PageDown: TRAVEL_STEP,
+      s: -TRAVEL_STEP,
+      S: -TRAVEL_STEP,
+      ArrowDown: -TRAVEL_STEP,
+      PageUp: -TRAVEL_STEP,
+    }[event.key]
+    if (travelStep) {
+      event.preventDefault()
+      setProgress((current) => clamp(current + travelStep, 0, 1))
+    }
+
+    if (event.key === 'r' || event.key === 'R') {
+      event.preventDefault()
+      setProgress(0)
+      setLook({ x: 0.5, y: 0 })
+    }
+  }
 
   return (
     <main className="cave-page">
       <div
         ref={stageRef}
-        className={`cave-stage${resolved ? ' is-resolved' : ''}${reducedMotion ? ' is-still' : ''}`}
-        style={{
-          '--lx': reducedMotion ? 0 : look.x,
-          '--ly': reducedMotion ? 0 : look.y,
-          '--resolve': resolve,
-          '--opening': openingPresence,
-          '--meadow-opening': meadowPresence,
-        }}
+        className={`cave-stage${reducedMotion ? ' is-still' : ''}`}
         tabIndex={0}
         role="group"
-        aria-label="Cave corridor. Move, drag, or use the arrow keys to change where you look."
+        aria-label="Cave Corridor"
+        aria-describedby="cave-instructions cave-condition"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerEnd}
         onPointerCancel={onPointerEnd}
         onKeyDown={onKeyDown}
       >
-        <div className="cave-walls" aria-hidden="true" />
-        <div className="cave-opening" aria-hidden="true" />
-        <div className="cave-opening cave-opening--meadow" aria-hidden="true" />
-        <div className="cave-crystals" aria-hidden="true">
-          {crystals.map((crystal) => (
-            <i
-              key={crystal.key}
-              style={{
-                '--depth': crystal.depth,
-                '--tilt': `${crystal.tilt}deg`,
-                left: `${crystal.left}%`,
-                top: `${crystal.top}%`,
-                height: `${crystal.height}vmin`,
-              }}
-            />
-          ))}
-        </div>
-        <div className="cave-fractures" aria-hidden="true">
-          <b style={{ '--angle': '-24deg' }} />
-          <b style={{ '--angle': '17deg' }} />
-          <b style={{ '--angle': '-9deg' }} />
-          <b style={{ '--angle': '31deg' }} />
-        </div>
-        <div className="cave-vignette" aria-hidden="true" />
+        <p id="cave-instructions" className="cave-status">Move forward with W or Arrow Up, back with S or Arrow Down, look with the pointer or left and right arrows, and reset with R.</p>
+        <p id="cave-condition" className="cave-status" aria-live="polite">
+          {`${corridor.meaning}. House and Garden: ${bendSeverance.visibility}.`}
+        </p>
+        <CaveCorridorViewport
+          position={travelerPosition}
+          lookDirection={lookDirection}
+          lookPitch={reducedMotion ? 0 : look.y * 0.45}
+        />
       </div>
 
       <nav className="cave-nav" aria-label="Cave corridor passages">
         <a className="cave-nav__retreat" href="/housegarden.html">Back to House &amp; Garden</a>
         {meadowResolved && <a className="cave-nav__meadow" href="/wildflower-drift.html">Toward the wildflower field</a>}
-        {resolved && <Link className="cave-nav__forward" to="/canyon">Enter the Canyon</Link>}
+        <Link className="cave-nav__prototype" to="/cave-corridor-prototype">Follow the older seam</Link>
+        {corridor.progress >= 0.98 && <Link className="cave-nav__forward" to="/canyon">Cross into Canyon</Link>}
       </nav>
     </main>
   )

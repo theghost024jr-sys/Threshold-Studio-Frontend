@@ -29,6 +29,11 @@
     .reading button:hover,.reading button:focus-visible,.reading button[aria-pressed="true"] { border-color:var(--gold); background:rgba(20,35,34,.72); outline:none; transform:translateY(-5px); }
     .reading strong { display:block; margin-bottom:.55rem; color:var(--gold); font-size:.67rem; letter-spacing:.12em; text-transform:uppercase; }
     .reading span { font:1.05rem/1.35 "Newsreader",Georgia,serif; }
+    .reading button[data-reading="drift"] { --relationship:0; position:relative; isolation:isolate; border-color:color-mix(in srgb,rgba(255,244,218,.35),var(--gold) calc(var(--relationship) * 100%)); background:color-mix(in srgb,rgba(9,23,27,.42),rgba(83,116,105,.72) calc(var(--relationship) * 100%)); transform:translateY(calc(var(--relationship) * -7px)) scale(calc(1 + var(--relationship) * .035)); }
+    .reading button[data-reading="drift"]::after { content:""; position:absolute; inset:-1px; z-index:-1; border-radius:inherit; background:radial-gradient(circle at 50% 0,rgba(243,198,119,calc(var(--relationship) * .42)),transparent 62%); opacity:var(--relationship); transition:opacity 180ms linear; }
+    .drift-expansion { position:fixed; z-index:12; left:var(--drift-card-left,0px); top:var(--drift-card-top,0px); width:var(--drift-card-width,0px); height:var(--drift-card-height,0px); display:grid; place-items:center; overflow:hidden; border:1px solid rgba(243,198,119,.75); border-radius:.9rem; color:transparent; background:rgba(20,35,34,.72); opacity:0; pointer-events:none; transition:left 900ms cubic-bezier(.2,.8,.2,1),top 900ms cubic-bezier(.2,.8,.2,1),width 900ms cubic-bezier(.2,.8,.2,1),height 900ms cubic-bezier(.2,.8,.2,1),border-radius 900ms ease,background 900ms ease,color 500ms ease,opacity 180ms linear; }
+    .field[data-drift-active="true"] .drift-expansion { left:0; top:0; width:100vw; height:100svh; border-radius:0; color:var(--ink); background:linear-gradient(145deg,rgba(14,32,35,.98),rgba(82,118,107,.98)); opacity:1; }
+    .drift-expansion strong { font:600 clamp(4rem,14vw,12rem)/.8 "Newsreader",Georgia,serif; letter-spacing:-.07em; }
     .seed { position:absolute; width:.6rem; aspect-ratio:1; border-radius:50%; background:var(--ink); box-shadow:0 0 12px var(--ink); opacity:.65; animation:float 9s ease-in-out infinite; transform:translate3d(calc(var(--shift-x) * 2),calc(var(--shift-y) * 2),180px); }
     .seed:nth-of-type(1){left:18%;top:33%;animation-delay:-2s}.seed:nth-of-type(2){left:73%;top:24%;animation-delay:-5s}.seed:nth-of-type(3){left:59%;top:69%;animation-delay:-7s}.seed:nth-of-type(4){left:37%;top:57%;animation-delay:-1s}
     .drift-stream { position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; transform-style:preserve-3d; }
@@ -56,7 +61,7 @@
     @keyframes float { 50% { transform:translate(2rem,-3rem); opacity:.18; } }
     @keyframes drift-across { from { transform:translate3d(0,0,var(--depth)) rotate(0deg); } 55% { transform:translate3d(64vw,-4rem,var(--depth)) rotate(160deg); } to { transform:translate3d(118vw,2rem,var(--depth)) rotate(340deg); } }
     @keyframes blossom-sway { from { transform:rotateX(10deg) rotateY(-16deg) rotateZ(-8deg) translate3d(-.5rem,.3rem,60px); } to { transform:rotateX(-8deg) rotateY(18deg) rotateZ(9deg) translate3d(.7rem,-.4rem,100px); } }
-    @media (prefers-reduced-motion:reduce){.seed,.drift-mote,.blossom{animation:none}.field::before,.hero,.reading,.reading button{transition:none}}
+    @media (prefers-reduced-motion:reduce){.seed,.drift-mote,.blossom{animation:none}.field::before,.hero,.reading,.reading button,.drift-expansion{transition:none}}
     @media (max-width:680px){.reading{grid-template-columns:1fr}.reading button{min-height:5rem}h1{font-size:clamp(4rem,20vw,7rem)}}
   </style>
 </head>
@@ -83,6 +88,7 @@
         <button type="button" data-reading="drift" aria-pressed="false"><strong>Drift</strong><span>Let the field widen around what is leaving.</span></button>
         <button type="button" data-reading="silence" aria-pressed="false"><strong>Silence field</strong><span>The diagram is linked here, but has not yet taken form.</span></button>
       </section>
+      <div class="drift-expansion" aria-hidden="true"><strong>Drift</strong></div>
     </main>
   </div>
   <section class="transition-landing">
@@ -96,8 +102,14 @@
     const stream = document.querySelector("[data-drift-stream]");
     const blossomLayer = document.querySelector("[data-blossom-layer]");
     const starfish = document.querySelector(".field-starfish");
+    const driftCard = document.querySelector('[data-reading="drift"]');
+    const driftTarget = { x: 53, y: 58, radius: 12, dwellMs: 700 };
     let draggingStarfish = false;
     let starfishPosition = { x: 78, y: 76 };
+    let driftRelationship = 0;
+    let driftDwellTimer = null;
+    let driftActive = false;
+    let priorReading = "anchor";
     for (let index = 0; index < 18; index += 1) {
       const mote = document.createElement("span");
       mote.className = "drift-mote";
@@ -124,6 +136,54 @@
       field.dataset.reading = button.dataset.reading;
       document.querySelectorAll("[data-reading]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
     }));
+    const selectReading = (reading) => {
+      field.dataset.reading = reading;
+      document.querySelectorAll("[data-reading]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice.dataset.reading === reading)));
+    };
+    const measureDriftCard = () => {
+      const bounds = driftCard.getBoundingClientRect();
+      field.style.setProperty("--drift-card-left", `${bounds.left}px`);
+      field.style.setProperty("--drift-card-top", `${bounds.top}px`);
+      field.style.setProperty("--drift-card-width", `${bounds.width}px`);
+      field.style.setProperty("--drift-card-height", `${bounds.height}px`);
+    };
+    const resetDriftExperiment = () => {
+      driftActive = false;
+      if (driftDwellTimer !== null) window.clearTimeout(driftDwellTimer);
+      driftDwellTimer = null;
+      field.dataset.driftActive = "false";
+      selectReading(priorReading);
+    };
+    const updateDriftExperiment = () => {
+      if (field.dataset.seamFound === "true") return;
+      const distance = Math.hypot(starfishPosition.x - driftTarget.x, starfishPosition.y - driftTarget.y);
+      driftRelationship = Math.max(0, Math.min(1, 1 - distance / driftTarget.radius));
+      driftCard.style.setProperty("--relationship", driftRelationship.toFixed(3));
+
+      if (driftActive && driftRelationship < 0.2) {
+        resetDriftExperiment();
+        return;
+      }
+
+      if (driftActive) return;
+
+      if (!draggingStarfish || driftRelationship < 0.88) {
+        if (driftDwellTimer !== null) window.clearTimeout(driftDwellTimer);
+        driftDwellTimer = null;
+        return;
+      }
+
+      if (driftDwellTimer !== null) return;
+      driftDwellTimer = window.setTimeout(() => {
+        driftDwellTimer = null;
+        if (!draggingStarfish || driftRelationship < 0.88 || driftActive) return;
+        priorReading = field.dataset.reading || "anchor";
+        measureDriftCard();
+        driftActive = true;
+        field.dataset.driftActive = "true";
+        selectReading("drift");
+      }, driftTarget.dwellMs);
+    };
     const updateScrollPassage = () => {
       field.style.setProperty("--scroll-progress", String(Math.min(1, Math.max(0, window.scrollY / window.innerHeight))));
     };
@@ -141,6 +201,7 @@
       starfishPosition = { x, y };
       starfish.style.left = `${x}%`;
       starfish.style.top = `${y}%`;
+      updateDriftExperiment();
     };
     const placeStarfish = () => {
       if (!draggingStarfish) return;
@@ -156,6 +217,12 @@
     document.addEventListener("mousemove", moveStarfish);
     document.addEventListener("pointerup", placeStarfish);
     document.addEventListener("mouseup", placeStarfish);
+    window.addEventListener("resize", () => {
+      if (driftActive) measureDriftCard();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && driftActive) resetDriftExperiment();
+    });
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       field.addEventListener("pointermove", (event) => {
         const x = (event.clientX / window.innerWidth - 0.5);

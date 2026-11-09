@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import worker from "../../worker.js";
@@ -74,6 +75,34 @@ test("serves the Portal router shell for direct World navigation", async () => {
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("content-type"), "text/html; charset=utf-8");
   assert.deepEqual(requestedPaths, ["/portal-dist/portal-shell.txt"]);
+});
+
+test("serves Cabin of Moss as HTML when the Portal shell is requested directly", async () => {
+  const requestedPaths = [];
+  const response = await worker.fetch(
+    new Request("https://threshold.example/portal/cabin-of-moss"),
+    {
+      ASSETS: {
+        async fetch(request) {
+          requestedPaths.push(new URL(request.url).pathname);
+          return new Response("<!doctype html><title>Threshold Portal</title>");
+        }
+      }
+    }
+  );
+
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("content-type"), "text/html; charset=utf-8");
+  assert.deepEqual(requestedPaths, ["/portal-dist/portal-shell.txt"]);
+});
+
+test("marks all extensionless Portal shells as HTML for static fallback delivery", async () => {
+  const headers = await readFile(new URL("../_headers", import.meta.url), "utf8");
+
+  assert.match(
+    headers,
+    /^\/portal\/\*\r?\n {2}Content-Type: text\/html; charset=utf-8$/m
+  );
 });
 
 test("logs sanitized node activation failures without a LOG binding", async () => {

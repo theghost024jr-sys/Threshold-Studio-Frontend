@@ -114,6 +114,40 @@ test("warms the existing Entry Hub without replacing its route structure", async
   assert.match(warmth, /"House & Garden · tending inward"/);
 });
 
+test("anchors every Entry Hub exit to its canonical static document", async () => {
+  const hub = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const documentUrl = new URL(
+    "https://www.thresholdstudiowebsite.org/portal/pages/pages/deep-system/engine.html"
+  );
+  const expectedDestinations = [
+    { href: "/world-map.html", file: "../world-map.html", title: "World Map - Threshold Studio" },
+    { href: "/glyphs.html", file: "../glyphs.html", title: "Glyph Archive - Threshold Studio" },
+    { href: "/housegarden.html", file: "../housegarden.html", title: "Threshold Studio - House and Garden" },
+    { href: "/pages/threshold.html", file: "../pages/threshold.html", title: "Threshold · Threshold" },
+    { href: "/ethos.html", file: "../ethos.html", title: "Ethos · Threshold Studio" },
+    { href: "/learningwheel.html", file: "../learningwheel.html", title: "Learning Wheel - Threshold Studio" },
+    { href: "/discover.html", file: "../discover.html", title: "Threshold Discover" },
+    { href: "/invitation.html", file: "../invitation.html", title: "You Are Welcome · Threshold" },
+    { href: "/mythology.html", file: "../mythology.html", title: "Threshold Studio - Mythology" },
+    { href: "/dialogues.html", file: "../dialogues.html", title: "Dialogues - Threshold Studio" },
+    { href: "/contact.html", file: "../contact.html", title: "Threshold Studio - Contact" },
+    { href: "/deep-system/engine.html", file: "../deep-system/engine.html", title: "Threshold Engine - Mechanics" },
+  ];
+
+  const hrefs = Array.from(hub.matchAll(/\bhref="([^"]+)"/g), (match) => match[1]);
+  for (const destination of expectedDestinations) {
+    assert.ok(hrefs.includes(destination.href), `Entry Hub includes ${destination.href}`);
+    assert.equal(new URL(destination.href, documentUrl).pathname, destination.href);
+    const page = await readFile(new URL(destination.file, import.meta.url), "utf8");
+    assert.match(page, new RegExp(`<title>${destination.title}</title>`));
+  }
+
+  assert.doesNotMatch(
+    hub,
+    /href="(?:portal\/)?(?:world-map|housegarden|pages\/threshold|ethos|learningwheel|discover|invitation|mythology|glyphs|dialogues|contact|deep-system\/engine)\.html"/
+  );
+});
+
 test("keeps panoramic main-Hub gestures separate from the return Hub", async () => {
   const [mainHub, returnHub, returnState, experience] = await Promise.all([
     readFile(new URL("../index.html", import.meta.url), "utf8"),

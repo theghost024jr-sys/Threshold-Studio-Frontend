@@ -14,8 +14,9 @@ export default function CabinOfMoss() {
   const [layer, setLayer] = useState(0)
   const [name, detail] = layers[layer]
   function reveal(index) {
+    const [nextName, nextDetail] = layers[index]
     setLayer(index)
-    recordReturnState('Cabin of Moss', name, detail)
+    recordReturnState('Cabin of Moss', nextName, nextDetail)
   }
 
   function lookDown(event) {

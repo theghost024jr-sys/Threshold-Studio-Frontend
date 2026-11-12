@@ -42,6 +42,7 @@ const BASE_QUERIES = [
 let cachedSearchIndex = null;
 let cachedPngIndex = null;
 let cachedPngMap = null;
+let cachedRouteLayers = null;
 const cachedCorpora = new Map();
 const cachedChambers = new Map();
 
@@ -56,6 +57,35 @@ function json(data, status = 200) {
       "cache-control": "no-store"
     }
   });
+}
+
+function normalizeRoute(value) {
+  if (!value) {
+    return "";
+  }
+  let route;
+  try {
+    route = new URL(String(value).trim(), "https://threshold.local").pathname;
+  } catch {
+    return "";
+  }
+  if (!route.startsWith("/")) {
+    route = "/" + route;
+  }
+  return route.length > 1 ? route.replace(/\/+$/, "") : route;
+}
+
+async function loadRouteLayers(env, request) {
+  if (cachedRouteLayers) {
+    return cachedRouteLayers;
+  }
+  const target = new URL("/config/route-layers.json", request.url);
+  const response = await env.ASSETS.fetch(new Request(target.toString()));
+  if (!response.ok) {
+    throw new Error("route layers unavailable (" + response.status + ")");
+  }
+  cachedRouteLayers = await response.json();
+  return cachedRouteLayers;
 }
 
 function traceFor(request) {
@@ -649,6 +679,52 @@ async function handleRequest(request, env, trace) {
   if (url.pathname === "/api/progression" && request.method === "GET") {
     const progression = await verifyProgression(request, env.SEED_SECRET);
     return json({ seedPlanted: progression.seedPlanted === true });
+  }
+
+  if (url.pathname === "/api/routes" && request.method === "GET") {
+    try {
+      const registry = await loadRouteLayers(env, request);
+      const routes = Array.isArray(registry.routes) ? registry.routes : [];
+      const byLayer = {};
+      const byStatus = {};
+      let unreturned = 0;
+      for (const entry of routes) {
+        byLayer[entry.layer] = (byLayer[entry.layer] || 0) + 1;
+        byStatus[entry.status] = (byStatus[entry.status] || 0) + 1;
+        if (entry.orphaned) {
+          unreturned += 1;
+        }
+      }
+      const requested = normalizeRoute(url.searchParams.get("url"));
+      const payload = {
+        revision: registry.revision || null,
+        total: routes.length,
+        unreturned,
+        byLayer,
+        byStatus,
+        layers: (registry.layers || []).map((layer) => ({
+          ...layer,
+          count: byLayer[layer.id] || 0
+        })),
+        edge: registry.edge || null
+      };
+      if (requested) {
+        const match = routes.find((entry) => entry.route === requested)
+          || routes.find((entry) => entry.route === requested + "/")
+          || null;
+        payload.query = requested;
+        payload.route = match;
+        payload.found = Boolean(match);
+      }
+      log("info", "routes.layers.served", trace, {
+        total: routes.length,
+        query: requested || null
+      });
+      return json(payload);
+    } catch (error) {
+      log("error", "routes.layers.failed", trace, { error: error?.message || "unknown error" });
+      return json({ error: error?.message || "route layers unavailable" }, 500);
+    }
   }
 
     if (url.pathname === "/api/seeds/plant" && request.method === "POST") {

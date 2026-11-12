@@ -1,0 +1,1317 @@
+{
+  "version": 1,
+  "revision": "2026-11-10",
+  "basis": [
+    "PUBLIC_ROUTE_AUDIT.md (rev 2026-11-03)",
+    "config/world-topology.json",
+    "config/access-flow.json"
+  ],
+  "layers": [
+    {
+      "id": "edge",
+      "order": 0,
+      "label": "Worker edge",
+      "note": "Intercepted before assets: canonical redirects and sealed build output."
+    },
+    {
+      "id": "spine",
+      "order": 1,
+      "label": "The Spine",
+      "note": "canonicalEntryPath: the five acts the site itself points through."
+    },
+    {
+      "id": "configured",
+      "order": 2,
+      "label": "Configured surface",
+      "note": "Declared by world topology, spokes or living-pages config."
+    },
+    {
+      "id": "portal",
+      "order": 3,
+      "label": "Portal SPA",
+      "note": "One document shell; the router selects the page."
+    },
+    {
+      "id": "world",
+      "order": 4,
+      "label": "World SPA",
+      "note": "Served the Portal shell by the Worker, but sourced outside website/portal."
+    },
+    {
+      "id": "legacy",
+      "order": 5,
+      "label": "Legacy",
+      "note": "Compatibility or retired-construct surfaces, kept addressable."
+    },
+    {
+      "id": "artifact",
+      "order": 6,
+      "label": "Build artifacts",
+      "note": "Generated or template output inside the deploy root."
+    }
+  ],
+  "edge": {
+    "redirects": [
+      {
+        "from": "/portal/index.html",
+        "to": "/portal/",
+        "status": 308
+      }
+    ],
+    "sealed": [
+      "/portal-dist/",
+      "/generated-pages/",
+      "/page-templates/",
+      "/echoes/inventory/"
+    ],
+    "retired": [
+      "/hub-return.html"
+    ]
+  },
+  "routes": [
+    {
+      "route": "/portal/index.html",
+      "layer": "edge",
+      "status": "redirect",
+      "title": "Threshold Portal shell"
+    },
+    {
+      "route": "/index.html",
+      "layer": "spine",
+      "status": "canonical",
+      "title": "Hub Entry",
+      "node": "entry-hub",
+      "passage": {
+        "mode": "access-stage",
+        "stage": "hub"
+      }
+    },
+    {
+      "route": "/housegarden.html",
+      "layer": "spine",
+      "status": "canonical",
+      "title": "House and Garden",
+      "node": "house-garden",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "access-stage",
+        "stage": "house-garden"
+      }
+    },
+    {
+      "route": "/environment/herbroom.html",
+      "layer": "spine",
+      "status": "canonical",
+      "title": "Herb Room",
+      "node": "herb-room",
+      "echo": "/housegarden.html",
+      "containedBy": "house-garden",
+      "passage": {
+        "mode": "access-stage",
+        "stage": "herb-room"
+      }
+    },
+    {
+      "route": "/environment/basin.html",
+      "layer": "spine",
+      "status": "canonical",
+      "title": "Basin",
+      "node": "basin",
+      "echo": "/environment/herbroom.html",
+      "containedBy": "herb-room",
+      "passage": {
+        "mode": "access-stage",
+        "stage": "basin",
+        "awards": "Shimmer"
+      }
+    },
+    {
+      "route": "/environment/old-forest.html",
+      "layer": "spine",
+      "status": "canonical",
+      "title": "Old Forest",
+      "node": "old-forest",
+      "echo": "/environment/basin.html",
+      "containedBy": "house-garden",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/contact.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Contact",
+      "node": "contact",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "access-stage",
+        "stage": "contact",
+        "requires": "Shimmer"
+      }
+    },
+    {
+      "route": "/deep-system/engine.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Threshold Engine",
+      "node": "engine",
+      "echo": "/hub.html",
+      "containedBy": "hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/dialogues.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Dialogues",
+      "node": "dialogues",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "access-stage",
+        "stage": "dialogue",
+        "requires": "Shimmer"
+      }
+    },
+    {
+      "route": "/discover.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Discover",
+      "node": "discover",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/environment/waterfall.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Waterfall",
+      "node": "waterfall",
+      "echo": "/environment/herbroom.html",
+      "containedBy": "herb-room",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/ethos.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Ethos",
+      "node": "ethos",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/garden.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Garden",
+      "node": "garden",
+      "echo": "/housegarden.html",
+      "containedBy": "house-garden",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/glyph-archive-node.html",
+      "layer": "configured",
+      "status": "experimental",
+      "title": "Glyph Archive Node",
+      "node": "glyph-archive-node",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/glyphs.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Glyphs",
+      "node": "glyphs",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/hub.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Return Hub",
+      "node": "hub",
+      "echo": "/index.html",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/invitation.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Invitation",
+      "node": "invitation",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "access-stage",
+        "stage": "invitation",
+        "requires": "Shimmer"
+      }
+    },
+    {
+      "route": "/learningwheel.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Learning Wheel",
+      "node": "learning-wheel",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/mythology.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Mythology",
+      "node": "mythology",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/node-field.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Node Field",
+      "node": "node-field",
+      "echo": "/hub.html",
+      "containedBy": "hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/beyond/Ella.html",
+      "layer": "configured",
+      "status": "experimental",
+      "title": "Ella",
+      "node": "ella",
+      "echo": "/pages/beyond/beyond.html",
+      "containedBy": "beyond",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/beyond/beyond.html",
+      "layer": "configured",
+      "status": "experimental",
+      "title": "Beyond",
+      "node": "beyond",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/ethos-seed.html",
+      "layer": "configured",
+      "status": "experimental",
+      "title": "Ethos Seed",
+      "node": "ethos-seed",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/learning-autumn.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Collapse Lore",
+      "node": "learning-autumn",
+      "echo": "/learningwheel.html",
+      "containedBy": "learning-wheel",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/learning-spring.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Sprout Gallery",
+      "node": "learning-spring",
+      "echo": "/learningwheel.html",
+      "containedBy": "learning-wheel",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/learning-summer.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Shimmer Chamber",
+      "node": "learning-summer",
+      "echo": "/learningwheel.html",
+      "containedBy": "learning-wheel",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/learning-winter.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Soil Archive",
+      "node": "learning-winter",
+      "echo": "/learningwheel.html",
+      "containedBy": "learning-wheel",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/notes.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Notes",
+      "node": "notes",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/posts.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Posts",
+      "node": "posts",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/projects.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Projects",
+      "node": "projects",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/role-expressions.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Role Expressions",
+      "node": "role-expressions",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/species-signals.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Species Signals",
+      "node": "species-signals",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/pages/threshold.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Threshold",
+      "node": "threshold-page",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/spiral-reflection.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Spiral Reflection",
+      "node": "spiral-reflection",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/spoke.html",
+      "layer": "configured",
+      "status": "legacy",
+      "title": "Spoke",
+      "node": "spoke",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/thankyou.html",
+      "layer": "configured",
+      "status": "experimental",
+      "title": "Thank You",
+      "node": "thankyou",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/wildflower-drift.html",
+      "layer": "configured",
+      "status": "experimental",
+      "title": "Wildflower Drift",
+      "node": "wildflower-drift",
+      "echo": "/garden.html",
+      "containedBy": "garden",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/world-map.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "World Map",
+      "node": "world-map",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "A place for passing through."
+    },
+    {
+      "route": "/portal/basin",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Basin (Portal)",
+      "node": "portal-basin",
+      "echo": "/environment/basin.html",
+      "containedBy": "basin",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/basin-falls",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Basin Falls",
+      "node": "basin-falls",
+      "echo": "/portal/basin",
+      "containedBy": "basin",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/beach",
+      "layer": "portal",
+      "status": "experimental",
+      "title": "Shore",
+      "node": "beach",
+      "echo": "/housegarden.html",
+      "containedBy": "house-garden",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/portal/branches/:branchId",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Branch dashboard"
+    },
+    {
+      "route": "/portal/cabin-of-moss",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Cabin of Moss",
+      "node": "cabin-of-moss",
+      "echo": "/environment/old-forest.html",
+      "containedBy": "old-forest",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/canyon",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Canyon",
+      "node": "canyon",
+      "echo": "/portal/cave-corridor",
+      "containedBy": "house-garden",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/cave-corridor",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Cave Corridor",
+      "node": "cave-corridor",
+      "echo": "/housegarden.html",
+      "containedBy": "house-garden",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/portal/cave-corridor-prototype",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Older Cave Seam",
+      "node": "cave-corridor-prototype",
+      "echo": "/portal/cave-corridor",
+      "containedBy": "cave-corridor",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/portal/collapse-chamber",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Collapse Chamber",
+      "node": "collapse-chamber",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/dashboard",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Dashboard",
+      "node": "dashboard",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/deepwater",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Deepwater",
+      "node": "deepwater",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/doug",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Doug",
+      "node": "doug",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/drift-chamber",
+      "layer": "portal",
+      "status": "legacy",
+      "title": "Drift Chamber",
+      "node": "drift-chamber",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/portal/drift-systems",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Drift Systems",
+      "node": "drift-systems",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/ethos",
+      "layer": "portal",
+      "status": "experimental",
+      "title": "Ethos (Portal)",
+      "node": "portal-ethos",
+      "echo": "/ethos.html",
+      "containedBy": "ethos",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/portal/first-door",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "First Door",
+      "node": "first-door",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/glyphs",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Glyphs (Portal)",
+      "node": "portal-glyphs",
+      "echo": "/glyphs.html",
+      "containedBy": "glyphs",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/glyphs/hourglass",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Hourglass Glyph",
+      "node": "hourglass-glyph",
+      "echo": "/portal/glyphs",
+      "containedBy": "portal-glyphs",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/lanternroot-conservatory",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Lanternroot Conservatory",
+      "node": "lanternroot-conservatory",
+      "echo": "/portal/cabin-of-moss",
+      "containedBy": "old-forest",
+      "passage": {
+        "mode": "return-trace"
+      }
+    },
+    {
+      "route": "/portal/motion",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Motion",
+      "node": "motion",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/ocean",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Ocean",
+      "node": "ocean",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/old-forest-trek",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Old Forest Trek",
+      "node": "old-forest-trek",
+      "echo": "/portal/lanternroot-conservatory",
+      "containedBy": "old-forest",
+      "passage": {
+        "mode": "stillness"
+      }
+    },
+    {
+      "route": "/portal/plasma-bloom-meadow",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Plasma-Bloom Meadow",
+      "node": "plasma-bloom-meadow",
+      "echo": "/housegarden.html",
+      "containedBy": "house-garden",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/portal/quiet-grove",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Quiet Grove",
+      "node": "quiet-grove",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/rava",
+      "layer": "portal",
+      "status": "experimental",
+      "title": "Rava",
+      "node": "rava",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/portal/rohg",
+      "layer": "portal",
+      "status": "experimental",
+      "title": "Rohg",
+      "node": "rohg",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/portal/ruins",
+      "layer": "portal",
+      "status": "experimental",
+      "title": "Ruins",
+      "node": "ruins",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/portal/shimmer",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Shimmer (Cabin Lights)",
+      "node": "shimmer",
+      "echo": "/environment/basin.html",
+      "containedBy": "basin",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/snail-band-clearing",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Snail Band Clearing",
+      "node": "snail-band-clearing",
+      "echo": "/portal/old-forest-trek",
+      "containedBy": "old-forest",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/spiral-grove",
+      "layer": "portal",
+      "status": "experimental",
+      "title": "Spiral Grove",
+      "node": "spiral-grove",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "orphaned": true
+    },
+    {
+      "route": "/portal/wildflower-drift",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Wildflower Drift (Portal)",
+      "node": "portal-wildflower-drift",
+      "echo": "/wildflower-drift.html",
+      "containedBy": "wildflower-drift",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
+      "route": "/portal/world",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "World (Portal)",
+      "node": "portal-world",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/portal/world/chambers",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Chambers (Portal)",
+      "node": "portal-chambers",
+      "echo": "/portal/world",
+      "containedBy": "portal-world",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/portal/world/ella",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Ella (Portal)",
+      "node": "portal-ella",
+      "echo": "/pages/beyond/Ella.html",
+      "containedBy": "ella",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/portal/world/garden",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Garden (Portal)",
+      "node": "portal-garden",
+      "echo": "/garden.html",
+      "containedBy": "garden",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/world",
+      "layer": "world",
+      "status": "experimental",
+      "title": "World Map",
+      "orphaned": true
+    },
+    {
+      "route": "/world/chambers",
+      "layer": "world",
+      "status": "experimental",
+      "title": "Chambers index",
+      "orphaned": true
+    },
+    {
+      "route": "/world/chambers/dialogues",
+      "layer": "world",
+      "status": "experimental",
+      "title": "Dialogues"
+    },
+    {
+      "route": "/world/chambers/ella",
+      "layer": "world",
+      "status": "experimental",
+      "title": "Ella"
+    },
+    {
+      "route": "/world/chambers/house-and-garden",
+      "layer": "world",
+      "status": "experimental",
+      "title": "House & Garden"
+    },
+    {
+      "route": "/world/ella",
+      "layer": "world",
+      "status": "experimental",
+      "title": "Ella",
+      "orphaned": true
+    },
+    {
+      "route": "/world/garden",
+      "layer": "world",
+      "status": "experimental",
+      "title": "House & Garden",
+      "orphaned": true
+    },
+    {
+      "route": "/world/map",
+      "layer": "world",
+      "status": "experimental",
+      "title": "World Map",
+      "orphaned": true
+    },
+    {
+      "route": "/architecture.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Engine Mechanics",
+      "node": "legacy-architecture",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/chamber-palette-map.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Chamber Map",
+      "node": "legacy-chamber-palette-map",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/hub2.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Legacy Hub",
+      "node": "legacy-hub2",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/index2.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Fibonacci Flower Constellation Wheel",
+      "node": "legacy-index2",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/ledger.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Ledger",
+      "node": "legacy-ledger",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/legacy/index.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Legacy Constructs",
+      "node": "legacy-index",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/porpoise.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Porpoise",
+      "node": "legacy-porpoise",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/resonancehub.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Resonance Hub",
+      "node": "legacy-resonancehub",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/submit.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Submit a Glyph",
+      "node": "legacy-submit",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/testing.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Echoing Vessel",
+      "node": "legacy-testing",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/thresholddialogues.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Threshold Dialogues",
+      "node": "legacy-thresholddialogues",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/thresholdmythology.html",
+      "layer": "legacy",
+      "status": "legacy",
+      "title": "Threshold Mythology",
+      "node": "legacy-thresholdmythology",
+      "echo": "/legacy/index.html",
+      "containedBy": "legacy-index",
+      "passage": {
+        "mode": "open"
+      },
+      "audited": false
+    },
+    {
+      "route": "/echoes/inventory/contact.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Studio - Contact",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/deep-system/engine.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Engine - Mechanics",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/dialogues.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Dialogues - Threshold Studio",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/discover.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Discover",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/environment/basin.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "The Basin",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/environment/herbroom.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Herb Room",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/environment/waterfall.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "The Waterfall",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/ethos.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Ethos",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/garden.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "House and Garden - Threshold",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/glyphs.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Glyph Archive - Threshold Studio",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/housegarden.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Studio - House and Garden",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/hub.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Hub",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/index.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Hub - Entry",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/invitation.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Invitation",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/learningwheel.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Learning Wheel - Threshold Studio",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/mythology.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Studio - Mythology",
+      "orphaned": true
+    },
+    {
+      "route": "/echoes/inventory/spoke.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Spoke",
+      "orphaned": true
+    },
+    {
+      "route": "/generated-pages/environment/basin.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "The Basin",
+      "orphaned": true
+    },
+    {
+      "route": "/page-templates/environment/basin.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "The Basin",
+      "orphaned": true
+    },
+    {
+      "route": "/portal-dist/index.html",
+      "layer": "artifact",
+      "status": "experimental",
+      "title": "Threshold Portal",
+      "orphaned": true
+    }
+  ]
+}

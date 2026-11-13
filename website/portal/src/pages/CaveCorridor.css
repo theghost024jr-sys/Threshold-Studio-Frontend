@@ -84,16 +84,6 @@
   transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
 }
 
-.cave-opening--meadow {
-  left: 12%;
-  width: 16vmin;
-  height: 24vmin;
-  transform: translate(calc(-50% + var(--lx) * -18px), calc(-50% + var(--ly) * -12px));
-  background: radial-gradient(ellipse at 50% 60%, #e8f2a0 0%, #6fa35a 45%, #1c3a1e 100%);
-  filter: blur(calc(10px - var(--meadow-opening) * 6px));
-  opacity: calc(var(--meadow-opening) * 0.9);
-}
-
 .cave-sand {
   top: auto;
   height: 42%;
@@ -169,11 +159,6 @@
   border-color: rgba(243, 178, 122, 0.8);
 }
 
-.cave-nav__meadow,
-.cave-nav__forward {
-  animation: cave-fade-in 0.8s ease both;
-}
-
 .cave-nav__prototype {
   align-self: center;
   margin-left: auto;
@@ -182,10 +167,6 @@
   background: transparent !important;
   color: rgba(233, 230, 242, 0.62) !important;
   font-size: 0.78rem;
-}
-
-.cave-nav__forward {
-  margin-left: auto;
 }
 
 @keyframes cave-fade-in {
@@ -208,9 +189,7 @@
     animation: none;
   }
 
-  .cave-opening,
-  .cave-nav__meadow,
-  .cave-nav__forward {
+  .cave-opening {
     transition: none;
     animation: cave-fade-in 0.4s ease both;
   }

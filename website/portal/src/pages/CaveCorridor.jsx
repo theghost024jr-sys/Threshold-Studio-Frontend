@@ -1,41 +1,48 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './CaveCorridor.css'
 import { deriveCaveCorridorState } from './CaveCorridorState.js'
 import {
   lookDirectionAtAngle,
   observeBendSeverance,
+  getHouseGardenBearing,
+  travelerHeadingAtProgress,
   travelerPositionAtProgress,
 } from './CaveCorridorGeometry.js'
 import CaveCorridorViewport from './CaveCorridorViewport.jsx'
 
-const MEADOW_ALIGNMENT = { x: -0.9, y: 0.1 }
-const RESOLVED_AT = 0.86
 const KEY_STEP = 0.1
 const TRAVEL_STEP = 0.055
 
 const clamp = (value, min = -1, max = 1) => Math.min(max, Math.max(min, value))
 
-function measureResolve(look, target) {
-  const distance = Math.hypot(look.x - target.x, look.y - target.y)
-  return clamp(1 - distance / 1.1, 0, 1)
-}
-
 export default function CaveCorridor() {
   const stageRef = useRef(null)
   const dragRef = useRef(null)
+  const navigate = useNavigate()
   const [look, setLook] = useState({ x: 0.5, y: 0 })
   const [progress, setProgress] = useState(0)
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [canyonFirstVisible, setCanyonFirstVisible] = useState(false)
   const corridor = useMemo(() => deriveCaveCorridorState(progress), [progress])
   const travelerPosition = useMemo(() => travelerPositionAtProgress(progress), [progress])
+  const travelerHeading = useMemo(() => travelerHeadingAtProgress(progress), [progress])
   const lookDirection = useMemo(
-    () => lookDirectionAtAngle(look.x * Math.PI),
-    [look.x],
+    () => lookDirectionAtAngle(
+      Math.atan2(travelerHeading.y, travelerHeading.x)
+        + (look.x - 0.5) * Math.PI * corridor.camera.horizontalFreedom,
+    ),
+    [corridor.camera.horizontalFreedom, look.x, travelerHeading],
   )
   const bendSeverance = useMemo(() => {
     return observeBendSeverance({ position: travelerPosition, lookDirection })
   }, [lookDirection, travelerPosition])
+  const originSightline = useMemo(() => {
+    return observeBendSeverance({
+      position: travelerPosition,
+      lookDirection: lookDirectionAtAngle(getHouseGardenBearing(travelerPosition)),
+    })
+  }, [travelerPosition])
 
   useEffect(() => {
     if (!import.meta.env.DEV) return undefined
@@ -69,8 +76,10 @@ export default function CaveCorridor() {
     stageRef.current?.focus({ preventScroll: true })
   }, [])
 
-  const meadowResolve = reducedMotion ? 1 : measureResolve(look, MEADOW_ALIGNMENT)
-  const meadowResolved = meadowResolve >= RESOLVED_AT
+  useEffect(() => {
+    if (progress === 1) navigate('/canyon')
+  }, [navigate, progress])
+
   const lookFromPointer = useCallback((event) => {
     const box = stageRef.current.getBoundingClientRect()
     return {
@@ -134,6 +143,7 @@ export default function CaveCorridor() {
       event.preventDefault()
       setProgress(0)
       setLook({ x: 0.5, y: 0 })
+      setCanyonFirstVisible(false)
     }
   }
 
@@ -154,20 +164,24 @@ export default function CaveCorridor() {
       >
         <p id="cave-instructions" className="cave-status">Move forward with W or Arrow Up, back with S or Arrow Down, look with the pointer or left and right arrows, and reset with R.</p>
         <p id="cave-condition" className="cave-status" aria-live="polite">
-          {`${corridor.meaning}. House and Garden: ${bendSeverance.visibility}.`}
+          {`${corridor.meaning}. House and Garden sightline: ${originSightline.visibility}. Canyon observed: ${canyonFirstVisible ? 'yes' : 'no'}.`}
         </p>
         <CaveCorridorViewport
+          cameraState={corridor.camera}
+          environment={corridor.environment}
           position={travelerPosition}
           lookDirection={lookDirection}
-          lookPitch={reducedMotion ? 0 : look.y * 0.45}
+          lookPitch={reducedMotion ? 0 : look.y * 0.45 * corridor.camera.verticalFreedom}
+          pathDirection={travelerHeading}
+          onCanyonVisibilityChange={(visible) => {
+            if (visible) setCanyonFirstVisible(true)
+          }}
         />
       </div>
 
       <nav className="cave-nav" aria-label="Cave corridor passages">
         <a className="cave-nav__retreat" href="/housegarden.html">Back to House &amp; Garden</a>
-        {meadowResolved && <a className="cave-nav__meadow" href="/wildflower-drift.html">Toward the wildflower field</a>}
         <Link className="cave-nav__prototype" to="/cave-corridor-prototype">Follow the older seam</Link>
-        {corridor.progress >= 0.98 && <Link className="cave-nav__forward" to="/canyon">Cross into Canyon</Link>}
       </nav>
     </main>
   )

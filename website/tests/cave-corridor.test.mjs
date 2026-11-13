@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { caveCorridorDefinition, deriveCaveCorridorState } from "../portal/src/pages/CaveCorridorState.js";
 
-test("keeps Cave Corridor as its own House and Garden chamber with Meadow branch", async () => {
+test("keeps Cave Corridor as its own House and Garden chamber with a Canyon exit", async () => {
   const [component, stylesheet, topology, app] = await Promise.all([
     readFile(new URL("../portal/src/pages/CaveCorridor.jsx", import.meta.url), "utf8"),
     readFile(new URL("../portal/src/pages/CaveCorridor.css", import.meta.url), "utf8"),
@@ -13,10 +13,11 @@ test("keeps Cave Corridor as its own House and Garden chamber with Meadow branch
   const cave = JSON.parse(topology).places.find((place) => place.id === "cave-corridor");
 
   assert.match(component, /href="\/housegarden\.html">Back to House &amp; Garden/);
-  assert.match(component, /<Link className="cave-nav__forward" to="\/canyon">Cross into Canyon<\/Link>/);
+  assert.match(component, /if \(progress === 1\) navigate\('\/canyon'\)/);
+  assert.doesNotMatch(component, /Cross into Canyon|cave-nav__forward/);
   assert.match(component, /<Link className="cave-nav__prototype" to="\/cave-corridor-prototype">Follow the older seam<\/Link>/);
-  assert.match(component, /MEADOW_ALIGNMENT|meadowResolve|meadowResolved|meadowPresence|wildflower-drift/);
-  assert.match(stylesheet, /cave-opening--meadow|cave-nav__meadow/);
+  assert.doesNotMatch(component, /wildflower|meadow/i);
+  assert.doesNotMatch(stylesheet, /cave-opening--meadow|cave-nav__meadow/);
   assert.match(app, /<Route path="\/cave-corridor-prototype" element={<CaveCorridorPrototype \/>} \/>/);
   assert.deepEqual(cave.connectsTo, ["house-garden", "canyon", "wildflower-drift", "cave-corridor-prototype"]);
   assert.equal(cave.returnsTo, "house-garden");
@@ -43,8 +44,12 @@ test("derives continuous Cave Corridor conditions from traveler progress", () =>
   assert.equal(bend.zone, "bend");
   assert.equal(bend.originVisible, false);
   assert.equal(release.zone, "reemergence");
-  assert.equal(release.canyonVisible, true);
+  assert.equal(Object.hasOwn(release, "canyonVisible"), false);
   assert.equal(release.camera.mode, "released");
+  assert.equal(release.camera.fov, 75);
+  assert.equal(release.attraction, "canyon-opening");
+  assert.equal(mouth.camera.fov, 68);
+  assert.equal(mouth.attraction, "none");
 });
 
 test("preserves the former alignment prototype as a connected branch", async () => {

@@ -6,6 +6,7 @@ import {
   getHouseGardenBearing,
   lookDirectionAtAngle,
   observeBendSeverance,
+  travelerHeadingAtProgress,
   travelerPositionAtProgress,
 } from "../portal/src/pages/CaveCorridorGeometry.js";
 
@@ -18,7 +19,7 @@ function observeFacingHouseGarden(progress) {
 }
 
 describe("Cave Corridor Bend severance", () => {
-  it("samples the specified continuous Mouth, Narrowing, and Bend profile", () => {
+  it("samples the specified continuous six-condition profile", () => {
     const { segments, totalLength, eyeHeight } = bendSeveranceGeometry;
 
     expect(totalLength).toBeCloseTo(30.712);
@@ -26,6 +27,11 @@ describe("Cave Corridor Bend severance", () => {
     expect(segments.bend).toMatchObject({ start: 14, end: 18.712, radius: 3, widthStart: 1.5, widthEnd: 1.6, height: 2.2 });
     expect(corridorSampleAtDistance(14).heading).toEqual({ x: 0, z: 1 });
     expect(corridorSampleAtDistance(18.712).heading.x).toBeCloseTo(1);
+    expect(corridorSampleAtDistance(23.712)).toMatchObject({ width: 2, height: 2.8 });
+    expect(corridorSampleAtDistance(27.712)).toMatchObject({ width: 2.4, height: 3.2 });
+    expect(corridorSampleAtDistance(totalLength)).toMatchObject({ width: 6, height: 6 });
+    expect(travelerPositionAtProgress(1)).toEqual({ x: 15, z: 17 });
+    expect(travelerHeadingAtProgress(1)).toEqual({ x: 1, y: 0 });
     expect(eyeHeight).toBeLessThan(segments.bend.height);
   });
 
@@ -39,10 +45,26 @@ describe("Cave Corridor Bend severance", () => {
 
     expect(source).toContain("segmentsIntersect");
     expect(componentSource).toContain("observeBendSeverance");
+    expect(componentSource).toContain("getHouseGardenBearing(travelerPosition)");
+    expect(componentSource).toContain("Math.atan2(travelerHeading.y, travelerHeading.x)");
+    expect(componentSource).toContain("corridor.camera.horizontalFreedom");
     expect(componentSource).not.toContain("--origin-visibility");
     expect(componentSource).toContain("CaveCorridorViewport");
     expect(viewportSource).toContain("bendSeveranceGeometry");
     expect(viewportSource).toContain("corridorSamples");
+    expect(viewportSource).toContain("applyCorridorState");
+    expect(viewportSource).toContain("canyonLight");
+    expect(viewportSource).toContain("observeCanyonVisibility");
+    expect(viewportSource).toContain("new THREE.Frustum");
+    expect(viewportSource).toContain("new THREE.Raycaster");
+    expect(viewportSource).toContain("addCrystalVeins");
+    expect(viewportSource).toContain("addCanyonParticles");
+    expect(viewportSource).toContain("canyonGround");
+    expect(viewportSource).toContain("environment.crystalLegibility");
+    expect(viewportSource).toContain("environment.sandPresence");
+    expect(viewportSource).not.toContain("wallMaterial.color.lerpColors");
+    expect(viewportSource).not.toContain("floorMaterial.color.lerpColors");
+    expect(viewportSource).toContain("cameraState");
     expect(viewportSource).toContain("new THREE.BufferGeometry");
     expect(viewportSource).not.toContain("scene.fog");
     expect(stylesheet).toContain(".cave-viewport");
@@ -54,6 +76,9 @@ describe("Cave Corridor Bend severance", () => {
     expect(observeFacingHouseGarden(0.53).visibility).toBe("partial");
     expect(observeFacingHouseGarden(0.537).visibility).toBe("sliver");
     expect(observeFacingHouseGarden(0.54).visibility).toBe("gone");
+    expect(observeFacingHouseGarden(0.66).visibility).toBe("gone");
+    expect(observeFacingHouseGarden(0.825).visibility).toBe("gone");
+    expect(observeFacingHouseGarden(0.99).visibility).toBe("gone");
   });
 
   it("restores the same sightline in reverse without teleporting the traveler", () => {

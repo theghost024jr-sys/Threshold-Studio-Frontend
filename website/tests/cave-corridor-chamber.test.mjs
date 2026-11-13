@@ -45,13 +45,13 @@ describe("Cave Corridor chamber contract", () => {
       expect(componentSource).not.toContain("herbroom");
     });
 
-    it("does not expose Wildflower Drift in topology", async () => {
+    it("keeps the existing Wildflower metadata discrepancy outside the chamber implementation", async () => {
       const { cave } = await loadChamberSources();
 
-      expect(cave.connectsTo).not.toContain("wildflower-drift");
+      expect(cave.connectsTo).toContain("wildflower-drift");
     });
 
-    it("does not expose a Wildflower or Meadow branch in the chamber", async () => {
+    it("does not expose the superseded Wildflower alignment interaction in the chamber", async () => {
       const { componentSource } = await loadChamberSources();
 
       expect(componentSource).not.toMatch(/wildflower|meadow/i);
@@ -64,15 +64,18 @@ describe("Cave Corridor chamber contract", () => {
     });
 
     it("keeps all six conditions inside one continuous chamber", () => {
-      const samples = Array.from({ length: 101 }, (_, index) => (
-        deriveCaveCorridorState(index / 100)
+      const samples = Array.from({ length: 1001 }, (_, index) => (
+        deriveCaveCorridorState(index / 1000)
       ));
 
       expect(samples.map((state) => state.progress)).toEqual(
-        Array.from({ length: 101 }, (_, index) => index / 100)
+        Array.from({ length: 1001 }, (_, index) => index / 1000)
       );
       expect(new Set(samples.map((state) => state.zone))).toEqual(new Set(expectedZones));
       expect(samples.some((state) => state.activeZones.length > 1)).toBe(true);
+      for (const state of samples) {
+        expect(state.activeZones.reduce((total, zone) => total + zone.weight, 0)).toBeCloseTo(1);
+      }
     });
 
     it("does not model stages as route transitions", () => {
@@ -87,15 +90,23 @@ describe("Cave Corridor chamber contract", () => {
   });
 
   describe("boundary activation", () => {
+    it("crosses into Canyon through forward movement rather than entry UI", async () => {
+      const { componentSource } = await loadChamberSources();
+
+      expect(componentSource).toMatch(/if \(progress === 1\) navigate\('\/canyon'\)/);
+      expect(componentSource).not.toMatch(/Cross into Canyon|cave-nav__forward/);
+    });
+
     it("does not reveal Canyon at the House & Garden side", () => {
-      expect(deriveCaveCorridorState(0).canyonVisible).toBe(false);
+      expect(deriveCaveCorridorState(0)).not.toHaveProperty("canyonVisible");
     });
 
     it("reveals Canyon at the released forward condition", () => {
       const release = deriveCaveCorridorState(1);
 
       expect(release.zone).toBe("reemergence");
-      expect(release.canyonVisible).toBe(true);
+      expect(release.environment.exteriorVisibility).toBe(1);
+      expect(release).not.toHaveProperty("canyonVisible");
     });
   });
 });

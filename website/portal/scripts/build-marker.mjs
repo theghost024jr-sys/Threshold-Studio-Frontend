@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process'
-import { rm, writeFile } from 'node:fs/promises'
+import { rename, rm, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { promisify } from 'node:util'
 
@@ -96,12 +96,23 @@ export async function createBuildMarker({
 
 export async function writeBuildMarker(outputDirectory, options) {
   const markerPath = resolve(outputDirectory, 'build-marker.json')
-  await rm(markerPath, { force: true })
-  const marker = await createBuildMarker(options)
-  await writeFile(
-    markerPath,
-    `${JSON.stringify(marker, null, 2)}\n`,
-    'utf8',
-  )
-  return marker
+  const temporaryMarkerPath = resolve(outputDirectory, '.build-marker.json.tmp')
+  const fileSystem = options?.fileSystem ?? { rename, rm, writeFile }
+  await fileSystem.rm(markerPath, { force: true })
+  await fileSystem.rm(temporaryMarkerPath, { force: true })
+
+  try {
+    const marker = await createBuildMarker(options)
+    await fileSystem.writeFile(
+      temporaryMarkerPath,
+      `${JSON.stringify(marker, null, 2)}\n`,
+      'utf8',
+    )
+    await fileSystem.rename(temporaryMarkerPath, markerPath)
+    return marker
+  } catch (error) {
+    await fileSystem.rm(temporaryMarkerPath, { force: true })
+    await fileSystem.rm(markerPath, { force: true })
+    throw error
+  }
 }

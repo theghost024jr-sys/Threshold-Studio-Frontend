@@ -620,8 +620,8 @@
       "route": "/portal/cave-corridor-prototype",
       "layer": "portal",
       "status": "canonical",
-      "title": "Older Cave Seam",
-      "node": "cave-corridor-prototype",
+      "title": "Crystal Verge",
+      "node": "crystal-verge",
       "echo": "/portal/cave-corridor",
       "containedBy": "cave-corridor",
       "passage": {

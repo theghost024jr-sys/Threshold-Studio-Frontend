@@ -22,6 +22,7 @@ async function loadChamberSources() {
   const topology = JSON.parse(topologySource);
   return {
     componentSource,
+    places: topology.places,
     cave: topology.places.find((place) => place.id === "cave-corridor"),
   };
 }
@@ -45,17 +46,19 @@ describe("Cave Corridor chamber contract", () => {
       expect(componentSource).not.toContain("herbroom");
     });
 
-    it("keeps the existing Wildflower metadata discrepancy outside the chamber implementation", async () => {
-      const { cave } = await loadChamberSources();
+    it("keeps Cave and Wildflower as independent nodes without ownership semantics", async () => {
+      const { cave, places } = await loadChamberSources();
+      const wildflower = places.find((place) => place.id === "wildflower-drift");
 
-      expect(cave.connectsTo).toContain("wildflower-drift");
+      expect(cave.id).not.toBe(wildflower.id);
+      expect(cave.route).not.toBe(wildflower.route);
+      for (const place of places) {
+        expect(place).not.toHaveProperty("owner");
+        expect(place).not.toHaveProperty("owns");
+        expect(place).not.toHaveProperty("ownedNodes");
+      }
     });
 
-    it("does not expose the superseded Wildflower alignment interaction in the chamber", async () => {
-      const { componentSource } = await loadChamberSources();
-
-      expect(componentSource).not.toMatch(/wildflower|meadow/i);
-    });
   });
 
   describe("internal progression", () => {

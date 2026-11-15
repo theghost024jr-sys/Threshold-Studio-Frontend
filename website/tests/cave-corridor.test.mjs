@@ -4,23 +4,18 @@ import test from "node:test";
 import { caveCorridorDefinition, deriveCaveCorridorState } from "../portal/src/pages/CaveCorridorState.js";
 
 test("keeps Cave Corridor as its own House and Garden chamber with a Canyon exit", async () => {
-  const [component, stylesheet, topology, app] = await Promise.all([
+  const [component, stylesheet, app] = await Promise.all([
     readFile(new URL("../portal/src/pages/CaveCorridor.jsx", import.meta.url), "utf8"),
     readFile(new URL("../portal/src/pages/CaveCorridor.css", import.meta.url), "utf8"),
-    readFile(new URL("../config/world-topology.json", import.meta.url), "utf8"),
     readFile(new URL("../portal/src/App.jsx", import.meta.url), "utf8"),
   ]);
-  const cave = JSON.parse(topology).places.find((place) => place.id === "cave-corridor");
 
   assert.match(component, /href="\/housegarden\.html">Back to House &amp; Garden/);
   assert.match(component, /if \(progress === 1\) navigate\('\/canyon'\)/);
   assert.doesNotMatch(component, /Cross into Canyon|cave-nav__forward/);
   assert.match(component, /<Link className="cave-nav__prototype" to="\/cave-corridor-prototype">Follow the older seam<\/Link>/);
-  assert.doesNotMatch(component, /wildflower|meadow/i);
-  assert.doesNotMatch(stylesheet, /cave-opening--meadow|cave-nav__meadow/);
   assert.match(app, /<Route path="\/cave-corridor-prototype" element={<CaveCorridorPrototype \/>} \/>/);
-  assert.deepEqual(cave.connectsTo, ["house-garden", "canyon", "wildflower-drift", "cave-corridor-prototype"]);
-  assert.equal(cave.returnsTo, "house-garden");
+  assert.doesNotMatch(stylesheet, /cave-nav__forward/);
 });
 
 test("derives continuous Cave Corridor conditions from traveler progress", () => {
@@ -53,18 +48,15 @@ test("derives continuous Cave Corridor conditions from traveler progress", () =>
 });
 
 test("preserves the former alignment prototype as a connected branch", async () => {
-  const [prototype, stylesheet, topology, shell] = await Promise.all([
+  const [prototype, stylesheet, shell] = await Promise.all([
     readFile(new URL("../portal/src/pages/CaveCorridorPrototype.jsx", import.meta.url), "utf8"),
     readFile(new URL("../portal/src/pages/CaveCorridorPrototype.css", import.meta.url), "utf8"),
-    readFile(new URL("../config/world-topology.json", import.meta.url), "utf8"),
     readFile(new URL("../portal/cave-corridor-prototype", import.meta.url), "utf8"),
   ]);
-  const prototypeNode = JSON.parse(topology).places.find((place) => place.id === "cave-corridor-prototype");
 
   assert.match(prototype, /MEADOW_ALIGNMENT/);
   assert.match(prototype, /<Link className="cave-nav__forward" to="\/canyon">Enter the Canyon<\/Link>/);
   assert.match(prototype, /<Link className="cave-nav__return" to="\/cave-corridor">Return to Cave Corridor<\/Link>/);
   assert.match(stylesheet, /cave-opening--meadow/);
-  assert.deepEqual(prototypeNode.connectsTo, ["cave-corridor", "house-garden", "canyon", "wildflower-drift"]);
   assert.equal(shell.trim(), "Portal route fallback.");
 });

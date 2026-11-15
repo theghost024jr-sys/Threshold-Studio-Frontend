@@ -32,7 +32,7 @@ function buildCrystals() {
   return crystals
 }
 
-export default function CaveCorridorPrototype() {
+export default function CrystalVerge() {
   const stageRef = useRef(null)
   const dragRef = useRef(null)
   const [look, setLook] = useState({ x: -0.5, y: 0.1 })
@@ -122,7 +122,7 @@ export default function CaveCorridorPrototype() {
         }}
         tabIndex={0}
         role="group"
-        aria-label="Cave corridor. Move, drag, or use the arrow keys to change where you look."
+        aria-label="Crystal Verge. Move, drag, or use the arrow keys to change where you look."
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerEnd}

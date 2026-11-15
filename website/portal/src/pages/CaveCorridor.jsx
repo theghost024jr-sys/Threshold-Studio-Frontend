@@ -181,7 +181,7 @@ export default function CaveCorridor() {
 
       <nav className="cave-nav" aria-label="Cave corridor passages">
         <a className="cave-nav__retreat" href="/housegarden.html">Back to House &amp; Garden</a>
-        <Link className="cave-nav__prototype" to="/cave-corridor-prototype">Follow the older seam</Link>
+        <Link className="cave-nav__prototype" to="/cave-corridor-prototype">Enter Crystal Verge</Link>
       </nav>
     </main>
   )

@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './PlasmaBloomMeadow.css'
 
 const FLOWER_COUNT = 34
@@ -31,6 +32,8 @@ function buildButterflies() {
 
 export default function PlasmaBloomMeadow() {
   const canvasRef = useRef(null)
+  const soundRef = useRef(null)
+  const [vergeOpen, setVergeOpen] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -45,6 +48,77 @@ export default function PlasmaBloomMeadow() {
     let frame = 0
     let last = performance.now()
 
+    const startSound = () => {
+      if (soundRef.current) {
+        soundRef.current.context.resume()
+        return
+      }
+
+      const AudioContext = window.AudioContext || window.webkitAudioContext
+      if (!AudioContext) return
+
+      const context = new AudioContext()
+      const output = context.createGain()
+      const root = context.createOscillator()
+      const shimmer = context.createOscillator()
+      const rootGain = context.createGain()
+      const shimmerGain = context.createGain()
+
+      output.gain.value = 0.0001
+      root.type = 'sine'
+      root.frequency.value = 88
+      shimmer.type = 'triangle'
+      shimmer.frequency.value = 220
+      rootGain.gain.value = 0
+      shimmerGain.gain.value = 0
+      root.connect(rootGain).connect(output)
+      shimmer.connect(shimmerGain).connect(output)
+      output.connect(context.destination)
+      root.start()
+      shimmer.start()
+      context.resume()
+      soundRef.current = { context, output, root, shimmer, rootGain, shimmerGain }
+    }
+
+    const shapeSound = (calmness, currentHue, opened) => {
+      const sound = soundRef.current
+      if (!sound) return
+
+      const now = sound.context.currentTime
+      sound.root.frequency.setTargetAtTime(82 + currentHue / 12, now, 0.18)
+      sound.shimmer.frequency.setTargetAtTime(196 + currentHue / 5, now, 0.12)
+      sound.rootGain.gain.setTargetAtTime(0.008 + calmness * 0.02, now, 0.2)
+      sound.shimmerGain.gain.setTargetAtTime(calmness * 0.012 + (opened ? 0.018 : 0), now, 0.16)
+      sound.output.gain.setTargetAtTime(opened ? 0.05 : 0.032, now, 0.2)
+    }
+
+    const ringVergeBell = () => {
+      const sound = soundRef.current
+      if (!sound || sound.bellRung) return
+
+      const now = sound.context.currentTime
+      const bell = sound.context.createOscillator()
+      const bellGain = sound.context.createGain()
+      const overtone = sound.context.createOscillator()
+      const overtoneGain = sound.context.createGain()
+
+      bell.type = 'sine'
+      bell.frequency.setValueAtTime(659.25, now)
+      overtone.type = 'sine'
+      overtone.frequency.setValueAtTime(1318.51, now)
+      bellGain.gain.setValueAtTime(0.026, now)
+      bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8)
+      overtoneGain.gain.setValueAtTime(0.009, now)
+      overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9)
+      bell.connect(bellGain).connect(sound.output)
+      overtone.connect(overtoneGain).connect(sound.output)
+      bell.start(now)
+      overtone.start(now)
+      bell.stop(now + 1.85)
+      overtone.stop(now + 0.95)
+      sound.bellRung = true
+    }
+
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2)
       width = canvas.clientWidth
@@ -55,6 +129,7 @@ export default function PlasmaBloomMeadow() {
     }
 
     const onMove = (event) => {
+      startSound()
       const box = canvas.getBoundingClientRect()
       pointer.x = (event.clientX - box.left) / box.width
       pointer.y = (event.clientY - box.top) / box.height
@@ -78,6 +153,11 @@ export default function PlasmaBloomMeadow() {
       // Lingering brightens the plasma; rushing dims it.
       const calm = pointer.active && pointer.speed < 0.25
       pointer.linger = Math.min(1, Math.max(0, pointer.linger + (calm ? dt * 0.6 : -dt * 1.2)))
+      if (pointer.linger >= 0.92) {
+        setVergeOpen(true)
+        ringVergeBell()
+      }
+      shapeSound(pointer.linger, hue, pointer.linger >= 0.92)
       // Hovering shifts hue more than touch ever does; the colour is never fixed.
       if (pointer.active) hue = wrapHue(hue + dt * (6 + pointer.linger * 26))
 
@@ -214,6 +294,8 @@ export default function PlasmaBloomMeadow() {
       window.removeEventListener('resize', resize)
       canvas.removeEventListener('pointermove', onMove)
       canvas.removeEventListener('pointerleave', onLeave)
+      soundRef.current?.context.close()
+      soundRef.current = null
     }
   }, [])
 
@@ -232,6 +314,7 @@ export default function PlasmaBloomMeadow() {
       <nav className="meadow-nav" aria-label="Meadow passages">
         <a href="/housegarden.html">Back to House &amp; Garden</a>
         <a href="/wildflower-drift.html">Wildflower Drift</a>
+        {vergeOpen && <Link to="/cave-corridor-prototype">Follow the violet seam</Link>}
       </nav>
     </main>
   )

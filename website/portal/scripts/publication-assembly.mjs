@@ -41,13 +41,17 @@ export async function assemblePublicationOutput({
   portalDirectory,
   outputDirectory,
   placeholderPaths = PUBLICATION_PLACEHOLDERS,
+  publicationDirectory = resolve(outputDirectory, 'publication-routes'),
+  manifestDirectory = outputDirectory,
+  sourcePathPrefix = 'website/portal',
+  outputPathPrefix = 'website/portal-dist/publication-routes',
+  portalShellOutputPath = 'website/portal-dist/portal-shell.txt',
 }) {
   const uniquePaths = new Set(placeholderPaths)
   if (uniquePaths.size !== placeholderPaths.length) {
     throw new Error('Publication placeholder paths must be unique.')
   }
 
-  const publicationDirectory = resolve(outputDirectory, 'publication-routes')
   const shellPath = resolve(outputDirectory, 'portal-shell.txt')
   const shell = await readFile(shellPath)
   const sources = []
@@ -79,9 +83,9 @@ export async function assemblePublicationOutput({
 
     await writeFile(outputPath, shell)
     entries.push({
-      sourcePath: `website/portal/${placeholderPath}`,
+      sourcePath: `${sourcePathPrefix}/${placeholderPath}`,
       sourceSha256: sha256(source),
-      outputPath: `website/portal-dist/publication-routes/${placeholderPath}`,
+      outputPath: `${outputPathPrefix}/${placeholderPath}`,
       outputSha256: sha256(shell),
     })
   }
@@ -91,18 +95,18 @@ export async function assemblePublicationOutput({
     entries,
   }
   const placeholderManifestContents = serializeManifest(placeholderManifest)
-  await writeFile(resolve(outputDirectory, PLACEHOLDER_MANIFEST_NAME), placeholderManifestContents)
+  await writeFile(resolve(manifestDirectory, PLACEHOLDER_MANIFEST_NAME), placeholderManifestContents)
 
   const outputManifest = {
     schema: 'threshold-publication-output/v1',
     portalShell: {
-      outputPath: 'website/portal-dist/portal-shell.txt',
+      outputPath: portalShellOutputPath,
       outputSha256: sha256(shell),
     },
     routes: entries.map(({ outputPath, outputSha256 }) => ({ outputPath, outputSha256 })),
   }
   const outputManifestContents = serializeManifest(outputManifest)
-  await writeFile(resolve(outputDirectory, OUTPUT_MANIFEST_NAME), outputManifestContents)
+  await writeFile(resolve(manifestDirectory, OUTPUT_MANIFEST_NAME), outputManifestContents)
 
   return {
     mode: 'isolated-publication-output',

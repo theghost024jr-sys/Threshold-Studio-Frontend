@@ -138,7 +138,7 @@ test('preserves clean Git source identity and reproducible manifests across isol
   }
 })
 
-test('refuses to materialize a changed source placeholder', async () => {
+test('ER-11 rejects a non-sentinel source placeholder without source mutation', async () => {
   const fixture = await createFixture()
 
   try {
@@ -150,6 +150,18 @@ test('refuses to materialize a changed source placeholder', async () => {
         outputDirectory: fixture.outputDirectory,
       }),
       /not the fallback sentinel/,
+    )
+    assert.equal(
+      await readFile(resolve(fixture.portalDirectory, 'cave-corridor'), 'utf8'),
+      'authored route content\n',
+    )
+    await assert.rejects(
+      readFile(resolve(fixture.outputDirectory, 'publication-routes', 'cave-corridor'), 'utf8'),
+      { code: 'ENOENT' },
+    )
+    await assert.rejects(
+      readFile(resolve(fixture.outputDirectory, 'build-marker.json'), 'utf8'),
+      { code: 'ENOENT' },
     )
   } finally {
     await rm(fixture.root, { recursive: true, force: true })

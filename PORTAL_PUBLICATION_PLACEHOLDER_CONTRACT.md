@@ -4,7 +4,7 @@
 
 **Decision:** Isolated assembly outside the tracked source worktree.
 
-**Implementation status:** The v2 isolated-assembly implementation and focused tests exist in the current worktree. They have not been attributed to a clean candidate commit, and they do not remediate the inadmissible marker previously produced for `678d0bc8…`.
+**Implementation status:** The v2 isolated-assembly implementation is committed in `2d84ecb4…`. It has not been applied to a clean Cave candidate, and it does not remediate the inadmissible marker previously produced for `678d0bc8…`. Exact-candidate publication requires the separate [external Pages-staging runner contract](EXTERNAL_PAGES_STAGING_RUNNER_CONTRACT.md).
 
 ## Tracked publication placeholders
 
@@ -57,18 +57,20 @@ npm run build:ci
   -> node scripts/build-pages.mjs --static
 ```
 
-`build:site` runs Vite into `website/portal-dist` and then calls `copy-portal-shell.mjs`.
-The current shell-copy step scans the tracked `website/portal` source tree and rewrites every file
-whose content is the placeholder sentinel. This is the behavior to replace.
+At exact candidate `678d0bc8…`, `build:site` runs Vite into `website/portal-dist` and then calls a
+legacy shell-copy step that scans the tracked `website/portal` source tree and rewrites every file
+whose content is the placeholder sentinel. The v2 infrastructure commit `2d84ecb4…` replaces that
+in-place mutation with isolated Portal output, but it does not provide external Pages staging for
+the exact candidate.
 
 The isolated implementation must instead take a declared placeholder manifest and write materialized
 route shells only into the publication staging root that is later packaged for Pages. The source-tree
 paths remain inputs to the manifest; they are never outputs of the build.
 
-## Proposed assembly provenance marker
+## Implemented v2 assembly provenance marker
 
-This is a proposed **v2** marker contract. It does not change the current v1 marker or authorize a
-served build.
+The v2 marker contract is implemented by `2d84ecb4…`. No served exact-candidate marker has been
+produced, and the marker alone does not authorize a build.
 
 ```json
 {
@@ -120,4 +122,6 @@ Focused isolated-assembly tests must prove that:
 
 ## Attribution consequence
 
-Until this contract is implemented and the focused tests pass, a marker produced by in-place source-worktree materialization is **not admissible**. Build attribution remains **NOT ATTRIBUTED**.
+Until the external Pages-staging runner is implemented and its isolation suite passes, no marker is
+admissible for exact-candidate attribution. A marker produced by in-place source-worktree
+materialization is always **not admissible**. Build attribution remains **NOT ATTRIBUTED**.

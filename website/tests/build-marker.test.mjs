@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { resolve } from 'node:path'
 import test from 'node:test'
@@ -114,6 +114,69 @@ test('removes a stale marker before refusing a dirty build', async () => {
   } finally {
     await rm(outputDirectory, { recursive: true, force: true })
   }
+})
+
+test('ER-17 removes temporary and final markers when atomic rename fails', async () => {
+  const outputDirectory = await mkdtemp(resolve(tmpdir(), 'threshold-build-marker-'))
+  const markerPath = resolve(outputDirectory, 'build-marker.json')
+  const temporaryMarkerPath = resolve(outputDirectory, '.build-marker.json.tmp')
+  try {
+    await assert.rejects(
+      writeBuildMarker(outputDirectory, {
+        assembly,
+        runGitCommand: async (args) => {
+          if (args.join(' ') === 'rev-parse HEAD') return `${commit}\n`
+          if (args.join(' ') === `rev-parse ${commit}^{tree}`) return `${tree}\n`
+          if (args.join(' ') === 'status --porcelain=v1 --untracked-files=all') return ''
+          throw new Error(`Unexpected Git command: ${args.join(' ')}`)
+        },
+        fileSystem: {
+          rm,
+          writeFile,
+          rename: async () => { throw new Error('rename failed') },
+        },
+      }),
+      /rename failed/,
+    )
+    await assert.rejects(readFile(markerPath, 'utf8'), { code: 'ENOENT' })
+    await assert.rejects(readFile(temporaryMarkerPath, 'utf8'), { code: 'ENOENT' })
+  } finally { await rm(outputDirectory, { recursive: true, force: true }) }
+})
+
+test('ER-07 finalizes the marker only after source checks and temporary write', async () => {
+  const outputDirectory = await mkdtemp(resolve(tmpdir(), 'threshold-build-marker-'))
+  const markerPath = resolve(outputDirectory, 'build-marker.json')
+  const temporaryMarkerPath = resolve(outputDirectory, '.build-marker.json.tmp')
+  const events = []
+  try {
+    await writeBuildMarker(outputDirectory, {
+      assembly,
+      runGitCommand: async (args) => {
+        events.push(`git:${args.join(' ')}`)
+        if (args.join(' ') === 'rev-parse HEAD') return `${commit}\n`
+        if (args.join(' ') === `rev-parse ${commit}^{tree}`) return `${tree}\n`
+        if (args.join(' ') === 'status --porcelain=v1 --untracked-files=all') return ''
+        throw new Error(`Unexpected Git command: ${args.join(' ')}`)
+      },
+      fileSystem: {
+        rm,
+        writeFile: async (path, contents, encoding) => {
+          events.push('temporary-write')
+          await assert.rejects(readFile(markerPath, 'utf8'), { code: 'ENOENT' })
+          await writeFile(path, contents, encoding)
+        },
+        rename: async (from, to) => {
+          events.push('atomic-rename')
+          assert.equal(from, temporaryMarkerPath)
+          assert.equal(to, markerPath)
+          await rename(from, to)
+        },
+      },
+    })
+    assert.ok(events.indexOf('temporary-write') > events.lastIndexOf('git:status --porcelain=v1 --untracked-files=all'))
+    assert.deepEqual(events.slice(-2), ['temporary-write', 'atomic-rename'])
+    await readFile(markerPath, 'utf8')
+  } finally { await rm(outputDirectory, { recursive: true, force: true }) }
 })
 
 test('links the build marker from the Portal shell', async () => {

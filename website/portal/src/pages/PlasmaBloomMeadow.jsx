@@ -6,6 +6,8 @@ const FLOWER_COUNT = 34
 const BUTTERFLY_COUNT = 5
 const REACH = 0.28
 const AGREE_HUE = 28
+const BLOOM_INSTRUMENTS = ['bell', 'glass', 'chorus', 'rain']
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5))
 
 const wrapHue = (hue) => ((hue % 360) + 360) % 360
 
@@ -17,6 +19,7 @@ function buildFlowers() {
     phase: index * 1.7,
     size: 0.7 + ((index * 13) % 10) / 14,
     flare: 0,
+    instrument: BLOOM_INSTRUMENTS[index % BLOOM_INSTRUMENTS.length],
   }))
 }
 
@@ -42,6 +45,14 @@ export default function PlasmaBloomMeadow() {
     const flowers = buildFlowers()
     const butterflies = buildButterflies()
     const pointer = { x: -1, y: -1, px: -1, py: -1, speed: 0, linger: 0, active: false }
+    const revealed = {
+      butterflyConvergence: false,
+      bloomChorus: false,
+      crystalRain: false,
+      fallingLanterns: false,
+    }
+    const playedSequence = []
+    let activeInstrument = null
     let hue = 190
     let width = 0
     let height = 0
@@ -117,6 +128,48 @@ export default function PlasmaBloomMeadow() {
       bell.stop(now + 1.85)
       overtone.stop(now + 0.95)
       sound.bellRung = true
+    }
+
+    const playBloomInstrument = (instrument) => {
+      const sound = soundRef.current
+      if (!sound) return
+
+      const tones = {
+        bell: [523.25, 'sine', 0.36],
+        glass: [783.99, 'sine', 0.24],
+        chorus: [329.63, 'triangle', 0.48],
+        rain: [1174.66, 'triangle', 0.16],
+      }
+      const [frequency, type, duration] = tones[instrument]
+      const now = sound.context.currentTime
+      const voice = sound.context.createOscillator()
+      const gain = sound.context.createGain()
+
+      voice.type = type
+      voice.frequency.setValueAtTime(frequency, now)
+      gain.gain.setValueAtTime(0.18, now)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration)
+      voice.connect(gain).connect(sound.output)
+      voice.start(now)
+      voice.stop(now + duration + 0.02)
+    }
+
+    const revealComposition = () => {
+      const composition = playedSequence.slice(-2).join('>')
+      if (composition === 'chorus>bell') revealed.butterflyConvergence = true
+      if (composition === 'glass>chorus') revealed.bloomChorus = true
+      if (composition === 'rain>glass') revealed.crystalRain = true
+      if (composition === 'bell>glass') revealed.fallingLanterns = true
+    }
+
+    const recordBloom = (instrument) => {
+      if (instrument === activeInstrument) return
+
+      activeInstrument = instrument
+      playedSequence.push(instrument)
+      if (playedSequence.length > 2) playedSequence.shift()
+      playBloomInstrument(instrument)
+      revealComposition()
     }
 
     const resize = () => {
@@ -218,6 +271,20 @@ export default function PlasmaBloomMeadow() {
         }
       })
 
+      if (pointer.active) {
+        const nearest = heads.reduce((closest, head) => {
+          const distance = Math.hypot(pointer.x * width - head.hx, pointer.y * height - head.hy)
+          return distance < closest.distance ? { distance, flower: head.flower } : closest
+        }, { distance: Infinity, flower: null })
+        if (nearest.distance < Math.min(width, height) * 0.12) {
+          recordBloom(nearest.flower.instrument)
+        } else {
+          activeInstrument = null
+        }
+      } else {
+        activeInstrument = null
+      }
+
       // Two flowers that agree arc a bridge between them.
       for (let a = 0; a < heads.length; a += 1) {
         for (let b = a + 1; b < heads.length; b += 1) {
@@ -278,6 +345,62 @@ export default function PlasmaBloomMeadow() {
         ctx.ellipse(fx + 4, fy, 5 * flap, 3, 0.4, 0, Math.PI * 2)
         ctx.fill()
       })
+
+      if (revealed.bloomChorus) {
+        heads.forEach(({ hx, hy, flowerHue }, index) => {
+          if (index % 3 !== 0) return
+          ctx.strokeStyle = `hsla(${wrapHue(flowerHue + 110)}, 100%, 82%, 0.45)`
+          ctx.lineWidth = 1.5
+          ctx.beginPath()
+          ctx.arc(hx, hy, 12 + Math.sin(t * 3 + index) * 4, 0, Math.PI * 2)
+          ctx.stroke()
+        })
+      }
+
+      if (revealed.butterflyConvergence) {
+        const centerX = width * 0.5
+        const centerY = height * 0.34
+        const halo = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, width * 0.2)
+        halo.addColorStop(0, `hsla(${wrapHue(hue + 145)}, 100%, 78%, 0.28)`)
+        halo.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        ctx.fillStyle = halo
+        ctx.beginPath()
+        ctx.arc(centerX, centerY, width * 0.2, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      if (revealed.fallingLanterns) {
+        for (let index = 0; index < 14; index += 1) {
+          const lanternX = ((index * 0.173 + 0.08) % 1) * width
+          const lanternY = ((t * 0.045 + index * 0.23) % 1.2 - 0.1) * height
+          const glow = ctx.createRadialGradient(lanternX, lanternY, 0, lanternX, lanternY, 18)
+          glow.addColorStop(0, 'rgba(255, 224, 142, 0.8)')
+          glow.addColorStop(1, 'rgba(255, 171, 90, 0)')
+          ctx.fillStyle = glow
+          ctx.beginPath()
+          ctx.arc(lanternX, lanternY, 18, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      }
+
+      if (revealed.crystalRain) {
+        const centerX = width * 0.5
+        const centerY = height * 0.42
+        for (let index = 0; index < 48; index += 1) {
+          const radius = Math.sqrt(index / 48) * Math.min(width, height) * 0.44
+          const angle = index * GOLDEN_ANGLE + t * 0.35
+          const crystalX = centerX + Math.cos(angle) * radius
+          const crystalY = centerY + Math.sin(angle) * radius + ((t * 28 + index * 13) % 36)
+          ctx.fillStyle = `hsla(${wrapHue(hue + 150)}, 100%, 86%, 0.58)`
+          ctx.beginPath()
+          ctx.moveTo(crystalX, crystalY - 5)
+          ctx.lineTo(crystalX + 3, crystalY)
+          ctx.lineTo(crystalX, crystalY + 7)
+          ctx.lineTo(crystalX - 3, crystalY)
+          ctx.closePath()
+          ctx.fill()
+        }
+      }
       ctx.globalCompositeOperation = 'source-over'
 
       if (!reduced) frame = requestAnimationFrame(draw)

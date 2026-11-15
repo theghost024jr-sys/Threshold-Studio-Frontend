@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './CaveCorridor.css'
 import { deriveCaveCorridorState } from './CaveCorridorState.js'
 import {
@@ -19,7 +19,6 @@ const clamp = (value, min = -1, max = 1) => Math.min(max, Math.max(min, value))
 export default function CaveCorridor() {
   const stageRef = useRef(null)
   const dragRef = useRef(null)
-  const navigate = useNavigate()
   const [look, setLook] = useState({ x: 0.5, y: 0 })
   const [progress, setProgress] = useState(0)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -75,10 +74,6 @@ export default function CaveCorridor() {
   useEffect(() => {
     stageRef.current?.focus({ preventScroll: true })
   }, [])
-
-  useEffect(() => {
-    if (progress === 1) navigate('/canyon')
-  }, [navigate, progress])
 
   const lookFromPointer = useCallback((event) => {
     const box = stageRef.current.getBoundingClientRect()

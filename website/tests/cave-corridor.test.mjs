@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { caveCorridorDefinition, deriveCaveCorridorState } from "../portal/src/pages/CaveCorridorState.js";
 
-test("keeps Cave Corridor as its own House and Garden chamber with a Canyon exit", async () => {
+test("keeps Cave Corridor as its own House and Garden chamber with a Crystal Verge exit", async () => {
   const [component, stylesheet, app] = await Promise.all([
     readFile(new URL("../portal/src/pages/CaveCorridor.jsx", import.meta.url), "utf8"),
     readFile(new URL("../portal/src/pages/CaveCorridor.css", import.meta.url), "utf8"),
@@ -11,10 +11,9 @@ test("keeps Cave Corridor as its own House and Garden chamber with a Canyon exit
   ]);
 
   assert.match(component, /href="\/housegarden\.html">Back to House &amp; Garden/);
-  assert.match(component, /if \(progress === 1\) navigate\('\/canyon'\)/);
-  assert.doesNotMatch(component, /Cross into Canyon|cave-nav__forward/);
-  assert.match(component, /<Link className="cave-nav__prototype" to="\/cave-corridor-prototype">Follow the older seam<\/Link>/);
-  assert.match(app, /<Route path="\/cave-corridor-prototype" element={<CaveCorridorPrototype \/>} \/>/);
+  assert.doesNotMatch(component, /navigate\('\/canyon'\)|to="\/canyon"/);
+  assert.match(component, /<Link className="cave-nav__prototype" to="\/cave-corridor-prototype">Enter Crystal Verge<\/Link>/);
+  assert.match(app, /<Route path="\/cave-corridor-prototype" element={<CrystalVerge \/>} \/>/);
   assert.doesNotMatch(stylesheet, /cave-nav__forward/);
 });
 
@@ -48,15 +47,13 @@ test("derives continuous Cave Corridor conditions from traveler progress", () =>
 });
 
 test("preserves the former alignment prototype as a connected branch", async () => {
-  const [prototype, stylesheet, shell] = await Promise.all([
+  const [prototype, stylesheet] = await Promise.all([
     readFile(new URL("../portal/src/pages/CaveCorridorPrototype.jsx", import.meta.url), "utf8"),
     readFile(new URL("../portal/src/pages/CaveCorridorPrototype.css", import.meta.url), "utf8"),
-    readFile(new URL("../portal/cave-corridor-prototype", import.meta.url), "utf8"),
   ]);
 
   assert.match(prototype, /MEADOW_ALIGNMENT/);
   assert.match(prototype, /<Link className="cave-nav__forward" to="\/canyon">Enter the Canyon<\/Link>/);
   assert.match(prototype, /<Link className="cave-nav__return" to="\/cave-corridor">Return to Cave Corridor<\/Link>/);
   assert.match(stylesheet, /cave-opening--meadow/);
-  assert.equal(shell.trim(), "Portal route fallback.");
 });

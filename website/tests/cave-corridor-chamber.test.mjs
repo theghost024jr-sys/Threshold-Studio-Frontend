@@ -29,13 +29,14 @@ async function loadChamberSources() {
 
 describe("Cave Corridor chamber contract", () => {
   describe("topology", () => {
-    it("begins at House & Garden and terminates at the Canyon boundary", async () => {
+    it("begins at House & Garden and reaches the Canyon through Crystal Verge", async () => {
       const { cave } = await loadChamberSources();
 
       expect(cave.containedBy).toBe("house-garden");
       expect(cave.returnsTo).toBe("house-garden");
       expect(cave.connectsTo).toContain("house-garden");
-      expect(cave.connectsTo).toContain("canyon");
+      expect(cave.connectsTo).toContain("crystal-verge");
+      expect(cave.connectsTo).not.toContain("canyon");
     });
 
     it("does not route through Herb Room", async () => {
@@ -93,11 +94,11 @@ describe("Cave Corridor chamber contract", () => {
   });
 
   describe("boundary activation", () => {
-    it("crosses into Canyon through forward movement rather than entry UI", async () => {
+    it("hands forward passage to Crystal Verge rather than entering Canyon directly", async () => {
       const { componentSource } = await loadChamberSources();
 
-      expect(componentSource).toMatch(/if \(progress === 1\) navigate\('\/canyon'\)/);
-      expect(componentSource).not.toMatch(/Cross into Canyon|cave-nav__forward/);
+      expect(componentSource).toMatch(/to="\/cave-corridor-prototype">Enter Crystal Verge/);
+      expect(componentSource).not.toMatch(/navigate\('\/canyon'\)|to="\/canyon"/);
     });
 
     it("does not reveal Canyon at the House & Garden side", () => {

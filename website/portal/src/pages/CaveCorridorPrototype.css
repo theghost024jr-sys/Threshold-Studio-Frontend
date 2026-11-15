@@ -68,8 +68,7 @@
   background: linear-gradient(160deg, rgba(200, 220, 255, 0.55), rgba(110, 90, 190, 0.35) 55%, rgba(20, 18, 40, 0.8));
   clip-path: polygon(50% 0, 100% 62%, 72% 100%, 24% 100%, 0 58%);
   transform:
-    translate(calc(var(--lx) * var(--depth) * -46px), calc(var(--ly) * var(--depth) * -30px))
-    rotate(var(--tilt));
+    translate(calc(var(--lx) * var(--depth) * -46px), calc(var(--ly) * var(--depth) * -30px)) rotate(var(--tilt));
   opacity: calc(0.35 + var(--depth) * 0.5);
   filter: brightness(calc(0.7 + var(--resolve) * 0.6));
   animation: cave-fold-drift calc(14s + var(--depth) * 18s) ease-in-out infinite alternate;
@@ -77,8 +76,13 @@
 }
 
 @keyframes cave-fold-drift {
-  from { rotate: -14deg; }
-  to { rotate: 16deg; }
+  from {
+    rotate: -14deg;
+  }
+
+  to {
+    rotate: 16deg;
+  }
 }
 
 .cave-fractures b {
@@ -89,8 +93,7 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(200, 215, 255, 0.5), transparent);
   transform-origin: 0 50%;
-  transform: translate(calc(var(--lx) * -14px), calc(var(--ly) * -10px))
-    rotate(calc(var(--angle) * (1 - var(--resolve))));
+  transform: translate(calc(var(--lx) * -14px), calc(var(--ly) * -10px)) rotate(calc(var(--angle) * (1 - var(--resolve))));
   opacity: calc(0.25 + var(--resolve) * 0.4);
 }
 
@@ -130,8 +133,13 @@
 }
 
 @keyframes cave-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

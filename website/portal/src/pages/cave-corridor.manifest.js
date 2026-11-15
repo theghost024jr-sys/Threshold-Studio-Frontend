@@ -8,8 +8,8 @@ export const caveCorridorManifest = Object.freeze({
       route: "/housegarden.html",
     }),
     destination: Object.freeze({
-      id: "canyon",
-      route: "/canyon",
+      id: "crystal-verge",
+      route: "/cave-corridor-prototype",
     }),
   }),
   progression: Object.freeze({

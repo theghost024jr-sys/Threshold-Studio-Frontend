@@ -2,13 +2,13 @@ import { describe, expect, it } from "vitest";
 import { caveCorridorManifest } from "../portal/src/pages/cave-corridor.manifest.js";
 
 describe("Cave Corridor manifest contract", () => {
-  it("declares one House & Garden chamber with a Canyon boundary", () => {
+  it("declares Crystal Verge as the forward Cave Corridor boundary", () => {
     expect(caveCorridorManifest.id).toBe("cave-corridor");
     expect(caveCorridorManifest.kind).toBe("chamber");
     expect(caveCorridorManifest.flower).toBe("house-garden");
     expect(caveCorridorManifest.boundaries).toEqual({
       origin: { id: "house-garden", route: "/housegarden.html" },
-      destination: { id: "canyon", route: "/canyon" },
+      destination: { id: "crystal-verge", route: "/cave-corridor-prototype" },
     });
   });
 

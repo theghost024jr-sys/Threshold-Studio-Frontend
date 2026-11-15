@@ -597,7 +597,7 @@
       "status": "canonical",
       "title": "Canyon",
       "node": "canyon",
-      "echo": "/portal/cave-corridor",
+      "echo": "/portal/cave-corridor-prototype",
       "containedBy": "house-garden",
       "passage": {
         "mode": "open"

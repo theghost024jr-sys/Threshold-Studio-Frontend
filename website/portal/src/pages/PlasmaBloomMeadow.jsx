@@ -87,9 +87,9 @@ export default function PlasmaBloomMeadow() {
       const now = sound.context.currentTime
       sound.root.frequency.setTargetAtTime(82 + currentHue / 12, now, 0.18)
       sound.shimmer.frequency.setTargetAtTime(196 + currentHue / 5, now, 0.12)
-      sound.rootGain.gain.setTargetAtTime(0.008 + calmness * 0.02, now, 0.2)
-      sound.shimmerGain.gain.setTargetAtTime(calmness * 0.012 + (opened ? 0.018 : 0), now, 0.16)
-      sound.output.gain.setTargetAtTime(opened ? 0.05 : 0.032, now, 0.2)
+      sound.rootGain.gain.setTargetAtTime(0.06 + calmness * 0.14, now, 0.2)
+      sound.shimmerGain.gain.setTargetAtTime(calmness * 0.06 + (opened ? 0.08 : 0), now, 0.16)
+      sound.output.gain.setTargetAtTime(opened ? 0.24 : 0.16, now, 0.2)
     }
 
     const ringVergeBell = () => {
@@ -106,9 +106,9 @@ export default function PlasmaBloomMeadow() {
       bell.frequency.setValueAtTime(659.25, now)
       overtone.type = 'sine'
       overtone.frequency.setValueAtTime(1318.51, now)
-      bellGain.gain.setValueAtTime(0.026, now)
+      bellGain.gain.setValueAtTime(0.32, now)
       bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8)
-      overtoneGain.gain.setValueAtTime(0.009, now)
+      overtoneGain.gain.setValueAtTime(0.12, now)
       overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9)
       bell.connect(bellGain).connect(sound.output)
       overtone.connect(overtoneGain).connect(sound.output)

@@ -7,7 +7,6 @@ const BUTTERFLY_COUNT = 5
 const REACH = 0.28
 const AGREE_HUE = 28
 const BLOOM_INSTRUMENTS = ['bell', 'glass', 'chorus', 'rain']
-const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5))
 
 const wrapHue = (hue) => ((hue % 360) + 360) % 360
 
@@ -45,14 +44,9 @@ export default function PlasmaBloomMeadow() {
     const flowers = buildFlowers()
     const butterflies = buildButterflies()
     const pointer = { x: -1, y: -1, px: -1, py: -1, speed: 0, linger: 0, active: false }
-    const revealed = {
-      butterflyConvergence: false,
-      bloomChorus: false,
-      crystalRain: false,
-      fallingLanterns: false,
-    }
     const playedSequence = []
     let activeInstrument = null
+    let activeReveal = null
     let hue = 190
     let width = 0
     let height = 0
@@ -156,10 +150,10 @@ export default function PlasmaBloomMeadow() {
 
     const revealComposition = () => {
       const composition = playedSequence.slice(-2).join('>')
-      if (composition === 'chorus>bell') revealed.butterflyConvergence = true
-      if (composition === 'glass>chorus') revealed.bloomChorus = true
-      if (composition === 'rain>glass') revealed.crystalRain = true
-      if (composition === 'bell>glass') revealed.fallingLanterns = true
+      if (composition === 'chorus>bell') activeReveal = 'butterflyConvergence'
+      if (composition === 'glass>chorus') activeReveal = 'bloomChorus'
+      if (composition === 'rain>glass') activeReveal = 'aurora'
+      if (composition === 'bell>glass') activeReveal = 'fallingLanterns'
     }
 
     const recordBloom = (instrument) => {
@@ -346,7 +340,7 @@ export default function PlasmaBloomMeadow() {
         ctx.fill()
       })
 
-      if (revealed.bloomChorus) {
+      if (activeReveal === 'bloomChorus') {
         heads.forEach(({ hx, hy, flowerHue }, index) => {
           if (index % 3 !== 0) return
           ctx.strokeStyle = `hsla(${wrapHue(flowerHue + 110)}, 100%, 82%, 0.45)`
@@ -357,7 +351,7 @@ export default function PlasmaBloomMeadow() {
         })
       }
 
-      if (revealed.butterflyConvergence) {
+      if (activeReveal === 'butterflyConvergence') {
         const centerX = width * 0.5
         const centerY = height * 0.34
         const halo = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, width * 0.2)
@@ -369,7 +363,7 @@ export default function PlasmaBloomMeadow() {
         ctx.fill()
       }
 
-      if (revealed.fallingLanterns) {
+      if (activeReveal === 'fallingLanterns') {
         for (let index = 0; index < 14; index += 1) {
           const lanternX = ((index * 0.173 + 0.08) % 1) * width
           const lanternY = ((t * 0.045 + index * 0.23) % 1.2 - 0.1) * height
@@ -383,21 +377,31 @@ export default function PlasmaBloomMeadow() {
         }
       }
 
-      if (revealed.crystalRain) {
-        const centerX = width * 0.5
-        const centerY = height * 0.42
-        for (let index = 0; index < 48; index += 1) {
-          const radius = Math.sqrt(index / 48) * Math.min(width, height) * 0.44
-          const angle = index * GOLDEN_ANGLE + t * 0.35
-          const crystalX = centerX + Math.cos(angle) * radius
-          const crystalY = centerY + Math.sin(angle) * radius + ((t * 28 + index * 13) % 36)
-          ctx.fillStyle = `hsla(${wrapHue(hue + 150)}, 100%, 86%, 0.58)`
+      if (activeReveal === 'aurora') {
+        const aurora = ctx.createLinearGradient(0, 0, width, height * 0.7)
+        aurora.addColorStop(0, `hsla(${wrapHue(hue + 120)}, 100%, 68%, 0.06)`)
+        aurora.addColorStop(0.45, `hsla(${wrapHue(hue + 180)}, 100%, 72%, 0.38)`)
+        aurora.addColorStop(1, `hsla(${wrapHue(hue + 245)}, 100%, 66%, 0.04)`)
+        ctx.strokeStyle = aurora
+        ctx.lineWidth = Math.max(16, width * 0.06)
+        ctx.lineCap = 'round'
+        ctx.beginPath()
+        for (let step = 0; step <= 20; step += 1) {
+          const x = (step / 20) * width
+          const y = height * 0.2
+            + Math.sin(step * 0.72 + t * 0.7) * height * 0.07
+            + Math.sin(step * 0.29 - t * 0.42) * height * 0.05
+          if (step === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+        }
+        ctx.stroke()
+        ctx.lineCap = 'butt'
+        for (let index = 0; index < 20; index += 1) {
+          const x = ((index * 0.19 + t * 0.012) % 1) * width
+          const y = height * 0.22 + Math.sin(index * 0.9 + t) * height * 0.08
+          ctx.fillStyle = `hsla(${wrapHue(hue + 145)}, 100%, 88%, 0.42)`
           ctx.beginPath()
-          ctx.moveTo(crystalX, crystalY - 5)
-          ctx.lineTo(crystalX + 3, crystalY)
-          ctx.lineTo(crystalX, crystalY + 7)
-          ctx.lineTo(crystalX - 3, crystalY)
-          ctx.closePath()
+          ctx.arc(x, y, 1.5, 0, Math.PI * 2)
           ctx.fill()
         }
       }

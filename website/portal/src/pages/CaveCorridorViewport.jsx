@@ -59,16 +59,104 @@ function addCanyonParticles(scene) {
   return { particles, material }
 }
 
-function addSurface(scene, samples, firstEdge, secondEdge, material) {
+function sampleAtDistance(samples, distance) {
+  return samples.find((sample) => sample.distance >= distance) ?? samples[samples.length - 1]
+}
+
+function addPassOneLights(scene, samples) {
+  const lights = [
+    { distance: 2.4, elevation: 2.25, color: '#b8c5dd', intensity: 4.8, range: 7 },
+    { distance: 9.5, elevation: 1.9, color: '#8fa0bc', intensity: 3.8, range: 5.5 },
+    { distance: 15.6, elevation: 1.65, color: '#7f91ae', intensity: 3.4, range: 4.2 },
+    { distance: 17.4, elevation: 1.55, color: '#7187a8', intensity: 3.1, range: 3.8 },
+  ]
+
+  for (const lightSpec of lights) {
+    const sample = sampleAtDistance(samples, lightSpec.distance)
+    const light = new THREE.PointLight(lightSpec.color, lightSpec.intensity, lightSpec.range, 2)
+    light.position.set(sample.position.x, lightSpec.elevation, sample.position.z)
+    scene.add(light)
+  }
+}
+
+function caveSurfaceColor(kind, sample, elevation) {
+  const bendEnd = bendSeveranceGeometry.segments.bend.end
+  const earlyProgress = Math.min(1, sample.distance / bendEnd)
+  const variation = Math.sin(sample.distance * 1.65 + elevation * 2.8) * 0.15
+  const colors = {
+    floor: ['#514b58', '#34323d'],
+    wall: ['#746a7a', '#4b4a58'],
+    ceiling: ['#4b4654', '#2d2c37'],
+  }
+  const [mouth, bend] = colors[kind]
+  return new THREE.Color(mouth).lerp(new THREE.Color(bend), earlyProgress).offsetHSL(0, 0, variation)
+}
+
+function frozenWallRelief(sample, elevation) {
+  return (
+    Math.sin(sample.distance * 1.9 + elevation * 2.7)
+    + Math.sin(sample.distance * 4.1 - elevation * 1.6) * 0.45
+  ) * 0.11
+}
+
+function isInsideBendWall(sample, side) {
+  const bend = bendSeveranceGeometry.segments.bend
+  const toBendCenterX = bend.radius - sample.position.x
+  const toBendCenterZ = bend.start - sample.position.z
+  const wallNormalX = sample.heading.z * side
+  const wallNormalZ = -sample.heading.x * side
+  return wallNormalX * toBendCenterX + wallNormalZ * toBendCenterZ > 0
+}
+
+function insideBendGuardFactor(distance) {
+  const bend = bendSeveranceGeometry.segments.bend
+  const rampLength = 1.5
+  const approachStart = bend.start - rampLength
+  const exitEnd = bend.end + rampLength
+
+  if (distance < approachStart || distance > exitEnd) return 1
+  if (distance <= bend.start) return (bend.start - distance) / rampLength
+  if (distance <= bend.end) return 0
+  return (distance - bend.end) / rampLength
+}
+
+function caveWallPoint(sample, point) {
+  const side = Math.sign(
+    (point[0] - sample.position.x) * sample.heading.z
+    - (point[2] - sample.position.z) * sample.heading.x,
+  )
+  const guard = isInsideBendWall(sample, side) ? insideBendGuardFactor(sample.distance) : 1
+  const relief = frozenWallRelief(sample, point[1]) * guard
+
+  return [
+    point[0] - sample.heading.z * side * relief,
+    point[1] + relief * 0.45,
+    point[2] + sample.heading.x * side * relief,
+  ]
+}
+
+function addSurface(scene, samples, firstEdge, secondEdge, material, kind) {
   const vertices = []
+  const colors = []
+  const addVertex = (sample, point) => {
+    vertices.push(...(kind === 'wall' ? caveWallPoint(sample, point) : point))
+    const color = caveSurfaceColor(kind, sample, point[1])
+    colors.push(color.r, color.g, color.b)
+  }
+
   for (let index = 1; index < samples.length; index += 1) {
     const previous = samples[index - 1]
     const current = samples[index]
-    vertices.push(...firstEdge(previous), ...firstEdge(current), ...secondEdge(current))
-    vertices.push(...firstEdge(previous), ...secondEdge(current), ...secondEdge(previous))
+    addVertex(previous, firstEdge(previous))
+    addVertex(current, firstEdge(current))
+    addVertex(current, secondEdge(current))
+    addVertex(previous, firstEdge(previous))
+    addVertex(current, secondEdge(current))
+    addVertex(previous, secondEdge(previous))
   }
   const geometry = new THREE.BufferGeometry()
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3))
   geometry.computeVertexNormals()
   const surface = new THREE.Mesh(geometry, material)
   scene.add(surface)
@@ -190,14 +278,15 @@ export default function CaveCorridorViewport({
     crystalLight.position.set(9, 1.8, 17)
     scene.add(crystalLight)
 
-    const wall = new THREE.MeshStandardMaterial({ color: '#37333a', roughness: 1, flatShading: true, side: THREE.DoubleSide })
-    const floor = new THREE.MeshStandardMaterial({ color: '#18161b', roughness: 1, flatShading: true, side: THREE.DoubleSide })
-    const ceiling = new THREE.MeshStandardMaterial({ color: '#100f13', roughness: 1, flatShading: true, side: THREE.DoubleSide })
-    const samples = corridorSamples()
-    const floorSurface = addSurface(scene, samples, (sample) => edgePoint(sample, -1, 0), (sample) => edgePoint(sample, 1, 0), floor)
-    const ceilingSurface = addSurface(scene, samples, (sample) => edgePoint(sample, 1, sample.height), (sample) => edgePoint(sample, -1, sample.height), ceiling)
-    const leftWall = addSurface(scene, samples, (sample) => edgePoint(sample, -1, 0), (sample) => edgePoint(sample, -1, sample.height), wall)
-    const rightWall = addSurface(scene, samples, (sample) => edgePoint(sample, 1, sample.height), (sample) => edgePoint(sample, 1, 0), wall)
+    const wall = new THREE.MeshStandardMaterial({ color: '#ffffff', vertexColors: true, roughness: 0.93, flatShading: true, side: THREE.DoubleSide })
+    const floor = new THREE.MeshStandardMaterial({ color: '#ffffff', vertexColors: true, roughness: 0.97, flatShading: true, side: THREE.DoubleSide })
+    const ceiling = new THREE.MeshStandardMaterial({ color: '#ffffff', vertexColors: true, roughness: 0.98, flatShading: true, side: THREE.DoubleSide })
+    const samples = corridorSamples(0.1)
+    const floorSurface = addSurface(scene, samples, (sample) => edgePoint(sample, -1, 0), (sample) => edgePoint(sample, 1, 0), floor, 'floor')
+    const ceilingSurface = addSurface(scene, samples, (sample) => edgePoint(sample, 1, sample.height), (sample) => edgePoint(sample, -1, sample.height), ceiling, 'ceiling')
+    const leftWall = addSurface(scene, samples, (sample) => edgePoint(sample, -1, 0), (sample) => edgePoint(sample, -1, sample.height), wall, 'wall')
+    const rightWall = addSurface(scene, samples, (sample) => edgePoint(sample, 1, sample.height), (sample) => edgePoint(sample, 1, 0), wall, 'wall')
+    addPassOneLights(scene, samples)
     const crystal = addCrystalVeins(scene)
     const canyonParticles = addCanyonParticles(scene)
 

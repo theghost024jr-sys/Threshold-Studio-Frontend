@@ -10,10 +10,17 @@ import { handleRequest } from '../../worker.js'
 
 const commit = '0123456789abcdef0123456789abcdef01234567'
 const tree = '89abcdef0123456789abcdef0123456789abcdef'
+const assembly = {
+  mode: 'isolated-publication-output',
+  placeholderManifestSha256: 'a'.repeat(64),
+  placeholderCount: 2,
+  outputManifestSha256: 'b'.repeat(64),
+}
 
-test('creates a versioned marker for a clean commit and its tree', async () => {
+test('creates a v2 marker for a clean source commit and isolated assembly', async () => {
   const marker = await createBuildMarker({
     now: new Date('2026-11-15T06:30:32.000Z'),
+    assembly,
     runGitCommand: async (args) => {
       if (args.join(' ') === 'rev-parse HEAD') return `${commit}\n`
       if (args.join(' ') === `rev-parse ${commit}^{tree}`) return `${tree}\n`
@@ -23,10 +30,12 @@ test('creates a versioned marker for a clean commit and its tree', async () => {
   })
 
   assert.deepEqual(marker, {
-    schema: 'threshold-build-marker/v1',
+    schema: 'threshold-build-marker/v2',
     commit,
     tree,
-    worktree: 'clean',
+    sourceWorktreeBefore: 'clean',
+    sourceWorktreeAfter: 'clean',
+    assembly,
     builtAtUtc: '2026-11-15T06:30:32.000Z',
   })
 })
@@ -39,6 +48,7 @@ for (const [label, status] of [
   test(`refuses to create a marker from a ${label}`, async () => {
     await assert.rejects(
       createBuildMarker({
+        assembly,
         runGitCommand: async (args) => {
           if (args.join(' ') === 'rev-parse HEAD') return `${commit}\n`
           if (args.join(' ') === `rev-parse ${commit}^{tree}`) return `${tree}\n`
@@ -46,10 +56,40 @@ for (const [label, status] of [
           throw new Error(`Unexpected Git command: ${args.join(' ')}`)
         },
       }),
-      /dirty worktree/,
+      /dirty source worktree/,
     )
   })
 }
+
+test('refuses a marker when source cleanliness changes after assembly', async () => {
+  let statusChecks = 0
+
+  await assert.rejects(
+    createBuildMarker({
+      assembly,
+      runGitCommand: async (args) => {
+        if (args.join(' ') === 'rev-parse HEAD') return `${commit}\n`
+        if (args.join(' ') === `rev-parse ${commit}^{tree}`) return `${tree}\n`
+        if (args.join(' ') === 'status --porcelain=v1 --untracked-files=all') {
+          statusChecks += 1
+          return statusChecks === 1 ? '' : ' M website/portal/cave-corridor\n'
+        }
+        throw new Error(`Unexpected Git command: ${args.join(' ')}`)
+      },
+    }),
+    /dirty source worktree/,
+  )
+})
+
+test('refuses an invalid caller-supplied source identity', async () => {
+  await assert.rejects(
+    createBuildMarker({
+      sourceIdentity: { commit: 'not-a-commit', tree },
+      assembly,
+    }),
+    /invalid source commit hash/,
+  )
+})
 
 test('removes a stale marker before refusing a dirty build', async () => {
   const outputDirectory = await mkdtemp(resolve(tmpdir(), 'threshold-build-marker-'))
@@ -59,6 +99,7 @@ test('removes a stale marker before refusing a dirty build', async () => {
   try {
     await assert.rejects(
       writeBuildMarker(outputDirectory, {
+        assembly,
         runGitCommand: async (args) => {
           if (args.join(' ') === 'rev-parse HEAD') return `${commit}\n`
           if (args.join(' ') === `rev-parse ${commit}^{tree}`) return `${tree}\n`
@@ -66,7 +107,7 @@ test('removes a stale marker before refusing a dirty build', async () => {
           throw new Error(`Unexpected Git command: ${args.join(' ')}`)
         },
       }),
-      /dirty worktree/,
+      /dirty source worktree/,
     )
 
     await assert.rejects(readFile(markerPath, 'utf8'), { code: 'ENOENT' })
@@ -89,7 +130,7 @@ test('serves the marker as JSON and preserves a missing marker response', async 
         const path = new URL(request.url).pathname
         assetPaths.push(path)
         if (path === '/portal-dist/build-marker.json') {
-          return new Response('{"schema":"threshold-build-marker/v1"}', {
+          return new Response('{"schema":"threshold-build-marker/v2"}', {
             headers: { 'content-type': 'application/json; charset=utf-8' },
           })
         }
@@ -105,7 +146,7 @@ test('serves the marker as JSON and preserves a missing marker response', async 
   )
   assert.equal(markerResponse.status, 200)
   assert.equal(markerResponse.headers.get('content-type'), 'application/json; charset=utf-8')
-  assert.equal(await markerResponse.text(), '{"schema":"threshold-build-marker/v1"}')
+  assert.equal(await markerResponse.text(), '{"schema":"threshold-build-marker/v2"}')
   assert.deepEqual(assetPaths, ['/portal-dist/build-marker.json'])
 
   const missingResponse = await handleRequest(

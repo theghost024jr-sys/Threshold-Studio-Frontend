@@ -6,7 +6,9 @@
 
 This protocol must pass before the Revision 3 Structural Eligibility Checklist can mark build identity as PASS.
 
-**Implementation status:** The Portal build now writes this marker and the Worker serves it at the specified endpoint. Attribution remains incomplete until a clean committed build produces, serves, and retains the required evidence.
+**Implementation status:** The Portal build now writes a v2 marker and the Worker serves it at the specified endpoint. Attribution remains incomplete until a clean committed build produces, serves, and retains the required evidence.
+
+> **Publication-boundary hold:** The current Portal assembly materializes tracked publication placeholders inside the source worktree after marker generation. That marker is inadmissible for attribution. The selected boundary is isolated assembly outside the tracked source worktree; see [the tracked-placeholder contract](PORTAL_PUBLICATION_PLACEHOLDER_CONTRACT.md). Do not reinterpret `worktree: "clean"` as an exception for in-place placeholder materialization.
 
 ## 1. Build-marker format
 
@@ -20,10 +22,17 @@ Its response must be JSON with exactly these required fields:
 
 ```json
 {
-  "schema": "threshold-build-marker/v1",
+  "schema": "threshold-build-marker/v2",
   "commit": "0123456789abcdef0123456789abcdef01234567",
   "tree": "0123456789abcdef0123456789abcdef01234567",
-  "worktree": "clean",
+  "sourceWorktreeBefore": "clean",
+  "sourceWorktreeAfter": "clean",
+  "assembly": {
+    "mode": "isolated-publication-output",
+    "placeholderManifestSha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "placeholderCount": 2,
+    "outputManifestSha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
   "builtAtUtc": "2026-11-15T06:30:32Z"
 }
 ```
@@ -32,13 +41,18 @@ Its response must be JSON with exactly these required fields:
 
 | Field | Format | Rule |
 | --- | --- | --- |
-| `schema` | Exact literal | Must equal `threshold-build-marker/v1`. |
+| `schema` | Exact literal | Must equal `threshold-build-marker/v2`. |
 | `commit` | 40 lowercase hexadecimal characters | Must name the Git commit used for the build. |
 | `tree` | 40 lowercase hexadecimal characters | Must equal `git rev-parse <commit>^{tree}`. |
-| `worktree` | Exact literal `clean` | The marker must never be emitted from an uncommitted source tree. |
+| `sourceWorktreeBefore` | Exact literal `clean` | The candidate source checkout was clean before publication assembly. |
+| `sourceWorktreeAfter` | Exact literal `clean` | The candidate source checkout was still clean after publication assembly. |
+| `assembly.mode` | Exact literal | Must equal `isolated-publication-output`. |
+| `assembly.placeholderManifestSha256` | 64 lowercase hexadecimal characters | SHA-256 of retained placeholder source/output provenance. |
+| `assembly.placeholderCount` | Non-negative integer | Number of isolated placeholder outputs. |
+| `assembly.outputManifestSha256` | 64 lowercase hexadecimal characters | SHA-256 of retained Portal-shell and placeholder-output provenance. |
 | `builtAtUtc` | UTC ISO 8601 timestamp ending in `Z` | Records when the attributable build was produced. |
 
-The marker is invalid if any required field is missing, a hash is abbreviated, `worktree` is not `clean`, or the served marker cannot be retrieved from the Cave URL origin.
+The marker is invalid if any required field is missing, a hash is abbreviated, either source-worktree field is not `clean`, the assembly mode is not isolated output, either retained manifest hash does not match, or the served marker cannot be retrieved from the Cave URL origin.
 
 ### Served-page discovery
 
@@ -98,6 +112,8 @@ npm --prefix website/portal run build:site
 - [ ] Build exit code is `0`.
 - [ ] Complete build output retained.
 - [ ] Output was produced from the clean candidate checkout.
+- [ ] Publication assembly did not mutate the tracked source worktree.
+- [ ] Placeholder and output manifests are present in `website/portal-dist`.
 
 **Build-log evidence location:**
 **Build exit code:**
@@ -124,10 +140,12 @@ $marker | ConvertTo-Json -Compress
 ```
 
 - [ ] Served marker endpoint returns HTTP `200`.
-- [ ] `schema` equals `threshold-build-marker/v1`.
+- [ ] `schema` equals `threshold-build-marker/v2`.
 - [ ] `commit` equals the candidate commit exactly.
 - [ ] `tree` equals the recorded candidate tree exactly.
-- [ ] `worktree` equals `clean`.
+- [ ] `sourceWorktreeBefore` equals `clean`.
+- [ ] `sourceWorktreeAfter` equals `clean`.
+- [ ] `assembly.mode` equals `isolated-publication-output`.
 - [ ] Served Cave page contains the alternate marker link.
 
 **Served URL:**
@@ -146,13 +164,16 @@ $actualTree = git rev-parse "$markerCommit^{tree}"
 
 if ($markerCommit -ne $commit) { throw 'Marker commit does not match candidate commit.' }
 if ($markerTree -ne $actualTree) { throw 'Marker tree does not match Git.' }
-if ($marker.worktree -ne 'clean') { throw 'Marker does not certify a clean source tree.' }
+if ($marker.sourceWorktreeBefore -ne 'clean') { throw 'Marker does not certify a clean pre-assembly source tree.' }
+if ($marker.sourceWorktreeAfter -ne 'clean') { throw 'Marker does not certify a clean post-assembly source tree.' }
+if ($marker.assembly.mode -ne 'isolated-publication-output') { throw 'Marker does not certify isolated publication assembly.' }
 ```
 
 - [ ] Marker commit resolves.
 - [ ] Marker commit equals candidate commit.
 - [ ] Marker tree equals the Git commit tree.
-- [ ] Marker certifies a clean source tree.
+- [ ] Marker certifies clean source before and after assembly.
+- [ ] Marker certifies isolated publication assembly.
 
 **Marker agreement:** [ ] PASS  [ ] FAIL
 
@@ -178,6 +199,8 @@ The evidence directory name uses the full 40-character commit hash. Do not mix a
 | B-08 | `protected-file-hashes.txt` | SHA-256 values for `CaveCorridorGeometry.js` and `CaveCorridorState.js`. |
 | B-09 | `viewport-diff.patch` | `git diff <baseline> -- website/portal/src/pages/CaveCorridorViewport.jsx`. |
 | B-10 | `verification-summary.txt` | Candidate commit, tree, marker URL, marker verification result, and all command exit codes. |
+| B-11 | `placeholder-manifest.json` | Exact `website/portal-dist/publication-placeholders.json` build output. |
+| B-12 | `output-manifest.json` | Exact `website/portal-dist/publication-output-manifest.json` build output. |
 
 ### Retention rules
 
@@ -186,6 +209,9 @@ The evidence directory name uses the full 40-character commit hash. Do not mix a
 - [ ] Every retained file has a SHA-256 recorded in the Revision 3 manifest.
 - [ ] The marker response is retained unchanged.
 - [ ] The build removes any existing ignored `portal-dist/build-marker.json` before attempting generation; a failed dirty build therefore leaves no stale marker to serve.
+- [ ] The build uses the isolated-assembly contract; tracked publication placeholders remain unchanged in the candidate checkout.
+- [ ] B-11 SHA-256 equals `assembly.placeholderManifestSha256`.
+- [ ] B-12 SHA-256 equals `assembly.outputManifestSha256`.
 - [ ] Evidence directories are immutable after final disposition; corrections create a new evidence package.
 - [ ] A new commit creates a new package. Evidence must not be copied forward as proof for another commit.
 

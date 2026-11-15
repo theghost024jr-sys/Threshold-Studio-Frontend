@@ -4,8 +4,9 @@ import { resolve } from 'node:path'
 import { promisify } from 'node:util'
 
 const execFileAsync = promisify(execFile)
-const BUILD_MARKER_SCHEMA = 'threshold-build-marker/v1'
+const BUILD_MARKER_SCHEMA = 'threshold-build-marker/v2'
 const GIT_HASH_PATTERN = /^[0-9a-f]{40}$/
+const SHA256_PATTERN = /^[0-9a-f]{64}$/
 
 async function runGit(args, repositoryRoot) {
   const { stdout } = await execFileAsync('git', ['-C', repositoryRoot, ...args])
@@ -20,9 +21,32 @@ function readHash(value, label) {
   return hash
 }
 
-export async function createBuildMarker({
+function validateAssembly(assembly) {
+  if (
+    !assembly
+    || assembly.mode !== 'isolated-publication-output'
+    || !SHA256_PATTERN.test(assembly.placeholderManifestSha256)
+    || !Number.isSafeInteger(assembly.placeholderCount)
+    || assembly.placeholderCount < 0
+    || !SHA256_PATTERN.test(assembly.outputManifestSha256)
+  ) {
+    throw new Error('Build marker requires valid isolated assembly provenance.')
+  }
+}
+
+function validateSourceIdentity(sourceIdentity) {
+  if (!sourceIdentity || typeof sourceIdentity !== 'object') {
+    throw new Error('Build marker requires a valid clean source identity.')
+  }
+
+  return {
+    commit: readHash(sourceIdentity.commit ?? '', 'source commit hash'),
+    tree: readHash(sourceIdentity.tree ?? '', 'source tree hash'),
+  }
+}
+
+export async function readCleanSourceIdentity({
   repositoryRoot = resolve(import.meta.dirname, '../../..'),
-  now = new Date(),
   runGitCommand = runGit,
 } = {}) {
   const commit = readHash(await runGitCommand(['rev-parse', 'HEAD'], repositoryRoot), 'commit hash')
@@ -30,14 +54,42 @@ export async function createBuildMarker({
   const status = await runGitCommand(['status', '--porcelain=v1', '--untracked-files=all'], repositoryRoot)
 
   if (status.trim() !== '') {
-    throw new Error('Cannot create a build marker from a dirty worktree.')
+    throw new Error('Cannot create a build marker from a dirty source worktree.')
+  }
+
+  return {
+    commit,
+    tree,
+  }
+}
+
+export async function createBuildMarker({
+  sourceIdentity,
+  assembly,
+  repositoryRoot = resolve(import.meta.dirname, '../../..'),
+  now = new Date(),
+  runGitCommand = runGit,
+} = {}) {
+  validateAssembly(assembly)
+  const sourceBefore = sourceIdentity
+    ? validateSourceIdentity(sourceIdentity)
+    : await readCleanSourceIdentity({ repositoryRoot, runGitCommand })
+  const sourceAfter = await readCleanSourceIdentity({ repositoryRoot, runGitCommand })
+
+  if (
+    sourceBefore.commit !== sourceAfter.commit
+    || sourceBefore.tree !== sourceAfter.tree
+  ) {
+    throw new Error('Source identity changed during publication assembly.')
   }
 
   return {
     schema: BUILD_MARKER_SCHEMA,
-    commit,
-    tree,
-    worktree: 'clean',
+    commit: sourceBefore.commit,
+    tree: sourceBefore.tree,
+    sourceWorktreeBefore: 'clean',
+    sourceWorktreeAfter: 'clean',
+    assembly,
     builtAtUtc: now.toISOString(),
   }
 }

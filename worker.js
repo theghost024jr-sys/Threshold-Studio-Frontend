@@ -640,7 +640,7 @@ async function buildEthosChamberPayload(env, request, trace, limit = 220) {
   return chamber;
 }
 
-async function handleRequest(request, env, trace) {
+export async function handleRequest(request, env, trace) {
   const url = new URL(request.url);
 
   if (url.pathname === "/portal/index.html") {
@@ -659,11 +659,16 @@ async function handleRequest(request, env, trace) {
   const isWorldPath = url.pathname === "/world" || url.pathname.startsWith("/world/");
   if (request.method === "GET" && (isPortalPath || isWorldPath)) {
     const portalUrl = new URL(request.url);
-    const isShellRequest = !url.pathname.startsWith("/portal/assets/") && url.pathname !== "/portal/favicon.svg";
+    const isShellRequest =
+      !url.pathname.startsWith("/portal/assets/") &&
+      url.pathname !== "/portal/favicon.svg" &&
+      url.pathname !== "/portal/build-marker.json";
     if (url.pathname.startsWith("/portal/assets/")) {
       portalUrl.pathname = "/portal-dist/assets/" + url.pathname.slice("/portal/assets/".length);
     } else if (url.pathname === "/portal/favicon.svg") {
       portalUrl.pathname = "/portal-dist/favicon.svg";
+    } else if (url.pathname === "/portal/build-marker.json") {
+      portalUrl.pathname = "/portal-dist/build-marker.json";
     } else {
       portalUrl.pathname = "/portal-dist/portal-shell.txt";
     }

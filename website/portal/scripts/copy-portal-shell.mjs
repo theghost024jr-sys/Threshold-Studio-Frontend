@@ -1,5 +1,6 @@
 import { copyFile, readFile, readdir, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import { writeBuildMarker } from './build-marker.mjs'
 
 const outputDirectory = resolve(import.meta.dirname, '../../portal-dist')
 const portalDirectory = resolve(import.meta.dirname, '..')
@@ -11,6 +12,7 @@ await copyFile(
 )
 
 const shell = await readFile(resolve(outputDirectory, 'portal-shell.txt'), 'utf8')
+const marker = await writeBuildMarker(outputDirectory)
 
 async function restorePortalRouteShells(directory) {
   const entries = await readdir(directory, { withFileTypes: true })
@@ -31,3 +33,4 @@ async function restorePortalRouteShells(directory) {
 }
 
 await restorePortalRouteShells(portalDirectory)
+console.log(`Portal build marker written for ${marker.commit}`)

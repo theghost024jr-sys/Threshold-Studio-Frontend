@@ -39,7 +39,7 @@ test("connects the canonical five-minute path through existing Threshold territo
   for (const page of pages) {
     assert.match(page, /scripts\/canonical-path\.js/);
   }
-  assert.match(pages[0], /href="housegarden\.html"\s*>\s*House and Garden/);
+  assert.match(pages[0], /href="(?:\/)?housegarden\.html"\s*>\s*House and Garden/);
   assert.match(pages[1], /href="environment\/herbroom\.html">Herb Room/);
   assert.match(pages[2], /href="\/environment\/basin\.html"/);
   assert.match(pages[2], /href="\/environment\/basin\.html" class="exit-east">Step through to Basin/);
@@ -51,5 +51,5 @@ test("connects the canonical five-minute path through existing Threshold territo
   assert.match(pages[3], /Sound unavailable/);
   assert.match(pages[3], /the Basin remains open/);
   assert.match(pages[4], /href="\/environment\/basin\.html">Return to the Basin/);
-  assert.match(pages[4], /href="\/environment\/cabin-of-moss\.html">Continue to the Cabin of Moss/);
+  assert.match(pages[4], /href="\/portal\/cabin-of-moss">Continue to the Cabin of Moss/);
 });

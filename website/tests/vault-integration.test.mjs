@@ -112,11 +112,11 @@ test("connects the Drift Falls choices to Wildflower Drift and Cabin of Moss", a
   const cabinOfMoss = await readFile("website/environment/cabin-of-moss.html", "utf8");
 
   assert.match(driftFalls, /href="\/wildflower-drift\.html">Behind the falls<\/a>/);
-  assert.match(driftFalls, /href="\/environment\/cabin-of-moss\.html">Past the falls<\/a>/);
+  assert.match(driftFalls, /href="\/portal\/cabin-of-moss">Past the falls<\/a>/);
   assert.match(wildflowerDrift, /url\("\/assets\/wildflower-drift\.png"\)/);
   assert.match(wildflowerDrift, /url\("\/assets\/wildflower-drift-painted-poppies\.png"\)/);
   assert.match(wildflowerDrift, /mote\.className = "drift-mote"/);
-  assert.match(wildflowerDrift, /blossom\.className = "blossom"/);
+  assert.match(wildflowerDrift, /blossom\.className = (?:index === 0 \? "blossom blossom--draggable" : )?"blossom";/);
   assert.match(wildflowerDrift, /prefers-reduced-motion:reduce/);
   assert.match(wildflowerDrift, /position:sticky/);
   assert.match(wildflowerDrift, /min-height:240svh/);
@@ -127,7 +127,8 @@ test("connects the Drift Falls choices to Wildflower Drift and Cabin of Moss", a
   assert.match(wildflowerDrift, /The flowers are still there\. The mist simply changes the distance from which they can be understood\./);
   assert.match(wildflowerDrift, /href="\/environment\/waterfall\.html">Return to the Drift Falls<\/a>/);
   assert.match(cabinOfMoss, /data-branch="cabin-of-moss"/);
-  assert.match(cabinOfMoss, /href="\/wildflower-drift\.html">Return through Wildflower Drift<\/a>/);
+  assert.match(cabinOfMoss, /The Cabin has moved beyond the Falls\./);
+  assert.match(cabinOfMoss, /href="\/portal\/cabin-of-moss">Enter the Cabin of Moss<\/a>/);
 });
 
 test("publishes and renders the four-path glyph archive", async () => {

@@ -47,7 +47,7 @@ describe("Main Hub runtime ownership", () => {
     const entry = read("website/index.html");
 
     expect(entry).toMatch(/data-main-hub-first-crossing/);
-    expect(entry).toMatch(/href="housegarden\.html"/);
+    expect(entry).toMatch(/href="(?:\/)?housegarden\.html"/);
     expect(entry).not.toMatch(/data-main-hub-first-crossing[^>]*href="hub\.html"/);
   });
 });

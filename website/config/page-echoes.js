@@ -39,6 +39,9 @@ export const PAGE_ECHOES = Object.freeze([
     "styles/complexity-layers.css",
     "styles/world-map.css"
   ]),
+  pageEcho("spiral-reflection", "home", "Spiral Reflection", "/spiral-reflection.html", "spiral-reflection.html", [
+    "styles/spiral-reflection.css"
+  ]),
   pageEcho("legacy-index", "home", "Legacy Constructs", "/legacy/index.html", "legacy/index.html"),
   pageEcho("legacy-hub2", "home", "Legacy Hub", "/hub2.html", "hub2.html", ["styles/styles.css"]),
   pageEcho("legacy-index2", "home", "Fibonacci Flower Constellation Wheel", "/index2.html", "index2.html"),
@@ -203,7 +206,7 @@ export const PAGE_ECHOES = Object.freeze([
   pageEcho("basin-generated-page", "houseGarden", "Basin (published note)", "/generated-pages/environment/basin.html", null),
   pageEcho("waterfall", "houseGarden", "Waterfall", "/environment/waterfall.html", "environment/waterfall.html"),
   pageEcho("wildflower-drift-environment", "houseGarden", "Wildflower Drift", "/environment/wildflower-drift.html", "environment/wildflower-drift.html"),
-  pageEcho("cabin-of-moss", "oldForest", "Cabin of Moss", "/portal/cabin-of-moss", "portal/src/pages/CabinOfMoss.jsx"),
+  pageEcho("cabin-of-moss-environment", "oldForest", "Cabin of Moss", "/environment/cabin-of-moss.html", "environment/cabin-of-moss.html"),
   pageEcho("old-forest", "houseGarden", "Old Forest", "/environment/old-forest.html", "environment/old-forest.html"),
   pageEcho("wildflower-drift", "home", "Wildflower Drift", "/wildflower-drift.html", "wildflower-drift.html"),
   pageEcho("living-threshold", "rootSigil", "Threshold Record", "/pages/threshold.html", "pages/threshold.html", [

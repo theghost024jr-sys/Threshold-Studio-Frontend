@@ -1,10 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './PlasmaBloomMeadow.css'
 
 const FLOWER_COUNT = 34
 const BUTTERFLY_COUNT = 5
 const REACH = 0.28
 const AGREE_HUE = 28
+const BLOOM_INSTRUMENTS = ['bell', 'glass', 'chorus', 'rain']
 
 const wrapHue = (hue) => ((hue % 360) + 360) % 360
 
@@ -16,6 +18,7 @@ function buildFlowers() {
     phase: index * 1.7,
     size: 0.7 + ((index * 13) % 10) / 14,
     flare: 0,
+    instrument: BLOOM_INSTRUMENTS[index % BLOOM_INSTRUMENTS.length],
   }))
 }
 
@@ -31,6 +34,8 @@ function buildButterflies() {
 
 export default function PlasmaBloomMeadow() {
   const canvasRef = useRef(null)
+  const soundRef = useRef(null)
+  const [vergeOpen, setVergeOpen] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -39,11 +44,127 @@ export default function PlasmaBloomMeadow() {
     const flowers = buildFlowers()
     const butterflies = buildButterflies()
     const pointer = { x: -1, y: -1, px: -1, py: -1, speed: 0, linger: 0, active: false }
+    const playedSequence = []
+    let activeInstrument = null
+    let activeReveal = null
     let hue = 190
     let width = 0
     let height = 0
     let frame = 0
     let last = performance.now()
+
+    const startSound = () => {
+      if (soundRef.current) {
+        soundRef.current.context.resume()
+        return
+      }
+
+      const AudioContext = window.AudioContext || window.webkitAudioContext
+      if (!AudioContext) return
+
+      const context = new AudioContext()
+      const output = context.createGain()
+      const root = context.createOscillator()
+      const shimmer = context.createOscillator()
+      const rootGain = context.createGain()
+      const shimmerGain = context.createGain()
+
+      output.gain.value = 0.0001
+      root.type = 'sine'
+      root.frequency.value = 88
+      shimmer.type = 'triangle'
+      shimmer.frequency.value = 220
+      rootGain.gain.value = 0
+      shimmerGain.gain.value = 0
+      root.connect(rootGain).connect(output)
+      shimmer.connect(shimmerGain).connect(output)
+      output.connect(context.destination)
+      root.start()
+      shimmer.start()
+      context.resume()
+      soundRef.current = { context, output, root, shimmer, rootGain, shimmerGain }
+    }
+
+    const shapeSound = (calmness, currentHue, opened) => {
+      const sound = soundRef.current
+      if (!sound) return
+
+      const now = sound.context.currentTime
+      sound.root.frequency.setTargetAtTime(82 + currentHue / 12, now, 0.18)
+      sound.shimmer.frequency.setTargetAtTime(196 + currentHue / 5, now, 0.12)
+      sound.rootGain.gain.setTargetAtTime(0.06 + calmness * 0.14, now, 0.2)
+      sound.shimmerGain.gain.setTargetAtTime(calmness * 0.06 + (opened ? 0.08 : 0), now, 0.16)
+      sound.output.gain.setTargetAtTime(opened ? 0.24 : 0.16, now, 0.2)
+    }
+
+    const ringVergeBell = () => {
+      const sound = soundRef.current
+      if (!sound || sound.bellRung) return
+
+      const now = sound.context.currentTime
+      const bell = sound.context.createOscillator()
+      const bellGain = sound.context.createGain()
+      const overtone = sound.context.createOscillator()
+      const overtoneGain = sound.context.createGain()
+
+      bell.type = 'sine'
+      bell.frequency.setValueAtTime(659.25, now)
+      overtone.type = 'sine'
+      overtone.frequency.setValueAtTime(1318.51, now)
+      bellGain.gain.setValueAtTime(0.32, now)
+      bellGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8)
+      overtoneGain.gain.setValueAtTime(0.12, now)
+      overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9)
+      bell.connect(bellGain).connect(sound.output)
+      overtone.connect(overtoneGain).connect(sound.output)
+      bell.start(now)
+      overtone.start(now)
+      bell.stop(now + 1.85)
+      overtone.stop(now + 0.95)
+      sound.bellRung = true
+    }
+
+    const playBloomInstrument = (instrument) => {
+      const sound = soundRef.current
+      if (!sound) return
+
+      const tones = {
+        bell: [523.25, 'sine', 0.36],
+        glass: [783.99, 'sine', 0.24],
+        chorus: [329.63, 'triangle', 0.48],
+        rain: [1174.66, 'triangle', 0.16],
+      }
+      const [frequency, type, duration] = tones[instrument]
+      const now = sound.context.currentTime
+      const voice = sound.context.createOscillator()
+      const gain = sound.context.createGain()
+
+      voice.type = type
+      voice.frequency.setValueAtTime(frequency, now)
+      gain.gain.setValueAtTime(0.18, now)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration)
+      voice.connect(gain).connect(sound.output)
+      voice.start(now)
+      voice.stop(now + duration + 0.02)
+    }
+
+    const revealComposition = () => {
+      const composition = playedSequence.slice(-2).join('>')
+      if (composition === 'chorus>bell') activeReveal = 'butterflyConvergence'
+      if (composition === 'glass>chorus') activeReveal = 'bloomChorus'
+      if (composition === 'rain>glass') activeReveal = 'aurora'
+      if (composition === 'bell>glass') activeReveal = 'fallingLanterns'
+    }
+
+    const recordBloom = (instrument) => {
+      if (instrument === activeInstrument) return
+
+      activeInstrument = instrument
+      playedSequence.push(instrument)
+      if (playedSequence.length > 2) playedSequence.shift()
+      playBloomInstrument(instrument)
+      revealComposition()
+    }
 
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2)
@@ -55,6 +176,7 @@ export default function PlasmaBloomMeadow() {
     }
 
     const onMove = (event) => {
+      startSound()
       const box = canvas.getBoundingClientRect()
       pointer.x = (event.clientX - box.left) / box.width
       pointer.y = (event.clientY - box.top) / box.height
@@ -78,6 +200,11 @@ export default function PlasmaBloomMeadow() {
       // Lingering brightens the plasma; rushing dims it.
       const calm = pointer.active && pointer.speed < 0.25
       pointer.linger = Math.min(1, Math.max(0, pointer.linger + (calm ? dt * 0.6 : -dt * 1.2)))
+      if (pointer.linger >= 0.92) {
+        setVergeOpen(true)
+        ringVergeBell()
+      }
+      shapeSound(pointer.linger, hue, pointer.linger >= 0.92)
       // Hovering shifts hue more than touch ever does; the colour is never fixed.
       if (pointer.active) hue = wrapHue(hue + dt * (6 + pointer.linger * 26))
 
@@ -137,6 +264,20 @@ export default function PlasmaBloomMeadow() {
           }
         }
       })
+
+      if (pointer.active) {
+        const nearest = heads.reduce((closest, head) => {
+          const distance = Math.hypot(pointer.x * width - head.hx, pointer.y * height - head.hy)
+          return distance < closest.distance ? { distance, flower: head.flower } : closest
+        }, { distance: Infinity, flower: null })
+        if (nearest.distance < Math.min(width, height) * 0.12) {
+          recordBloom(nearest.flower.instrument)
+        } else {
+          activeInstrument = null
+        }
+      } else {
+        activeInstrument = null
+      }
 
       // Two flowers that agree arc a bridge between them.
       for (let a = 0; a < heads.length; a += 1) {
@@ -198,6 +339,72 @@ export default function PlasmaBloomMeadow() {
         ctx.ellipse(fx + 4, fy, 5 * flap, 3, 0.4, 0, Math.PI * 2)
         ctx.fill()
       })
+
+      if (activeReveal === 'bloomChorus') {
+        heads.forEach(({ hx, hy, flowerHue }, index) => {
+          if (index % 3 !== 0) return
+          ctx.strokeStyle = `hsla(${wrapHue(flowerHue + 110)}, 100%, 82%, 0.45)`
+          ctx.lineWidth = 1.5
+          ctx.beginPath()
+          ctx.arc(hx, hy, 12 + Math.sin(t * 3 + index) * 4, 0, Math.PI * 2)
+          ctx.stroke()
+        })
+      }
+
+      if (activeReveal === 'butterflyConvergence') {
+        const centerX = width * 0.5
+        const centerY = height * 0.34
+        const halo = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, width * 0.2)
+        halo.addColorStop(0, `hsla(${wrapHue(hue + 145)}, 100%, 78%, 0.28)`)
+        halo.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        ctx.fillStyle = halo
+        ctx.beginPath()
+        ctx.arc(centerX, centerY, width * 0.2, 0, Math.PI * 2)
+        ctx.fill()
+      }
+
+      if (activeReveal === 'fallingLanterns') {
+        for (let index = 0; index < 14; index += 1) {
+          const lanternX = ((index * 0.173 + 0.08) % 1) * width
+          const lanternY = ((t * 0.045 + index * 0.23) % 1.2 - 0.1) * height
+          const glow = ctx.createRadialGradient(lanternX, lanternY, 0, lanternX, lanternY, 18)
+          glow.addColorStop(0, 'rgba(255, 224, 142, 0.8)')
+          glow.addColorStop(1, 'rgba(255, 171, 90, 0)')
+          ctx.fillStyle = glow
+          ctx.beginPath()
+          ctx.arc(lanternX, lanternY, 18, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      }
+
+      if (activeReveal === 'aurora') {
+        const aurora = ctx.createLinearGradient(0, 0, width, height * 0.7)
+        aurora.addColorStop(0, `hsla(${wrapHue(hue + 120)}, 100%, 68%, 0.06)`)
+        aurora.addColorStop(0.45, `hsla(${wrapHue(hue + 180)}, 100%, 72%, 0.38)`)
+        aurora.addColorStop(1, `hsla(${wrapHue(hue + 245)}, 100%, 66%, 0.04)`)
+        ctx.strokeStyle = aurora
+        ctx.lineWidth = Math.max(16, width * 0.06)
+        ctx.lineCap = 'round'
+        ctx.beginPath()
+        for (let step = 0; step <= 20; step += 1) {
+          const x = (step / 20) * width
+          const y = height * 0.2
+            + Math.sin(step * 0.72 + t * 0.7) * height * 0.07
+            + Math.sin(step * 0.29 - t * 0.42) * height * 0.05
+          if (step === 0) ctx.moveTo(x, y)
+          else ctx.lineTo(x, y)
+        }
+        ctx.stroke()
+        ctx.lineCap = 'butt'
+        for (let index = 0; index < 20; index += 1) {
+          const x = ((index * 0.19 + t * 0.012) % 1) * width
+          const y = height * 0.22 + Math.sin(index * 0.9 + t) * height * 0.08
+          ctx.fillStyle = `hsla(${wrapHue(hue + 145)}, 100%, 88%, 0.42)`
+          ctx.beginPath()
+          ctx.arc(x, y, 1.5, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      }
       ctx.globalCompositeOperation = 'source-over'
 
       if (!reduced) frame = requestAnimationFrame(draw)
@@ -214,6 +421,8 @@ export default function PlasmaBloomMeadow() {
       window.removeEventListener('resize', resize)
       canvas.removeEventListener('pointermove', onMove)
       canvas.removeEventListener('pointerleave', onLeave)
+      soundRef.current?.context.close()
+      soundRef.current = null
     }
   }, [])
 
@@ -232,6 +441,7 @@ export default function PlasmaBloomMeadow() {
       <nav className="meadow-nav" aria-label="Meadow passages">
         <a href="/housegarden.html">Back to House &amp; Garden</a>
         <a href="/wildflower-drift.html">Wildflower Drift</a>
+        {vergeOpen && <Link to="/cave-corridor-prototype">Follow the violet seam</Link>}
       </nav>
     </main>
   )

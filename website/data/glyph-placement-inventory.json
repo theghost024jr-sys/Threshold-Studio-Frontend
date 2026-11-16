@@ -3,7 +3,7 @@
   "source": "glyph-corpus placement audit",
   "counts": {
     "records": 15,
-    "placed": 6,
+    "placed": 7,
     "missingPlacement": 7
   },
   "records": [
@@ -188,7 +188,15 @@
         "context": [],
         "repetition": null
       },
-      "placements": [],
+      "placements": [
+        {
+          "surface": "Portal HourglassGlyph",
+          "route": "/portal/glyphs/hourglass",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/HourglassGlyph.jsx"
+        }
+      ],
       "missingPlacement": false
     },
     {
@@ -208,6 +216,13 @@
         "repetition": null
       },
       "placements": [
+        {
+          "surface": "Portal HourglassGlyph",
+          "route": "/portal/glyphs/hourglass",
+          "asset": "",
+          "interaction": "source-defined page interaction",
+          "evidence": "portal/src/pages/HourglassGlyph.jsx"
+        },
         {
           "surface": "Portal GlyphArchive",
           "route": "/portal/glyphs",

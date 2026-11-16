@@ -48,6 +48,15 @@ python -m pytest tests/test_build_vault_data.py tools/test_threshold_paths.py
 
 Cloudflare serves the public site. Secrets and domain configuration remain managed outside this repository.
 
+## Spiral Reflection
+
+[`/spiral-reflection.html`](website/spiral-reflection.html) presents the original
+word-spiral image without redrawing or reconstructing its distorted lettering.
+It is linked from the World Map and registered in the world topology. The
+preserved image is [`symbolic-glyph-spiral.png`](website/assets/glyphs/symbolic-glyph-spiral.png);
+its source is `04 - Organism\06 Species\Species-Linked Artifacts\Symbolic glyph spiral.png`
+in the vault. Its original creation date is unverified.
+
 The complete ownership and generation rules are defined in [REPOSITORY_CONTRACT.md](REPOSITORY_CONTRACT.md).
 The future composition rules for engine primitives are defined in
 [THRESHOLD-META-ENGINE-CONTRACT.md](THRESHOLD-META-ENGINE-CONTRACT.md).

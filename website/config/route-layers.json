@@ -158,8 +158,8 @@
       "status": "canonical",
       "title": "Threshold Engine",
       "node": "engine",
-      "echo": "/hub.html",
-      "containedBy": "hub",
+      "echo": "/index.html",
+      "containedBy": "entry-hub",
       "passage": {
         "mode": "open"
       }

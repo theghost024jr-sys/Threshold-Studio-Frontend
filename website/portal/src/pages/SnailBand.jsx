@@ -26,6 +26,7 @@ export default function SnailBand() {
       <div className="band-instruments">{instruments.map(([label], index) => <button className={index === beat ? 'is-active' : ''} type="button" onClick={() => play(index)} key={label}>{label}</button>)}</div>
       <aside><strong>{name}</strong><p>{detail}</p></aside>
       <p className="band-note">The Beetle plays from the center outward and never repeats a pattern. It pauses for the Shadow-Cat; it resumes only when the traveler’s stance is true.</p>
+      <p className="band-listening">They listen to each other. The Beetle hears the frogs on bass; the Frog listens for the groove and brings in the low end. The band is a loop, not a chain.</p>
       <nav><Link to="/motion">Follow an awakened pathway</Link><Link to="/quiet-grove">Enter the Quiet Grove</Link><Link to="/">Return to the Portal</Link></nav>
     </section>
     <figure className="band-beetle"><img src={beetleArt} alt="The Beetle playing percussion in its forest nest" /><figcaption>Alignment in motion.</figcaption></figure>

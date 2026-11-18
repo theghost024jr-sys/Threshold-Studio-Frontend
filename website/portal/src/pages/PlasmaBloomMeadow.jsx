@@ -36,6 +36,7 @@ export default function PlasmaBloomMeadow() {
   const canvasRef = useRef(null)
   const soundRef = useRef(null)
   const [vergeOpen, setVergeOpen] = useState(false)
+  const [frogHere, setFrogHere] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -203,6 +204,10 @@ export default function PlasmaBloomMeadow() {
       if (pointer.linger >= 0.92) {
         setVergeOpen(true)
         ringVergeBell()
+      }
+      // The band has stopped. The Frog returns alone once the field has gone quiet.
+      if (pointer.linger >= 0.6) {
+        setFrogHere(true)
       }
       shapeSound(pointer.linger, hue, pointer.linger >= 0.92)
       // Hovering shifts hue more than touch ever does; the colour is never fixed.
@@ -438,6 +443,13 @@ export default function PlasmaBloomMeadow() {
         <p>Plasma-Bloom Meadow</p>
       </header>
       <p className="meadow-line">You&rsquo;re not the player. You&rsquo;re the variable.</p>
+      {frogHere && (
+        <div className="meadow-frog" aria-live="polite">
+          <p className="meadow-frog__line">You haven&rsquo;t eaten.</p>
+          <p className="meadow-frog__walking">The Frog starts walking.</p>
+          <Link to="/frog-chamber">Follow the Frog</Link>
+        </div>
+      )}
       <nav className="meadow-nav" aria-label="Meadow passages">
         <a href="/housegarden.html">Back to House &amp; Garden</a>
         <a href="/wildflower-drift.html">Wildflower Drift</a>

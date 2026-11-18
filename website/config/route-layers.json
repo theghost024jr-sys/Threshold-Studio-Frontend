@@ -728,6 +728,18 @@
       }
     },
     {
+      "route": "/portal/frog-chamber",
+      "layer": "portal",
+      "status": "canonical",
+      "title": "Frog Chamber",
+      "node": "frog-chamber",
+      "echo": "/portal/plasma-bloom-meadow",
+      "containedBy": "plasma-bloom-meadow",
+      "passage": {
+        "mode": "stillness"
+      }
+    },
+    {
       "route": "/portal/glyphs",
       "layer": "portal",
       "status": "canonical",

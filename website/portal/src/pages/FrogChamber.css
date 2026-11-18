@@ -1,0 +1,368 @@
+.frog-chamber {
+  --wet: #18363a;
+  --wet-deep: #0c2024;
+  --reed: #4d6b4a;
+  --stone: #6b6a5e;
+  --ember: #d98a4a;
+  min-height: 100vh;
+  padding: clamp(1.5rem, 4vw, 4rem);
+  color: #e6ece7;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(77, 107, 74, 0.22), transparent 70%),
+    linear-gradient(180deg, var(--wet-deep), #07161a 60%, #050e11);
+  font-family: inherit;
+  overflow-x: hidden;
+}
+
+.frog-chamber section {
+  max-width: 52rem;
+  margin: 0 auto clamp(1.75rem, 5vw, 3.5rem);
+}
+
+/* Sleep is not a scene you act on. The chamber darkens and withdraws on its own. */
+.frog-chamber--sleeping,
+.frog-chamber--sleeping .frog-approach,
+.frog-chamber--sleeping .frog-room,
+.frog-chamber--sleeping .frog-scene {
+  animation: frog-fall-asleep 3.2s ease-in forwards;
+}
+
+@keyframes frog-fall-asleep {
+  to { opacity: 0; filter: brightness(0.2); }
+}
+
+.frog-sleep {
+  min-height: 60vh;
+}
+
+.frog-chamber--awake {
+  animation: frog-wake 2.4s ease-out both;
+}
+
+@keyframes frog-wake {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.frog-awake {
+  padding-top: clamp(3rem, 10vw, 8rem);
+}
+
+.frog-awake__line {
+  color: #e6ece7;
+  font-size: clamp(1.3rem, 3.4vw, 1.8rem);
+}
+
+.frog-awake .frog-water,
+.frog-awake .frog-reeds {
+  opacity: 0.5;
+}
+
+.frog-awake__gone,
+.frog-awake__jar {
+  position: relative;
+  z-index: 1;
+}
+
+.frog-awake__gone {
+  color: #8fa89f;
+}
+
+.frog-awake__jar {
+  padding: 0.7rem 1rem;
+  border-left: 2px solid var(--ember);
+  background: rgba(217, 138, 74, 0.08);
+}
+
+.frog-approach {
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  line-height: 1.7;
+  color: #b9cbc4;
+}
+
+.frog-approach__line {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  color: #e6ece7;
+  margin-top: 0;
+}
+
+.frog-approach__note {
+  font-style: italic;
+  color: #8fa89f;
+}
+
+.frog-listen,
+.frog-scene button {
+  appearance: none;
+  border: 1px solid #4d6b4a;
+  border-radius: 0.35rem;
+  background: rgba(24, 54, 58, 0.6);
+  color: #e6ece7;
+  font: inherit;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.frog-listen:hover,
+.frog-scene button:hover {
+  background: rgba(77, 107, 74, 0.5);
+  border-color: #8fa89f;
+}
+
+.frog-listen[aria-pressed='true'] {
+  border-color: var(--ember);
+}
+
+.frog-room {
+  position: relative;
+  min-height: 20rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid rgba(143, 168, 159, 0.25);
+  border-radius: 0.6rem;
+  background: linear-gradient(180deg, rgba(24, 54, 58, 0.5), rgba(7, 22, 26, 0.7));
+  overflow: hidden;
+}
+
+.frog-water {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 38%;
+  background:
+    repeating-linear-gradient(90deg, rgba(230, 236, 231, 0.05) 0 2px, transparent 2px 26px),
+    linear-gradient(180deg, rgba(24, 54, 58, 0.1), rgba(12, 32, 36, 0.85));
+  pointer-events: none;
+}
+
+.frog-stones,
+.frog-reeds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.frog-stones i {
+  position: absolute;
+  bottom: 12%;
+  width: clamp(3rem, 10vw, 6rem);
+  height: clamp(1.4rem, 4vw, 2.6rem);
+  border-radius: 50% 50% 42% 42%;
+  background: linear-gradient(180deg, #8a897b, var(--stone));
+  box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.35);
+}
+
+.frog-stones i:nth-child(1) { left: 12%; }
+.frog-stones i:nth-child(2) { left: 34%; bottom: 20%; }
+.frog-stones i:nth-child(3) { right: 30%; bottom: 9%; }
+.frog-stones i:nth-child(4) { right: 8%; bottom: 22%; }
+
+.frog-reeds i {
+  position: absolute;
+  bottom: 0;
+  width: 2px;
+  height: clamp(4rem, 14vw, 9rem);
+  background: linear-gradient(180deg, var(--reed), transparent);
+  transform-origin: bottom;
+  transform: rotate(var(--lean, 0deg));
+}
+
+.frog-reeds i:nth-child(1) { left: 4%; --lean: -8deg; }
+.frog-reeds i:nth-child(2) { left: 9%; --lean: 6deg; height: 7rem; }
+.frog-reeds i:nth-child(3) { right: 6%; --lean: 9deg; }
+.frog-reeds i:nth-child(4) { right: 12%; --lean: -5deg; height: 6rem; }
+.frog-reeds i:nth-child(5) { left: 48%; --lean: 3deg; height: 4rem; }
+.frog-reeds i:nth-child(6) { right: 46%; --lean: -4deg; height: 5rem; }
+
+.frog-fire {
+  position: absolute;
+  left: 22%;
+  bottom: 16%;
+  width: 3.5rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: #3a2b20;
+  box-shadow: 0 0 2.5rem 0.6rem rgba(217, 138, 74, 0.28);
+}
+
+.frog-fire span {
+  position: absolute;
+  left: 50%;
+  bottom: 60%;
+  width: 0.9rem;
+  height: 1.8rem;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 40% 40%;
+  background: linear-gradient(180deg, #ffd07a, var(--ember) 60%, transparent);
+  animation: frog-flicker 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes frog-flicker {
+  from { transform: translateX(-50%) scaleY(0.9); opacity: 0.85; }
+  to { transform: translateX(-50%) scaleY(1.1); opacity: 1; }
+}
+
+.frog-table {
+  position: relative;
+  z-index: 1;
+  max-width: 22rem;
+  margin: 0 auto;
+  padding: 1.4rem 1.6rem;
+  border-radius: 0.4rem;
+  background: linear-gradient(180deg, #7a5f45, #4a3828);
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.frog-table__dish {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  margin: 0 0 0.4rem;
+  color: #ffe6b8;
+}
+
+.frog-table__note {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #d8c6ad;
+  margin: 0;
+}
+
+.frog-places {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  font-style: italic;
+  color: #8fa89f;
+  margin: 1rem 0 0;
+}
+
+.frog-scene {
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.frog-dialogue {
+  font-size: clamp(1.3rem, 3.4vw, 1.8rem);
+  color: #e6ece7;
+}
+
+.frog-jar-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.frog-jar-choices button.is-active {
+  border-color: var(--ember);
+  background: rgba(217, 138, 74, 0.22);
+}
+
+.frog-eat {
+  margin-top: 0.8rem;
+}
+
+.frog-after__line {
+  color: #e6ece7;
+  font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+}
+
+.frog-jar-on-table {
+  padding: 0.7rem 1rem;
+  border-left: 2px solid var(--ember);
+  background: rgba(217, 138, 74, 0.08);
+}
+
+.frog-unresolved {
+  font-style: italic;
+  color: #b9cbc4;
+}
+
+.frog-unresolved__note {
+  color: #8fa89f;
+  font-size: 0.9rem;
+}
+
+.frog-rest {
+  position: relative;
+  margin-top: clamp(2rem, 6vw, 4rem);
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+  border-top: 1px solid rgba(143, 168, 159, 0.25);
+  color: #b9cbc4;
+}
+
+.frog-chamber--after .frog-fire span {
+  animation-duration: 3.4s;
+  transform: translateX(-50%) scaleY(0.6);
+  opacity: 0.55;
+}
+
+.frog-rest__outside {
+  color: #e6ece7;
+  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+}
+
+.frog-rest__maybe {
+  font-style: italic;
+  color: #8fa89f;
+}
+
+.frog-rest__line {
+  display: block;
+  margin: 0.9rem 0;
+  color: #e6ece7;
+  font-size: clamp(1.15rem, 2.8vw, 1.4rem);
+}
+
+.frog-rest__stars::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 9rem;
+  margin-top: 1.5rem;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 30%, #eef3ff, transparent),
+    radial-gradient(1.5px 1.5px at 18% 62%, #cfe0ff, transparent),
+    radial-gradient(1px 1px at 27% 18%, #eef3ff, transparent),
+    radial-gradient(2px 2px at 38% 48%, #fff, transparent),
+    radial-gradient(1px 1px at 47% 24%, #dce8ff, transparent),
+    radial-gradient(1.5px 1.5px at 56% 70%, #eef3ff, transparent),
+    radial-gradient(1px 1px at 65% 35%, #fff, transparent),
+    radial-gradient(2px 2px at 74% 55%, #dce8ff, transparent),
+    radial-gradient(1px 1px at 83% 20%, #eef3ff, transparent),
+    radial-gradient(1.5px 1.5px at 92% 64%, #fff, transparent);
+  background-repeat: no-repeat;
+  opacity: 0.75;
+}
+
+.frog-rest__absences {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  color: #8fa89f;
+  font-size: 0.9rem;
+}
+
+.frog-rest__absences li {
+  padding: 0.1rem 0;
+}
+
+.frog-rest__hidden {
+  padding: 0.7rem 1rem;
+  border-left: 2px solid var(--ember);
+  background: rgba(217, 138, 74, 0.08);
+}
+
+.frog-rest__note {
+  font-style: italic;
+  color: #d8c6ad;
+  margin-top: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frog-fire span { animation: none; }
+  .frog-chamber--sleeping,
+  .frog-chamber--sleeping .frog-approach,
+  .frog-chamber--sleeping .frog-room,
+  .frog-chamber--sleeping .frog-scene,
+  .frog-chamber--awake { animation: none; }
+}

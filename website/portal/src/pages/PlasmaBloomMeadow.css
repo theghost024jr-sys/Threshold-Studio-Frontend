@@ -66,3 +66,42 @@
 .meadow-nav a:focus-visible {
   border-color: rgba(190, 150, 255, 0.8);
 }
+
+.meadow-frog {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.meadow-frog__line {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  color: #f0ead8;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+}
+
+.meadow-frog__walking {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #c8c2ad;
+}
+
+.meadow-frog a {
+  pointer-events: auto;
+  color: #f0ead8;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  background: rgba(5, 5, 8, 0.55);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+}

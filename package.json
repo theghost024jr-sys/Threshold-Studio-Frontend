@@ -13,7 +13,7 @@
     "build:inventory-echoes": "node scripts/build-inventory-echoes.mjs",
     "build": "npm run build:data && npm run build:render-jobs && npm --prefix website/portal ci && npm run build:pages && npm --prefix website/portal run build:site && node scripts/build-pages.mjs",
     "build:portal": "npm --prefix website/portal ci && npm --prefix website/portal run build",
-    "build:ci": "python tools/build_page_render_jobs.py --ci && npm run build:pages && npm --prefix website/portal run build:site && node scripts/build-pages.mjs --static",
+    "build:ci": "python tools/build_vault_data.py --from-public-data && python tools/build_page_render_jobs.py --ci && npm run build:pages && npm --prefix website/portal run build:site && node scripts/build-pages.mjs --static",
     "test": "node --test website/tests/*.test.mjs && npm run test:vitest",
     "test:vitest": "vitest run",
     "test:traceability": "node website/scripts/check-invariant-traceability.mjs && node --test website/tests/invariant-traceability.test.mjs website/tests/invariant-traceability-mutations.test.mjs",

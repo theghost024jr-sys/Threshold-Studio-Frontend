@@ -163,24 +163,22 @@ An earlier pass listed `asset.webp`, `card.image.webp`, `card.story.webp`, `item
 filename pattern matched `.webp` inside `.webPath`. The static surface contains **zero** unresolved
 image references.
 
-## Known conflict — the Engine door, 2026-11-03
+## Resolved — the Engine door, ruled 2026-11-03, topology aligned 2026-11-18
 
-The "Enter Engine" door was removed from `index.html` and `hub.html`. It was the only link to
-`deep-system/engine.html`, which renders an Engine Telemetry Matrix and calibration sliders — a
-makers' instrument, not a room.
+The Engine console (`deep-system/engine.html`) is a makers' surface, not a room. The 2026-11-03
+ruling (recorded as a deliberately inverted assertion in
+`website/tests/destination-routing.test.mjs`) keeps its door off the Return Hub (`hub.html`).
+The Entry Hub (`index.html`) retains the `Enter Engine` door, and the "anchors every Entry Hub
+exit" test requires it.
 
-Consequence: **no file in `website/` now links to `deep-system/engine.html`.** It is reachable by
-direct URL only.
-
-But `website/config/world-topology.json` L9 still declares:
+`website/config/world-topology.json` previously declared the Engine as a Return Hub spoke, which
+no surface or test supported. The declaration is now anchored to tested reality:
 
 ```json
-{ "id": "engine", "containedBy": "hub", "connectsTo": ["hub"], "returnsTo": "hub", "passage": { "mode": "open" } }
+{ "id": "engine", "containedBy": "entry-hub", "connectsTo": ["entry-hub"], "returnsTo": "entry-hub", "passage": { "mode": "open" } }
 ```
 
-So the declared topology still calls the Engine a Hub spoke while no surface links it. This
-contradiction is unresolved and needs a ruling: either the node leaves `world-topology.json`, or the
-Engine gets a door on the makers' surface, or the removal is reverted.
+The route ledger echo for `/deep-system/engine.html` points to `/index.html` accordingly.
 
 ## CSS and brand handoff
 

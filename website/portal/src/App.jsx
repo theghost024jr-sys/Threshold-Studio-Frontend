@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import DougHelpDesk from './components/DougHelpDesk.jsx'
 import NaturalEffects from './components/NaturalEffects.jsx'
 import SlitPassage from './components/SlitPassage.jsx'
@@ -42,12 +42,35 @@ const EllaPage = lazy(() => import('../../world/WorldChamberPages.jsx').then(({ 
 const GardenPage = lazy(() => import('../../world/WorldChamberPages.jsx').then(({ GardenPage: Page }) => ({ default: Page })))
 const ChamberPage = lazy(() => import('../../world/chambers/ChamberPage.jsx').then(({ ChamberPage: Page }) => ({ default: Page })))
 
+const gate4IdentityByPath = {
+  '/': 'portal',
+  '/basin': 'basin',
+  '/basin-falls': 'basin-falls',
+  '/cabin-of-moss': 'cabin-of-moss',
+  '/shimmer': 'shimmer',
+  '/cave-corridor': 'cave-corridor',
+}
+
+function Gate4Identity() {
+  const { pathname } = useLocation()
+  const identity = gate4IdentityByPath[pathname]
+
+  if (!identity) return null
+
+  return (
+    <output className="gate4-identity" data-threshold-identity={identity}>
+      {identity.replaceAll('-', ' ')}
+    </output>
+  )
+}
+
 export default function App() {
   const basename = window.location.pathname.startsWith('/portal') ? '/portal' : '/'
 
   return (
     <BrowserRouter basename={basename}>
       <SlitPassage>
+        <Gate4Identity />
         <NaturalEffects />
         <DougHelpDesk />
         <Suspense fallback={<main className="route-loading">Loading</main>}>

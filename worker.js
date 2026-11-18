@@ -1,5 +1,17 @@
 const VERSION = "2026-09-13b";
 
+function destinationUnavailable() {
+  return new Response("Threshold destination unavailable.", {
+    status: 404,
+    headers: { "content-type": "text/plain; charset=utf-8" },
+  });
+}
+
+function isHubDocument(body) {
+  return body.includes("<title>Threshold Hub - Entry</title>")
+    && body.includes('<main class="entry-shell">');
+}
+
 const GROUPS = [
   {
     key: "identity",
@@ -663,25 +675,124 @@ export async function handleRequest(request, env, trace) {
   const isPortalPath = url.pathname === "/portal" || url.pathname.startsWith("/portal/");
   const isWorldPath = url.pathname === "/world" || url.pathname.startsWith("/world/");
   if (request.method === "GET" && (isPortalPath || isWorldPath)) {
+    if (url.pathname.startsWith("/portal/assets/")) {
+      const diagnosticStarted = performance.now();
+      const startedAt = new Date().toISOString();
+      const assetUrl = new URL(request.url);
+      assetUrl.pathname = "/portal-dist/assets/" + url.pathname.slice("/portal/assets/".length);
+      const assetHeaders = new Headers(request.headers);
+      assetHeaders.delete("if-none-match");
+      assetHeaders.delete("if-modified-since");
+      const assetFetchStarted = performance.now();
+      const assetFetchStartedAt = new Date().toISOString();
+      const response = await env.ASSETS.fetch(new Request(assetUrl, {
+        method: "GET",
+        headers: assetHeaders
+      }));
+      const assetFetchCompleted = performance.now();
+      const assetFetchCompletedAt = new Date().toISOString();
+      const upstreamContentType = response.headers.get("content-type") || "";
+      const rejectionReason = !response.ok
+        ? "upstream-status"
+        : upstreamContentType.startsWith("text/html")
+          ? "upstream-html-fallback"
+          : null;
+      const completed = performance.now();
+      const completedAt = new Date().toISOString();
+      console.log(JSON.stringify({
+        diagnostic: "portal_asset",
+        startedAt,
+        assetFetchStartedAt,
+        assetFetchCompletedAt,
+        completedAt,
+        assetFetchDurationMs:
+          Math.round((assetFetchCompleted - assetFetchStarted) * 1000) / 1000,
+        totalDurationMs:
+          Math.round((completed - diagnosticStarted) * 1000) / 1000,
+        request_path: url.pathname,
+        rewritten_path: assetUrl.pathname,
+        upstream_status: response.status,
+        upstream_content_type: upstreamContentType,
+        rejection_reason: rejectionReason,
+        final_status: rejectionReason ? 404 : response.status
+      }));
+      if (rejectionReason) {
+        return new Response("Portal asset unavailable.", {
+          status: 404,
+          headers: { "content-type": "text/plain; charset=utf-8" }
+        });
+      }
+      return response;
+    }
+
     const portalUrl = new URL(request.url);
     const isShellRequest =
-      !url.pathname.startsWith("/portal/assets/") &&
       url.pathname !== "/portal/favicon.svg" &&
       url.pathname !== "/portal/build-marker.json";
-    if (url.pathname.startsWith("/portal/assets/")) {
-      portalUrl.pathname = "/portal-dist/assets/" + url.pathname.slice("/portal/assets/".length);
-    } else if (url.pathname === "/portal/favicon.svg") {
+    if (url.pathname === "/portal/favicon.svg") {
       portalUrl.pathname = "/portal-dist/favicon.svg";
     } else if (url.pathname === "/portal/build-marker.json") {
       portalUrl.pathname = "/portal-dist/build-marker.json";
     } else {
       portalUrl.pathname = "/portal-dist/portal-shell.txt";
     }
-    const response = await env.ASSETS.fetch(new Request(portalUrl, request));
+    const shellHeaders = isShellRequest ? new Headers(request.headers) : null;
+    const conditionalHeadersRemoved = [];
+    if (shellHeaders) {
+      for (const headerName of ["if-none-match", "if-modified-since"]) {
+        if (shellHeaders.has(headerName)) {
+          conditionalHeadersRemoved.push(headerName);
+          shellHeaders.delete(headerName);
+        }
+      }
+    }
+    const shellDiagnosticStarted = isShellRequest ? performance.now() : null;
+    const startedAt = isShellRequest ? new Date().toISOString() : null;
+    const shellFetchStarted = isShellRequest ? performance.now() : null;
+    const shellFetchStartedAt = isShellRequest ? new Date().toISOString() : null;
+    const response = await env.ASSETS.fetch(isShellRequest
+      ? new Request(portalUrl, { method: "GET", headers: shellHeaders })
+      : new Request(portalUrl, request));
     if (isShellRequest) {
+      const shellFetchCompleted = performance.now();
+      const shellFetchCompletedAt = new Date().toISOString();
+      const upstreamContentType = response.headers.get("content-type") || "";
+      let body = "";
+      let rejectionReason = null;
+      if (response.status === 304) {
+        rejectionReason = "unexpected-not-modified";
+      } else if (!response.ok) {
+        rejectionReason = "upstream-status";
+      } else {
+        body = await response.text();
+        if (isHubDocument(body)) {
+          rejectionReason = "entry-hub-document";
+        }
+      }
+      const completed = performance.now();
+      const completedAt = new Date().toISOString();
+      console.log(JSON.stringify({
+        diagnostic: "portal_shell",
+        startedAt,
+        shellFetchStartedAt,
+        shellFetchCompletedAt,
+        completedAt,
+        shellFetchDurationMs:
+          Math.round((shellFetchCompleted - shellFetchStarted) * 1000) / 1000,
+        totalDurationMs:
+          Math.round((completed - shellDiagnosticStarted) * 1000) / 1000,
+        request_path: url.pathname,
+        rewritten_path: portalUrl.pathname,
+        conditional_headers_removed: conditionalHeadersRemoved,
+        upstream_status: response.status,
+        upstream_content_type: upstreamContentType,
+        rejection_reason: rejectionReason,
+        final_status: rejectionReason ? 404 : response.status
+      }));
+      if (rejectionReason) return destinationUnavailable();
       const headers = new Headers(response.headers);
       headers.set("content-type", "text/html; charset=utf-8");
-      return new Response(response.body, { status: response.status, headers });
+      return new Response(body, { status: response.status, headers });
     }
     return response;
   }

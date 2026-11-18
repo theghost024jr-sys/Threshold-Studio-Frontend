@@ -1,0 +1,99 @@
+name: Gate 4 - Six Canary Identity
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gate4-six-canary-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  worker-contract:
+    name: Worker contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Gate 4 Worker contract
+        run: npm run test:gate4:worker
+
+      - name: Verify canonical and published Worker parity
+        run: cmp --silent worker.js website/_worker.js
+
+  six-canary:
+    name: Six-canary runtime identity
+    needs: worker-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Portal dependencies
+        run: npm ci --prefix website/portal
+
+      - name: Build local Pages artifact
+        run: npm run build:ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run six-canary identity acceptance
+        env:
+          GATE4_WRANGLER_LOG: gate4-wrangler.log
+        run: npm run test:gate4:runtime
+
+      - name: Preserve Wrangler log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate4-wrangler-log
+          path: gate4-wrangler.log
+          if-no-files-found: warn
+
+  gate4:
+    name: Gate 4
+    needs:
+      - worker-contract
+      - six-canary
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Gate 4 passed
+        run: |
+          echo "GATE 4 PASS"
+          echo "All six canaries preserved identity through refresh."
+          echo "This workflow does not authorize or perform deployment."

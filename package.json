@@ -17,11 +17,20 @@
     "test": "node --test website/tests/*.test.mjs && npm run test:vitest",
     "test:vitest": "vitest run",
     "test:traceability": "node website/scripts/check-invariant-traceability.mjs && node --test website/tests/invariant-traceability.test.mjs website/tests/invariant-traceability-mutations.test.mjs",
+    "test:gate4:worker": "node --test website/tests/worker-observability.test.mjs website/tests/worker-identity-preservation.test.mjs website/tests/deployment-config.test.mjs",
+    "test:gate4:runtime": "playwright test website/tests/gate4-six-canary-acceptance.spec.mjs",
+    "test:gate4": "npm run test:gate4:worker && npm run test:gate4:runtime",
     "test:ci": "npm test",
     "dev": "npm run build:data && npm run build:render-jobs && npm run build:pages && npm --prefix website/portal run build:site && wrangler pages dev website",
     "test:main-hub-runtime": "vitest run website/tests/main-hub-engine-adapter.test.js website/tests/main-hub-runtime.test.js website/tests/main-hub-runtime-ownership.test.js"
   },
   "devDependencies": {
-    "vitest": "^5.0.5"
+    "@playwright/test": "^1.57.0",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.144.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261117.1": true
   }
 }

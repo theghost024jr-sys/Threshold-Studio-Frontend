@@ -17,6 +17,22 @@
   }
 }
 
+.gate4-identity {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 10;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, Canvas 82%, transparent);
+  color: CanvasText;
+  font: 600 0.6875rem/1.2 system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
 .hero {
   position: relative;
 

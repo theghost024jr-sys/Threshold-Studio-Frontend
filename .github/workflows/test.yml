@@ -68,6 +68,9 @@ jobs:
       - name: Install Portal dependencies
         run: npm ci --prefix website/portal
 
+      - name: Build publication artifact for artifact-dependent tests
+        run: npm run build:ci
+
       - name: Run full test suite
         run: npm test
 

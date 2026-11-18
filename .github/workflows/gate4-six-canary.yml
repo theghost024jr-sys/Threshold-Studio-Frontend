@@ -29,8 +29,19 @@ jobs:
           node-version: "24"
           cache: npm
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Install Portal dependencies
+        run: npm ci --prefix website/portal
+
+      - name: Build local Pages artifact
+        run: npm run build:ci
 
       - name: Run Gate 4 Worker contract
         run: npm run test:gate4:worker

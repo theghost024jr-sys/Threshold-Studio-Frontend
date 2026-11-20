@@ -1,0 +1,211 @@
+:root {
+  --cwa-paper: #f4efdf;
+  --cwa-ink: #2b2620;
+  --cwa-muted: #6d6354;
+  --cwa-line: #c9bfa6;
+  --cwa-accent: #8a4b2d;
+  --cwa-receipt-paper: #ece4ce;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cwa-paper);
+  color: var(--cwa-ink);
+  font-family: Georgia, serif;
+  line-height: 1.65;
+}
+
+.cwa-page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 5vw, 2.5rem) 4rem;
+}
+
+.cwa-return {
+  color: var(--cwa-accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.cwa-return:hover,
+.cwa-return:focus-visible { text-decoration: underline; }
+
+.cwa-eyebrow {
+  margin: 2rem 0 0;
+  color: var(--cwa-muted);
+  font-family: Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.cwa-header h1 {
+  margin: 0.4rem 0 0.6rem;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.cwa-subtitle {
+  margin: 0 0 1.4rem;
+  color: var(--cwa-muted);
+  font-style: italic;
+}
+
+.cwa-intro p { margin: 0.35rem 0; }
+.cwa-promise { font-weight: 700; }
+
+.cwa-modes {
+  margin: 2.5rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid var(--cwa-line);
+  border-bottom: 1px solid var(--cwa-line);
+}
+
+.cwa-modes button {
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--cwa-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cwa-ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.cwa-modes button[aria-pressed="true"] {
+  background: var(--cwa-ink);
+  border-color: var(--cwa-ink);
+  color: var(--cwa-paper);
+}
+.cwa-modes button:focus-visible {
+  outline: 2px solid var(--cwa-accent);
+  outline-offset: 2px;
+}
+
+.cwa-modes__note {
+  margin: 0.4rem 0 0;
+  color: var(--cwa-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Reading registers */
+body[data-archive-view="story"] [data-archive-register="receipts"] { display: none; }
+body[data-archive-view="receipts"] [data-archive-register="story"] { display: none; }
+
+.cwa-entry__flag {
+  margin: 2.5rem 0 0.6rem;
+  color: var(--cwa-muted);
+  font-family: Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cwa-jump {
+  color: var(--cwa-accent);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.cwa-story h2,
+.cwa-receipts h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  font-weight: 400;
+}
+
+.cwa-story__deck {
+  color: var(--cwa-muted);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.cwa-caveat {
+  padding: 0.6rem 0.9rem;
+  border-left: 3px solid var(--cwa-line);
+  color: var(--cwa-muted);
+  font-size: 0.9rem;
+}
+
+/* Receipts keep a different texture: mono, denser, cooler paper. */
+.cwa-receipts {
+  margin-top: 3rem;
+  padding: 1.4rem clamp(0.9rem, 3vw, 1.6rem);
+  background: var(--cwa-receipt-paper);
+  border: 1px solid var(--cwa-line);
+  font-family: Consolas, monospace;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.cwa-receipts h2 { font-family: Georgia, serif; }
+
+.cwa-receipts h3 {
+  margin: 1.6rem 0 0.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cwa-receipts ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.cwa-receipts li { margin: 0.45rem 0; }
+
+.cwa-receipts__deck {
+  margin: 0 0 1rem;
+  color: var(--cwa-muted);
+  font-style: italic;
+}
+
+.cwa-gap {
+  border-left: 3px solid var(--cwa-accent);
+  padding-left: 0.9rem;
+}
+
+.cwa-echo__warning {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--cwa-accent);
+  color: var(--cwa-accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cwa-thesis { font-weight: 700; }
+
+.cwa-coming {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--cwa-line);
+  padding-top: 1.5rem;
+}
+.cwa-coming h2 {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.cwa-coming article { margin: 1.4rem 0; }
+.cwa-coming h3 { margin: 0.2rem 0; font-weight: 700; }
+.cwa-coming p { margin: 0.2rem 0; }
+.cwa-coming__flag {
+  color: var(--cwa-muted);
+  font-family: Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cwa-footer {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--cwa-line);
+  padding-top: 1.4rem;
+  color: var(--cwa-muted);
+  font-size: 0.9rem;
+}

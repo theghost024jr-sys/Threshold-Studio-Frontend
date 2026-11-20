@@ -153,6 +153,18 @@
       }
     },
     {
+      "route": "/conversations-with-ai.html",
+      "layer": "configured",
+      "status": "canonical",
+      "title": "Conversations With AI",
+      "node": "conversations-with-ai",
+      "echo": "/world-map.html",
+      "containedBy": "world-map",
+      "passage": {
+        "mode": "open"
+      }
+    },
+    {
       "route": "/deep-system/engine.html",
       "layer": "configured",
       "status": "canonical",

@@ -42,6 +42,9 @@ export const PAGE_ECHOES = Object.freeze([
   pageEcho("spiral-reflection", "home", "Spiral Reflection", "/spiral-reflection.html", "spiral-reflection.html", [
     "styles/spiral-reflection.css"
   ]),
+  pageEcho("conversations-with-ai", "home", "Conversations With AI", "/conversations-with-ai.html", "conversations-with-ai.html", [
+    "styles/conversations-with-ai.css"
+  ]),
   pageEcho("legacy-index", "home", "Legacy Constructs", "/legacy/index.html", "legacy/index.html"),
   pageEcho("legacy-hub2", "home", "Legacy Hub", "/hub2.html", "hub2.html", ["styles/styles.css"]),
   pageEcho("legacy-index2", "home", "Fibonacci Flower Constellation Wheel", "/index2.html", "index2.html"),

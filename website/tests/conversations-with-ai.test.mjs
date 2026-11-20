@@ -42,3 +42,14 @@ test("the archive returns to the world it is mapped in", async () => {
   const matches = page.match(/href="\/world-map\.html"/g) || [];
   assert.ok(matches.length >= 2, "return passage at both ends of the document");
 });
+
+test("the Court card is a source packet, not a destination", async () => {
+  const page = await read("../conversations-with-ai.html");
+
+  assert.match(page, /Source packet &middot; Non-canonical &middot; Unpublished/);
+  assert.match(page, /Recovered lines are verbatim; connective writing is marked\./);
+
+  const court = page.match(/<article>[\s\S]*?<h3>The Court<\/h3>[\s\S]*?<\/article>/);
+  assert.ok(court, "Court card is present");
+  assert.doesNotMatch(court[0], /href=/, "no route behind the Court card");
+});

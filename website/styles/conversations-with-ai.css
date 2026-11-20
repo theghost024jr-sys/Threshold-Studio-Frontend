@@ -202,6 +202,22 @@ body[data-archive-view="receipts"] [data-archive-register="story"] { display: no
   text-transform: uppercase;
 }
 
+.cwa-verbatim {
+  margin: 0.6rem 0 0;
+  color: var(--cwa-muted);
+  font-family: Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+.cwa-card-status,
+.cwa-card-address {
+  margin: 0.3rem 0 0;
+  color: var(--cwa-muted);
+  font-family: Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
 .cwa-footer {
   margin-top: 3.5rem;
   border-top: 1px solid var(--cwa-line);

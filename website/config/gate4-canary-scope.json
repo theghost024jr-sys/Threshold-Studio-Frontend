@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "law": "Every place classified NEW in world-topology.json must either be a Gate 4 canary or be declared here with a reason. Declarations are honest accounting, not permanent exemptions; promotion to canary is a ruling.",
+  "outOfScope": [
+    {
+      "id": "lanternroot-conservatory",
+      "reason": "Portal place without authored identity markers yet; canary promotion pending a ruling."
+    },
+    {
+      "id": "plasma-bloom-meadow",
+      "reason": "Portal place without authored identity markers yet; canary promotion pending a ruling."
+    },
+    {
+      "id": "frog-chamber",
+      "reason": "Portal place without authored identity markers yet; canary promotion pending a ruling."
+    },
+    {
+      "id": "node-field",
+      "reason": "Static route served directly; Gate 4's runtime lane guards Portal shell delivery identity, a different failure class."
+    },
+    {
+      "id": "spiral-reflection",
+      "reason": "Static route served directly; Gate 4's runtime lane guards Portal shell delivery identity, a different failure class."
+    },
+    {
+      "id": "conversations-with-ai",
+      "reason": "Static route served directly; Gate 4's runtime lane guards Portal shell delivery identity, a different failure class."
+    }
+  ]
+}

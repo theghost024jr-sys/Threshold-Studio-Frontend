@@ -59,8 +59,8 @@ jobs:
 
       - name: Run Python tests
         run: |
-          python -m pip install pytest
-          python -m pytest tests/test_build_vault_data.py tools/test_threshold_paths.py
+          python -m pip install pytest -r requirements.txt
+          python -m pytest tests/ tools/test_threshold_paths.py
 
       - name: Build CI vault index
         run: python tools/build_vault_data.py --from-public-data
